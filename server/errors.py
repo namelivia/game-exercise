@@ -1,0 +1,2 @@
+class InvalidCommandError(ValueError):
+    pass
