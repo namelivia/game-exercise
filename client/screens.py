@@ -55,7 +55,7 @@ class Lobby(Screen):
 
 class InGame(Screen):
 
-    def __init__(self, game, profile):
+    def __init__(self, profile):
         self.game = Game()
         self.profile = profile
         # TODO: Import here to avoid circular import
