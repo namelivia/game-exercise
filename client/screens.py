@@ -7,7 +7,10 @@ class Screen(ABC):
     def __init__(self, profile):
         self.profile = profile
 
-    def get_input(self):
+    def render(self):
+        pass
+
+    def read_input(self):
         pass
 
     def is_invalid_option(self, option):
@@ -20,7 +23,7 @@ class Screen(ABC):
 class Lobby(Screen):
 
     def __init__(self, profile):
-        self.profile = profile
+        super().__init__(profile)
         from .commands import (
             CreateAGame,
             JoinAGame,
@@ -36,14 +39,13 @@ class Lobby(Screen):
         for index, option in self.options.items():
             print(f'{index} - {option.description}')
 
-    def _render(self):
+    def render(self):
         print('[WELCOME TO GAME]')
         print('=======================')
         self._print_options()
         print('=======================')
 
-    def get_input(self):
-        self._render()
+    def read_input(self):
         return input("Select an option:")
 
     def is_invalid_option(self, option):
@@ -56,8 +58,8 @@ class Lobby(Screen):
 class InGame(Screen):
 
     def __init__(self, profile):
+        super().__init__(profile)
         self.game = Game()
-        self.profile = profile
         # TODO: Import here to avoid circular import
         from .commands import PlaceASymbol, LeaveTheGame
         self.options = {
@@ -69,14 +71,14 @@ class InGame(Screen):
         for index, option in self.options.items():
             print(f'{index} - {option.description}')
 
-    def _render(self):
+    def render(self):
         print('=======================')
         self._print_options()
         print('=======================')
 
-    def get_input(self):
+    def read_input(self):
         self.game.render()
-        self._render()
+        self.render()
         return input("Select an option:")
 
     def is_invalid_option(self, option):

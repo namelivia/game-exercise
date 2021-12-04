@@ -1,19 +1,25 @@
 from client.screen_manager import ScreenManager
-from client.profile import Profile
-import pickle
+from client.profile.profile import Profile
+from client.persistence.persistence import Peristence
+from client.profile.factory import Factory
 
 
-def get_new_name():
-    profile = Profile(input('Enter your name:'))
-    pickle.dump(profile, open("client_data/profile", "wb"))
+def _get_new_profile() -> Profile:
+    name = input('Enter your name:')
+    profile = Factory.new_profile(name)
+    Peristence.save(profile)
     return profile
 
 
-if __name__ == "__main__":
+def _initialize_status() -> Profile:
     try:
-        profile = pickle.load(open("client_data/profile", "rb"))
+        return Peristence.load()
     except FileNotFoundError:
-        profile = get_new_name()
+        return _get_new_profile()
+
+
+if __name__ == "__main__":
+    profile = _initialize_status()
     screen_manager = ScreenManager(profile)
     while True:
         screen_manager.run()

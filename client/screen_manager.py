@@ -14,10 +14,13 @@ class ScreenManager():
             self.current_screen = InGame(self.profile)
 
     def run(self):
-        option = self.current_screen.get_input()
-        if self.current_screen.is_invalid_option(option):
+        self.current_screen.render()
+        input_data = self.current_screen.read_input()
+        if self.current_screen.is_invalid_option(input_data):
             print('Invalid option')
-        else:
-            new_screen = self.current_screen.run_command(option)
-            if new_screen is not None:
-                self.go_to(new_screen)
+            return None
+
+        # Update state
+        new_screen = self.current_screen.run_command(input_data)
+        if new_screen is not None:
+            self.go_to(new_screen)
