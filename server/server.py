@@ -43,6 +43,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         try:
             # Using the command map get the command
             command = self.decode_command(request_data)
+            logger.info(f'Command is {command.name}')
 
             # Execute the command to get the new game
             new_game = command.execute()

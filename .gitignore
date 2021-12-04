@@ -5,3 +5,4 @@ games/*
 !games/.gitkeep
 client_data/*
 !client_data/.gitkeep
+tags
