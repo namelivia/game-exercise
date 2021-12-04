@@ -8,6 +8,7 @@ from common.messages import (
     CreateAGameMessage,
     JoinAGameMessage,
 )
+from .constants import LOBBY, IN_GAME
 
 ip, port = "localhost", 1234
 
@@ -37,7 +38,7 @@ class PlaceASymbol:
         # TODO: I should set this in the local game state, not passing it
         if isinstance(response, GameMessage):
             print(response.__dict__)
-            return 'in_game'
+            return IN_GAME
         if isinstance(response, ErrorMessage):
             print(
                 f"The server returned the following error: {response.message}"
@@ -59,7 +60,7 @@ class CreateAGame:
         # TODO: I should set this in the local game state, not passing it
         if isinstance(response, GameMessage):
             self.profile.set_game(response.id)
-            return 'in_game'
+            return IN_GAME
         if isinstance(response, ErrorMessage):
             print(
                 f"The server returned the following error: {response.message}"
@@ -81,12 +82,12 @@ class JoinAGame:
         # TODO: I should set this in the local game state, not passing it
         if isinstance(response, GameMessage):
             self.profile.set_game(response.id)
-            return 'in_game'
+            return IN_GAME
         if isinstance(response, ErrorMessage):
             print(
                 f"The server returned the following error: {response.message}"
             )
-            return 'lobby'
+            return LOBBY
 
     def _encode(self, game_id):
         return JoinAGameMessage(game_id, self.profile.id)
@@ -99,4 +100,4 @@ class LeaveTheGame:
 
     def execute(self):
         self.profile.set_game(None)
-        return 'lobby'
+        return LOBBY
