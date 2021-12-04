@@ -50,7 +50,7 @@ class PlaceSymbol(Command):
         logger.info(f"Game {self.game_id}: Player {self.player_id} placed a symbol on {self.position}")
 
     def execute(self):
-        super.execute()
+        super().execute()
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
@@ -70,7 +70,7 @@ class CreateGame(Command):
         logger.info(f"Player {self.player_id} created a game called {self.game_name}")
 
     def execute(self):
-        super.execute()
+        super().execute()
         game = self.create_game(self.game_name, self.player_id)
         # Persist the new game on storage
         self.save_game(game)
@@ -89,7 +89,7 @@ class JoinGame(Command):
         logger.info(f"Game {self.game_id}: Player {self.player_id} is joining")
 
     def execute(self):
-        super.execute()
+        super().execute()
         game = self.load_game(self.game_id)
         game.join(self.player_id)
         self.save_game(game)

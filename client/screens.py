@@ -61,7 +61,7 @@ class InGame(Screen):
         # TODO: Import here to avoid circular import
         from .commands import PlaceASymbol, LeaveTheGame
         self.options = {
-            '1': PlaceASymbol(self.game.id, self.profile),
+            '1': PlaceASymbol(self.profile),
             '2': LeaveTheGame(self.profile),
         }
 

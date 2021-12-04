@@ -24,9 +24,8 @@ def send_command(ip, port, message):
 
 
 class PlaceASymbol:
-    def __init__(self, game_id, profile):
+    def __init__(self, profile):
         self.description = 'Place a symbol on the board'
-        self.game_id = game_id
         self.profile = profile
 
     def execute(self):
@@ -37,6 +36,7 @@ class PlaceASymbol:
         response = send_command(ip, port, request_data)
         # TODO: I should set this in the local game state, not passing it
         if isinstance(response, GameMessage):
+            print(response.__dict__)
             return 'in_game'
         if isinstance(response, ErrorMessage):
             print(
@@ -44,7 +44,7 @@ class PlaceASymbol:
             )
 
     def _encode(self, position):
-        return PlaceASymbolMessage(self.game_id, self.profile.id, position)
+        return PlaceASymbolMessage(self.profile.game_id, self.profile.id, position)
 
 
 class CreateAGame:
@@ -58,6 +58,7 @@ class CreateAGame:
         response = send_command(ip, port, request_data)
         # TODO: I should set this in the local game state, not passing it
         if isinstance(response, GameMessage):
+            self.profile.set_game(response.id)
             return 'in_game'
         if isinstance(response, ErrorMessage):
             print(
@@ -79,6 +80,7 @@ class JoinAGame:
         response = send_command(ip, port, request_data)
         # TODO: I should set this in the local game state, not passing it
         if isinstance(response, GameMessage):
+            self.profile.set_game(response.id)
             return 'in_game'
         if isinstance(response, ErrorMessage):
             print(
@@ -96,4 +98,5 @@ class LeaveTheGame:
         self.profile = profile
 
     def execute(self):
+        self.profile.set_game(None)
         return 'lobby'
