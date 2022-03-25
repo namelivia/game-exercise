@@ -2,6 +2,17 @@ import uuid
 from .errors import InvalidCommandError
 
 
+"""
+This implements the game state and the
+operations that can be applied on them.
+
+Currently joining a game and placing a symbol on the board.
+
+Note that every command first validates (can be invalid).
+And if valid sets something on the game state.
+"""
+
+
 class Game():
     def __init__(self, name, player_id):
         self.id = uuid.uuid4()

@@ -1,25 +1,29 @@
 from client.screen_manager import ScreenManager
-from client.profile.profile import Profile
-from client.persistence.persistence import Peristence
-from client.profile.factory import Factory
+from client.game_specific.events import ScreenTransitionEvent
+from client.input.input import Input
+from client.general_state.client_state import ClientState
+from client.graphics.graphics import Graphics
 
+USES_PYGAME = False
 
-def _get_new_profile() -> Profile:
-    name = input('Enter your name:')
-    profile = Factory.new_profile(name)
-    Peristence.save(profile)
-    return profile
-
-
-def _initialize_status() -> Profile:
-    try:
-        return Peristence.load()
-    except FileNotFoundError:
-        return _get_new_profile()
-
+"""
+This initializes the client
+"""
 
 if __name__ == "__main__":
-    profile = _initialize_status()
-    screen_manager = ScreenManager(profile)
+
+    # The initial event is game specific
+    initial_event = ScreenTransitionEvent("lobby")
+    client_state = ClientState(initial_event)
+
+    # Only if using pygame
+    input_manager = None
+    if USES_PYGAME:
+        import pygame
+        pygame.init()
+    graphics = Graphics(USES_PYGAME)
+    input_manager = Input(USES_PYGAME)
+
+    screen_manager = ScreenManager(client_state, input_manager, graphics)
     while True:
         screen_manager.run()

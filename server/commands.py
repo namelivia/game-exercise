@@ -6,6 +6,15 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+"""
+These are the commands that can be received from the server.
+All the commands do the following:
+1 - Load game
+2 - Execute game operation
+3 - Save the game
+4 - And return it
+"""
+
 
 class Command(ABC):
 
@@ -24,7 +33,7 @@ class Command(ABC):
     # Retrieve the current game from storage
     def load_game(self, game_id):
         try:
-            return pickle.load(open("games/" + str(game_id), "rb"))
+            return pickle.load(open("server_data/games/" + str(game_id), "rb"))
         except FileNotFoundError:
             raise InvalidCommandError("Invalid game id")
 
@@ -33,7 +42,7 @@ class Command(ABC):
         return Game(name, player_id)
 
     def save_game(self, new_game: Game):
-        pickle.dump(new_game, open("games/" + str(new_game.id), "wb"))
+        pickle.dump(new_game, open("server_data/games/" + str(new_game.id), "wb"))
 
 
 class PlaceSymbol(Command):

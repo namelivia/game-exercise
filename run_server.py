@@ -2,11 +2,15 @@ import threading
 import logging
 from server.server import ThreadedTCPRequestHandler, ThreadedTCPServer
 
+"""
+This is the main file for the server
+"""
+
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
     HOST, PORT = "localhost", 1234
     logging.basicConfig(
-        filename='logs/server.log',
+        filename='server_data/logs/server.log',
         level=logging.DEBUG,
         format='[%(asctime)s] %(message)s'
     )

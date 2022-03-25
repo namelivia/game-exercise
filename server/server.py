@@ -17,6 +17,10 @@ from .errors import InvalidCommandError
 
 logger = logging.getLogger(__name__)
 
+"""
+This just intializes the server
+"""
+
 
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 

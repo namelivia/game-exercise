@@ -5,7 +5,8 @@ from common.messages import (
     JoinAGameMessage,
 )
 from .constants import LOBBY, IN_GAME
-from .channel import Channel
+from client.network.channel import Channel
+from .events import ScreenTransitionEvent
 from abc import ABC
 
 
@@ -19,7 +20,7 @@ class Command(ABC):
         pass
 
 
-class PlaceASymbol:
+class PlaceASymbol(Command):
     def __init__(self, profile):
         super().__init__(profile, 'Place a symbol on the board')
 
@@ -37,7 +38,18 @@ class PlaceASymbol:
         return PlaceASymbolMessage(self.profile.game_id, self.profile.id, position)
 
 
-class CreateAGame:
+class NewGame(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Create a new game')
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            ScreenTransitionEvent('new_game_screen')
+        )
+
+
+class CreateAGame(Command):
     def __init__(self, profile):
         super().__init__(profile, 'Create a new game')
 
@@ -53,7 +65,7 @@ class CreateAGame:
         return CreateAGameMessage(game_name, self.profile.id)
 
 
-class JoinAGame:
+class JoinAGame(Command):
     def __init__(self, profile):
         super().__init__(profile, 'Join an existing game')
 
@@ -70,10 +82,19 @@ class JoinAGame:
         return JoinAGameMessage(game_id, self.profile.id)
 
 
-class LeaveTheGame:
+class LeaveTheGame(Command):
     def __init__(self, profile):
-        super().__init__(profile, 'LeaveTheGame')
+        super().__init__(profile, 'Leave the game')
 
     def execute(self):
         self.profile.set_game(None)
         return LOBBY
+
+
+class AddLetterA(Command):
+    def __init__(self, profile, new_game_name):
+        super().__init__(profile, 'Type the letter A')
+        self.new_game_name = new_game_name
+
+    def execute(self):
+        self.new_game_name += "a"
