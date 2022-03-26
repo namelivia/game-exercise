@@ -1,8 +1,6 @@
 __pycache__
-logs/*
-!logs/.gitkeep
-games/*
-!games/.gitkeep
+server_data/*
+!server_data/.gitkeep
 client_data/*
-!client_data/.gitkeep
+client_data/.gitkeep
 tags
