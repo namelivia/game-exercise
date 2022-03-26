@@ -27,18 +27,15 @@ class ScreenManager():
         self.client_state.clock.tick()  # Update the clock
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
-        # TODO: This value returned may be a new screen
-        value = self.event_processor.process_event(  # Process the event
+        self.event_processor.process_event(  # Process the event
             queued_event,
             self.client_state,
             self.graphics
         )
-        if value is not None:
-            self.current_screen = value
 
-        self.current_screen.render()  # Render the screen
+        self.client_state.get_current_screen().render()  # Render the screen
 
         self._read_user_input()
 
         # The screens may also use the event to update their internal state
-        self.current_screen.update(queued_event)
+        self.client_state.get_current_screen().update(queued_event)
