@@ -13,7 +13,7 @@ This initializes the client
 if __name__ == "__main__":
 
     # The initial event is game specific
-    initial_event = ScreenTransitionEvent("lobby")
+    initial_event = ScreenTransitionEvent("intro")
     client_state = ClientState(initial_event)
 
     # Only if using pygame

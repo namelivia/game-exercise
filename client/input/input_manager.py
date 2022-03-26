@@ -9,6 +9,14 @@ class InputManager():
         mapping = {pygame.KEYDOWN: {
             pygame.K_1: "event_1",
             pygame.K_2: "event_2",
+            pygame.K_3: "event_3",
+            pygame.K_4: "event_4",
+            pygame.K_5: "event_5",
+            pygame.K_6: "event_6",
+            pygame.K_7: "event_7",
+            pygame.K_8: "event_8",
+            pygame.K_9: "event_9",
+            pygame.K_0: "event_0",
             pygame.K_a: "event_a",
             pygame.K_b: "event_b",
             pygame.K_c: "event_c",
@@ -37,6 +45,9 @@ class InputManager():
             pygame.K_z: "event_z",
             pygame.K_RETURN: "event_return",
             pygame.K_ESCAPE: "event_escape",
+            pygame.K_BACKSPACE: "event_backspace",
+            pygame.K_SPACE: "event_space",
+            pygame.K_MINUS: "event_minus"
         }}
 
         events = pygame.event.get()

@@ -3,10 +3,20 @@ from common.messages import (
     PlaceASymbolMessage,
     CreateAGameMessage,
     JoinAGameMessage,
+    GameMessage,
+    ErrorMessage
 )
-from .constants import LOBBY, IN_GAME
+
 from client.network.channel import Channel
-from .events import ScreenTransitionEvent, UserTypedEvent
+from .events import (
+    ScreenTransitionEvent,
+    UserTypedEvent,
+    NewGameRequestEvent,
+    JoinExistingGameEvent,
+    QuitGameEvent,
+    InitiateGameEvent,
+    PlaceASymbolRequestEvent
+)
 from abc import ABC
 
 
@@ -20,19 +30,44 @@ class Command(ABC):
         pass
 
 
-class PlaceASymbol(Command):
-    def __init__(self, profile):
-        super().__init__(profile, 'Place a symbol on the board')
+class RequestPlaceASymbol(Command):
+    def __init__(self, profile, queue, position):
+        super().__init__(profile, 'Request placing a symbol')
+        self.position = position
+        self.queue = queue
 
     def execute(self):
+        self.queue.put(
+            PlaceASymbolRequestEvent(self.position)
+        )
+
+
+class PlaceASymbol(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Place a symbol on the board')
+        self.queue = queue
+
+    def execute(self, position):
         # TODO: This should be a different screen
-        print('Where?')
-        position = int(input('0, 1, 2, 3, 4 ,5, 6, 7, 8?'))
         request_data = self._encode(position)
 
         response = Channel.send_command(request_data)
         if response is not None:
-            return IN_GAME
+            if isinstance(response, GameMessage):
+                self.queue.put(
+                    InitiateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
 
     def _encode(self, position):
         return PlaceASymbolMessage(self.profile.game_id, self.profile.id, position)
@@ -49,57 +84,133 @@ class NewGame(Command):
         )
 
 
+class GoToJoinAGame(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Go to the join a game screen')
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            ScreenTransitionEvent('join_a_game')
+        )
+
+
 class BackToLobby(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, 'Back to lobby')
         self.queue = queue
 
     def execute(self):
+        self.profile.set_game(None)
         self.queue.put(
             ScreenTransitionEvent('lobby')
         )
 
 
-class CreateAGame(Command):
-    def __init__(self, profile):
-        super().__init__(profile, 'Create a new game')
+class QuitGame(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Exit from the game')
+        self.queue = queue
 
     def execute(self):
-        game_name = input('Game name:')
-        request_data = self._encode(game_name)
+        self.queue.put(
+            QuitGameEvent()
+        )
+
+
+class CreateAGame(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Create a new game')
+        self.queue = queue
+
+    def execute(self, new_game_name):
+        request_data = self._encode(new_game_name)
 
         response = Channel.send_command(request_data)
         if response is not None:
-            return IN_GAME
+            if isinstance(response, GameMessage):
+                self.queue.put(
+                    InitiateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+                self.profile.set_game(response.id)
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+                self.queue.put(
+                    ScreenTransitionEvent('lobby')
+                )
+        else:
+            print("Server error")
+            self.queue.put(
+                ScreenTransitionEvent('lobby')
+            )
 
-    def _encode(self, game_name):
-        return CreateAGameMessage(game_name, self.profile.id)
+    def _encode(self, new_game_name):
+        return CreateAGameMessage(new_game_name, self.profile.id)
+
+
+class RequestGameCreation(Command):
+    def __init__(self, profile, queue, new_game_name):
+        super().__init__(profile, 'Request the game creation')
+        self.new_game_name = new_game_name
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            NewGameRequestEvent(self.new_game_name)
+        )
+
+
+class RequestJoiningAGame(Command):
+    def __init__(self, profile, queue, game_id):
+        super().__init__(profile, 'Request joining an existing game')
+        self.game_id = game_id
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            JoinExistingGameEvent(self.game_id)
+        )
 
 
 class JoinAGame(Command):
-    def __init__(self, profile):
-        super().__init__(profile, 'Join an existing game')
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Join a game')
+        self.queue = queue
 
-    def execute(self):
-        game_id = input('Game id:')
+    def execute(self, game_id):
         request_data = self._encode(game_id)
-        response = Channel.send_command(request_data)
+
         response = Channel.send_command(request_data)
         if response is not None:
-            return IN_GAME
-        return LOBBY
+            if isinstance(response, GameMessage):
+                self.queue.put(
+                    InitiateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+                self.profile.set_game(response.id)
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
+            self.queue.put(
+                ScreenTransitionEvent('lobby')
+            )
 
     def _encode(self, game_id):
         return JoinAGameMessage(game_id, self.profile.id)
-
-
-class LeaveTheGame(Command):
-    def __init__(self, profile):
-        super().__init__(profile, 'Leave the game')
-
-    def execute(self):
-        self.profile.set_game(None)
-        return LOBBY
 
 
 class UserTyped(Command):

@@ -37,8 +37,11 @@ class Game():
             if self.player_2_id is not None:
                 raise InvalidCommandError("The game is full")
             self.player_2_id = player_id
+        else:
+            raise InvalidCommandError("This player is already in the game")
 
     def place(self, player, position):
+        position = int(position)
         try:
             if self.player_2_id is None:
                 raise InvalidCommandError("No player 2 yet")

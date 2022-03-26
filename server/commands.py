@@ -35,6 +35,7 @@ class Command(ABC):
         try:
             return pickle.load(open("server_data/games/" + str(game_id), "rb"))
         except FileNotFoundError:
+            logger.info("Invalid game id")
             raise InvalidCommandError("Invalid game id")
 
     # Create a new game

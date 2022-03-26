@@ -1,5 +1,12 @@
-from .game_specific.events import ScreenTransitionEvent
-from client.game_specific.commands import UserTyped
+from .game_specific.events import (
+    ScreenTransitionEvent,
+    NewGameRequestEvent,
+    PlaceASymbolRequestEvent,
+    JoinExistingGameEvent,
+    QuitGameEvent,
+    InitiateGameEvent
+)
+from client.game_specific.commands import UserTyped, CreateAGame, JoinAGame, PlaceASymbol
 
 # This should manage transitions between states
 
@@ -28,13 +35,56 @@ class ScreenManager():
 
         # PROCESS GENERAL STATE EVENTS
         # This is an event that acts on the general state
+        if isinstance(queued_event, QuitGameEvent):  # This could go somewhere else (not not on the event)
+            import pygame  # This is pygame dependent
+            import sys
+            pygame.quit()
+            sys.exit()
+        if isinstance(queued_event, InitiateGameEvent):  # This could go somewhere else (not not on the event)
+            # TODO: Why is it not an screen transition event???
+            from client.game_specific.screens.screens import InGameScreen
+            self.current_screen = InGameScreen(
+                self.client_state,
+                self.graphics,
+                queued_event.turn,
+                queued_event.board,
+                queued_event.game_id,
+                queued_event.name,
+                queued_event.player_1_id,
+                queued_event.player_2_id,
+            )
         if isinstance(queued_event, ScreenTransitionEvent):  # This could go somewhere else (not not on the event)
             # Circular import
-            from client.game_specific.screens.screens import Lobby, NewGameScreen
+            from client.game_specific.screens.screens import Lobby, NewGameScreen, Intro, JoinGameScreen, InGameScreen
+            if queued_event.dest_screen == "intro":
+                self.current_screen = Intro(self.client_state, self.graphics)
             if queued_event.dest_screen == "lobby":
                 self.current_screen = Lobby(self.client_state, self.graphics)
             if queued_event.dest_screen == "new_game_screen":
                 self.current_screen = NewGameScreen(self.client_state, self.graphics)
+            if queued_event.dest_screen == "join_a_game":
+                self.current_screen = JoinGameScreen(self.client_state, self.graphics)
+            # if queued_event.dest_screen == "in_game":
+                # self.current_screen = InGameScreen(self.client_state, self.graphics)
+
+        # PROCESS NETWORK RELATED EVENTS
+        if isinstance(queued_event, NewGameRequestEvent):  # This could go somewhere else (not not on the event)
+            CreateAGame(
+                self.client_state.profile,
+                self.client_state.queue
+            ).execute(queued_event.new_game_name)
+
+        if isinstance(queued_event, PlaceASymbolRequestEvent):  # This could go somewhere else (not not on the event)
+            PlaceASymbol(
+                self.client_state.profile,
+                self.client_state.queue
+            ).execute(queued_event.position)
+
+        if isinstance(queued_event, JoinExistingGameEvent):  # This could go somewhere else (not not on the event)
+            JoinAGame(
+                self.client_state.profile,
+                self.client_state.queue
+            ).execute(queued_event.game_id)
 
         self.current_screen.render()  # Display
 
@@ -44,12 +94,52 @@ class ScreenManager():
                 "event_1": UserTyped(
                     self.client_state.profile,
                     self.client_state.queue,
-                    "1"
+                    "1"  # maybe here I can pass the key from the event
                 ),
                 "event_2": UserTyped(
                     self.client_state.profile,
                     self.client_state.queue,
                     "2"
+                ),
+                "event_3": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "3"
+                ),
+                "event_4": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "4"
+                ),
+                "event_5": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "5"
+                ),
+                "event_6": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "6"
+                ),
+                "event_7": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "7"
+                ),
+                "event_8": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "8"
+                ),
+                "event_9": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "9"
+                ),
+                "event_0": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "0"
                 ),
                 "event_a": UserTyped(
                     self.client_state.profile,
@@ -190,6 +280,21 @@ class ScreenManager():
                     self.client_state.profile,
                     self.client_state.queue,
                     "escape"
+                ),
+                "event_backspace": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "backspace"
+                ),
+                "event_space": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    " "
+                ),
+                "event_minus": UserTyped(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    "-"
                 ),
             }
 

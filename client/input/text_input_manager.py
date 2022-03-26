@@ -5,6 +5,14 @@ class TextInputManager():
         mapping = {
             "1": "event_1",
             "2": "event_2",
+            "3": "event_2",
+            "4": "event_2",
+            "5": "event_5",
+            "6": "event_6",
+            "7": "event_7",
+            "8": "event_8",
+            "9": "event_9",
+            "0": "event_0",
             "a": "event_a",
             "b": "event_b",
             "c": "event_c",
@@ -33,6 +41,9 @@ class TextInputManager():
             "z": "event_z",
             "enter": "event_return",
             "escape": "event_escape",
+            "backspace": "event_backspace",
+            "space": "event_space",
+            "-": "event_minus",
         }
         user_input = input("Write the key you would like to press:")
         try:
