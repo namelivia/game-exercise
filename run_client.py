@@ -4,7 +4,7 @@ from client.input.input import Input
 from client.general_state.client_state import ClientState
 from client.graphics.graphics import Graphics
 
-USES_PYGAME = False
+USES_PYGAME = True
 
 """
 This initializes the client

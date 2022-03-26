@@ -8,14 +8,19 @@ class UIElement(ABC):
 
     # No animations yet
     # def render(self, time, window):
+    # UI elements can hold a small state too that can be updated
     def render(self, window):
         [shape.render(window) for shape in self.shapes]
 
+    def update(self, data):
+        pass
+
 
 class WelcomeMessage(UIElement):
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.shapes = [
-            Text('Welcome to Game', 20, 0)
+            Text(f'Welcome to game, {name}', 20, 0)
         ]
 
 
@@ -30,11 +35,15 @@ class OptionList(UIElement):
 
 
 class ClockUI(UIElement):
-    def __init__(self, clock):
-        self.clock = clock
+    def __init__(self, value):
         self.shapes = [
-            Text('Time is (update pending)', 20, 100)
+            Text(f'Time is {value}', 20, 100)
         ]
+
+    def update(self, data):
+        # What if data does not contain time? Throw an exception
+        time = data['time']
+        self.shapes[0].set_message(f'Time is {time}')  # Not supersure about this
 
 
 class NewGameMessage(UIElement):
