@@ -6,7 +6,7 @@ from common.messages import (
 )
 from .constants import LOBBY, IN_GAME
 from client.network.channel import Channel
-from .events import ScreenTransitionEvent
+from .events import ScreenTransitionEvent, UserTypedEvent
 from abc import ABC
 
 
@@ -46,6 +46,17 @@ class NewGame(Command):
     def execute(self):
         self.queue.put(
             ScreenTransitionEvent('new_game_screen')
+        )
+
+
+class BackToLobby(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Back to lobby')
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            ScreenTransitionEvent('lobby')
         )
 
 
@@ -91,10 +102,13 @@ class LeaveTheGame(Command):
         return LOBBY
 
 
-class AddLetterA(Command):
-    def __init__(self, profile, new_game_name):
-        super().__init__(profile, 'Type the letter A')
-        self.new_game_name = new_game_name
+class UserTyped(Command):
+    def __init__(self, profile, queue, key):
+        super().__init__(profile, 'User typed')
+        self.queue = queue
+        self.key = key
 
     def execute(self):
-        self.new_game_name += "a"
+        self.queue.put(
+            UserTypedEvent(self.key)
+        )

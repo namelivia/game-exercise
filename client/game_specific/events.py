@@ -1,14 +1,8 @@
 from abc import ABC
-from .screens.screens import Lobby, NewGameScreen
 
 
 class Event(ABC):
-
-    def __init__(self):
-        pass
-
-    def execute():
-        pass
+    pass
 
 
 class ScreenTransitionEvent(Event):
@@ -16,9 +10,8 @@ class ScreenTransitionEvent(Event):
         super().__init__()
         self.dest_screen = dest_screen
 
-    # Actually only this mapping is game_specific
-    def execute(self, client_state, graphics):
-        if self.dest_screen == "lobby":
-            return Lobby(client_state, graphics)
-        if self.dest_screen == "new_game_screen":
-            return NewGameScreen(client_state, graphics)
+
+class UserTypedEvent(Event):
+    def __init__(self, key):
+        super().__init__()
+        self.key = key

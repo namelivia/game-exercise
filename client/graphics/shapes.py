@@ -19,6 +19,7 @@ class Text():
 
     def set_message(self, message):
         self.message = message
+        self.text_already_printed = False  # If the text changes needs to be rewritten
 
     def set_x(self, x):
         self.x = x

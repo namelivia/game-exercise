@@ -3,10 +3,38 @@ class TextInputManager():
     def read(self):
 
         mapping = {
-            "event_1": "event_1",
-            "event_2": "event_2",
+            "1": "event_1",
+            "2": "event_2",
+            "a": "event_a",
+            "b": "event_b",
+            "c": "event_c",
+            "d": "event_d",
+            "e": "event_e",
+            "f": "event_f",
+            "g": "event_g",
+            "h": "event_h",
+            "i": "event_i",
+            "j": "event_j",
+            "k": "event_k",
+            "l": "event_l",
+            "m": "event_m",
+            "n": "event_n",
+            "o": "event_o",
+            "p": "event_p",
+            "q": "event_q",
+            "r": "event_r",
+            "s": "event_s",
+            "t": "event_t",
+            "u": "event_u",
+            "v": "event_v",
+            "w": "event_w",
+            "x": "event_x",
+            "y": "event_y",
+            "z": "event_z",
+            "enter": "event_return",
+            "escape": "event_escape",
         }
-        user_input = input("Input:")
+        user_input = input("Write the key you would like to press:")
         try:
             return [mapping[user_input]]
         except KeyError:

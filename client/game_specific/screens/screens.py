@@ -1,6 +1,7 @@
 from abc import ABC
 # from .game import Game
 from client.game_specific.ui import WelcomeMessage, NewGameMessage, OptionList, ClockUI
+from client.game_specific.events import UserTypedEvent
 
 # This should be the definition of the different states
 
@@ -19,21 +20,8 @@ class Screen(ABC):
     def render(self):
         self.graphics.render(self)  # Tell graphics to draw current screen
 
-    def update(self, events):
-        # Transform events into actions
-        if events is not None:
-            for event in events:
-                action = self._get_action(event)
-                if action is not None:
-                    action.execute()
-
-    def _get_action(self, event):
-        # Map pygame events with actions
-        # This may change based on the clock
-        try:
-            return self.mapping[event]
-        except KeyError:
-            pass
+    def update(self, event):
+        pass
 
 
 class Lobby(Screen):
@@ -60,25 +48,28 @@ class Lobby(Screen):
             })
         ]
 
-        # This is the functional representation (input and actions). (Will always be here)
-        # Avoid circular import
-        from client.game_specific.commands import (
-            NewGame,
-            JoinAGame,
-        )
-        self.mapping = {
-            "event_1": NewGame(
-                self.client_state.profile,
-                self.client_state.queue
-            ),  # These will always end up adding events to the queue
-            "event_2": JoinAGame(self.client_state.profile),
-        }
-
-    def update(self, events):
-        super().update(events)
+    def update(self, event):
         # And now here I can update the screen-specific data
         # for example the time.
         self.data['time'] = self.client_state.clock.get()
+
+        if event is not None:
+            if isinstance(event, UserTypedEvent):
+                # Avoid circular import
+                # Could these be not just game specific but screen specific?
+                from client.game_specific.commands import (
+                    NewGame,
+                    JoinAGame,
+                )
+                # These actions, some may update the data, others run commands, who knows
+                key = event.key
+                if key == "1":
+                    NewGame(
+                        self.client_state.profile,
+                        self.client_state.queue
+                    ).execute()
+                if key == "2":
+                    JoinAGame(self.client_state.profile).execute()
 
         # Update ui elements (They need to access the data to do so)
         [element.update(self.data) for element in self.ui_elements]
@@ -90,36 +81,36 @@ class NewGameScreen(Screen):
         super().__init__(client_state, window)
 
         self.data = {
-            "time": client_state.clock.get()
+            "time": client_state.clock.get(),
+            "new_game_name": ""
         }
 
-        # local Screen state
-        self.new_game_name = ""
-
-        # This is the text representation (pure graphical description). Only for text mode
         self.ui_elements = [
             ClockUI(self.data['time']),
-            NewGameMessage(),
+            NewGameMessage(self.data['new_game_name']),
         ]
 
-        # TODO: This does not work
-        # This is the functional representation (input and actions). (Will always be here)
-        # Avoid circular import
-        # from .commands import (
-        # AddLetterA,  # These commands may be screen dependent
-        # )
-        # self.mapping = {pygame.A: {
-        # pygame.K_A: AddLetterA(
-        # self.client_state.profile,
-        # self.client_state.queue),  # Will These will always adding events to the queue?
-        # }}
-        self.mapping = {}
+        # Here if user typed A I would like to update the internal state
+        self.actions = {}
 
-    def update(self, events):
-        super().update(events)
+    def update(self, event):
         # And now here I can update the screen-specific data
         # for example the time.
         self.data['time'] = self.client_state.clock.get()
+
+        if event is not None:
+            if isinstance(event, UserTypedEvent):
+                if event.key == "escape":
+                    # Avoid circular import
+                    from client.game_specific.commands import (
+                        BackToLobby
+                    )
+                    BackToLobby(
+                        self.client_state.profile,
+                        self.client_state.queue
+                    ).execute()
+                else:
+                    self.data["new_game_name"] += event.key
 
         # Update ui elements (They need to access the data to do so)
         [element.update(self.data) for element in self.ui_elements]
