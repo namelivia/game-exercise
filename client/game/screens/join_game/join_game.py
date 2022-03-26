@@ -2,7 +2,7 @@ from client.primitives.screen import Screen
 from .ui import (
     GameIdMessage
 )
-from client.game_specific.events import UserTypedEvent  # This could be generic
+from client.game.events import UserTypedEvent  # This could be generic
 
 
 class JoinGame(Screen):
@@ -26,7 +26,7 @@ class JoinGame(Screen):
             if isinstance(event, UserTypedEvent):
                 if event.key == "escape":
                     # Avoid circular import
-                    from client.game_specific.commands import (
+                    from client.game.commands import (
                         BackToLobby
                     )
                     BackToLobby(
@@ -36,7 +36,7 @@ class JoinGame(Screen):
                     return
                 if event.key == "return":
                     # Avoid circular import
-                    from client.game_specific.commands import (
+                    from client.game.commands import (
                         RequestJoiningAGame
                     )
                     RequestJoiningAGame(

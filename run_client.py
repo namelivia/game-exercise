@@ -1,5 +1,5 @@
 from client.screen_manager import ScreenManager
-from client.game_specific.events import ScreenTransitionEvent
+from client.game.events import ScreenTransitionEvent
 from client.input.input import Input
 from client.general_state.client_state import ClientState
 from client.graphics.graphics import Graphics

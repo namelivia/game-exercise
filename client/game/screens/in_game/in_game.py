@@ -8,7 +8,7 @@ from .ui import (
     Board,
     Instructions,
 )
-from client.game_specific.events import UserTypedEvent  # This could be generic
+from client.game.events import UserTypedEvent  # This could be generic
 
 
 class InGame(Screen):
@@ -52,7 +52,7 @@ class InGame(Screen):
         if event is not None:
             if isinstance(event, UserTypedEvent):
                 # Avoid circular import
-                from client.game_specific.commands import (
+                from client.game.commands import (
                     BackToLobby,
                     RequestPlaceASymbol
                 )

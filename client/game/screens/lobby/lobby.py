@@ -3,7 +3,7 @@ from .ui import (
     WelcomeMessage,
     OptionList,
 )
-from client.game_specific.events import UserTypedEvent  # This could be generic
+from client.game.events import UserTypedEvent  # This could be generic
 
 
 class Lobby(Screen):
@@ -31,7 +31,7 @@ class Lobby(Screen):
             if isinstance(event, UserTypedEvent):
                 # Avoid circular import
                 # Could these be not just game specific but screen specific?
-                from client.game_specific.commands import (
+                from client.game.commands import (
                     NewGame,
                     GoToJoinAGame,
                     QuitGame

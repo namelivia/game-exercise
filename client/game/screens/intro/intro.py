@@ -2,7 +2,7 @@ from client.primitives.screen import Screen
 from .ui import (
     Title
 )
-from client.game_specific.events import UserTypedEvent  # This could be generic
+from client.game.events import UserTypedEvent  # This could be generic
 
 
 class Intro(Screen):
@@ -19,7 +19,7 @@ class Intro(Screen):
 
         # Time based triggers
         if (self.time > 30000):
-            from client.game_specific.commands import (
+            from client.game.commands import (
                 BackToLobby
             )
             BackToLobby(
@@ -32,7 +32,7 @@ class Intro(Screen):
             if isinstance(event, UserTypedEvent):
                 if event.key == "escape" or event.key == "return":
                     # Avoid circular import
-                    from client.game_specific.commands import (
+                    from client.game.commands import (
                         BackToLobby
                     )
                     BackToLobby(

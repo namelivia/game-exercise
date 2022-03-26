@@ -1,5 +1,5 @@
-from client.game_specific.commands import UserTyped
-from client.game_specific.event_processor import EventProcessor
+from client.game.commands import UserTyped
+from client.game.event_processor import EventProcessor
 
 
 class ScreenManager():
