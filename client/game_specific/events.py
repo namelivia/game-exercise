@@ -1,5 +1,5 @@
 from abc import ABC
-from .screens import Lobby, NewGameScreen
+from .screens.screens import Lobby, NewGameScreen
 
 
 class Event(ABC):

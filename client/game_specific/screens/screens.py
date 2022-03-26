@@ -1,7 +1,7 @@
 import pygame
 from abc import ABC
 # from .game import Game
-from .ui import WelcomeMessage, NewGameMessage, OptionList, ClockUI
+from client.game_specific.ui import WelcomeMessage, NewGameMessage, OptionList, ClockUI
 
 # This should be the definition of the different states
 
@@ -67,7 +67,7 @@ class Lobby(Screen):
 
         # This is the functional representation (input and actions). (Will always be here)
         # Avoid circular import
-        from .commands import (
+        from client.game_specific.commands import (
             NewGame,
             JoinAGame,
         )

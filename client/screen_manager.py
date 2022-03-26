@@ -16,7 +16,10 @@ class ScreenManager():
 
         # The event is a screen transition one, these will override current_screen
         if type(event) is ScreenTransitionEvent:
-            self.current_screen = event.execute(self.client_state, self.graphics)  # This is weird (passing the graphics)
+            self.current_screen = event.execute(
+                self.client_state,
+                self.graphics
+            )  # This is weird (passing the graphics)
 
     def run(self):
         # THIS IS THE MAIN CYCLE!!!!

@@ -71,3 +71,4 @@
 [2022-03-10 18:16:45,481] Command is <bound method JoinGame.name of <server.commands.JoinGame object at 0x7ff5e67e8a10>>
 [2022-03-10 18:16:45,486] Game asdf: Player 37cea580-caaa-4ce1-b079-efa57a6d7a13 is joining
 [2022-03-25 20:45:28,272] Server listening on localhost:1234
+[2022-03-26 11:12:40,610] Server listening on localhost:1234
