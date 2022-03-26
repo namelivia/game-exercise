@@ -23,8 +23,8 @@ Here we decide what to do with each of the events
 """
 
 
-class EventProcessor():
-    def process_event(self, event, client_state, graphics):
+class EventHandler():
+    def handle(self, event, client_state, graphics):
         if event is None:
             return
         print(event)

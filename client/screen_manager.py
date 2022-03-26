@@ -1,5 +1,5 @@
 from client.game.commands import UserTyped
-from client.game.event_processor import EventProcessor
+from client.game.event_handler import EventHandler
 
 
 class ScreenManager():
@@ -10,7 +10,7 @@ class ScreenManager():
         self.graphics = graphics  # Only pygame
         self.input_manager = input_manager  # Only pygame
 
-        self.event_processor = EventProcessor()
+        self.event_handler = EventHandler()
 
     def _read_user_input(self):
         if self.input_manager is not None:
@@ -27,7 +27,7 @@ class ScreenManager():
         self.client_state.clock.tick()  # Update the clock
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
-        self.event_processor.process_event(  # Process the event
+        self.event_handler.handle(  # Process the event
             queued_event,
             self.client_state,
             self.graphics
