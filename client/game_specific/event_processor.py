@@ -1,0 +1,81 @@
+from .events import (
+    QuitGameEvent,
+    ScreenTransitionEvent,
+    NewGameRequestEvent,
+    PlaceASymbolRequestEvent,
+    JoinExistingGameEvent,
+    InitiateGameEvent
+)
+from .screens.intro.intro import Intro
+from .screens.lobby.lobby import Lobby
+from .screens.new_game.new_game import NewGame
+from .screens.join_game.join_game import JoinGame
+from .screens.in_game.in_game import InGame
+from .commands import (
+    CreateAGame,
+    JoinAGame,
+    PlaceASymbol
+)
+
+
+"""
+Here we decide what to do with each of the events
+"""
+
+
+class EventProcessor():
+    def process_event(self, event, client_state, graphics):
+        if event is None:
+            return
+        print(event)
+        # QUIT GAME
+        if isinstance(event, QuitGameEvent):
+            import pygame  # This is pygame dependent
+            import sys
+            pygame.quit()
+            sys.exit()
+
+        # TRANSITION TO OTHER SCREEN
+        if isinstance(event, ScreenTransitionEvent):
+            # TODO: Not superhappy returning these.
+            # Could I just push the instances to the queue?
+            if event.dest_screen == "intro":
+                return Intro(client_state, graphics)
+            if event.dest_screen == "lobby":
+                return Lobby(client_state, graphics)
+            if event.dest_screen == "new_game_screen":
+                return NewGame(client_state, graphics)
+            if event.dest_screen == "join_a_game":
+                return JoinGame(client_state, graphics)
+
+        if isinstance(event, InitiateGameEvent):  # This could go somewhere else (not not on the event)
+            # TODO: Why is it not an screen transition event??? Just because it contains more data?
+            return InGame(
+                client_state,
+                graphics,
+                event.turn,
+                event.board,
+                event.game_id,
+                event.name,
+                event.player_1_id,
+                event.player_2_id,
+            )
+
+        # TALK WITH THE SERVER
+        if isinstance(event, NewGameRequestEvent):  # This could go somewhere else (not not on the event)
+            CreateAGame(
+                client_state.profile,
+                client_state.queue
+            ).execute(event.new_game_name)
+
+        if isinstance(event, PlaceASymbolRequestEvent):  # This could go somewhere else (not not on the event)
+            PlaceASymbol(
+                client_state.profile,
+                client_state.queue
+            ).execute(event.position)
+
+        if isinstance(event, JoinExistingGameEvent):  # This could go somewhere else (not not on the event)
+            JoinAGame(
+                client_state.profile,
+                client_state.queue
+            ).execute(event.game_id)

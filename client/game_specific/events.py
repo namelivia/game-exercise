@@ -1,8 +1,4 @@
-from abc import ABC
-
-
-class Event(ABC):
-    pass
+from client.primitives.event import Event
 
 
 class QuitGameEvent(Event):
