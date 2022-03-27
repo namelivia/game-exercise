@@ -1,11 +1,12 @@
 import pygame
+from .sprite import Sprite
+from client.primitives.shape import Shape
 
 
-class Text():
+class Text(Shape):
     def __init__(self, message, x, y):
+        super().__init__(x, y)
         self.message = message
-        self.x = x
-        self.y = y
 
     def render(self, window):
         if window is not None:  # TODO: only if pygame
@@ -16,18 +17,11 @@ class Text():
     def set_message(self, message):
         self.message = message
 
-    def set_x(self, x):
-        self.x = x
 
-    def set_y(self, y):
-        self.y = y
-
-
-class SmallText():
+class SmallText(Shape):
     def __init__(self, message, x, y):
+        super().__init__(x, y)
         self.message = message
-        self.x = x
-        self.y = y
 
     def render(self, window):
         if window is not None:  # TODO: only if pygame
@@ -38,8 +32,35 @@ class SmallText():
     def set_message(self, message):
         self.message = message
 
+
+class Image(Shape):
+    def __init__(self, path, x, y):
+        super().__init__(x, y)
+        self.image = pygame.image.load(path)
+
+    def render(self, window):
+        if window is not None:  # TODO: only if pygame
+            window.blit(self.image, dest=(self.x, self.y))
+
+
+class Animation(Shape):
+    def __init__(self, folder, x, y, initial_frame=0):
+        super().__init__(x, y)
+        self.sprite_group = pygame.sprite.Group()
+        self.animation = Sprite(folder, x, y, initial_frame)
+        self.sprite_group.add(self.animation)
+
     def set_x(self, x):
-        self.x = x
+        super().set_x(x)
+        self.animation.set_x(x)
 
     def set_y(self, y):
-        self.y = y
+        super().set_y(y)
+        self.animation.set_y(y)
+
+    def update(self):
+        self.sprite_group.update()  # Calls update on every sprite on the group
+
+    def render(self, window):
+        if window is not None:  # TODO: only if pygame
+            self.sprite_group.draw(window)

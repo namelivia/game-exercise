@@ -1,6 +1,8 @@
 from client.primitives.screen import Screen
 from .ui import (
-    Title
+    Title,
+    Background,
+    Coins
 )
 from client.game.events import UserTypedEvent  # This could be generic
 
@@ -11,6 +13,8 @@ class Intro(Screen):
         super().__init__(client_state, window)
 
         self.ui_elements = [
+            Background(),
+            Coins(),
             Title(self.time),
         ]
 
