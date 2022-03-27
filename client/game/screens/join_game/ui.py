@@ -1,4 +1,4 @@
-from client.graphics.shapes import Text
+from client.graphics.shapes import Text, Image
 from client.primitives.ui import UIElement
 
 
@@ -15,3 +15,10 @@ class GameIdMessage(UIElement):
         # What if data does not contain game_id? Throw an exception
         game_id = data["game_id"]
         self.shapes[2].set_message(game_id)  # Not supersure about this
+
+
+class Background(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Image('client/game/images/background4.png', 0, 0)
+        ]

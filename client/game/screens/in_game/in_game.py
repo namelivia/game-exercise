@@ -7,6 +7,7 @@ from .ui import (
     Player2NameIndicator,
     Board,
     Instructions,
+    Background,
 )
 from client.game.events import (
     UserTypedEvent,  # This could be generic
@@ -43,6 +44,7 @@ class InGame(Screen):
         }
 
         self.ui_elements = [
+            Background(),
             TurnIndicator(self.data['turn']),
             GameIdIndicator(self.data['game_id']),
             GameNameIndicator(self.data['name']),

@@ -1,4 +1,4 @@
-from client.graphics.shapes import SmallText
+from client.graphics.shapes import SmallText, Image
 from client.primitives.ui import UIElement
 
 
@@ -62,4 +62,11 @@ class Instructions(UIElement):
     def __init__(self):
         self.shapes = [
             SmallText('Press the square number to place a symbol', 20, 200)
+        ]
+
+
+class Background(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Image('client/game/images/background5.png', 0, 0)
         ]

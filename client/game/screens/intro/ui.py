@@ -17,7 +17,7 @@ class Title(UIElement):
 class Background(UIElement):
     def __init__(self):
         self.shapes = [
-            Image('client/game/images/background.png', 50, 50)
+            Image('client/game/images/background.png', 0, 0)
         ]
 
 

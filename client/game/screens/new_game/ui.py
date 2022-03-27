@@ -1,4 +1,4 @@
-from client.graphics.shapes import Text
+from client.graphics.shapes import Text, Image
 from client.primitives.ui import UIElement
 
 
@@ -15,3 +15,10 @@ class NewGameMessage(UIElement):
         # What if data does not contain new_game_name? Throw an exception
         name = data['new_game_name']
         self.shapes[2].set_message(name)  # Not supersure about this
+
+
+class Background(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Image('client/game/images/background3.png', 0, 0)
+        ]

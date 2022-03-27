@@ -1,6 +1,7 @@
 from client.primitives.screen import Screen
 from .ui import (
-    NewGameMessage
+    NewGameMessage,
+    Background
 )
 from client.game.events import UserTypedEvent, PlaySoundEvent  # This could be generic
 
@@ -15,6 +16,7 @@ class NewGame(Screen):
         }
 
         self.ui_elements = [
+            Background(),
             NewGameMessage(self.data['new_game_name']),
         ]
 

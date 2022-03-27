@@ -2,6 +2,7 @@ from client.primitives.screen import Screen
 from .ui import (
     WelcomeMessage,
     OptionList,
+    Background,
 )
 from client.game.events import UserTypedEvent  # This could be generic
 
@@ -16,6 +17,7 @@ class Lobby(Screen):
         }
 
         self.ui_elements = [
+            Background(),
             WelcomeMessage(self.data['name']),
             OptionList({
                 "1": "Create a new game",

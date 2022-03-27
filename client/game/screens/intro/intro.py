@@ -39,7 +39,7 @@ class Intro(Screen):
                 self.client_state.queue
             ).execute()
 
-        if (self.time == 10000):
+        if (self.time == 10000):  # TODO: This sould be transformed in a command
             self.sounds[0].play()
             self.ui_elements[1].appear()
 
