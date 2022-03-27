@@ -6,10 +6,14 @@ from .ui import (
     Player1NameIndicator,
     Player2NameIndicator,
     Board,
-    Events,
     Instructions,
 )
-from client.game.events import UserTypedEvent  # This could be generic
+from client.game.events import (
+    UserTypedEvent,  # This could be generic
+    GameCreatedEvent,
+    PlayerJoinedEvent,
+    PlayerPlacedSymbolEvent
+)
 
 
 class InGame(Screen):
@@ -45,7 +49,6 @@ class InGame(Screen):
             Player1NameIndicator(self.data['player_1_id']),
             Player2NameIndicator(self.data['player_2_id']),
             Board(self.data['board']),
-            Events(self.data['events']),
             Instructions(),
         ]
 
@@ -71,3 +74,9 @@ class InGame(Screen):
                         self.client_state.queue,
                         event.key
                     ).execute()
+            if isinstance(event, GameCreatedEvent):
+                print("Game created, do something play some music, update the internal state or something")
+            if isinstance(event, PlayerJoinedEvent):
+                print("Player joined, do something play some music, update the internal state or something")
+            if isinstance(event, PlayerPlacedSymbolEvent):
+                print("Player placed a symbol, do something play some music, update the internal state or something")

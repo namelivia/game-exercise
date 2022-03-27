@@ -18,7 +18,10 @@ from .events import (
     InitiateGameEvent,
     PlaceASymbolRequestEvent,
     RefreshGameStatusEvent,
-    UpdateGameEvent
+    UpdateGameEvent,
+    GameCreatedEvent,
+    PlayerJoinedEvent,
+    PlayerPlacedSymbolEvent
 )
 
 
@@ -168,6 +171,7 @@ class JoinAGame(Command):
                     )
                 )
                 self.profile.set_game(response.id)
+                self.profile.set_game_event_pointer(0)
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
@@ -249,6 +253,41 @@ class GoToJoinAGame(Command):
             ScreenTransitionEvent('join_a_game')
         )
 # ===================
+
+
+# Things to do as a reaction to new events from the server
+# ===== REACTIVE COMMANDS =====
+class GameCreatedCommand(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'A player created a game')
+        self.queue = queue
+
+    def execute(self, player_id):
+        self.queue.put(
+            GameCreatedEvent(player_id)
+        )
+
+
+class PlayerJoinedCommand(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'User typed')
+        self.queue = queue
+
+    def execute(self, player_id):
+        self.queue.put(
+            PlayerJoinedEvent(player_id)
+        )
+
+
+class PlayerPlacedSymbolCommand(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Player placed a symbol')
+        self.queue = queue
+
+    def execute(self, player_id, position):
+        self.queue.put(
+            PlayerPlacedSymbolEvent(player_id, position)
+        )
 
 
 # These are other (generic?) events

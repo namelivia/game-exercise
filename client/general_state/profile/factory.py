@@ -9,5 +9,6 @@ class Factory():
         return Profile(
             uuid.uuid4(),
             name,
-            None  # game_id
+            None,  # game_id
+            None  # game_event_pointer
         )

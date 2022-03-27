@@ -81,3 +81,32 @@ class UpdateGameEvent(Event):
         self.events = events
         self.player_1_id = player_1_id
         self.player_2_id = player_2_id
+
+
+class GameCreatedEvent(Event):
+    def __init__(
+            self,
+            player_id
+    ):
+        super().__init__()
+        self.player_id = player_id
+
+
+class PlayerJoinedEvent(Event):
+    def __init__(
+            self,
+            player_id
+    ):
+        super().__init__()
+        self.player_id = player_id
+
+
+class PlayerPlacedSymbolEvent(Event):
+    def __init__(
+            self,
+            player_id,
+            position
+    ):
+        super().__init__()
+        self.player_id = player_id
+        self.position = position
