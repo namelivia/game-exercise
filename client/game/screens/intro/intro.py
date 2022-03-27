@@ -1,4 +1,5 @@
 from client.primitives.screen import Screen
+from client.game.sounds import UserJoinedSound
 from .ui import (
     Title,
     Background,
@@ -18,6 +19,10 @@ class Intro(Screen):
             Title(self.time),
         ]
 
+        self.sounds = [
+            UserJoinedSound()
+        ]
+
     def update(self, event):
         super().update()
 
@@ -32,6 +37,7 @@ class Intro(Screen):
             ).execute()
 
         if (self.time == 10000):
+            self.sounds[0].play()
             self.ui_elements[1].appear()
 
         # Event based triggers
