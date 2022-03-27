@@ -31,6 +31,9 @@ class Intro(Screen):
                 self.client_state.queue
             ).execute()
 
+        if (self.time == 10000):
+            self.ui_elements[1].appear()
+
         # Event based triggers
         if event is not None:
             if isinstance(event, UserTypedEvent):

@@ -28,6 +28,13 @@ class Coins(UIElement):
             Animation('client/game/images/coin', 250, 0, 3),
         ]
 
+        self.shapes[0].hide()
+        self.shapes[1].hide()
+
+    def appear(self):
+        self.shapes[0].show()
+        self.shapes[1].show()
+
     def update(self, time, data):
         animation_speed = 128  # The higher the slower
         if (time % animation_speed) == 0:
