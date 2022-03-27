@@ -7,6 +7,7 @@ class GameMessage():
         self.board = game.board
         self.player_1_id = game.player_1_id
         self.player_2_id = game.player_2_id
+        self.events = game.events
 
 
 class CreateAGameMessage():
