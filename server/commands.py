@@ -104,3 +104,21 @@ class JoinGame(Command):
         game.join(self.player_id)
         self.save_game(game)
         return game
+
+
+class GameStatus(Command):
+    def __init__(self, game_id, player_id):
+        self.game_id = game_id
+        self.player_id = player_id
+
+    def name(self):
+        return "Get game status"
+
+    def debug(self):
+        logger.info(f"Player {self.player_id} requested info for game: {self.game_id}")
+
+    def execute(self):
+        super().execute()
+        game = self.load_game(self.game_id)
+        game.player_can_get_status(self.player_id)
+        return game

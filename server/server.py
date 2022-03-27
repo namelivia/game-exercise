@@ -4,14 +4,16 @@ import pickle
 from .commands import (
     PlaceSymbol,
     JoinGame,
-    CreateGame
+    CreateGame,
+    GameStatus
 )
 from common.messages import (
     GameMessage,
     ErrorMessage,
     PlaceASymbolMessage,
     CreateAGameMessage,
-    JoinAGameMessage
+    JoinAGameMessage,
+    GetGameStatus
 )
 from .errors import InvalidCommandError
 
@@ -37,6 +39,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             return CreateGame(decoded.name, decoded.player_id)
         if isinstance(decoded, JoinAGameMessage):
             return JoinGame(decoded.game_id, decoded.player_id)
+        if isinstance(decoded, GetGameStatus):
+            return GameStatus(decoded.game_id, decoded.player_id)
         raise InvalidCommandError('Unknown command')
 
     def handle(self):

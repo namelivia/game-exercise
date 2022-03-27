@@ -40,6 +40,10 @@ class Game():
         else:
             raise InvalidCommandError("This player is already in the game")
 
+    def player_can_get_status(self, player_id):
+        if player_id not in [self.player_1_id, self.player_2_id]:
+            raise InvalidCommandError("Player has no access to the game")
+
     def place(self, player, position):
         position = int(position)
         try:

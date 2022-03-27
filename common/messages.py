@@ -31,3 +31,9 @@ class PlaceASymbolMessage():
 class ErrorMessage():
     def __init__(self, message):
         self.message = message
+
+
+class GetGameStatus():
+    def __init__(self, game_id, player_id):
+        self.game_id = game_id
+        self.player_id = player_id
