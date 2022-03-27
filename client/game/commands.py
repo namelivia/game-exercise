@@ -3,7 +3,8 @@ from common.messages import (
     CreateAGameMessage,
     JoinAGameMessage,
     GameMessage,
-    ErrorMessage
+    ErrorMessage,
+    GetGameStatus
 )
 
 from client.network.channel import Channel
@@ -15,7 +16,9 @@ from .events import (
     JoinExistingGameEvent,
     QuitGameEvent,
     InitiateGameEvent,
-    PlaceASymbolRequestEvent
+    PlaceASymbolRequestEvent,
+    RefreshGameStatusEvent,
+    UpdateGameEvent
 )
 
 
@@ -55,6 +58,18 @@ class RequestJoiningAGame(Command):
         self.queue.put(
             JoinExistingGameEvent(self.game_id)
         )
+
+
+class RequestGameStatus(Command):
+    def __init__(self, profile, queue, game_id):
+        super().__init__(profile, 'Request refreshing the status of the game')
+        self.game_id = game_id
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            RefreshGameStatusEvent(self.game_id)
+        )
 # ===================
 
 
@@ -72,7 +87,7 @@ class PlaceASymbol(Command):
         if response is not None:
             if isinstance(response, GameMessage):
                 self.queue.put(
-                    InitiateGameEvent(
+                    UpdateGameEvent(
                         response.id,
                         response.name,
                         response.turn,
@@ -159,6 +174,36 @@ class JoinAGame(Command):
 
     def _encode(self, game_id):
         return JoinAGameMessage(game_id, self.profile.id)
+
+
+class RefreshGameStatus(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Refresh game status')
+        self.queue = queue
+
+    def execute(self, game_id):
+        request_data = self._encode(game_id)
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameMessage):
+                self.queue.put(
+                    UpdateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
+
+    def _encode(self, game_id):
+        return GetGameStatus(game_id, self.profile.id)
 
 # ===================
 

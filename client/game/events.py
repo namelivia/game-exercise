@@ -35,7 +35,32 @@ class JoinExistingGameEvent(Event):
         self.game_id = game_id
 
 
+class RefreshGameStatusEvent(Event):
+    def __init__(self, game_id):
+        super().__init__()
+        self.game_id = game_id
+
+
 class InitiateGameEvent(Event):
+    def __init__(
+            self,
+            game_id,
+            name,
+            turn,
+            board,
+            player_1_id,
+            player_2_id,
+    ):
+        super().__init__()
+        self.game_id = game_id
+        self.name = name
+        self.turn = turn
+        self.board = board
+        self.player_1_id = player_1_id
+        self.player_2_id = player_2_id
+
+
+class UpdateGameEvent(Event):
     def __init__(
             self,
             game_id,

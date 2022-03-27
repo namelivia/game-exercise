@@ -4,7 +4,9 @@ from .events import (
     NewGameRequestEvent,
     PlaceASymbolRequestEvent,
     JoinExistingGameEvent,
-    InitiateGameEvent
+    InitiateGameEvent,
+    RefreshGameStatusEvent,
+    UpdateGameEvent
 )
 from .screens.intro.intro import Intro
 from .screens.lobby.lobby import Lobby
@@ -14,7 +16,8 @@ from .screens.in_game.in_game import InGame
 from .commands import (
     CreateAGame,
     JoinAGame,
-    PlaceASymbol
+    PlaceASymbol,
+    RefreshGameStatus
 )
 
 
@@ -70,6 +73,22 @@ class EventHandler():
                 )
             )
 
+        if isinstance(event, UpdateGameEvent):
+            # TODO: Why is it not an screen transition event??? Just because it contains more data?
+            # TODO: Beware, uptating is actually re-creating the screen
+            client_state.set_current_screen(
+                InGame(
+                    client_state,
+                    graphics,
+                    event.turn,
+                    event.board,
+                    event.game_id,
+                    event.name,
+                    event.player_1_id,
+                    event.player_2_id,
+                )
+            )
+
         # TALK WITH THE SERVER
         if isinstance(event, NewGameRequestEvent):
             CreateAGame(
@@ -85,6 +104,11 @@ class EventHandler():
 
         if isinstance(event, JoinExistingGameEvent):
             JoinAGame(
+                client_state.profile,
+                client_state.queue
+            ).execute(event.game_id)
+        if isinstance(event, RefreshGameStatusEvent):
+            RefreshGameStatus(
                 client_state.profile,
                 client_state.queue
             ).execute(event.game_id)

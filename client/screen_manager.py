@@ -1,5 +1,6 @@
 from client.game.commands import UserTyped
 from client.game.event_handler import EventHandler
+from client.game.events import RefreshGameStatusEvent
 
 
 class ScreenManager():
@@ -23,8 +24,16 @@ class ScreenManager():
                     user_event
                 ).execute()
 
+    def push_polling_event(self):
+        # Do the polling once every 1000 cycles
+        polling_rate = 1000
+        game_id = self.client_state.profile.game_id
+        if self.client_state.clock.get() % polling_rate == 0 and game_id is not None:
+            self.client_state.queue.put(RefreshGameStatusEvent(game_id))
+
     def run(self):
         self.client_state.clock.tick()  # Update the clock
+        self.push_polling_event()
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
         self.event_handler.handle(  # Process the event
