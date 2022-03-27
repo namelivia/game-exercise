@@ -129,6 +129,7 @@ class CreateAGame(Command):
                     )
                 )
                 self.profile.set_game(response.id)
+                self.profile.set_game_event_pointer(0)
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
                 self.queue.put(
@@ -221,6 +222,7 @@ class BackToLobby(Command):
 
     def execute(self):
         self.profile.set_game(None)
+        self.profile.set_game_event_pointer(None)
         self.queue.put(
             ScreenTransitionEvent('lobby')
         )
