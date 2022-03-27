@@ -110,3 +110,12 @@ class PlayerPlacedSymbolEvent(Event):
         super().__init__()
         self.player_id = player_id
         self.position = position
+
+
+class PlaySoundEvent(Event):
+    def __init__(
+            self,
+            sound
+    ):
+        super().__init__()
+        self.sound = sound

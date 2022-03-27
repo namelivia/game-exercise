@@ -2,7 +2,7 @@ from client.primitives.screen import Screen
 from .ui import (
     NewGameMessage
 )
-from client.game.events import UserTypedEvent  # This could be generic
+from client.game.events import UserTypedEvent, PlaySoundEvent  # This could be generic
 
 
 class NewGame(Screen):
@@ -46,7 +46,14 @@ class NewGame(Screen):
                     ).execute()
                     return
                 if event.key == "backspace":
+                    self.client_state.queue.put(
+                        PlaySoundEvent("erase")
+                    )
                     self.data["new_game_name"] = self.data["new_game_name"][:-1]
                     return
                 else:
+                    # TODO: Should this be a command instead of pushing directly to the queue?
+                    self.client_state.queue.put(
+                        PlaySoundEvent("type")
+                    )
                     self.data["new_game_name"] += event.key

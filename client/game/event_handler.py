@@ -6,7 +6,8 @@ from .events import (
     JoinExistingGameEvent,
     InitiateGameEvent,
     RefreshGameStatusEvent,
-    UpdateGameEvent
+    UpdateGameEvent,
+    PlaySoundEvent
 )
 from .screens.intro.intro import Intro
 from .screens.lobby.lobby import Lobby
@@ -26,6 +27,13 @@ from common.events import (
     GameCreated,
     PlayerJoined,
     PlayerPlacedSymbol
+)
+from .sounds import (
+    BackSound,
+    SelectSound,
+    StartGameSound,
+    TypeSound,
+    EraseSound
 )
 
 
@@ -64,6 +72,19 @@ class EventHandler():
             import sys
             pygame.quit()
             sys.exit()
+
+        if isinstance(event, PlaySoundEvent):
+            # PLAY A SOUND
+            if event.sound == "back":
+                BackSound().play()
+            if event.sound == "select":
+                SelectSound().play()
+            if event.sound == "start_game":
+                StartGameSound().play()
+            if event.sound == "type":
+                TypeSound().play()
+            if event.sound == "erase":
+                EraseSound().play()
 
         # TRANSITION TO OTHER SCREEN
         if isinstance(event, ScreenTransitionEvent):

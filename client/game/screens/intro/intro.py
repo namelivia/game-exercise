@@ -1,5 +1,6 @@
 from client.primitives.screen import Screen
 from client.game.sounds import UserJoinedSound
+from client.game.music import MainThemeMusic
 from .ui import (
     Title,
     Background,
@@ -22,6 +23,8 @@ class Intro(Screen):
         self.sounds = [
             UserJoinedSound()
         ]
+
+        MainThemeMusic().play()
 
     def update(self, event):
         super().update()
@@ -46,9 +49,9 @@ class Intro(Screen):
                 if event.key == "escape" or event.key == "return":
                     # Avoid circular import
                     from client.game.commands import (
-                        BackToLobby
+                        ToLobby
                     )
-                    BackToLobby(
+                    ToLobby(
                         self.client_state.profile,
                         self.client_state.queue
                     ).execute()

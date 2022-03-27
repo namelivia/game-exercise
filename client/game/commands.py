@@ -21,7 +21,8 @@ from .events import (
     UpdateGameEvent,
     GameCreatedEvent,
     PlayerJoinedEvent,
-    PlayerPlacedSymbolEvent
+    PlayerPlacedSymbolEvent,
+    PlaySoundEvent
 )
 
 
@@ -131,6 +132,9 @@ class CreateAGame(Command):
                         response.player_2_id,
                     )
                 )
+                self.queue.put(
+                    PlaySoundEvent('start_game')
+                )
                 self.profile.set_game(response.id)
                 self.profile.set_game_event_pointer(0)
             if isinstance(response, ErrorMessage):
@@ -221,12 +225,29 @@ class RefreshGameStatus(Command):
 # ===== SCREEN CHANGE REQUESTS =====
 class BackToLobby(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, 'Back to lobby')
+        super().__init__(profile, 'Move back to lobby')
         self.queue = queue
 
     def execute(self):
         self.profile.set_game(None)
         self.profile.set_game_event_pointer(None)
+        self.queue.put(
+            PlaySoundEvent('back')
+        )
+        self.queue.put(
+            ScreenTransitionEvent('lobby')
+        )
+
+
+class ToLobby(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, 'Move forward to lobby')
+        self.queue = queue
+
+    def execute(self):
+        self.queue.put(
+            PlaySoundEvent('select')
+        )
         self.queue.put(
             ScreenTransitionEvent('lobby')
         )
@@ -239,6 +260,9 @@ class NewGame(Command):
 
     def execute(self):
         self.queue.put(
+            PlaySoundEvent('select')
+        )
+        self.queue.put(
             ScreenTransitionEvent('new_game_screen')
         )
 
@@ -249,6 +273,9 @@ class GoToJoinAGame(Command):
         self.queue = queue
 
     def execute(self):
+        self.queue.put(
+            PlaySoundEvent('select')
+        )
         self.queue.put(
             ScreenTransitionEvent('join_a_game')
         )
