@@ -22,7 +22,7 @@ class Game():
         self.player_2_id = None
         self.turn = self.player_1_id
         self.events = [
-            'Game created by {player_1}'
+            f'Game created by {player_id}'
         ]
 
     def _next_turn(self):
@@ -40,7 +40,7 @@ class Game():
             if self.player_2_id is not None:
                 raise InvalidCommandError("The game is full")
             self.player_2_id = player_id
-            self.events.append('Player {player_2_id} joined')
+            self.events.append(f'Player {player_id} joined')
         else:
             raise InvalidCommandError("This player is already in the game")
 
@@ -58,7 +58,7 @@ class Game():
             if self.board[position] != ' ':
                 raise InvalidCommandError("Position already taken")
             self.board[position] = self._get_symbol(player)
-            self.events.append('Player {player} places a symbol on position {position}')
+            self.events.append(f'Player {player} places a symbol on position {position}')
             self.turn = self._next_turn()
         except IndexError:
             raise InvalidCommandError("Position out of bounds")

@@ -92,6 +92,7 @@ class PlaceASymbol(Command):
                         response.name,
                         response.turn,
                         response.board,
+                        response.events,
                         response.player_1_id,
                         response.player_2_id,
                     )
@@ -122,6 +123,7 @@ class CreateAGame(Command):
                         response.name,
                         response.turn,
                         response.board,
+                        response.events,
                         response.player_1_id,
                         response.player_2_id,
                     )
@@ -159,6 +161,7 @@ class JoinAGame(Command):
                         response.name,
                         response.turn,
                         response.board,
+                        response.events,
                         response.player_1_id,
                         response.player_2_id,
                     )
@@ -193,6 +196,7 @@ class RefreshGameStatus(Command):
                         response.name,
                         response.turn,
                         response.board,
+                        response.events,
                         response.player_1_id,
                         response.player_2_id,
                     )

@@ -48,6 +48,7 @@ class InitiateGameEvent(Event):
             name,
             turn,
             board,
+            events,
             player_1_id,
             player_2_id,
     ):
@@ -56,6 +57,7 @@ class InitiateGameEvent(Event):
         self.name = name
         self.turn = turn
         self.board = board
+        self.events = events
         self.player_1_id = player_1_id
         self.player_2_id = player_2_id
 
@@ -67,6 +69,7 @@ class UpdateGameEvent(Event):
             name,
             turn,
             board,
+            events,
             player_1_id,
             player_2_id,
     ):
@@ -75,5 +78,6 @@ class UpdateGameEvent(Event):
         self.name = name
         self.turn = turn
         self.board = board
+        self.events = events
         self.player_1_id = player_1_id
         self.player_2_id = player_2_id

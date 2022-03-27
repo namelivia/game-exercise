@@ -6,6 +6,7 @@ from .ui import (
     Player1NameIndicator,
     Player2NameIndicator,
     Board,
+    Events,
     Instructions,
 )
 from client.game.events import UserTypedEvent  # This could be generic
@@ -18,6 +19,7 @@ class InGame(Screen):
         window,
         turn,
         board,
+        events,
         game_id,
         name,
         player_1_id,
@@ -28,6 +30,7 @@ class InGame(Screen):
         self.data = {
             "turn": turn,
             "board": board,
+            "events": events,
             "game_id": game_id,
             "name": name,
             "player_1_id": player_1_id,
@@ -42,6 +45,7 @@ class InGame(Screen):
             Player1NameIndicator(self.data['player_1_id']),
             Player2NameIndicator(self.data['player_2_id']),
             Board(self.data['board']),
+            Events(self.data['events']),
             Instructions(),
         ]
 

@@ -52,6 +52,12 @@ class Board(UIElement):
         ]
 
 
+class Events(UIElement):
+    def __init__(self, events):
+        self.events = events
+        self.shapes = [SmallText(event, 20, 300 + (20 * index)) for index, event in enumerate(events)]
+
+
 class Instructions(UIElement):
     def __init__(self):
         self.shapes = [
