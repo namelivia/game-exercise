@@ -18,6 +18,12 @@ from .events import (
     PlaySoundEvent
 )
 
+"""
+Commands are called externally, and are defined by 1 or many events.
+When the commands are executed these events are placed on the queue to be
+processed.
+"""
+
 
 # These put events on the queue requesting server interactions.
 # ===== REQUESTS =====
@@ -51,46 +57,8 @@ class RequestGameStatus(Command):
         self.events = [
             RefreshGameStatusEvent(game_id)
         ]
-# ===================
 
 
-# These are direct interactions with the server.
-# ===== SERVER INTERACTIONS =====
-class PlaceASymbol(Command):
-    def __init__(self, profile, queue, game_id, position):
-        super().__init__(profile, queue, f'Place a symbol on game {game_id} on position {position}')
-        self.events = [
-            PlaceASymbolNetworkRequestEvent(game_id, position)
-        ]
-
-
-class CreateAGame(Command):
-    def __init__(self, profile, queue, new_game_name):
-        super().__init__(profile, queue, f'Create a new game called {new_game_name}')
-        self.events = [
-            CreateAGameNetworkRequestEvent(new_game_name)
-        ]
-
-
-class JoinAGame(Command):
-    def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, f'Join game {game_id}')
-        self.events = [
-            JoinAGameNetworkRequestEvent(game_id)
-        ]
-
-
-class RefreshGameStatus(Command):
-    def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, f'Refresh game status {game_id}')
-        self.events = [
-            RefreshGameStatusNetworkRequestEvent(game_id)
-        ]
-
-# ===================
-
-
-# These are requests to change the screen.
 # ===== SCREEN CHANGE REQUESTS =====
 class BackToLobby(Command):
     def __init__(self, profile, queue):
@@ -128,11 +96,43 @@ class GoToJoinAGame(Command):
             ScreenTransitionEvent('join_a_game'),
         ]
 
-# ===================
+
+# ===== SERVER OUTBOUND COMMUNICATIONS =====
+class PlaceASymbol(Command):
+    def __init__(self, profile, queue, game_id, position):
+        super().__init__(profile, queue, f'Place a symbol on game {game_id} on position {position}')
+        self.events = [
+            PlaceASymbolNetworkRequestEvent(game_id, position)
+        ]
+
+
+class CreateAGame(Command):
+    def __init__(self, profile, queue, new_game_name):
+        super().__init__(profile, queue, f'Create a new game called {new_game_name}')
+        self.events = [
+            CreateAGameNetworkRequestEvent(new_game_name)
+        ]
+
+
+class JoinAGame(Command):
+    def __init__(self, profile, queue, game_id):
+        super().__init__(profile, queue, f'Join game {game_id}')
+        self.events = [
+            JoinAGameNetworkRequestEvent(game_id)
+        ]
+
+
+class RefreshGameStatus(Command):
+    def __init__(self, profile, queue, game_id):
+        super().__init__(profile, queue, f'Refresh game status {game_id}')
+        self.events = [
+            RefreshGameStatusNetworkRequestEvent(game_id)
+        ]
 
 
 # Things to do as a reaction to new events from the server
-# ===== REACTIVE COMMANDS =====
+# These maybe could be non-game specific and could be somewhere else
+# ===== SERVER INBOUND COMMUNICATIONS =====
 class GameCreatedCommand(Command):
     def __init__(self, profile, queue, player_id):
         super().__init__(profile, queue, f'Player {player_id} created a game')
@@ -157,8 +157,7 @@ class PlayerPlacedSymbolCommand(Command):
         ]
 
 
-# These are other (generic?) events
-# These could be non-game specific and be somewhere else
+# These could be non-game specific and could be somewhere else
 # ===== GENERIC =====
 class UserTyped(Command):
     def __init__(self, profile, queue, key):

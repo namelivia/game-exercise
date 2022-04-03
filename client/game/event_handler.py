@@ -36,7 +36,8 @@ from .commands import (
     RefreshGameStatus,
     GameCreatedCommand,
     PlayerJoinedCommand,
-    PlayerPlacedSymbolCommand
+    PlayerPlacedSymbolCommand,
+    BackToLobby
 )
 from common.events import (
     GameCreated,
@@ -54,7 +55,8 @@ from .sounds import (
 from client.network.channel import Channel
 
 """
-Here we decide what to do with each of the events
+Currently event handlers are the one that do the processing.
+They do the actual procssing and can execute commands.
 """
 
 
@@ -220,6 +222,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Server error")
+            BackToLobby()
 
     def _encode(self, game_id, profile_id, position):
         return PlaceASymbolMessage(game_id, profile_id, position)
@@ -252,15 +255,11 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                 client_state.profile.set_game(response.id)
                 client_state.profile.set_game_event_pointer(0)
             if isinstance(response, ErrorMessage):
-                print(response.__dict__)
-                client_state.queue.put(
-                    ScreenTransitionEvent('lobby')
-                )
+                print("Error creating the game")
+                BackToLobby()
         else:
             print("Server error")
-            client_state.queue.put(
-                ScreenTransitionEvent('lobby')
-            )
+            BackToLobby()
 
     def _encode(self, profile_id, new_game_name):
         return CreateAGameMessage(new_game_name, profile_id)
@@ -289,10 +288,8 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
-            print("Server error")
-            client_state.queue.put(
-                ScreenTransitionEvent('lobby')
-            )
+            print("Error Joining Game")
+            BackToLobby()
 
     def _encode(self, profile_id, game_id):
         return JoinAGameMessage(game_id, profile_id)
@@ -320,6 +317,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Server error")
+            BackToLobby()
 
     def _encode(self, game_id, profile_id):
         return GetGameStatus(game_id, profile_id)
