@@ -23,7 +23,7 @@ from .events import (
 # ===== REQUESTS =====
 class RequestPlaceASymbol(Command):
     def __init__(self, profile, queue, position):
-        super().__init__(profile, queue, 'Request placing a symbol')
+        super().__init__(profile, queue, f'Request placing a symbol on position {position}')
         self.events = [
             PlaceASymbolRequestEvent(position)
         ]
@@ -31,7 +31,7 @@ class RequestPlaceASymbol(Command):
 
 class RequestGameCreation(Command):
     def __init__(self, profile, queue, new_game_name):
-        super().__init__(profile, queue, 'Request the game creation')
+        super().__init__(profile, queue, f'Request creating a game called {new_game_name}')
         self.events = [
             NewGameRequestEvent(new_game_name)
         ]
@@ -39,7 +39,7 @@ class RequestGameCreation(Command):
 
 class RequestJoiningAGame(Command):
     def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, 'Request joining an existing game')
+        super().__init__(profile, queue, f'Request joining game {game_id}')
         self.events = [
             JoinExistingGameEvent(game_id)
         ]
@@ -47,7 +47,7 @@ class RequestJoiningAGame(Command):
 
 class RequestGameStatus(Command):
     def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, 'Request refreshing the status of the game')
+        super().__init__(profile, queue, f'Request refreshing the status of game {game_id}')
         self.events = [
             RefreshGameStatusEvent(game_id)
         ]
@@ -58,7 +58,7 @@ class RequestGameStatus(Command):
 # ===== SERVER INTERACTIONS =====
 class PlaceASymbol(Command):
     def __init__(self, profile, queue, game_id, position):
-        super().__init__(profile, queue, 'Place a symbol on the board')
+        super().__init__(profile, queue, f'Place a symbol on game {game_id} on position {position}')
         self.events = [
             PlaceASymbolNetworkRequestEvent(game_id, position)
         ]
@@ -66,7 +66,7 @@ class PlaceASymbol(Command):
 
 class CreateAGame(Command):
     def __init__(self, profile, queue, new_game_name):
-        super().__init__(profile, queue, 'Create a new game')
+        super().__init__(profile, queue, f'Create a new game called {new_game_name}')
         self.events = [
             CreateAGameNetworkRequestEvent(new_game_name)
         ]
@@ -74,7 +74,7 @@ class CreateAGame(Command):
 
 class JoinAGame(Command):
     def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, 'Join a game')
+        super().__init__(profile, queue, f'Join game {game_id}')
         self.events = [
             JoinAGameNetworkRequestEvent(game_id)
         ]
@@ -82,7 +82,7 @@ class JoinAGame(Command):
 
 class RefreshGameStatus(Command):
     def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, 'Refresh game status')
+        super().__init__(profile, queue, f'Refresh game status {game_id}')
         self.events = [
             RefreshGameStatusNetworkRequestEvent(game_id)
         ]
@@ -113,7 +113,7 @@ class ToLobby(Command):
 
 class NewGame(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Create a new game')
+        super().__init__(profile, queue, 'Move to new game screen')
         self.events = [
             PlaySoundEvent('select'),
             ScreenTransitionEvent('new_game_screen'),
@@ -122,7 +122,7 @@ class NewGame(Command):
 
 class GoToJoinAGame(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Go to the join a game screen')
+        super().__init__(profile, queue, 'Move to join game screen')
         self.events = [
             PlaySoundEvent('select'),
             ScreenTransitionEvent('join_a_game'),
@@ -135,7 +135,7 @@ class GoToJoinAGame(Command):
 # ===== REACTIVE COMMANDS =====
 class GameCreatedCommand(Command):
     def __init__(self, profile, queue, player_id):
-        super().__init__(profile, queue, 'A player created a game')
+        super().__init__(profile, queue, f'Player {player_id} created a game')
         self.events = [
             GameCreatedEvent(player_id),
         ]
@@ -143,7 +143,7 @@ class GameCreatedCommand(Command):
 
 class PlayerJoinedCommand(Command):
     def __init__(self, profile, queue, player_id):
-        super().__init__(profile, queue, 'User typed')
+        super().__init__(profile, queue, f'Player {player_id} joined the game')
         self.events = [
             PlayerJoinedEvent(player_id)
         ]
@@ -151,7 +151,7 @@ class PlayerJoinedCommand(Command):
 
 class PlayerPlacedSymbolCommand(Command):
     def __init__(self, profile, queue, player_id, position):
-        super().__init__(profile, queue, 'Player placed a symbol')
+        super().__init__(profile, queue, f'Player {player_id} placed a symbol on position {position}')
         self.events = [
             PlayerPlacedSymbolEvent(player_id, position)
         ]
@@ -162,7 +162,7 @@ class PlayerPlacedSymbolCommand(Command):
 # ===== GENERIC =====
 class UserTyped(Command):
     def __init__(self, profile, queue, key):
-        super().__init__(profile, queue, 'User typed')
+        super().__init__(profile, queue, f'User typed key {key}')
         self.key = key
 
     def execute(self):
