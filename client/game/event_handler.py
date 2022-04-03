@@ -19,6 +19,7 @@ from .events import (
     PlaySoundEvent,
     PlayerJoinedEvent,
     PlayerPlacedSymbolEvent,
+    ClearInternalGameInformationEvent,
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     PlaceASymbolNetworkRequestEvent,
@@ -88,24 +89,28 @@ class GameCreatedEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         GameCreatedCommand(
             client_state.profile,
-            client_state.queue
-        ).execute(event.player_id)
+            client_state.queue,
+            event.player_id
+        ).execute()
 
 
 class PlayerJoinedGenericEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         PlayerJoinedCommand(
             client_state.profile,
-            client_state.queue
-        ).execute(event.player_id)
+            client_state.queue,
+            event.player_id
+        ).execute()
 
 
 class PlayerPlacedSymbolGenericEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         PlayerPlacedSymbolCommand(
             client_state.profile,
-            client_state.queue
-        ).execute(event.player_id, event.position)
+            client_state.queue,
+            event.player_id,
+            event.position
+        ).execute()
 
 
 class ScreenTransitionEventHandler(EventHandler):
@@ -168,16 +173,25 @@ class NewGameRequestEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         CreateAGame(
             client_state.profile,
-            client_state.queue
-        ).execute(event.new_game_name)
+            client_state.queue,
+            event.new_game_name
+        ).execute()
+
+
+class ClearInternalGameInformationEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        client_state.profile.set_game(None)
+        client_state.profile.set_game_event_pointer(None)
 
 
 class PlaceASymbolRequestEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         PlaceASymbol(
             client_state.profile,
-            client_state.queue
-        ).execute(client_state.profile.game_id, event.position)
+            client_state.queue,
+            client_state.profile.game_id,
+            event.position
+        ).execute()
 
 
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
@@ -315,16 +329,18 @@ class JoinExistingGameEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         JoinAGame(
             client_state.profile,
-            client_state.queue
-        ).execute(event.game_id)
+            client_state.queue,
+            event.game_id
+        ).execute()
 
 
 class RefreshGameStatusEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         RefreshGameStatus(
             client_state.profile,
-            client_state.queue
-        ).execute(event.game_id)
+            client_state.queue,
+            event.game_id
+        ).execute()
 
 
 class PlayerJoinedEventHandler(EventHandler):
@@ -354,6 +370,7 @@ handlers_map = {
     PlayerJoinedEvent: PlayerJoinedEventHandler,
     PlayerPlacedSymbolEvent: PlayerPlacedSymbolEventHandler,
     GameCreated: GameCreatedEventHandler,
+    ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,

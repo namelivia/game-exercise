@@ -29,6 +29,10 @@ class PlaceASymbolRequestEvent(Event):
         self.position = position
 
 
+class ClearInternalGameInformationEvent():
+    pass
+
+
 class PlaceASymbolNetworkRequestEvent(Event):
     def __init__(self, game_id, position):
         super().__init__()
