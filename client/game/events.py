@@ -29,6 +29,31 @@ class PlaceASymbolRequestEvent(Event):
         self.position = position
 
 
+class PlaceASymbolNetworkRequestEvent(Event):
+    def __init__(self, game_id, position):
+        super().__init__()
+        self.game_id = game_id
+        self.position = position
+
+
+class CreateAGameNetworkRequestEvent(Event):
+    def __init__(self, new_game_name):
+        super().__init__()
+        self.new_game_name = new_game_name
+
+
+class JoinAGameNetworkRequestEvent(Event):
+    def __init__(self, game_id):
+        super().__init__()
+        self.game_id = game_id
+
+
+class RefreshGameStatusNetworkRequestEvent(Event):
+    def __init__(self, game_id):
+        super().__init__()
+        self.game_id = game_id
+
+
 class JoinExistingGameEvent(Event):
     def __init__(self, game_id):
         super().__init__()

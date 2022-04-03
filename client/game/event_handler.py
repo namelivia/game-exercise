@@ -1,4 +1,12 @@
 from abc import ABC
+from common.messages import (
+    GameMessage,
+    ErrorMessage,
+    CreateAGameMessage,
+    PlaceASymbolMessage,
+    JoinAGameMessage,
+    GetGameStatus,
+)
 from .events import (
     QuitGameEvent,
     ScreenTransitionEvent,
@@ -11,6 +19,9 @@ from .events import (
     PlaySoundEvent,
     PlayerJoinedEvent,
     PlayerPlacedSymbolEvent,
+    CreateAGameNetworkRequestEvent,
+    JoinAGameNetworkRequestEvent,
+    PlaceASymbolNetworkRequestEvent,
 )
 from .screens.intro.intro import Intro
 from .screens.lobby.lobby import Lobby
@@ -39,6 +50,7 @@ from .sounds import (
     EraseSound
 )
 
+from client.network.channel import Channel
 
 """
 Here we decide what to do with each of the events
@@ -165,7 +177,138 @@ class PlaceASymbolRequestEventHandler(EventHandler):
         PlaceASymbol(
             client_state.profile,
             client_state.queue
-        ).execute(event.position)
+        ).execute(client_state.profile.game_id, event.position)
+
+
+class PlaceASymbolNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        request_data = self._encode(
+            client_state.profile.game_id,
+            client_state.profile.id,
+            event.position
+        )
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameMessage):
+                client_state.queue.put(
+                    UpdateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.events,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
+
+    def _encode(self, game_id, profile_id, position):
+        return PlaceASymbolMessage(game_id, profile_id, position)
+
+
+class CreateAGameNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        request_data = self._encode(
+            client_state.profile.id,
+            event.new_game_name
+        )
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameMessage):
+                client_state.queue.put(
+                    InitiateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.events,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+                client_state.queue.put(
+                    PlaySoundEvent('start_game')
+                )
+                client_state.profile.set_game(response.id)
+                client_state.profile.set_game_event_pointer(0)
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+                client_state.queue.put(
+                    ScreenTransitionEvent('lobby')
+                )
+        else:
+            print("Server error")
+            client_state.queue.put(
+                ScreenTransitionEvent('lobby')
+            )
+
+    def _encode(self, profile_id, new_game_name):
+        return CreateAGameMessage(new_game_name, profile_id)
+
+
+class JoinAGameNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        request_data = self._encode(client_state.profile.id, event.game_id)
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameMessage):
+                client_state.queue.put(
+                    InitiateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.events,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+                client_state.profile.set_game(response.id)
+                client_state.profile.set_game_event_pointer(0)
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
+            client_state.queue.put(
+                ScreenTransitionEvent('lobby')
+            )
+
+    def _encode(self, profile_id, game_id):
+        return JoinAGameMessage(game_id, profile_id)
+
+
+class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        request_data = self._encode(event.game_id, client_state.profile.id)
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameMessage):
+                client_state.queue.put(
+                    UpdateGameEvent(
+                        response.id,
+                        response.name,
+                        response.turn,
+                        response.board,
+                        response.events,
+                        response.player_1_id,
+                        response.player_2_id,
+                    )
+                )
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
+
+    def _encode(self, game_id, profile_id):
+        return GetGameStatus(game_id, profile_id)
 
 
 class JoinExistingGameEventHandler(EventHandler):
@@ -208,11 +351,14 @@ handlers_map = {
     RefreshGameStatusEvent: RefreshGameStatusEventHandler,
     UpdateGameEvent: UpdateGameEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
-    PlayerJoinedEvent: PlaySoundEventHandler,
+    PlayerJoinedEvent: PlayerJoinedEventHandler,
     PlayerPlacedSymbolEvent: PlayerPlacedSymbolEventHandler,
     GameCreated: GameCreatedEventHandler,
+    CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
+    JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
+    PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
     PlayerJoinedGenericEvent: PlayerJoinedGenericEventHandler,
-    PlayerPlacedSymbolGenericEvent: PlayerPlacedSymbolEventHandler,
+    PlayerPlacedSymbolGenericEvent: PlayerPlacedSymbolEventHandler,  # TODO: This should be the GENERIC!
 }
 
 
