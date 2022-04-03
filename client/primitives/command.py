@@ -10,5 +10,6 @@ class Command(ABC):
         self.events = []
 
     def execute(self):
+        print(f"COMMAND: {self.description}")
         for event in self.events:
             self.queue.put(event)
