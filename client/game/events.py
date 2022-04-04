@@ -39,6 +39,12 @@ class ClearInternalGameInformationEvent():
     pass
 
 
+class SetInternalGameInformationEvent(Event):
+    def __init__(self, game_id):
+        super().__init__()
+        self.game_id = game_id
+
+
 class PlaceASymbolNetworkRequestEvent(Event):
     def __init__(self, game_id, position):
         super().__init__()

@@ -12,10 +12,13 @@ from .events import (
     RefreshGameStatusNetworkRequestEvent,
     RefreshGameStatusEvent,
     ClearInternalGameInformationEvent,
+    SetInternalGameInformationEvent,
     GameCreatedEvent,
     PlayerJoinedEvent,
     PlayerPlacedSymbolEvent,
-    PlaySoundEvent
+    PlaySoundEvent,
+    UpdateGameEvent,
+    InitiateGameEvent,
 )
 
 """
@@ -23,6 +26,25 @@ Commands are called externally, and are defined by 1 or many events.
 When the commands are executed these events are placed on the queue to be
 processed.
 """
+
+
+# ===== LOCAL GAME MANAGEMENT COMMANDS =====
+class UpdateGame(Command):
+    def __init__(self, profile, queue, game_id, name, turn, board, events, player_1_id, player_2_id):
+        super().__init__(profile, queue, f'Locally udpating game {game_id}')
+        self.events = [
+            UpdateGameEvent(game_id, name, turn, board, events, player_1_id, player_2_id)
+        ]
+
+
+class InitiateGame(Command):
+    def __init__(self, profile, queue, game_id, name, turn, board, events, player_1_id, player_2_id):
+        super().__init__(profile, queue, f'Locally initializing game {game_id}')
+        self.events = [
+            InitiateGameEvent(game_id, name, turn, board, events, player_1_id, player_2_id),
+            PlaySoundEvent('start_game')
+        ]
+        SetInternalGameInformationEvent(game_id),
 
 
 # These put events on the queue requesting server interactions.

@@ -20,6 +20,7 @@ from .events import (
     PlayerJoinedEvent,
     PlayerPlacedSymbolEvent,
     ClearInternalGameInformationEvent,
+    SetInternalGameInformationEvent,
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     PlaceASymbolNetworkRequestEvent,
@@ -37,7 +38,9 @@ from .commands import (
     GameCreatedCommand,
     PlayerJoinedCommand,
     PlayerPlacedSymbolCommand,
-    BackToLobby
+    BackToLobby,
+    UpdateGame,
+    InitiateGame
 )
 from common.events import (
     GameCreated,
@@ -186,6 +189,12 @@ class ClearInternalGameInformationEventHandler(EventHandler):
         client_state.profile.set_game_event_pointer(None)
 
 
+class SetInternalGameInformationEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        client_state.profile.set_game(event.game_id)
+        client_state.profile.set_game_event_pointer(0)
+
+
 class PlaceASymbolRequestEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         PlaceASymbol(
@@ -207,16 +216,16 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameMessage):
-                client_state.queue.put(
-                    UpdateGameEvent(
-                        response.id,
-                        response.name,
-                        response.turn,
-                        response.board,
-                        response.events,
-                        response.player_1_id,
-                        response.player_2_id,
-                    )
+                UpdateGame(
+                    client_state.profile,
+                    client_state.queue,
+                    response.id,
+                    response.name,
+                    response.turn,
+                    response.board,
+                    response.events,
+                    response.player_1_id,
+                    response.player_2_id,
                 )
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
@@ -238,22 +247,15 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameMessage):
-                client_state.queue.put(
-                    InitiateGameEvent(
-                        response.id,
-                        response.name,
-                        response.turn,
-                        response.board,
-                        response.events,
-                        response.player_1_id,
-                        response.player_2_id,
-                    )
+                InitiateGame(
+                    response.id,
+                    response.name,
+                    response.turn,
+                    response.board,
+                    response.events,
+                    response.player_1_id,
+                    response.player_2_id,
                 )
-                client_state.queue.put(
-                    PlaySoundEvent('start_game')
-                )
-                client_state.profile.set_game(response.id)
-                client_state.profile.set_game_event_pointer(0)
             if isinstance(response, ErrorMessage):
                 print("Error creating the game")
                 BackToLobby()
@@ -272,19 +274,15 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameMessage):
-                client_state.queue.put(
-                    InitiateGameEvent(
-                        response.id,
-                        response.name,
-                        response.turn,
-                        response.board,
-                        response.events,
-                        response.player_1_id,
-                        response.player_2_id,
-                    )
+                InitiateGame(
+                    response.id,
+                    response.name,
+                    response.turn,
+                    response.board,
+                    response.events,
+                    response.player_1_id,
+                    response.player_2_id,
                 )
-                client_state.profile.set_game(response.id)
-                client_state.profile.set_game_event_pointer(0)
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
@@ -302,16 +300,14 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameMessage):
-                client_state.queue.put(
-                    UpdateGameEvent(
-                        response.id,
-                        response.name,
-                        response.turn,
-                        response.board,
-                        response.events,
-                        response.player_1_id,
-                        response.player_2_id,
-                    )
+                UpdateGame(
+                    response.id,
+                    response.name,
+                    response.turn,
+                    response.board,
+                    response.events,
+                    response.player_1_id,
+                    response.player_2_id,
                 )
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
@@ -369,6 +365,7 @@ handlers_map = {
     PlayerPlacedSymbolEvent: PlayerPlacedSymbolEventHandler,
     GameCreated: GameCreatedEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
+    SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
