@@ -231,7 +231,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Server error")
-            BackToLobby()
+            BackToLobby(client_state.profile, client_state.queue)
 
     def _encode(self, game_id, profile_id, position):
         return PlaceASymbolMessage(game_id, profile_id, position)
@@ -258,10 +258,10 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                 )
             if isinstance(response, ErrorMessage):
                 print("Error creating the game")
-                BackToLobby()
+                BackToLobby(client_state.profile, client_state.queue)
         else:
             print("Server error")
-            BackToLobby()
+            BackToLobby(client_state.profile, client_state.queue)
 
     def _encode(self, profile_id, new_game_name):
         return CreateAGameMessage(new_game_name, profile_id)
@@ -287,7 +287,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Error Joining Game")
-            BackToLobby()
+            BackToLobby(client_state.profile, client_state.queue)
 
     def _encode(self, profile_id, game_id):
         return JoinAGameMessage(game_id, profile_id)
@@ -313,7 +313,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Server error")
-            BackToLobby()
+            BackToLobby(client_state.profile, client_state.queue)
 
     def _encode(self, game_id, profile_id):
         return GetGameStatus(game_id, profile_id)
