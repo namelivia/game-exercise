@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 
 pygame = "*"
+pytest = "*"
+mock = "*"
 
 [requires]
 python_version = "3.7"

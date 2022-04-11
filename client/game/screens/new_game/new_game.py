@@ -3,7 +3,8 @@ from .ui import (
     NewGameMessage,
     Background
 )
-from client.game.events import UserTypedEvent, PlaySoundEvent  # This could be generic
+from client.events import UserTypedEvent
+from client.game.events import PlaySoundEvent  # This could be generic
 
 
 class NewGame(Screen):

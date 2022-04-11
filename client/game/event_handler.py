@@ -1,4 +1,4 @@
-from abc import ABC
+from client.primitives.event_handler import EventHandler
 from common.messages import (
     GameMessage,
     ErrorMessage,
@@ -8,7 +8,6 @@ from common.messages import (
     GetGameStatus,
 )
 from .events import (
-    QuitGameEvent,
     ScreenTransitionEvent,
     NewGameRequestEvent,
     PlaceASymbolRequestEvent,
@@ -40,6 +39,7 @@ from .commands import (
     PlayerPlacedSymbolCommand,
     BackToLobby,
     UpdateGame,
+    ProcessServerEvents,
     InitiateGame
 )
 from common.events import (
@@ -61,19 +61,6 @@ from client.network.channel import Channel
 Currently event handlers are the one that do the processing.
 They do the actual procssing and can execute commands.
 """
-
-
-class EventHandler(ABC):
-    def handle(self, event, client_state, graphics):
-        pass
-
-
-class QuitGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        import pygame  # This is pygame dependent
-        import sys
-        pygame.quit()
-        sys.exit()
 
 
 class PlaySoundEventHandler(EventHandler):
@@ -165,13 +152,8 @@ class UpdateGameEventHandler(EventHandler):
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
         unprocessed_events = events[game_event_pointer + 1:]
-        # and now for each of this I would like to push them
-        # to the queue
-        for event in unprocessed_events:
-            pass
-            # self._handle_server_event(event, client_state)
-        # And finally I would update the game event pointer
         game_event_pointer = client_state.profile.set_game_event_pointer(len(events) - 1)
+        ProcessServerEvents(client_state.profile, client_state.queue, unprocessed_events).execute()
 
 
 class NewGameRequestEventHandler(EventHandler):
@@ -226,12 +208,12 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                     response.events,
                     response.player_1_id,
                     response.player_2_id,
-                )
+                ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
             print("Server error")
-            BackToLobby(client_state.profile, client_state.queue)
+            BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, game_id, profile_id, position):
         return PlaceASymbolMessage(game_id, profile_id, position)
@@ -248,6 +230,8 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
         if response is not None:
             if isinstance(response, GameMessage):
                 InitiateGame(
+                    client_state.profile,
+                    client_state.queue,
                     response.id,
                     response.name,
                     response.turn,
@@ -255,13 +239,13 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                     response.events,
                     response.player_1_id,
                     response.player_2_id,
-                )
+                ).execute()
             if isinstance(response, ErrorMessage):
                 print("Error creating the game")
-                BackToLobby(client_state.profile, client_state.queue)
+                BackToLobby(client_state.profile, client_state.queue).execute()
         else:
             print("Server error")
-            BackToLobby(client_state.profile, client_state.queue)
+            BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, profile_id, new_game_name):
         return CreateAGameMessage(new_game_name, profile_id)
@@ -275,6 +259,8 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
         if response is not None:
             if isinstance(response, GameMessage):
                 InitiateGame(
+                    client_state.profile,
+                    client_state.queue,
                     response.id,
                     response.name,
                     response.turn,
@@ -282,12 +268,12 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                     response.events,
                     response.player_1_id,
                     response.player_2_id,
-                )
+                ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
             print("Error Joining Game")
-            BackToLobby(client_state.profile, client_state.queue)
+            BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, profile_id, game_id):
         return JoinAGameMessage(game_id, profile_id)
@@ -308,12 +294,12 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
                     response.events,
                     response.player_1_id,
                     response.player_2_id,
-                )
+                ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
             print("Server error")
-            BackToLobby(client_state.profile, client_state.queue)
+            BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, game_id, profile_id):
         return GetGameStatus(game_id, profile_id)
@@ -352,7 +338,6 @@ class PlayerPlacedSymbolEventHandler(EventHandler):
 
 
 handlers_map = {
-    QuitGameEvent: QuitGameEventHandler,
     ScreenTransitionEvent: ScreenTransitionEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
@@ -377,9 +362,6 @@ handlers_map = {
 class EventHandler():
 
     def handle(self, event, client_state, graphics):
-        if event is None:
-            return
-        print(event)
         try:
             handlers_map[type(event)]().handle(event, client_state, graphics)
         except KeyError:

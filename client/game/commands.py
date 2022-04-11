@@ -1,10 +1,8 @@
 from client.primitives.command import Command
 from .events import (
     ScreenTransitionEvent,
-    UserTypedEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
-    QuitGameEvent,
     PlaceASymbolRequestEvent,
     PlaceASymbolNetworkRequestEvent,
     CreateAGameNetworkRequestEvent,
@@ -42,9 +40,9 @@ class InitiateGame(Command):
         super().__init__(profile, queue, f'Locally initializing game {game_id}')
         self.events = [
             InitiateGameEvent(game_id, name, turn, board, events, player_1_id, player_2_id),
-            PlaySoundEvent('start_game')
+            PlaySoundEvent('start_game'),
+            SetInternalGameInformationEvent(game_id),
         ]
-        SetInternalGameInformationEvent(game_id),
 
 
 # These put events on the queue requesting server interactions.
@@ -179,24 +177,7 @@ class PlayerPlacedSymbolCommand(Command):
         ]
 
 
-# These could be non-game specific and could be somewhere else
-# ===== GENERIC =====
-class UserTyped(Command):
-    def __init__(self, profile, queue, key):
-        super().__init__(profile, queue, f'User typed key {key}')
-        self.key = key
-
-    def execute(self):
-        self.queue.put(
-            UserTypedEvent(self.key)
-        )
-
-
-class QuitGame(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Exit from the game')
-
-    def execute(self):
-        self.queue.put(
-            QuitGameEvent()
-        )
+class ProcessServerEvents(Command):
+    def __init__(self, profile, queue, events):
+        super().__init__(profile, queue, f'Processing {len(events)} unprocessed server events')
+        self.events = events

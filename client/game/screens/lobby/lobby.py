@@ -4,7 +4,7 @@ from .ui import (
     OptionList,
     Background,
 )
-from client.game.events import UserTypedEvent  # This could be generic
+from client.events import UserTypedEvent
 
 
 class Lobby(Screen):
@@ -35,7 +35,9 @@ class Lobby(Screen):
                 # Could these be not just game specific but screen specific?
                 from client.game.commands import (
                     NewGame,
-                    GoToJoinAGame,
+                    GoToJoinAGame
+                )
+                from client.commands import (
                     QuitGame
                 )
                 # These actions, some may update the data, others run commands, who knows

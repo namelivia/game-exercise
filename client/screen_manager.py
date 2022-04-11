@@ -1,6 +1,8 @@
-from client.game.commands import UserTyped
-from client.game.event_handler import EventHandler
+from client.commands import UserTyped
+from client.event_handler import EventHandler
+from client.game.event_handler import EventHandler as GameEventHandler
 from client.game.events import RefreshGameStatusEvent
+from .events_processor import EventsProcessor
 
 
 class ScreenManager():
@@ -11,7 +13,7 @@ class ScreenManager():
         self.graphics = graphics  # Only pygame
         self.input_manager = input_manager  # Only pygame
 
-        self.event_handler = EventHandler()
+        self.event_processor = EventsProcessor([EventHandler(), GameEventHandler()])
 
     def _read_user_input(self):
         if self.input_manager is not None:
@@ -36,7 +38,7 @@ class ScreenManager():
         self.push_polling_event()
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
-        self.event_handler.handle(  # Process the event
+        self.event_processor.handle(  # Process the event
             queued_event,
             self.client_state,
             self.graphics

@@ -9,8 +9,10 @@ from .ui import (
     Instructions,
     Background,
 )
+from client.events import (
+    UserTypedEvent
+)
 from client.game.events import (
-    UserTypedEvent,  # This could be generic
     GameCreatedEvent,
     PlayerJoinedEvent,
     PlayerPlacedSymbolEvent
@@ -80,5 +82,6 @@ class InGame(Screen):
                 print("Game created, do something play some music, update the internal state or something")
             if isinstance(event, PlayerJoinedEvent):
                 print("Player joined, do something play some music, update the internal state or something")
+                self.data.player_2_id = event.player_id
             if isinstance(event, PlayerPlacedSymbolEvent):
                 print("Player placed a symbol, do something play some music, update the internal state or something")

@@ -6,7 +6,7 @@ from .ui import (
     Background,
     Coins
 )
-from client.game.events import UserTypedEvent  # This could be generic
+from client.events import UserTypedEvent
 
 
 class Intro(Screen):
