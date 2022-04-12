@@ -14,7 +14,7 @@ class EventsProcessor():
             try:
                 event_handler.handle(event, client_state, graphics)
                 handled = True
-            except Exception:  # TODO: Restrict this, it should only catch non-handeable events
+            except KeyError:  # TODO: Restrict this, it should only catch non-handeable events
                 pass
         if not handled:
             pass  # TODO: Inform that no handler was able to handle the event

@@ -2,26 +2,16 @@ from client.primitives.event_handler import EventHandler
 from common.messages import (
     GameMessage,
     ErrorMessage,
-    CreateAGameMessage,
     PlaceASymbolMessage,
-    JoinAGameMessage,
-    GetGameStatus,
+)
+from client.events import (
+    InitiateGameEvent
 )
 from .events import (
     ScreenTransitionEvent,
-    NewGameRequestEvent,
     PlaceASymbolRequestEvent,
-    JoinExistingGameEvent,
-    InitiateGameEvent,
-    RefreshGameStatusEvent,
-    UpdateGameEvent,
     PlaySoundEvent,
-    PlayerJoinedEvent,
-    PlayerPlacedSymbolEvent,
     ClearInternalGameInformationEvent,
-    SetInternalGameInformationEvent,
-    CreateAGameNetworkRequestEvent,
-    JoinAGameNetworkRequestEvent,
     PlaceASymbolNetworkRequestEvent,
 )
 from .screens.intro.intro import Intro
@@ -29,18 +19,15 @@ from .screens.lobby.lobby import Lobby
 from .screens.new_game.new_game import NewGame
 from .screens.join_game.join_game import JoinGame
 from .screens.in_game.in_game import InGame
-from .commands import (
-    CreateAGame,
-    JoinAGame,
-    PlaceASymbol,
-    RefreshGameStatus,
+from client.commands import (
+    UpdateGame,
     GameCreatedCommand,
     PlayerJoinedCommand,
     PlayerPlacedSymbolCommand,
+)
+from .commands import (
+    PlaceASymbol,
     BackToLobby,
-    UpdateGame,
-    ProcessServerEvents,
-    InitiateGame
 )
 from common.events import (
     GameCreated,
@@ -77,6 +64,7 @@ class PlaySoundEventHandler(EventHandler):
             EraseSound().play()
 
 
+# ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class GameCreatedEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         GameCreatedCommand(
@@ -104,6 +92,27 @@ class PlayerPlacedSymbolGenericEventHandler(EventHandler):
             event.position
         ).execute()
 
+#################################################################
+
+
+class InitiateGameEventHandler(EventHandler):
+    def handle(self, event, client_state, graphics):
+        # TODO: Why is it not an screen transition event??? Just because it contains more data?
+        # PlaySoundEvent('start_game'), This should be a command
+        client_state.set_current_screen(
+            InGame(
+                client_state,
+                graphics,
+                event.game_data.turn,
+                event.game_data.board,
+                event.game_data.events,
+                event.game_data.game_id,
+                event.game_data.name,
+                event.game_data.player_1_id,
+                event.game_data.player_2_id,
+            )
+        )
+
 
 class ScreenTransitionEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
@@ -126,55 +135,10 @@ class ScreenTransitionEventHandler(EventHandler):
             )
 
 
-class InitiateGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        # TODO: Why is it not an screen transition event??? Just because it contains more data?
-        client_state.set_current_screen(
-            InGame(
-                client_state,
-                graphics,
-                event.turn,
-                event.board,
-                event.events,
-                event.game_id,
-                event.name,
-                event.player_1_id,
-                event.player_2_id,
-            )
-        )
-
-
-class UpdateGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        # What we are going to do know is to check for unprocessed events
-        # there may be new events that have not been processed by the client,
-        # How do we know that? using tha game_event_pointer.
-        events = event.events
-        game_event_pointer = client_state.profile.game_event_pointer
-        unprocessed_events = events[game_event_pointer + 1:]
-        game_event_pointer = client_state.profile.set_game_event_pointer(len(events) - 1)
-        ProcessServerEvents(client_state.profile, client_state.queue, unprocessed_events).execute()
-
-
-class NewGameRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        CreateAGame(
-            client_state.profile,
-            client_state.queue,
-            event.new_game_name
-        ).execute()
-
-
 class ClearInternalGameInformationEventHandler(EventHandler):
     def handle(self, event, client_state, graphics):
         client_state.profile.set_game(None)
         client_state.profile.set_game_event_pointer(None)
-
-
-class SetInternalGameInformationEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        client_state.profile.set_game(event.game_id)
-        client_state.profile.set_game_event_pointer(0)
 
 
 class PlaceASymbolRequestEventHandler(EventHandler):
@@ -219,143 +183,16 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         return PlaceASymbolMessage(game_id, profile_id, position)
 
 
-class CreateAGameNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        request_data = self._encode(
-            client_state.profile.id,
-            event.new_game_name
-        )
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameMessage):
-                InitiateGame(
-                    client_state.profile,
-                    client_state.queue,
-                    response.id,
-                    response.name,
-                    response.turn,
-                    response.board,
-                    response.events,
-                    response.player_1_id,
-                    response.player_2_id,
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                print("Error creating the game")
-                BackToLobby(client_state.profile, client_state.queue).execute()
-        else:
-            print("Server error")
-            BackToLobby(client_state.profile, client_state.queue).execute()
-
-    def _encode(self, profile_id, new_game_name):
-        return CreateAGameMessage(new_game_name, profile_id)
-
-
-class JoinAGameNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        request_data = self._encode(client_state.profile.id, event.game_id)
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameMessage):
-                InitiateGame(
-                    client_state.profile,
-                    client_state.queue,
-                    response.id,
-                    response.name,
-                    response.turn,
-                    response.board,
-                    response.events,
-                    response.player_1_id,
-                    response.player_2_id,
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                print(response.__dict__)
-        else:
-            print("Error Joining Game")
-            BackToLobby(client_state.profile, client_state.queue).execute()
-
-    def _encode(self, profile_id, game_id):
-        return JoinAGameMessage(game_id, profile_id)
-
-
-class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        request_data = self._encode(event.game_id, client_state.profile.id)
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameMessage):
-                UpdateGame(
-                    response.id,
-                    response.name,
-                    response.turn,
-                    response.board,
-                    response.events,
-                    response.player_1_id,
-                    response.player_2_id,
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                print(response.__dict__)
-        else:
-            print("Server error")
-            BackToLobby(client_state.profile, client_state.queue).execute()
-
-    def _encode(self, game_id, profile_id):
-        return GetGameStatus(game_id, profile_id)
-
-
-class JoinExistingGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        JoinAGame(
-            client_state.profile,
-            client_state.queue,
-            event.game_id
-        ).execute()
-
-
-class RefreshGameStatusEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        RefreshGameStatus(
-            client_state.profile,
-            client_state.queue,
-            event.game_id
-        ).execute()
-
-
-class PlayerJoinedEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        # Update the ingame data to set the player
-        # Put an event on the queue to play an animation
-        pass
-
-
-class PlayerPlacedSymbolEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
-        # Update the ingame data to set the player piece
-        # Put an event on the queue to play an animation
-        pass
-
-
 handlers_map = {
     ScreenTransitionEvent: ScreenTransitionEventHandler,
-    NewGameRequestEvent: NewGameRequestEventHandler,
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
-    JoinExistingGameEvent: JoinExistingGameEventHandler,
-    InitiateGameEvent: InitiateGameEventHandler,
-    RefreshGameStatusEvent: RefreshGameStatusEventHandler,
-    UpdateGameEvent: UpdateGameEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
-    PlayerJoinedEvent: PlayerJoinedEventHandler,
-    PlayerPlacedSymbolEvent: PlayerPlacedSymbolEventHandler,
     GameCreated: GameCreatedEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
-    SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
-    CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
-    JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
+    InitiateGameEvent: InitiateGameEventHandler,
     PlayerJoinedGenericEvent: PlayerJoinedGenericEventHandler,
-    PlayerPlacedSymbolGenericEvent: PlayerPlacedSymbolEventHandler,  # TODO: This should be the GENERIC!
+    PlayerPlacedSymbolGenericEvent: PlayerPlacedSymbolGenericEventHandler,
 }
 
 

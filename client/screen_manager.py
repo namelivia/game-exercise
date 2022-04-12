@@ -1,7 +1,7 @@
 from client.commands import UserTyped
 from client.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
-from client.game.events import RefreshGameStatusEvent
+from client.commands import RequestGameStatus
 from .events_processor import EventsProcessor
 
 
@@ -31,7 +31,7 @@ class ScreenManager():
         polling_rate = 1000
         game_id = self.client_state.profile.game_id
         if self.client_state.clock.get() % polling_rate == 0 and game_id is not None:
-            self.client_state.queue.put(RefreshGameStatusEvent(game_id))
+            RequestGameStatus(game_id).execute()
 
     def run(self):
         self.client_state.clock.tick()  # Update the clock

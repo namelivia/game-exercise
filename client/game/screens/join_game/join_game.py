@@ -39,7 +39,7 @@ class JoinGame(Screen):
                     return
                 if event.key == "return":
                     # Avoid circular import
-                    from client.game.commands import (
+                    from client.commands import (
                         RequestJoiningAGame
                     )
                     RequestJoiningAGame(

@@ -13,12 +13,6 @@ class ScreenTransitionEvent(Event):
         self.dest_screen = dest_screen
 
 
-class NewGameRequestEvent(Event):
-    def __init__(self, new_game_name):
-        super().__init__()
-        self.new_game_name = new_game_name
-
-
 class PlaceASymbolRequestEvent(Event):
     def __init__(self, position):
         super().__init__()
@@ -29,117 +23,10 @@ class ClearInternalGameInformationEvent():
     pass
 
 
-class SetInternalGameInformationEvent(Event):
-    def __init__(self, game_id):
-        super().__init__()
-        self.game_id = game_id
-
-
 class PlaceASymbolNetworkRequestEvent(Event):
     def __init__(self, game_id, position):
         super().__init__()
         self.game_id = game_id
-        self.position = position
-
-
-class CreateAGameNetworkRequestEvent(Event):
-    def __init__(self, new_game_name):
-        super().__init__()
-        self.new_game_name = new_game_name
-
-
-class JoinAGameNetworkRequestEvent(Event):
-    def __init__(self, game_id):
-        super().__init__()
-        self.game_id = game_id
-
-
-class RefreshGameStatusNetworkRequestEvent(Event):
-    def __init__(self, game_id):
-        super().__init__()
-        self.game_id = game_id
-
-
-class JoinExistingGameEvent(Event):
-    def __init__(self, game_id):
-        super().__init__()
-        self.game_id = game_id
-
-
-class RefreshGameStatusEvent(Event):
-    def __init__(self, game_id):
-        super().__init__()
-        self.game_id = game_id
-
-
-class InitiateGameEvent(Event):
-    def __init__(
-            self,
-            game_id,
-            name,
-            turn,
-            board,
-            events,
-            player_1_id,
-            player_2_id,
-    ):
-        super().__init__()
-        self.game_id = game_id
-        self.name = name
-        self.turn = turn
-        self.board = board
-        self.events = events
-        self.player_1_id = player_1_id
-        self.player_2_id = player_2_id
-
-
-class UpdateGameEvent(Event):
-    def __init__(
-            self,
-            game_id,
-            name,
-            turn,
-            board,
-            events,
-            player_1_id,
-            player_2_id,
-    ):
-        super().__init__()
-        self.game_id = game_id
-        self.name = name
-        self.turn = turn
-        self.board = board
-        self.events = events
-        self.player_1_id = player_1_id
-        self.player_2_id = player_2_id
-
-
-class GameCreatedEvent(Event):
-    def __init__(
-            self,
-            player_id
-    ):
-        super().__init__()
-        self.player_id = player_id
-
-
-class PlayerJoinedEvent(Event):
-    def __init__(
-            self,
-            player_id
-    ):
-        super().__init__()
-        self.player_id = player_id
-
-
-class PlayerPlacedSymbolEvent(Event):
-    def __init__(
-            self,
-            player_id,
-            position
-    ):
-        super().__init__()
-        self.player_id = player_id
         self.position = position
 
 

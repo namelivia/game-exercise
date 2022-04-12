@@ -12,7 +12,7 @@ from .ui import (
 from client.events import (
     UserTypedEvent
 )
-from client.game.events import (
+from client.events import (
     GameCreatedEvent,
     PlayerJoinedEvent,
     PlayerPlacedSymbolEvent
