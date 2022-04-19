@@ -3,9 +3,8 @@ from abc import ABC
 
 class Screen(ABC):
 
-    def __init__(self, client_state, graphics):
+    def __init__(self, client_state):
         self.client_state = client_state
-        self.graphics = graphics
         self.ui_elements = []  # UI elements on the screen
         self.initial_time = client_state.clock.get()
         self.time = 0
@@ -13,9 +12,6 @@ class Screen(ABC):
 
     def get_ui_elements(self):
         return self.ui_elements
-
-    def render(self):
-        self.graphics.render(self)  # Tell graphics to draw current screen
 
     def update(self):
         self.time = self.client_state.clock.get() - self.initial_time

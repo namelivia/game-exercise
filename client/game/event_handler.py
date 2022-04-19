@@ -51,7 +51,7 @@ They do the actual procssing and can execute commands.
 
 
 class PlaySoundEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         if event.sound == "back":
             BackSound().play()
         if event.sound == "select":
@@ -66,7 +66,7 @@ class PlaySoundEventHandler(EventHandler):
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class GameCreatedEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         GameCreatedCommand(
             client_state.profile,
             client_state.queue,
@@ -75,7 +75,7 @@ class GameCreatedEventHandler(EventHandler):
 
 
 class PlayerJoinedGenericEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         PlayerJoinedCommand(
             client_state.profile,
             client_state.queue,
@@ -84,7 +84,7 @@ class PlayerJoinedGenericEventHandler(EventHandler):
 
 
 class PlayerPlacedSymbolGenericEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         PlayerPlacedSymbolCommand(
             client_state.profile,
             client_state.queue,
@@ -96,13 +96,12 @@ class PlayerPlacedSymbolGenericEventHandler(EventHandler):
 
 
 class InitiateGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
         # PlaySoundEvent('start_game'), This should be a command
         client_state.set_current_screen(
             InGame(
                 client_state,
-                graphics,
                 event.game_data.turn,
                 event.game_data.board,
                 event.game_data.events,
@@ -115,34 +114,34 @@ class InitiateGameEventHandler(EventHandler):
 
 
 class ScreenTransitionEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
             client_state.set_current_screen(
-                Intro(client_state, graphics)
+                Intro(client_state)
             )
         if event.dest_screen == "lobby":
             client_state.set_current_screen(
-                Lobby(client_state, graphics)
+                Lobby(client_state)
             )
         if event.dest_screen == "new_game_screen":
             client_state.set_current_screen(
-                NewGame(client_state, graphics)
+                NewGame(client_state)
             )
         if event.dest_screen == "join_a_game":
             client_state.set_current_screen(
-                JoinGame(client_state, graphics)
+                JoinGame(client_state)
             )
 
 
 class ClearInternalGameInformationEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         client_state.profile.set_game(None)
         client_state.profile.set_game_event_pointer(None)
 
 
 class PlaceASymbolRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         PlaceASymbol(
             client_state.profile,
             client_state.queue,
@@ -152,7 +151,7 @@ class PlaceASymbolRequestEventHandler(EventHandler):
 
 
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         request_data = self._encode(
             client_state.profile.game_id,
             client_state.profile.id,
@@ -198,8 +197,8 @@ handlers_map = {
 
 class EventHandler():
 
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         try:
-            handlers_map[type(event)]().handle(event, client_state, graphics)
+            handlers_map[type(event)]().handle(event, client_state)
         except KeyError:
             pass  # Unhandled event

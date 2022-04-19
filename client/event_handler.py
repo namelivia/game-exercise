@@ -36,7 +36,7 @@ They do the actual procssing and can execute commands.
 
 # ======= GENERIC =======
 class QuitGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         import pygame  # This is pygame dependent
         import sys
         pygame.quit()
@@ -45,7 +45,7 @@ class QuitGameEventHandler(EventHandler):
 
 # ======= GAME STATE SYNC =======
 class UpdateGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         # What we are going to do know is to check for unprocessed events
         # there may be new events that have not been processed by the client,
         # How do we know that? using tha game_event_pointer.
@@ -57,13 +57,13 @@ class UpdateGameEventHandler(EventHandler):
 
 
 class SetInternalGameInformationEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         client_state.profile.set_game(event.game_id)
         client_state.profile.set_game_event_pointer(0)
 
 
 class RefreshGameStatusEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         RefreshGameStatus(
             client_state.profile,
             client_state.queue,
@@ -72,7 +72,7 @@ class RefreshGameStatusEventHandler(EventHandler):
 
 
 class NewGameRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         CreateAGame(
             client_state.profile,
             client_state.queue,
@@ -81,7 +81,7 @@ class NewGameRequestEventHandler(EventHandler):
 
 
 class JoinExistingGameEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         JoinAGame(
             client_state.profile,
             client_state.queue,
@@ -90,7 +90,7 @@ class JoinExistingGameEventHandler(EventHandler):
 
 
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         request_data = self._encode(event.game_id, client_state.profile.id)
 
         response = Channel.send_command(request_data)
@@ -113,7 +113,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
 
 
 class CreateAGameNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         request_data = self._encode(
             client_state.profile.id,
             event.new_game_name
@@ -150,7 +150,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
 
 
 class JoinAGameNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         request_data = self._encode(client_state.profile.id, event.game_id)
 
         response = Channel.send_command(request_data)
@@ -194,8 +194,8 @@ handlers_map = {
 
 class EventHandler():
 
-    def handle(self, event, client_state, graphics):
+    def handle(self, event, client_state):
         try:
-            handlers_map[type(event)]().handle(event, client_state, graphics)
+            handlers_map[type(event)]().handle(event, client_state)
         except KeyError:
             pass  # Unhandled event

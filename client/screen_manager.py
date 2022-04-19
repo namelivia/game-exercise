@@ -40,11 +40,10 @@ class ScreenManager():
 
         self.event_processor.handle(  # Process the event
             queued_event,
-            self.client_state,
-            self.graphics
+            self.client_state
         )
 
-        self.client_state.get_current_screen().render()  # Render the screen
+        self.graphics.render(self.client_state.get_current_screen())  # Render the screen
 
         self._read_user_input()
 

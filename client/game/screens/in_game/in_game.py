@@ -23,7 +23,6 @@ class InGame(Screen):
     def __init__(
         self,
         client_state,
-        window,
         turn,
         board,
         events,
@@ -32,7 +31,7 @@ class InGame(Screen):
         player_1_id,
         player_2_id
     ):
-        super().__init__(client_state, window)
+        super().__init__(client_state)
 
         self.data = {
             "turn": turn,

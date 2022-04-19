@@ -9,8 +9,8 @@ from client.game.events import PlaySoundEvent  # This could be generic
 
 class JoinGame(Screen):
 
-    def __init__(self, client_state, window):
-        super().__init__(client_state, window)
+    def __init__(self, client_state):
+        super().__init__(client_state)
 
         self.data = {
             "game_id": ""

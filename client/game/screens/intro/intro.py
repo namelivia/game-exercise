@@ -11,8 +11,8 @@ from client.events import UserTypedEvent
 
 class Intro(Screen):
 
-    def __init__(self, client_state, window):
-        super().__init__(client_state, window)
+    def __init__(self, client_state):
+        super().__init__(client_state)
 
         self.ui_elements = [
             Background(),

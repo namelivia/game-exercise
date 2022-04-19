@@ -47,8 +47,7 @@ class TestClient(TestCase):
         event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, QuitGameEvent)
         client_state = mock.Mock()  # TODO: I don't like I have to define these two
-        graphics = mock.Mock()
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
         m_pygame_quit.assert_called_once_with()
         m_exit.assert_called_once_with()
 
@@ -82,8 +81,7 @@ class TestClient(TestCase):
         client_state = mock.Mock()  # TODO: I don't like I have to define these two
         client_state.profile = profile
         client_state.queue = self.queue
-        graphics = mock.Mock()
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # Unprocessed events have been calculated and pushed to the queue
         unprocessed_event_1 = self.queue.pop()
@@ -123,8 +121,7 @@ class TestClient(TestCase):
         assert isinstance(event, InitiateGameEvent)  # Event to be picked up by the game logic
 
         event = self.queue.pop()
-        graphics = mock.Mock()
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
         assert client_state.profile.game_id == "some_game_id"  # The internal game id is set
 
     # Game events
@@ -168,13 +165,12 @@ class TestClient(TestCase):
 
         client_state = mock.Mock()  # TODO: I don't like I have to define these two
         client_state.queue = self.queue
-        graphics = mock.Mock()
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # A network request to ask for the game status for the server is sent
         event = self.queue.pop()
         assert isinstance(event, RefreshGameStatusNetworkRequestEvent)
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
@@ -217,13 +213,12 @@ class TestClient(TestCase):
         # Handle the event
         client_state = mock.Mock()  # TODO: I don't like I have to define these two
         client_state.queue = self.queue
-        graphics = mock.Mock()
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # A network request to ask for the game initialization on the server is sent
         event = self.queue.pop()
         assert isinstance(event, CreateAGameNetworkRequestEvent)
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
@@ -275,13 +270,12 @@ class TestClient(TestCase):
         # Handle the event
         client_state = mock.Mock()  # TODO: I don't like I have to define these two
         client_state.queue = self.queue
-        graphics = mock.Mock()
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # A network request to ask for the game initialization on the server is sent
         event = self.queue.pop()
         assert isinstance(event, JoinAGameNetworkRequestEvent)
-        self.event_handler.handle(event, client_state, graphics)
+        self.event_handler.handle(event, client_state)
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
