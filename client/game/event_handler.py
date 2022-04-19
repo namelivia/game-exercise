@@ -102,8 +102,6 @@ class InitiateGameEventHandler(EventHandler):
         client_state.set_current_screen(
             InGame(
                 client_state,
-                event.game_data.turn,
-                event.game_data.board,
                 event.game_data.events,
                 event.game_data.game_id,
                 event.game_data.name,
@@ -166,8 +164,6 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                     client_state.queue,
                     response.id,
                     response.name,
-                    response.turn,
-                    response.board,
                     response.events,
                     response.player_1_id,
                     response.player_2_id,

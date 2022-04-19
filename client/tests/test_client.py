@@ -29,7 +29,7 @@ from client.commands import (
 from common.messages import (
     GameMessage
 )
-from client.game.game_data import CustomGameData
+from client.game_data import GameData
 import mock
 
 
@@ -46,7 +46,7 @@ class TestClient(TestCase):
         QuitGame(self.profile, self.queue).execute()
         event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, QuitGameEvent)
-        client_state = mock.Mock()  # TODO: I don't like I have to define these two
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
         self.event_handler.handle(event, client_state)
         m_pygame_quit.assert_called_once_with()
         m_exit.assert_called_once_with()
@@ -78,7 +78,7 @@ class TestClient(TestCase):
         event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UpdateGameEvent)
 
-        client_state = mock.Mock()  # TODO: I don't like I have to define these two
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.profile = profile
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
@@ -91,12 +91,9 @@ class TestClient(TestCase):
         assert client_state.profile.game_event_pointer == 2  # And the event pointer has been updated
 
     def test_initializating_game(self):
-        # TODO: I don't like this, this is too game specific
-        game_data = CustomGameData(
+        game_data = GameData(
             "some_game_id",
             "some_game_name",
-            "player_1_turn",
-            "board_status",
             "player_1_id",
             "player_2_id",
         )
@@ -114,7 +111,7 @@ class TestClient(TestCase):
             game_data
         ).execute()
 
-        client_state = mock.Mock()  # TODO: I don't like I have to define these two
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.profile = profile
 
         event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
@@ -142,12 +139,9 @@ class TestClient(TestCase):
 
         # The server will respond with a correct game message
         m_send_command.return_value = GameMessage(
-            # TODO: This could be only events, the rest is redundandt
-            CustomGameData(
+            GameData(
                 'game_id',
                 'game_name',
-                'player_turn',
-                'some_board',
                 'player_1_id',
                 'player_2_id',
                 [
@@ -163,7 +157,7 @@ class TestClient(TestCase):
         event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, RefreshGameStatusEvent)
 
-        client_state = mock.Mock()  # TODO: I don't like I have to define these two
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
 
@@ -191,12 +185,9 @@ class TestClient(TestCase):
     @mock.patch("client.event_handler.Channel.send_command")
     def test_request_create_new_game_success(self, m_send_command):
         m_send_command.return_value = GameMessage(
-            # TODO: I don't like this, this is too specific
-            CustomGameData(
+            GameData(
                 'game_id',
                 'game_name',
-                'player_turn',
-                'some_board',
                 'player_1_id',
                 'player_2_id',
                 [
@@ -211,7 +202,7 @@ class TestClient(TestCase):
         assert isinstance(event, NewGameRequestEvent)
 
         # Handle the event
-        client_state = mock.Mock()  # TODO: I don't like I have to define these two
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
 
@@ -229,11 +220,9 @@ class TestClient(TestCase):
 
         # And it contains the data to initialize the game from the server
         assert event.game_data.__dict__ == {
-            "board": "some_board",
             "events": [],
             "id": "game_id",
             "name": "game_name",
-            "turn": "player_turn",
             "player_1_id": "player_1_id",
             "player_2_id": "player_2_id",
         }
@@ -248,12 +237,9 @@ class TestClient(TestCase):
     @mock.patch("client.event_handler.Channel.send_command")
     def test_request_join_a_game_success(self, m_send_command):
         m_send_command.return_value = GameMessage(
-            # TODO: I don't like this, this is too specific
-            CustomGameData(
+            GameData(
                 'game_id',
                 'game_name',
-                'player_turn',
-                'some_board',
                 'player_1_id',
                 'player_2_id',
                 [
@@ -268,7 +254,7 @@ class TestClient(TestCase):
         assert isinstance(event, JoinExistingGameEvent)
 
         # Handle the event
-        client_state = mock.Mock()  # TODO: I don't like I have to define these two
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
 
@@ -286,11 +272,9 @@ class TestClient(TestCase):
 
         # And it contains the data to initialize the game from the server
         assert event.game_data.__dict__ == {
-            "board": "some_board",
             "events": [],
             "id": "game_id",
             "name": "game_name",
-            "turn": "player_turn",
             "player_1_id": "player_1_id",
             "player_2_id": "player_2_id",
         }

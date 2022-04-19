@@ -26,7 +26,7 @@ from common.messages import (
     JoinAGameMessage,
 )
 from client.network.channel import Channel
-from client.game.game_data import CustomGameData  # TODO: I don't like this
+from .game_data import GameData
 
 """
 Currently event handlers are the one that do the processing.
@@ -125,12 +125,9 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                 InitiateGame(
                     client_state.profile,
                     client_state.queue,
-                    # This is very game specific because it has CustomGameData
-                    CustomGameData(
+                    GameData(
                         response.id,
                         response.name,
-                        response.turn,
-                        response.board,
                         response.player_1_id,
                         response.player_2_id,
                     )
@@ -159,12 +156,9 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                 InitiateGame(
                     client_state.profile,
                     client_state.queue,
-                    # This is very game specific because it has CustomGameData
-                    CustomGameData(
+                    GameData(
                         response.id,
                         response.name,
-                        response.turn,
-                        response.board,
                         response.player_1_id,
                         response.player_2_id,
                     )
