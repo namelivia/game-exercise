@@ -1,11 +1,9 @@
 from client.primitives.screen import Screen
 from .ui import (
-    # TurnIndicator,
     GameIdIndicator,
     GameNameIndicator,
     Player1NameIndicator,
     Player2NameIndicator,
-    # Board,
     Instructions,
     Background,
 )
@@ -23,8 +21,6 @@ class InGame(Screen):
     def __init__(
         self,
         client_state,
-        # turn, TODO: This can be inferred from events
-        # board, TODO: This can be inferred from events
         events,
         game_id,
         name,
@@ -33,8 +29,6 @@ class InGame(Screen):
         super().__init__(client_state)
 
         self.data = {
-            # "turn": turn,
-            # "board": board,
             "events": events,
             "game_id": game_id,
             "name": name,
@@ -44,12 +38,10 @@ class InGame(Screen):
 
         self.ui_elements = [
             Background(),
-            # TurnIndicator(self.data['turn']),
             GameIdIndicator(self.data['game_id']),
             GameNameIndicator(self.data['name']),
             Player1NameIndicator(self.data['players'][0]),
             Player2NameIndicator(self.data['players'][1]),
-            # Board(self.data['board']),
             Instructions(),
         ]
 
