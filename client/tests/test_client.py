@@ -94,8 +94,7 @@ class TestClient(TestCase):
         game_data = GameData(
             "some_game_id",
             "some_game_name",
-            "player_1_id",
-            "player_2_id",
+            ["player_1_id", "player_2_id"]
         )
 
         profile = Profile(
@@ -142,8 +141,7 @@ class TestClient(TestCase):
             GameData(
                 'game_id',
                 'game_name',
-                'player_1_id',
-                'player_2_id',
+                ['player_1_id', 'player_2_id'],
                 [
                     'event_1',
                     'event_2',
@@ -188,8 +186,7 @@ class TestClient(TestCase):
             GameData(
                 'game_id',
                 'game_name',
-                'player_1_id',
-                'player_2_id',
+                ['player_1_id', 'player_2_id'],
                 [
                     'event_1',
                     'event_2',
@@ -223,8 +220,7 @@ class TestClient(TestCase):
             "events": [],
             "id": "game_id",
             "name": "game_name",
-            "player_1_id": "player_1_id",
-            "player_2_id": "player_2_id",
+            "players": ["player_1_id", "player_2_id"]
         }
 
     @mock.patch("client.event_handler.Channel.send_command")
@@ -240,8 +236,7 @@ class TestClient(TestCase):
             GameData(
                 'game_id',
                 'game_name',
-                'player_1_id',
-                'player_2_id',
+                ['player_1_id', 'player_2_id'],
                 [
                     'event_1',
                     'event_2',
@@ -275,8 +270,7 @@ class TestClient(TestCase):
             "events": [],
             "id": "game_id",
             "name": "game_name",
-            "player_1_id": "player_1_id",
-            "player_2_id": "player_2_id",
+            "players": ["player_1_id", "player_2_id"]
         }
 
     @mock.patch("client.event_handler.Channel.send_command")

@@ -17,46 +17,47 @@ Note that every command first validates (can be invalid).
 And if valid sets something on the game state.
 """
 
+PLAYERS_PER_GAME = 2
+
 
 class Game():
+
     def __init__(self, name, player_id):
         self.id = uuid.uuid4()
         self.name = name
         self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
-        self.player_1_id = player_id
-        self.player_2_id = None
-        self.turn = self.player_1_id
+        self.players = [player_id]
         self.events = [
             GameCreated(player_id)
         ]
 
     def _next_turn(self):
-        if self.turn == self.player_2_id:
-            return self.player_1_id
-        return self.player_2_id
+        if self.turn == self.players[1]:
+            return self.players[0]
+        return self.players[1]
 
     def _get_symbol(self, player):
-        if player == self.player_2_id:
+        if player == self.players[1]:
             return 'X'
         return 'O'
 
     def join(self, player_id):
-        if player_id not in [self.player_1_id, self.player_2_id]:
-            if self.player_2_id is not None:
+        if player_id not in self.players:
+            if len(self.players) >= PLAYERS_PER_GAME:
                 raise InvalidCommandError("The game is full")
-            self.player_2_id = player_id
+            self.players.append(player_id)
             self.events.append(PlayerJoined(player_id))
         else:
             raise InvalidCommandError("This player is already in the game")
 
     def player_can_get_status(self, player_id):
-        if player_id not in [self.player_1_id, self.player_2_id]:
+        if player_id not in self.players:
             raise InvalidCommandError("Player has no access to the game")
 
     def place(self, player, position):
         position = int(position)
         try:
-            if self.player_2_id is None:
+            if len(self.players) < PLAYERS_PER_GAME:
                 raise InvalidCommandError("No player 2 yet")
             if self.turn != player:
                 raise InvalidCommandError("Not your turn")

@@ -28,8 +28,7 @@ class InGame(Screen):
         events,
         game_id,
         name,
-        player_1_id,
-        player_2_id
+        players
     ):
         super().__init__(client_state)
 
@@ -39,8 +38,7 @@ class InGame(Screen):
             "events": events,
             "game_id": game_id,
             "name": name,
-            "player_1_id": player_1_id,
-            "player_2_id": player_2_id
+            "players": players,
 
         }
 
@@ -49,8 +47,8 @@ class InGame(Screen):
             # TurnIndicator(self.data['turn']),
             GameIdIndicator(self.data['game_id']),
             GameNameIndicator(self.data['name']),
-            Player1NameIndicator(self.data['player_1_id']),
-            Player2NameIndicator(self.data['player_2_id']),
+            Player1NameIndicator(self.data['players'][0]),
+            Player2NameIndicator(self.data['players'][1]),
             # Board(self.data['board']),
             Instructions(),
         ]
@@ -80,7 +78,8 @@ class InGame(Screen):
             if isinstance(event, GameCreatedEvent):
                 print("Game created, do something play some music, update the internal state or something")
             if isinstance(event, PlayerJoinedEvent):
-                print("Player joined, do something play some music, update the internal state or something")
-                self.data.player_2_id = event.player_id
+                pass
+                # print("Player joined, do something play some music, update the internal state or something")
+                # self.data.player_2_id = event.player_id
             if isinstance(event, PlayerPlacedSymbolEvent):
                 print("Player placed a symbol, do something play some music, update the internal state or something")

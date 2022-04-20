@@ -128,8 +128,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                     GameData(
                         response.id,
                         response.name,
-                        response.player_1_id,
-                        response.player_2_id,
+                        response.players
                     )
                 ).execute()
                 # This is too game specific, why not using hooks?
@@ -159,8 +158,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                     GameData(
                         response.id,
                         response.name,
-                        response.player_1_id,
-                        response.player_2_id,
+                        response.players
                     )
                 ).execute()
             if isinstance(response, ErrorMessage):

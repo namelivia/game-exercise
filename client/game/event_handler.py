@@ -105,8 +105,7 @@ class InitiateGameEventHandler(EventHandler):
                 event.game_data.events,
                 event.game_data.game_id,
                 event.game_data.name,
-                event.game_data.player_1_id,
-                event.game_data.player_2_id,
+                event.game_data.players
             )
         )
 
@@ -165,8 +164,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                     response.id,
                     response.name,
                     response.events,
-                    response.player_1_id,
-                    response.player_2_id,
+                    response.players
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)

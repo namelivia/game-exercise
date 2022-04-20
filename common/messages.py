@@ -3,8 +3,7 @@ class GameMessage():
     def __init__(self, game):
         self.id = game.id
         self.name = game.name
-        self.player_1_id = game.player_1_id
-        self.player_2_id = game.player_2_id
+        self.players = game.players
         self.events = game.events
 
 
