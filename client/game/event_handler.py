@@ -135,12 +135,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         if response is not None:
             if isinstance(response, GameMessage):
                 UpdateGame(
-                    client_state.profile,
-                    client_state.queue,
-                    response.id,
-                    response.name,
-                    response.events,
-                    response.players,
+                    client_state.profile, client_state.queue, response.events
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)

@@ -23,6 +23,7 @@ class Game:
         self.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
         self.players = [player_id]
         self.events = [GameCreated(player_id)]
+        self.turn = player_id
 
     def _next_turn(self):
         if self.turn == self.players[1]:
