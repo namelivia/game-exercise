@@ -9,9 +9,11 @@ from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
     PlaySoundEvent,
+    PlayMusicEvent,
     ClearInternalGameInformationEvent,
     PlaceASymbolNetworkRequestEvent,
 )
+from client.game.music import MainThemeMusic
 from .screens.intro.intro import Intro
 from .screens.lobby.lobby import Lobby
 from .screens.new_game.new_game import NewGame
@@ -33,7 +35,14 @@ from common.events import (
     PlayerJoined as PlayerJoinedGenericEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolGenericEvent,  # TODO: akward
 )
-from .sounds import BackSound, SelectSound, StartGameSound, TypeSound, EraseSound
+from .sounds import (
+    BackSound,
+    SelectSound,
+    StartGameSound,
+    TypeSound,
+    EraseSound,
+    UserJoinedSound,
+)
 
 from client.network.channel import Channel
 
@@ -55,6 +64,14 @@ class PlaySoundEventHandler(EventHandler):
             TypeSound().play()
         if event.sound == "erase":
             EraseSound().play()
+        if event.sound == "user_joined":
+            UserJoinedSound().play()
+
+
+class PlayMusicEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        if event.music == "main_theme":
+            MainThemeMusic().play()
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
@@ -152,6 +169,7 @@ handlers_map = {
     ScreenTransitionEvent: ScreenTransitionEventHandler,
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
+    PlayMusicEvent: PlayMusicEventHandler,
     GameCreated: GameCreatedEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,

@@ -31,32 +31,36 @@ class InGame(Screen):
             Instructions(),
         ]
 
-    def update(self, event):
-        super().update()
+        self.events = {
+            UserTypedEvent: self.on_user_typed,
+            GameCreatedEvent: self.on_game_created,
+            PlayerJoinedEvent: self.on_player_joined,
+            PlayerPlacedSymbolEvent: self.on_player_placed_symbol,
+        }
 
-        # Event based triggers
-        if event is not None:
-            if isinstance(event, UserTypedEvent):
-                # Avoid circular import
-                from client.game.commands import BackToLobby, RequestPlaceASymbol
+    def on_user_typed(self, event):
+        # Avoid circular import
+        from client.game.commands import BackToLobby, RequestPlaceASymbol
 
-                if event.key == "escape":
-                    BackToLobby(
-                        self.client_state.profile, self.client_state.queue
-                    ).execute()
-                if event.key in "012345678":
-                    RequestPlaceASymbol(
-                        self.client_state.profile, self.client_state.queue, event.key
-                    ).execute()
-            if isinstance(event, GameCreatedEvent):
-                print(
-                    "Game created, do something play some music, update the internal state or something"
-                )
-            if isinstance(event, PlayerJoinedEvent):
-                pass
-                # print("Player joined, do something play some music, update the internal state or something")
-                # self.data.player_2_id = event.player_id
-            if isinstance(event, PlayerPlacedSymbolEvent):
-                print(
-                    "Player placed a symbol, do something play some music, update the internal state or something"
-                )
+        if event.key == "escape":
+            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+        if event.key in "012345678":
+            RequestPlaceASymbol(
+                self.client_state.profile, self.client_state.queue, event.key
+            ).execute()
+
+    def on_game_created(self, event):
+        print(
+            "Game created, do something play some music, update the internal state or something"
+        )
+
+    def on_player_joined(self, event):
+        print(
+            "Player Joined, do something play some music, update the internal state or something"
+        )
+        # self.data.player_2_id = event.player_id
+
+    def on_player_placed_symbol(self, event):
+        print(
+            "Player placed a symbol, do something play some music, update the internal state or something"
+        )

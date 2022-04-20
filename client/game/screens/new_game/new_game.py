@@ -15,38 +15,33 @@ class NewGame(Screen):
             NewGameMessage(self.data["new_game_name"]),
         ]
 
-    def update(self, event):
-        super().update()
+        self.events = {UserTypedEvent: self.on_user_typed}
 
-        # Event based triggers
-        if event is not None:
-            if isinstance(event, UserTypedEvent):
-                if event.key == "escape":
-                    # Avoid circular import
-                    from client.game.commands import BackToLobby
+    def on_user_typed(self, event):
+        if event.key == "escape":
+            # Avoid circular import
+            from client.game.commands import BackToLobby
 
-                    BackToLobby(
-                        self.client_state.profile, self.client_state.queue
-                    ).execute()
-                    return
-                if event.key == "return":
-                    # Avoid circular import
-                    from client.commands import RequestGameCreation
+            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            return
+        if event.key == "return":
+            # Avoid circular import
+            from client.commands import RequestGameCreation
 
-                    RequestGameCreation(
-                        self.client_state.profile,
-                        self.client_state.queue,
-                        self.data["new_game_name"],
-                    ).execute()
-                    return
-                if event.key == "backspace":
-                    PlaySound(
-                        self.client_state.profile, self.client_state.queue, "erase"
-                    ).execute()
-                    self.data["new_game_name"] = self.data["new_game_name"][:-1]
-                    return
-                else:
-                    PlaySound(
-                        self.client_state.profile, self.client_state.queue, "type"
-                    ).execute()
-                    self.data["new_game_name"] += event.key
+            RequestGameCreation(
+                self.client_state.profile,
+                self.client_state.queue,
+                self.data["new_game_name"],
+            ).execute()
+            return
+        if event.key == "backspace":
+            PlaySound(
+                self.client_state.profile, self.client_state.queue, "erase"
+            ).execute()
+            self.data["new_game_name"] = self.data["new_game_name"][:-1]
+            return
+        else:
+            PlaySound(
+                self.client_state.profile, self.client_state.queue, "type"
+            ).execute()
+            self.data["new_game_name"] += event.key

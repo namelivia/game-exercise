@@ -19,28 +19,19 @@ class Lobby(Screen):
             OptionList({"1": "Create a new game", "2": "Join an existing game"}),
         ]
 
-    def update(self, event):
-        super().update()
+        self.events = {UserTypedEvent: self.on_user_typed}
 
-        # Event based triggers
-        if event is not None:
-            if isinstance(event, UserTypedEvent):
-                # Avoid circular import
-                # Could these be not just game specific but screen specific?
-                from client.game.commands import NewGame, GoToJoinAGame
-                from client.commands import QuitGame
+    def on_user_typed(self, event):
+        # Avoid circular import
+        # Could these be not just game specific but screen specific?
+        from client.game.commands import NewGame, GoToJoinAGame
+        from client.commands import QuitGame
 
-                # These actions, some may update the data, others run commands, who knows
-                key = event.key
-                if key == "1":
-                    NewGame(
-                        self.client_state.profile, self.client_state.queue
-                    ).execute()
-                if key == "2":
-                    GoToJoinAGame(
-                        self.client_state.profile, self.client_state.queue
-                    ).execute()
-                if event.key == "escape":
-                    QuitGame(
-                        self.client_state.profile, self.client_state.queue
-                    ).execute()
+        # These actions, some may update the data, others run commands, who knows
+        key = event.key
+        if key == "1":
+            NewGame(self.client_state.profile, self.client_state.queue).execute()
+        if key == "2":
+            GoToJoinAGame(self.client_state.profile, self.client_state.queue).execute()
+        if event.key == "escape":
+            QuitGame(self.client_state.profile, self.client_state.queue).execute()

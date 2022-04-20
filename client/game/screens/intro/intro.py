@@ -1,6 +1,5 @@
 from client.primitives.screen import Screen
-from client.game.sounds import UserJoinedSound
-from client.game.music import MainThemeMusic
+from client.game.commands import PlaySound, PlayMusic
 from .ui import Title, Background, Coins
 from client.events import UserTypedEvent
 
@@ -15,30 +14,32 @@ class Intro(Screen):
             Title(self.time),
         ]
 
-        self.sounds = [UserJoinedSound()]
+        PlayMusic(
+            self.client_state.profile, self.client_state.queue, "main_theme"
+        ).execute()
 
-        MainThemeMusic().play()
+        self.timers = {
+            10000: self.show_coins,
+            30000: self.go_back_to_lobby,
+        }
 
-    def update(self, event):
-        super().update()
+        self.events = {UserTypedEvent: self.on_user_typed}
 
-        # Time based triggers
-        if self.time > 30000:
-            from client.game.commands import BackToLobby
+    # Actions
+    def go_back_to_lobby(self):
+        from client.game.commands import BackToLobby
 
-            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+        BackToLobby(self.client_state.profile, self.client_state.queue).execute()
 
-        if self.time == 10000:  # TODO: This sould be transformed in a command
-            self.sounds[0].play()
-            self.ui_elements[1].appear()
+    def show_coins(self):
+        PlaySound(
+            self.client_state.profile, self.client_state.queue, "user_joined"
+        ).execute()
+        self.ui_elements[1].appear()
 
-        # Event based triggers
-        if event is not None:
-            if isinstance(event, UserTypedEvent):
-                if event.key == "escape" or event.key == "return":
-                    # Avoid circular import
-                    from client.game.commands import ToLobby
+    def on_user_typed(self, event):
+        if event.key == "escape" or event.key == "return":
+            # Avoid circular import
+            from client.game.commands import ToLobby
 
-                    ToLobby(
-                        self.client_state.profile, self.client_state.queue
-                    ).execute()
+            ToLobby(self.client_state.profile, self.client_state.queue).execute()
