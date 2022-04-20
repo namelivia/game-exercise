@@ -89,7 +89,7 @@ class InitiateGameEventHandler(EventHandler):
             InGame(
                 client_state,
                 event.game_data.events,
-                event.game_data.game_id,
+                event.game_data.id,
                 event.game_data.name,
                 event.game_data.players,
             )

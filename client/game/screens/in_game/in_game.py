@@ -27,7 +27,7 @@ class InGame(Screen):
             GameIdIndicator(self.data["game_id"]),
             GameNameIndicator(self.data["name"]),
             Player1NameIndicator(self.data["players"][0]),
-            Player2NameIndicator(self.data["players"][1]),
+            Player2NameIndicator(None),
             Instructions(),
         ]
 

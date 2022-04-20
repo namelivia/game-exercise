@@ -29,7 +29,9 @@ class ScreenManager:
         polling_rate = 1000
         game_id = self.client_state.profile.game_id
         if self.client_state.clock.get() % polling_rate == 0 and game_id is not None:
-            RequestGameStatus(game_id).execute()
+            RequestGameStatus(
+                self.client_state.profile, self.client_state.queue, game_id
+            ).execute()
 
     def run(self):
         self.client_state.clock.tick()  # Update the clock
