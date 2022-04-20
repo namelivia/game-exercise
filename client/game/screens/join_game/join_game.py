@@ -1,7 +1,7 @@
 from client.primitives.screen import Screen
 from .ui import GameIdMessage, Background
 from client.events import UserTypedEvent
-from client.game.events import PlaySoundEvent  # This could be generic
+from client.game.commands import PlaySound
 
 
 class JoinGame(Screen):
@@ -40,10 +40,13 @@ class JoinGame(Screen):
                     ).execute()
                     return
                 if event.key == "backspace":
-                    self.client_state.queue.put(PlaySoundEvent("erase"))
+                    PlaySound(
+                        self.client_state.profile, self.client_state.queue, "erase"
+                    ).execute()
                     self.data["game_id"] = self.data["game_id"][:-1]
                     return
                 else:
-                    # TODO: Should this be a command instead of pushing directly to the queue?
-                    self.client_state.queue.put(PlaySoundEvent("type"))
+                    PlaySound(
+                        self.client_state.profile, self.client_state.queue, "type"
+                    ).execute()
                     self.data["game_id"] += event.key

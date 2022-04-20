@@ -26,6 +26,7 @@ from client.commands import (
 from .commands import (
     PlaceASymbol,
     BackToLobby,
+    PlaySound,
 )
 from common.events import (
     GameCreated,
@@ -84,7 +85,7 @@ class PlayerPlacedSymbolGenericEventHandler(EventHandler):
 class InitiateGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
-        # PlaySoundEvent('start_game'), This should be a command
+        PlaySound(client_state.profile, client_state.queue, "start_game").execute()
         client_state.set_current_screen(
             InGame(
                 client_state,

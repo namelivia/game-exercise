@@ -44,6 +44,14 @@ class ToLobby(Command):
         ]
 
 
+class PlaySound(Command):
+    def __init__(self, profile, queue, sound_id):
+        super().__init__(profile, queue, f"Playing sound {sound_id}")
+        self.events = [
+            PlaySoundEvent(sound_id),
+        ]
+
+
 class NewGame(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Move to new game screen")
