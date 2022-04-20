@@ -5,7 +5,7 @@ from client.commands import RequestGameStatus
 from .events_processor import EventsProcessor
 
 
-class ScreenManager():
+class ScreenManager:
 
     # Would I need all this? Maybe not, only someties if using pygame
     def __init__(self, client_state, input_manager, graphics):
@@ -21,9 +21,7 @@ class ScreenManager():
             for user_event in user_events:
                 # Execute a command that will push the user input event to the queue
                 UserTyped(
-                    self.client_state.profile,
-                    self.client_state.queue,
-                    user_event
+                    self.client_state.profile, self.client_state.queue, user_event
                 ).execute()
 
     def push_polling_event(self):
@@ -39,11 +37,12 @@ class ScreenManager():
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
         self.event_processor.handle(  # Process the event
-            queued_event,
-            self.client_state
+            queued_event, self.client_state
         )
 
-        self.graphics.render(self.client_state.get_current_screen())  # Render the screen
+        self.graphics.render(
+            self.client_state.get_current_screen()
+        )  # Render the screen
 
         self._read_user_input()
 

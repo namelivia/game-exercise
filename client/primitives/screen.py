@@ -2,7 +2,6 @@ from abc import ABC
 
 
 class Screen(ABC):
-
     def __init__(self, client_state):
         self.client_state = client_state
         self.ui_elements = []  # UI elements on the screen

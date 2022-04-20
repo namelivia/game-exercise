@@ -17,7 +17,6 @@ All the commands do the following:
 
 
 class Command(ABC):
-
     @property
     @abstractmethod
     def name(self):
@@ -57,7 +56,9 @@ class PlaceSymbol(Command):
         return "Place a symbol on the board"
 
     def debug(self):
-        logger.info(f"Game {self.game_id}: Player {self.player_id} placed a symbol on {self.position}")
+        logger.info(
+            f"Game {self.game_id}: Player {self.player_id} placed a symbol on {self.position}"
+        )
 
     def execute(self):
         super().execute()

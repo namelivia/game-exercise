@@ -1,4 +1,4 @@
-class Profile():
+class Profile:
     def __init__(self, id, name, game_id, game_event_pointer):
         self.id = id
         self.name = name

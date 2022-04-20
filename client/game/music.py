@@ -1,7 +1,7 @@
 import pygame
 
 
-class MainThemeMusic():
+class MainThemeMusic:
     def __init__(self):
         self.sound = pygame.mixer.music.load("client/game/music/main_theme.mp3")
 

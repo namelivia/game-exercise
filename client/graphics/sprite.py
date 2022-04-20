@@ -12,7 +12,9 @@ class Sprite(pygame.sprite.Sprite):
 
     def __init__(self, folder, x, y, initial_frame):
         super().__init__()
-        self.sprites = [pygame.image.load(frame) for frame in self._get_frames_path(folder)]
+        self.sprites = [
+            pygame.image.load(frame) for frame in self._get_frames_path(folder)
+        ]
         self.current_sprite = initial_frame % self._animation_length()
         self.image = self.sprites[self.current_sprite]
 

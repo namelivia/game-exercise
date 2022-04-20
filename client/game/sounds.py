@@ -1,7 +1,7 @@
 import pygame
 
 
-class UserJoinedSound():
+class UserJoinedSound:
     def __init__(self):
         self.sound = pygame.mixer.Sound("client/game/sounds/user_connected.mp3")
 
@@ -9,7 +9,7 @@ class UserJoinedSound():
         pygame.mixer.Sound.play(self.sound)
 
 
-class BackSound():
+class BackSound:
     def __init__(self):
         self.sound = pygame.mixer.Sound("client/game/sounds/back.mp3")
 
@@ -17,7 +17,7 @@ class BackSound():
         pygame.mixer.Sound.play(self.sound)
 
 
-class SelectSound():
+class SelectSound:
     def __init__(self):
         self.sound = pygame.mixer.Sound("client/game/sounds/select.mp3")
 
@@ -25,7 +25,7 @@ class SelectSound():
         pygame.mixer.Sound.play(self.sound)
 
 
-class StartGameSound():
+class StartGameSound:
     def __init__(self):
         self.sound = pygame.mixer.Sound("client/game/sounds/start_game.mp3")
 
@@ -33,7 +33,7 @@ class StartGameSound():
         pygame.mixer.Sound.play(self.sound)
 
 
-class TypeSound():
+class TypeSound:
     def __init__(self):
         self.sound = pygame.mixer.Sound("client/game/sounds/type.mp3")
 
@@ -41,7 +41,7 @@ class TypeSound():
         pygame.mixer.Sound.play(self.sound)
 
 
-class EraseSound():
+class EraseSound:
     def __init__(self):
         self.sound = pygame.mixer.Sound("client/game/sounds/erase.mp3")
 

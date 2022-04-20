@@ -2,9 +2,9 @@ from .input_manager import InputManager
 from .text_input_manager import TextInputManager
 
 
-class Input():
+class Input:
     def __init__(self, uses_pygame):
-        if (uses_pygame):
+        if uses_pygame:
             self.manager = InputManager()
         else:
             self.manager = TextInputManager()
@@ -59,4 +59,7 @@ class Input():
             "event_space": " ",
             "event_minus": "-",
         }
-        return [values_map[input_manager_event] for input_manager_event in input_manager_events]
+        return [
+            values_map[input_manager_event]
+            for input_manager_event in input_manager_events
+        ]

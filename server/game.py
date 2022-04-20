@@ -1,10 +1,6 @@
 import uuid
 from .errors import InvalidCommandError
-from common.events import (
-    GameCreated,
-    PlayerJoined,
-    PlayerPlacedSymbol
-)
+from common.events import GameCreated, PlayerJoined, PlayerPlacedSymbol
 
 
 """
@@ -20,16 +16,13 @@ And if valid sets something on the game state.
 PLAYERS_PER_GAME = 2
 
 
-class Game():
-
+class Game:
     def __init__(self, name, player_id):
         self.id = uuid.uuid4()
         self.name = name
-        self.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        self.board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
         self.players = [player_id]
-        self.events = [
-            GameCreated(player_id)
-        ]
+        self.events = [GameCreated(player_id)]
 
     def _next_turn(self):
         if self.turn == self.players[1]:
@@ -38,8 +31,8 @@ class Game():
 
     def _get_symbol(self, player):
         if player == self.players[1]:
-            return 'X'
-        return 'O'
+            return "X"
+        return "O"
 
     def join(self, player_id):
         if player_id not in self.players:
@@ -61,7 +54,7 @@ class Game():
                 raise InvalidCommandError("No player 2 yet")
             if self.turn != player:
                 raise InvalidCommandError("Not your turn")
-            if self.board[position] != ' ':
+            if self.board[position] != " ":
                 raise InvalidCommandError("Position already taken")
             self.board[position] = self._get_symbol(player)
             self.events.append(PlayerPlacedSymbol(player, position))

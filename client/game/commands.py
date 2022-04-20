@@ -18,54 +18,54 @@ processed.
 # ===== REQUESTS =====
 class RequestPlaceASymbol(Command):
     def __init__(self, profile, queue, position):
-        super().__init__(profile, queue, f'Request placing a symbol on position {position}')
-        self.events = [
-            PlaceASymbolRequestEvent(position)
-        ]
+        super().__init__(
+            profile, queue, f"Request placing a symbol on position {position}"
+        )
+        self.events = [PlaceASymbolRequestEvent(position)]
 
 
 # ===== SCREEN CHANGE REQUESTS =====
 class BackToLobby(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Move back to lobby')
+        super().__init__(profile, queue, "Move back to lobby")
         self.events = [
             ClearInternalGameInformationEvent(),
-            PlaySoundEvent('back'),
-            ScreenTransitionEvent('lobby')
+            PlaySoundEvent("back"),
+            ScreenTransitionEvent("lobby"),
         ]
 
 
 class ToLobby(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Move forward to lobby')
+        super().__init__(profile, queue, "Move forward to lobby")
         self.events = [
-            PlaySoundEvent('select'),
-            ScreenTransitionEvent('lobby'),
+            PlaySoundEvent("select"),
+            ScreenTransitionEvent("lobby"),
         ]
 
 
 class NewGame(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Move to new game screen')
+        super().__init__(profile, queue, "Move to new game screen")
         self.events = [
-            PlaySoundEvent('select'),
-            ScreenTransitionEvent('new_game_screen'),
+            PlaySoundEvent("select"),
+            ScreenTransitionEvent("new_game_screen"),
         ]
 
 
 class GoToJoinAGame(Command):
     def __init__(self, profile, queue):
-        super().__init__(profile, queue, 'Move to join game screen')
+        super().__init__(profile, queue, "Move to join game screen")
         self.events = [
-            PlaySoundEvent('select'),
-            ScreenTransitionEvent('join_a_game'),
+            PlaySoundEvent("select"),
+            ScreenTransitionEvent("join_a_game"),
         ]
 
 
 # ===== SERVER OUTBOUND COMMUNICATIONS =====
 class PlaceASymbol(Command):
     def __init__(self, profile, queue, game_id, position):
-        super().__init__(profile, queue, f'Place a symbol on game {game_id} on position {position}')
-        self.events = [
-            PlaceASymbolNetworkRequestEvent(game_id, position)
-        ]
+        super().__init__(
+            profile, queue, f"Place a symbol on game {game_id} on position {position}"
+        )
+        self.events = [PlaceASymbolNetworkRequestEvent(game_id, position)]

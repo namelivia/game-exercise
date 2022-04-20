@@ -1,5 +1,4 @@
-
-class GameMessage():
+class GameMessage:
     def __init__(self, game):
         self.id = game.id
         self.name = game.name
@@ -7,31 +6,31 @@ class GameMessage():
         self.events = game.events
 
 
-class CreateAGameMessage():
+class CreateAGameMessage:
     def __init__(self, name, player_id):
         self.name = name
         self.player_id = player_id
 
 
-class JoinAGameMessage():
+class JoinAGameMessage:
     def __init__(self, game_id, player_id):
         self.game_id = game_id
         self.player_id = player_id
 
 
-class PlaceASymbolMessage():
+class PlaceASymbolMessage:
     def __init__(self, game_id, player_id, position):
         self.game_id = game_id
         self.player_id = player_id
         self.position = position
 
 
-class ErrorMessage():
+class ErrorMessage:
     def __init__(self, message):
         self.message = message
 
 
-class GetGameStatus():
+class GetGameStatus:
     def __init__(self, game_id, player_id):
         self.game_id = game_id
         self.player_id = player_id

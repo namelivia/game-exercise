@@ -39,6 +39,7 @@ class QuitGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         import pygame  # This is pygame dependent
         import sys
+
         pygame.quit()
         sys.exit()
 
@@ -51,9 +52,13 @@ class UpdateGameEventHandler(EventHandler):
         # How do we know that? using tha game_event_pointer.
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
-        unprocessed_events = events[game_event_pointer + 1:]
-        game_event_pointer = client_state.profile.set_game_event_pointer(len(events) - 1)
-        ProcessServerEvents(client_state.profile, client_state.queue, unprocessed_events).execute()
+        unprocessed_events = events[game_event_pointer + 1 :]
+        game_event_pointer = client_state.profile.set_game_event_pointer(
+            len(events) - 1
+        )
+        ProcessServerEvents(
+            client_state.profile, client_state.queue, unprocessed_events
+        ).execute()
 
 
 class SetInternalGameInformationEventHandler(EventHandler):
@@ -65,28 +70,20 @@ class SetInternalGameInformationEventHandler(EventHandler):
 class RefreshGameStatusEventHandler(EventHandler):
     def handle(self, event, client_state):
         RefreshGameStatus(
-            client_state.profile,
-            client_state.queue,
-            event.game_id
+            client_state.profile, client_state.queue, event.game_id
         ).execute()
 
 
 class NewGameRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         CreateAGame(
-            client_state.profile,
-            client_state.queue,
-            event.new_game_name
+            client_state.profile, client_state.queue, event.new_game_name
         ).execute()
 
 
 class JoinExistingGameEventHandler(EventHandler):
     def handle(self, event, client_state):
-        JoinAGame(
-            client_state.profile,
-            client_state.queue,
-            event.game_id
-        ).execute()
+        JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
 
 
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
@@ -97,9 +94,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         if response is not None:
             if isinstance(response, GameMessage):
                 UpdateGame(
-                    client_state.profile,
-                    client_state.queue,
-                    response.events
+                    client_state.profile, client_state.queue, response.events
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
@@ -114,10 +109,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
 
 class CreateAGameNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
-        request_data = self._encode(
-            client_state.profile.id,
-            event.new_game_name
-        )
+        request_data = self._encode(client_state.profile.id, event.new_game_name)
 
         response = Channel.send_command(request_data)
         if response is not None:
@@ -125,11 +117,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                 InitiateGame(
                     client_state.profile,
                     client_state.queue,
-                    GameData(
-                        response.id,
-                        response.name,
-                        response.players
-                    )
+                    GameData(response.id, response.name, response.players),
                 ).execute()
                 # This is too game specific, why not using hooks?
             if isinstance(response, ErrorMessage):
@@ -155,11 +143,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                 InitiateGame(
                     client_state.profile,
                     client_state.queue,
-                    GameData(
-                        response.id,
-                        response.name,
-                        response.players
-                    )
+                    GameData(response.id, response.name, response.players),
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
@@ -184,8 +168,7 @@ handlers_map = {
 }
 
 
-class EventHandler():
-
+class EventHandler:
     def handle(self, event, client_state):
         try:
             handlers_map[type(event)]().handle(event, client_state)

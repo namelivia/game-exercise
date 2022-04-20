@@ -10,11 +10,11 @@ if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
     HOST, PORT = "localhost", 1234
     logging.basicConfig(
-        filename='server_data/logs/server.log',
+        filename="server_data/logs/server.log",
         level=logging.DEBUG,
-        format='[%(asctime)s] %(message)s'
+        format="[%(asctime)s] %(message)s",
     )
-    logging.info(f'Server listening on {HOST}:{PORT}')
+    logging.info(f"Server listening on {HOST}:{PORT}")
 
     server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
     with server:

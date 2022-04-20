@@ -19,7 +19,7 @@ class PlaceASymbolRequestEvent(Event):
         self.position = position
 
 
-class ClearInternalGameInformationEvent():
+class ClearInternalGameInformationEvent:
     pass
 
 
@@ -31,9 +31,6 @@ class PlaceASymbolNetworkRequestEvent(Event):
 
 
 class PlaySoundEvent(Event):
-    def __init__(
-            self,
-            sound
-    ):
+    def __init__(self, sound):
         super().__init__()
         self.sound = sound

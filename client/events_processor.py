@@ -1,4 +1,4 @@
-class EventsProcessor():
+class EventsProcessor:
     def __init__(self, event_handlers):
         self.event_handlers = event_handlers  # Initial list of event handlers
 

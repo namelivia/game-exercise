@@ -1,5 +1,4 @@
-class TextInputManager():
-
+class TextInputManager:
     def read(self):
 
         mapping = {

@@ -4,9 +4,7 @@ from common.messages import (
     ErrorMessage,
     PlaceASymbolMessage,
 )
-from client.events import (
-    InitiateGameEvent
-)
+from client.events import InitiateGameEvent
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
@@ -32,15 +30,9 @@ from .commands import (
 from common.events import (
     GameCreated,
     PlayerJoined as PlayerJoinedGenericEvent,  # TODO: akward
-    PlayerPlacedSymbol as PlayerPlacedSymbolGenericEvent  # TODO: akward
+    PlayerPlacedSymbol as PlayerPlacedSymbolGenericEvent,  # TODO: akward
 )
-from .sounds import (
-    BackSound,
-    SelectSound,
-    StartGameSound,
-    TypeSound,
-    EraseSound
-)
+from .sounds import BackSound, SelectSound, StartGameSound, TypeSound, EraseSound
 
 from client.network.channel import Channel
 
@@ -68,29 +60,23 @@ class PlaySoundEventHandler(EventHandler):
 class GameCreatedEventHandler(EventHandler):
     def handle(self, event, client_state):
         GameCreatedCommand(
-            client_state.profile,
-            client_state.queue,
-            event.player_id
+            client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
 class PlayerJoinedGenericEventHandler(EventHandler):
     def handle(self, event, client_state):
         PlayerJoinedCommand(
-            client_state.profile,
-            client_state.queue,
-            event.player_id
+            client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
 class PlayerPlacedSymbolGenericEventHandler(EventHandler):
     def handle(self, event, client_state):
         PlayerPlacedSymbolCommand(
-            client_state.profile,
-            client_state.queue,
-            event.player_id,
-            event.position
+            client_state.profile, client_state.queue, event.player_id, event.position
         ).execute()
+
 
 #################################################################
 
@@ -105,7 +91,7 @@ class InitiateGameEventHandler(EventHandler):
                 event.game_data.events,
                 event.game_data.game_id,
                 event.game_data.name,
-                event.game_data.players
+                event.game_data.players,
             )
         )
 
@@ -114,21 +100,13 @@ class ScreenTransitionEventHandler(EventHandler):
     def handle(self, event, client_state):
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
-            client_state.set_current_screen(
-                Intro(client_state)
-            )
+            client_state.set_current_screen(Intro(client_state))
         if event.dest_screen == "lobby":
-            client_state.set_current_screen(
-                Lobby(client_state)
-            )
+            client_state.set_current_screen(Lobby(client_state))
         if event.dest_screen == "new_game_screen":
-            client_state.set_current_screen(
-                NewGame(client_state)
-            )
+            client_state.set_current_screen(NewGame(client_state))
         if event.dest_screen == "join_a_game":
-            client_state.set_current_screen(
-                JoinGame(client_state)
-            )
+            client_state.set_current_screen(JoinGame(client_state))
 
 
 class ClearInternalGameInformationEventHandler(EventHandler):
@@ -143,16 +121,14 @@ class PlaceASymbolRequestEventHandler(EventHandler):
             client_state.profile,
             client_state.queue,
             client_state.profile.game_id,
-            event.position
+            event.position,
         ).execute()
 
 
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
-            client_state.profile.game_id,
-            client_state.profile.id,
-            event.position
+            client_state.profile.game_id, client_state.profile.id, event.position
         )
 
         response = Channel.send_command(request_data)
@@ -164,7 +140,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                     response.id,
                     response.name,
                     response.events,
-                    response.players
+                    response.players,
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
@@ -189,8 +165,7 @@ handlers_map = {
 }
 
 
-class EventHandler():
-
+class EventHandler:
     def handle(self, event, client_state):
         try:
             handlers_map[type(event)]().handle(event, client_state)

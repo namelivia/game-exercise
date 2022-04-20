@@ -1,8 +1,7 @@
 import pygame
 
 
-class Clock():
-
+class Clock:
     def tick(self):
         pass
 

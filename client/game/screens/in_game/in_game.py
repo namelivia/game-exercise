@@ -7,25 +7,12 @@ from .ui import (
     Instructions,
     Background,
 )
-from client.events import (
-    UserTypedEvent
-)
-from client.events import (
-    GameCreatedEvent,
-    PlayerJoinedEvent,
-    PlayerPlacedSymbolEvent
-)
+from client.events import UserTypedEvent
+from client.events import GameCreatedEvent, PlayerJoinedEvent, PlayerPlacedSymbolEvent
 
 
 class InGame(Screen):
-    def __init__(
-        self,
-        client_state,
-        events,
-        game_id,
-        name,
-        players
-    ):
+    def __init__(self, client_state, events, game_id, name, players):
         super().__init__(client_state)
 
         self.data = {
@@ -33,15 +20,14 @@ class InGame(Screen):
             "game_id": game_id,
             "name": name,
             "players": players,
-
         }
 
         self.ui_elements = [
             Background(),
-            GameIdIndicator(self.data['game_id']),
-            GameNameIndicator(self.data['name']),
-            Player1NameIndicator(self.data['players'][0]),
-            Player2NameIndicator(self.data['players'][1]),
+            GameIdIndicator(self.data["game_id"]),
+            GameNameIndicator(self.data["name"]),
+            Player1NameIndicator(self.data["players"][0]),
+            Player2NameIndicator(self.data["players"][1]),
             Instructions(),
         ]
 
@@ -52,26 +38,25 @@ class InGame(Screen):
         if event is not None:
             if isinstance(event, UserTypedEvent):
                 # Avoid circular import
-                from client.game.commands import (
-                    BackToLobby,
-                    RequestPlaceASymbol
-                )
+                from client.game.commands import BackToLobby, RequestPlaceASymbol
+
                 if event.key == "escape":
                     BackToLobby(
-                        self.client_state.profile,
-                        self.client_state.queue
+                        self.client_state.profile, self.client_state.queue
                     ).execute()
                 if event.key in "012345678":
                     RequestPlaceASymbol(
-                        self.client_state.profile,
-                        self.client_state.queue,
-                        event.key
+                        self.client_state.profile, self.client_state.queue, event.key
                     ).execute()
             if isinstance(event, GameCreatedEvent):
-                print("Game created, do something play some music, update the internal state or something")
+                print(
+                    "Game created, do something play some music, update the internal state or something"
+                )
             if isinstance(event, PlayerJoinedEvent):
                 pass
                 # print("Player joined, do something play some music, update the internal state or something")
                 # self.data.player_2_id = event.player_id
             if isinstance(event, PlayerPlacedSymbolEvent):
-                print("Player placed a symbol, do something play some music, update the internal state or something")
+                print(
+                    "Player placed a symbol, do something play some music, update the internal state or something"
+                )

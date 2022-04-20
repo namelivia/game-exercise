@@ -1,11 +1,11 @@
 import socket
 import pickle
+
 IP = "localhost"
 PORT = 1234
 
 
-class Channel():
-
+class Channel:
     @staticmethod
     def send_command(message):
         try:

@@ -12,7 +12,7 @@ from client.events import (
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     RefreshGameStatusEvent,
-    RefreshGameStatusNetworkRequestEvent
+    RefreshGameStatusNetworkRequestEvent,
 )
 from client.commands import (
     QuitGame,
@@ -26,9 +26,7 @@ from client.commands import (
     RequestJoiningAGame,
     RequestGameCreation,
 )
-from common.messages import (
-    GameMessage
-)
+from common.messages import GameMessage
 from client.game_data import GameData
 import mock
 
@@ -44,7 +42,9 @@ class TestClient(TestCase):
     @mock.patch("sys.exit")
     def test_quitting_the_game(self, m_exit, m_pygame_quit):
         QuitGame(self.profile, self.queue).execute()
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, QuitGameEvent)
         client_state = mock.Mock()  # TODO: I don't like I have to define this
         self.event_handler.handle(event, client_state)
@@ -52,30 +52,27 @@ class TestClient(TestCase):
         m_exit.assert_called_once_with()
 
     def test_user_typing(self):
-        UserTyped(self.profile, self.queue,  "f").execute()
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
+        UserTyped(self.profile, self.queue, "f").execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UserTypedEvent)
         assert event.key == "f"
         # There is no generic handler for this one, it is handled by the game on each screen
 
     def test_updating(self):
         # When there are new events to process these will be pushed to the queue
-        already_processed_events = [
-            "event_1"
-        ]
+        already_processed_events = ["event_1"]
         game_events = [
             "event_1",
             "event_2",
             "event_3",
         ]
-        profile = Profile(
-            'id',
-            'name',
-            'game_id',
-            len(already_processed_events) - 1
-        )
+        profile = Profile("id", "name", "game_id", len(already_processed_events) - 1)
         UpdateGame(profile, self.queue, game_events).execute()
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UpdateGameEvent)
 
         client_state = mock.Mock()  # TODO: I don't like I have to define this
@@ -88,49 +85,48 @@ class TestClient(TestCase):
         assert unprocessed_event_1 == "event_2"
         unprocessed_event_1 = self.queue.pop()
         assert unprocessed_event_1 == "event_3"
-        assert client_state.profile.game_event_pointer == 2  # And the event pointer has been updated
+        assert (
+            client_state.profile.game_event_pointer == 2
+        )  # And the event pointer has been updated
 
     def test_initializating_game(self):
         game_data = GameData(
-            "some_game_id",
-            "some_game_name",
-            ["player_1_id", "player_2_id"]
+            "some_game_id", "some_game_name", ["player_1_id", "player_2_id"]
         )
 
-        profile = Profile(
-            'id',
-            'name',
-            None,  # Internal game id is not set
-            0
-        )
+        profile = Profile("id", "name", None, 0)  # Internal game id is not set
 
-        InitiateGame(
-            self.profile,
-            self.queue,
-            game_data
-        ).execute()
+        InitiateGame(self.profile, self.queue, game_data).execute()
 
         client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.profile = profile
 
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
-        assert isinstance(event, InitiateGameEvent)  # Event to be picked up by the game logic
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(
+            event, InitiateGameEvent
+        )  # Event to be picked up by the game logic
 
         event = self.queue.pop()
         self.event_handler.handle(event, client_state)
-        assert client_state.profile.game_id == "some_game_id"  # The internal game id is set
+        assert (
+            client_state.profile.game_id == "some_game_id"
+        )  # The internal game id is set
 
     # Game events
     def test_game_created(self):
-        GameCreatedCommand(self.profile, self.queue,  "some_player_id").execute()
+        GameCreatedCommand(self.profile, self.queue, "some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_joined(self):
-        PlayerJoinedCommand(self.profile, self.queue,  "some_player_id").execute()
+        PlayerJoinedCommand(self.profile, self.queue, "some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_placed_symbol(self):
-        PlayerPlacedSymbolCommand(self.profile, self.queue,  "some_player_id", 2).execute()
+        PlayerPlacedSymbolCommand(
+            self.profile, self.queue, "some_player_id", 2
+        ).execute()
         # TODO: Finish this test
 
     @mock.patch("client.event_handler.Channel.send_command")
@@ -139,20 +135,22 @@ class TestClient(TestCase):
         # The server will respond with a correct game message
         m_send_command.return_value = GameMessage(
             GameData(
-                'game_id',
-                'game_name',
-                ['player_1_id', 'player_2_id'],
+                "game_id",
+                "game_name",
+                ["player_1_id", "player_2_id"],
                 [
-                    'event_1',
-                    'event_2',
-                    'event_3',
-                ]
+                    "event_1",
+                    "event_2",
+                    "event_3",
+                ],
             )
         )
 
         # A request to get the game status is sourced
-        RequestGameStatus(self.profile, self.queue,  "some_game_id").execute()
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
+        RequestGameStatus(self.profile, self.queue, "some_game_id").execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, RefreshGameStatusEvent)
 
         client_state = mock.Mock()  # TODO: I don't like I have to define this
@@ -171,7 +169,7 @@ class TestClient(TestCase):
         event = self.queue.pop()
         assert isinstance(event, UpdateGameEvent)
         # And it contains the new set of events from the server
-        assert event.events == ['event_1', 'event_2', 'event_3']
+        assert event.events == ["event_1", "event_2", "event_3"]
 
     @mock.patch("client.event_handler.Channel.send_command")
     def test_request_game_status_error(self, m_send_command):
@@ -184,18 +182,20 @@ class TestClient(TestCase):
     def test_request_create_new_game_success(self, m_send_command):
         m_send_command.return_value = GameMessage(
             GameData(
-                'game_id',
-                'game_name',
-                ['player_1_id', 'player_2_id'],
+                "game_id",
+                "game_name",
+                ["player_1_id", "player_2_id"],
                 [
-                    'event_1',
-                    'event_2',
-                    'event_3',
-                ]
+                    "event_1",
+                    "event_2",
+                    "event_3",
+                ],
             )
         )
-        RequestGameCreation(self.profile, self.queue,  "some_game_id").execute()
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
+        RequestGameCreation(self.profile, self.queue, "some_game_id").execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, NewGameRequestEvent)
 
         # Handle the event
@@ -220,7 +220,7 @@ class TestClient(TestCase):
             "events": [],
             "id": "game_id",
             "name": "game_name",
-            "players": ["player_1_id", "player_2_id"]
+            "players": ["player_1_id", "player_2_id"],
         }
 
     @mock.patch("client.event_handler.Channel.send_command")
@@ -234,18 +234,20 @@ class TestClient(TestCase):
     def test_request_join_a_game_success(self, m_send_command):
         m_send_command.return_value = GameMessage(
             GameData(
-                'game_id',
-                'game_name',
-                ['player_1_id', 'player_2_id'],
+                "game_id",
+                "game_name",
+                ["player_1_id", "player_2_id"],
                 [
-                    'event_1',
-                    'event_2',
-                    'event_3',
-                ]
+                    "event_1",
+                    "event_2",
+                    "event_3",
+                ],
             )
         )
-        RequestJoiningAGame(self.profile, self.queue,  "some_game_id").execute()
-        event = self.queue.pop()  # TODO: Manage the case of commands that queue several events
+        RequestJoiningAGame(self.profile, self.queue, "some_game_id").execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, JoinExistingGameEvent)
 
         # Handle the event
@@ -270,7 +272,7 @@ class TestClient(TestCase):
             "events": [],
             "id": "game_id",
             "name": "game_name",
-            "players": ["player_1_id", "player_2_id"]
+            "players": ["player_1_id", "player_2_id"],
         }
 
     @mock.patch("client.event_handler.Channel.send_command")

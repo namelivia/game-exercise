@@ -5,7 +5,7 @@ from client.persistence.persistence import Persistence
 from .profile.factory import Factory
 
 
-class ClientState():
+class ClientState:
     def __init__(self, initial_event):
         self.queue = Queue()
         self.profile = self._initialize_status()
@@ -15,7 +15,7 @@ class ClientState():
         self.queue.put(initial_event)
 
     def _get_new_profile(self) -> Profile:
-        name = input('Enter your name:')
+        name = input("Enter your name:")
         profile = Factory.new_profile(name)
         Persistence.save(profile)
         return profile

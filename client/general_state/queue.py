@@ -1,8 +1,7 @@
 from queue import SimpleQueue, Empty
 
 
-class Queue():
-
+class Queue:
     def __init__(self):
         self.data = SimpleQueue()
 
