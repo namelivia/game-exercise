@@ -79,6 +79,15 @@ class GoToJoinAGame(Command):
         ]
 
 
+class GoToGameList(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Move to game list screen")
+        self.events = [
+            PlaySoundEvent("select"),
+            ScreenTransitionEvent("game_list"),
+        ]
+
+
 class GoToOptions(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Move to options screen")

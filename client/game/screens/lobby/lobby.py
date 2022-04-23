@@ -17,7 +17,12 @@ class Lobby(Screen):
             Background(),
             WelcomeMessage(self.data["name"]),
             OptionList(
-                {"1": "Create a new game", "2": "Join an existing game", "3": "Options"}
+                {
+                    "1": "Create a new game",
+                    "2": "Join an existing game",
+                    "3": "Game list",
+                    "4": "Options",
+                }
             ),
         ]
 
@@ -26,7 +31,12 @@ class Lobby(Screen):
     def on_user_typed(self, event):
         # Avoid circular import
         # Could these be not just game specific but screen specific?
-        from client.game.commands import NewGame, GoToJoinAGame, GoToOptions
+        from client.game.commands import (
+            NewGame,
+            GoToJoinAGame,
+            GoToOptions,
+            GoToGameList,
+        )
         from client.commands import QuitGame
 
         # These actions, some may update the data, others run commands, who knows
@@ -36,6 +46,8 @@ class Lobby(Screen):
         if key == "2":
             GoToJoinAGame(self.client_state.profile, self.client_state.queue).execute()
         if key == "3":
+            GoToGameList(self.client_state.profile, self.client_state.queue).execute()
+        if key == "4":
             GoToOptions(self.client_state.profile, self.client_state.queue).execute()
         if event.key == "escape":
             QuitGame(self.client_state.profile, self.client_state.queue).execute()
