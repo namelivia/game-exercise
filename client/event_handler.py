@@ -9,6 +9,8 @@ from .events import (
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
+    TurnSoundOnEvent,
+    TurnSoundOffEvent,
 )
 from .commands import (
     ProcessServerEvents,
@@ -42,6 +44,16 @@ class QuitGameEventHandler(EventHandler):
 
         pygame.quit()
         sys.exit()
+
+
+class TurnSoundOnEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        client_state.profile.set_sound_on()
+
+
+class TurnSoundOffEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        client_state.profile.set_sound_off()
 
 
 # ======= GAME STATE SYNC =======
@@ -164,6 +176,8 @@ handlers_map = {
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
+    TurnSoundOnEvent: TurnSoundOnEventHandler,
+    TurnSoundOffEvent: TurnSoundOffEventHandler,
     JoinExistingGameEvent: JoinExistingGameEventHandler,
 }
 

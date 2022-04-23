@@ -55,24 +55,26 @@ They do the actual procssing and can execute commands.
 
 class PlaySoundEventHandler(EventHandler):
     def handle(self, event, client_state):
-        if event.sound == "back":
-            BackSound().play()
-        if event.sound == "select":
-            SelectSound().play()
-        if event.sound == "start_game":
-            StartGameSound().play()
-        if event.sound == "type":
-            TypeSound().play()
-        if event.sound == "erase":
-            EraseSound().play()
-        if event.sound == "user_joined":
-            UserJoinedSound().play()
+        if client_state.profile.sound_on:
+            if event.sound == "back":
+                BackSound().play()
+            if event.sound == "select":
+                SelectSound().play()
+            if event.sound == "start_game":
+                StartGameSound().play()
+            if event.sound == "type":
+                TypeSound().play()
+            if event.sound == "erase":
+                EraseSound().play()
+            if event.sound == "user_joined":
+                UserJoinedSound().play()
 
 
 class PlayMusicEventHandler(EventHandler):
     def handle(self, event, client_state):
-        if event.music == "main_theme":
-            MainThemeMusic().play()
+        if client_state.profile.sound_on:
+            if event.music == "main_theme":
+                MainThemeMusic().play()
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER

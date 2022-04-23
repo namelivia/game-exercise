@@ -17,7 +17,7 @@ class ClientState:
     def _get_new_profile(self) -> Profile:
         name = input("Enter your name:")
         profile = Factory.new_profile(name)
-        Persistence.save(profile)
+        profile.save()
         return profile
 
     def _initialize_status(self) -> Profile:
