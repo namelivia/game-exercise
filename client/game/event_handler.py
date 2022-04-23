@@ -18,6 +18,7 @@ from .screens.intro.intro import Intro
 from .screens.lobby.lobby import Lobby
 from .screens.new_game.new_game import NewGame
 from .screens.join_game.join_game import JoinGame
+from .screens.options.options import Options
 from .screens.in_game.in_game import InGame
 from client.commands import (
     UpdateGame,
@@ -125,6 +126,8 @@ class ScreenTransitionEventHandler(EventHandler):
             client_state.set_current_screen(NewGame(client_state))
         if event.dest_screen == "join_a_game":
             client_state.set_current_screen(JoinGame(client_state))
+        if event.dest_screen == "options":
+            client_state.set_current_screen(Options(client_state))
 
 
 class ClearInternalGameInformationEventHandler(EventHandler):

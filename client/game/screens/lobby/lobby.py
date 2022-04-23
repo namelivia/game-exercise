@@ -16,7 +16,9 @@ class Lobby(Screen):
         self.ui_elements = [
             Background(),
             WelcomeMessage(self.data["name"]),
-            OptionList({"1": "Create a new game", "2": "Join an existing game"}),
+            OptionList(
+                {"1": "Create a new game", "2": "Join an existing game", "3": "Options"}
+            ),
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
@@ -24,7 +26,7 @@ class Lobby(Screen):
     def on_user_typed(self, event):
         # Avoid circular import
         # Could these be not just game specific but screen specific?
-        from client.game.commands import NewGame, GoToJoinAGame
+        from client.game.commands import NewGame, GoToJoinAGame, GoToOptions
         from client.commands import QuitGame
 
         # These actions, some may update the data, others run commands, who knows
@@ -33,5 +35,7 @@ class Lobby(Screen):
             NewGame(self.client_state.profile, self.client_state.queue).execute()
         if key == "2":
             GoToJoinAGame(self.client_state.profile, self.client_state.queue).execute()
+        if key == "3":
+            GoToOptions(self.client_state.profile, self.client_state.queue).execute()
         if event.key == "escape":
             QuitGame(self.client_state.profile, self.client_state.queue).execute()
