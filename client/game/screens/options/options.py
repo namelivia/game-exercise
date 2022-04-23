@@ -1,5 +1,5 @@
 from client.primitives.screen import Screen
-from .ui import Background
+from .ui import Background, OptionsTitle, OptionList
 from client.events import UserTypedEvent
 
 
@@ -9,6 +9,8 @@ class Options(Screen):
 
         self.ui_elements = [
             Background(),
+            OptionsTitle(),
+            OptionList({"1": "Sound ON", "2": "Soud OFF"}),
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
@@ -20,7 +22,11 @@ class Options(Screen):
 
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
             return
-        if event.key == "return":
-            # Avoid circular import
-            pass
-            return
+        if event.key == "1":
+            from client.commands import TurnSoundOn
+
+            TurnSoundOn(self.client_state.profile, self.client_state.queue).execute()
+        if event.key == "2":
+            from client.commands import TurnSoundOff
+
+            TurnSoundOff(self.client_state.profile, self.client_state.queue).execute()
