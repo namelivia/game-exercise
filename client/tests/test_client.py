@@ -13,6 +13,8 @@ from client.events import (
     JoinAGameNetworkRequestEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
+    TurnSoundOnEvent,
+    TurnSoundOffEvent,
 )
 from client.commands import (
     QuitGame,
@@ -25,6 +27,8 @@ from client.commands import (
     RequestGameStatus,
     RequestJoiningAGame,
     RequestGameCreation,
+    TurnSoundOn,
+    TurnSoundOff,
 )
 from common.messages import GameMessage
 from client.game_data import GameData
@@ -51,6 +55,34 @@ class TestClient(TestCase):
         m_pygame_quit.assert_called_once_with()
         m_exit.assert_called_once_with()
 
+    def test_turning_sound_on(self):
+        profile = Profile(
+            id="id",
+            name="name",
+            game_id="game_id",
+            game_event_pointer=0,
+            sound_on=False,
+        )
+        TurnSoundOn(self.profile, self.queue).execute()
+        event = self.queue.pop()
+        assert isinstance(event, TurnSoundOnEvent)
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
+        client_state.profile = profile
+        self.event_handler.handle(event, client_state)
+        assert client_state.profile.sound_on is True
+
+    def test_turning_sound_off(self):
+        profile = Profile(
+            id="id", name="name", game_id="game_id", game_event_pointer=0, sound_on=True
+        )
+        TurnSoundOff(self.profile, self.queue).execute()
+        event = self.queue.pop()
+        assert isinstance(event, TurnSoundOffEvent)
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
+        client_state.profile = profile
+        self.event_handler.handle(event, client_state)
+        assert client_state.profile.sound_on is False
+
     def test_user_typing(self):
         UserTyped(self.profile, self.queue, "f").execute()
         event = (
@@ -68,7 +100,13 @@ class TestClient(TestCase):
             "event_2",
             "event_3",
         ]
-        profile = Profile("id", "name", "game_id", len(already_processed_events) - 1)
+        profile = Profile(
+            id="id",
+            name="name",
+            game_id="game_id",
+            game_event_pointer=len(already_processed_events) - 1,
+            sound_on=False,
+        )
         UpdateGame(profile, self.queue, game_events).execute()
         event = (
             self.queue.pop()
@@ -94,7 +132,13 @@ class TestClient(TestCase):
             "some_game_id", "some_game_name", ["player_1_id", "player_2_id"]
         )
 
-        profile = Profile("id", "name", None, 0)  # Internal game id is not set
+        profile = Profile(
+            id="id",
+            name="name",
+            game_id=None,  # Internal game id is not set
+            game_event_pointer=0,
+            sound_on=False,
+        )
 
         InitiateGame(self.profile, self.queue, game_data).execute()
 
