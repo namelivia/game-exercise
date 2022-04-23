@@ -46,20 +46,20 @@ class SetInternalGameInformationEvent(Event):
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
-class GameCreatedEvent(Event):
+class GameCreatedInGameEvent(Event):
     def __init__(self, player_id):
         super().__init__()
         self.player_id = player_id
 
 
-class PlayerJoinedEvent(Event):
+class PlayerJoinedInGameEvent(Event):
     def __init__(self, player_id):
         super().__init__()
         self.player_id = player_id
 
 
 # This one seems specific
-class PlayerPlacedSymbolEvent(Event):
+class PlayerPlacedSymbolInGameEvent(Event):
     def __init__(self, player_id, position):
         super().__init__()
         self.player_id = player_id

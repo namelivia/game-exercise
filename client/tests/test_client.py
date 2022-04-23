@@ -21,9 +21,9 @@ from client.commands import (
     UserTyped,
     UpdateGame,
     InitiateGame,
-    GameCreatedCommand,
-    PlayerJoinedCommand,
-    PlayerPlacedSymbolCommand,
+    GameCreatedInGameCommand,
+    PlayerJoinedInGameCommand,
+    PlayerPlacedSymbolInGameCommand,
     RequestGameStatus,
     RequestJoiningAGame,
     RequestGameCreation,
@@ -160,15 +160,15 @@ class TestClient(TestCase):
 
     # Game events
     def test_game_created(self):
-        GameCreatedCommand(self.profile, self.queue, "some_player_id").execute()
+        GameCreatedInGameCommand(self.profile, self.queue, "some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_joined(self):
-        PlayerJoinedCommand(self.profile, self.queue, "some_player_id").execute()
+        PlayerJoinedInGameCommand(self.profile, self.queue, "some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_placed_symbol(self):
-        PlayerPlacedSymbolCommand(
+        PlayerPlacedSymbolInGameCommand(
             self.profile, self.queue, "some_player_id", 2
         ).execute()
         # TODO: Finish this test

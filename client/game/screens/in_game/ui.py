@@ -30,7 +30,15 @@ class Events(UIElement):
     def __init__(self, events):
         self.events = events
         self.shapes = [
-            SmallText(event, 20, 300 + (20 * index))
+            SmallText(str(event), 20, 300 + (20 * index))
+            for index, event in enumerate(events)
+        ]
+
+    def update(self, time, data):
+        # What if data does not contain events? Throw an exception
+        events = data["events"]
+        self.shapes = [
+            SmallText(str(event), 20, 300 + (20 * index))
             for index, event in enumerate(events)
         ]
 

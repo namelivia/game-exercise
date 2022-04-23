@@ -6,9 +6,14 @@ from .ui import (
     Player2NameIndicator,
     Instructions,
     Background,
+    Events,
 )
 from client.events import UserTypedEvent
-from client.events import GameCreatedEvent, PlayerJoinedEvent, PlayerPlacedSymbolEvent
+from client.events import (
+    GameCreatedInGameEvent,
+    PlayerJoinedInGameEvent,
+    PlayerPlacedSymbolInGameEvent,
+)
 
 
 class InGame(Screen):
@@ -28,14 +33,15 @@ class InGame(Screen):
             GameNameIndicator(self.data["name"]),
             Player1NameIndicator(self.data["players"][0]),
             Player2NameIndicator(None),
+            Events(self.data["events"]),
             Instructions(),
         ]
 
         self.events = {
             UserTypedEvent: self.on_user_typed,
-            GameCreatedEvent: self.on_game_created,
-            PlayerJoinedEvent: self.on_player_joined,
-            PlayerPlacedSymbolEvent: self.on_player_placed_symbol,
+            GameCreatedInGameEvent: self.on_game_created,
+            PlayerJoinedInGameEvent: self.on_player_joined,
+            PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
         }
 
     def on_user_typed(self, event):
@@ -50,17 +56,20 @@ class InGame(Screen):
             ).execute()
 
     def on_game_created(self, event):
+        self.data["events"].append(event)
         print(
-            "Game created, do something play some music, update the internal state or something"
+            "New Game created event, do something play some music, update the internal state or something"
         )
 
     def on_player_joined(self, event):
+        self.data["events"].append(event)
         print(
-            "Player Joined, do something play some music, update the internal state or something"
+            "New Player Joined event, do something play some music, update the internal state or something"
         )
         # self.data.player_2_id = event.player_id
 
     def on_player_placed_symbol(self, event):
+        self.data["events"].append(event)
         print(
-            "Player placed a symbol, do something play some music, update the internal state or something"
+            "New Player placed a symbol event, do something play some music, update the internal state or something"
         )

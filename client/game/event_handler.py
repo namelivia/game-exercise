@@ -23,9 +23,9 @@ from .screens.options.options import Options
 from .screens.in_game.in_game import InGame
 from client.commands import (
     UpdateGame,
-    GameCreatedCommand,
-    PlayerJoinedCommand,
-    PlayerPlacedSymbolCommand,
+    GameCreatedInGameCommand,
+    PlayerJoinedInGameCommand,
+    PlayerPlacedSymbolInGameCommand,
 )
 from .commands import (
     PlaceASymbol,
@@ -33,9 +33,9 @@ from .commands import (
     PlaySound,
 )
 from common.events import (
-    GameCreated,
-    PlayerJoined as PlayerJoinedGenericEvent,  # TODO: akward
-    PlayerPlacedSymbol as PlayerPlacedSymbolGenericEvent,  # TODO: akward
+    GameCreated as GameCreatedInGameEvent,  # TODO: akward
+    PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
+    PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
 )
 from .sounds import (
     BackSound,
@@ -79,23 +79,23 @@ class PlayMusicEventHandler(EventHandler):
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
-class GameCreatedEventHandler(EventHandler):
+class GameCreatedInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
-        GameCreatedCommand(
+        GameCreatedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
-class PlayerJoinedGenericEventHandler(EventHandler):
+class PlayerJoinedInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
-        PlayerJoinedCommand(
+        PlayerJoinedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
-class PlayerPlacedSymbolGenericEventHandler(EventHandler):
+class PlayerPlacedSymbolInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
-        PlayerPlacedSymbolCommand(
+        PlayerPlacedSymbolInGameCommand(
             client_state.profile, client_state.queue, event.player_id, event.position
         ).execute()
 
@@ -178,12 +178,13 @@ handlers_map = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
     PlayMusicEvent: PlayMusicEventHandler,
-    GameCreated: GameCreatedEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
     InitiateGameEvent: InitiateGameEventHandler,
-    PlayerJoinedGenericEvent: PlayerJoinedGenericEventHandler,
-    PlayerPlacedSymbolGenericEvent: PlayerPlacedSymbolGenericEventHandler,
+    # In game events, these events define the status of the game
+    GameCreatedInGameEvent: GameCreatedInGameEventHandler,
+    PlayerJoinedInGameEvent: PlayerJoinedInGameEventHandler,
+    PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
 }
 
 

@@ -5,11 +5,11 @@ from .events import (
     UpdateGameEvent,
     InitiateGameEvent,
     SetInternalGameInformationEvent,
-    GameCreatedEvent,
-    PlayerJoinedEvent,
+    GameCreatedInGameEvent,
+    PlayerJoinedInGameEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
-    PlayerPlacedSymbolEvent,
+    PlayerPlacedSymbolInGameEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
@@ -87,14 +87,14 @@ class ProcessServerEvents(Command):
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
-class GameCreatedCommand(Command):
+class GameCreatedInGameCommand(Command):
     def __init__(self, profile, queue, player_id):
         super().__init__(profile, queue, f"Player {player_id} created a game")
         # Then who starts GameCreated??
         # IT IS AN EVENT ON THE GAME QUEUE, AND BECAUSE OF THAT IT IS PUT ON THE EVENTS ARRAY BY THE SERVER
         # GameCreated => GameCreatedEventHandler => GameCreatedCommand => GameCreatedEvent
         self.events = [
-            GameCreatedEvent(
+            GameCreatedInGameEvent(
                 player_id
             ),  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
@@ -102,11 +102,11 @@ class GameCreatedCommand(Command):
         ]
 
 
-class PlayerJoinedCommand(Command):
+class PlayerJoinedInGameCommand(Command):
     def __init__(self, profile, queue, player_id):
         super().__init__(profile, queue, f"Player {player_id} joined the game")
         self.events = [
-            PlayerJoinedEvent(
+            PlayerJoinedInGameEvent(
                 player_id
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
@@ -115,13 +115,13 @@ class PlayerJoinedCommand(Command):
 
 
 # This one seems specific
-class PlayerPlacedSymbolCommand(Command):
+class PlayerPlacedSymbolInGameCommand(Command):
     def __init__(self, profile, queue, player_id, position):
         super().__init__(
             profile, queue, f"Player {player_id} placed a symbol on position {position}"
         )
         self.events = [
-            PlayerPlacedSymbolEvent(
+            PlayerPlacedSymbolInGameEvent(
                 player_id, position
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
