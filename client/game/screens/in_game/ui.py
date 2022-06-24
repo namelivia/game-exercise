@@ -1,4 +1,4 @@
-from client.graphics.shapes import SmallText, Image
+from client.graphics.shapes import SmallText, Image, Animation
 from client.primitives.ui import UIElement
 
 
@@ -43,11 +43,48 @@ class Events(UIElement):
         ]
 
 
-class Instructions(UIElement):
-    def __init__(self):
-        self.shapes = [SmallText("Press the square number to place a symbol", 20, 200)]
+class EventPointerIndicator(UIElement):
+    def __init__(self, event_pointer):
+        self.event_pointer = event_pointer
+        self.shapes = [SmallText(f"Event pointer at {self.event_pointer}", 20, 200)]
+
+    def update(self, time, data):
+        # What if data does not contain events? Throw an exception
+        event_pointer = data["event_pointer"]
+        self.shapes = [SmallText(f"Event pointer at {event_pointer}", 20, 200)]
 
 
 class Background(UIElement):
     def __init__(self):
         self.shapes = [Image("client/game/images/background5.png", 0, 0)]
+
+
+class IntroAnimation(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Animation("client/game/images/coin", 0, 150),
+            Animation("client/game/images/coin", 250, 0, 3),
+        ]
+
+        self.shapes[0].hide()
+        self.shapes[1].hide()
+        self.timer = 0
+
+    def play(self):
+        self.shapes[0].show()
+        self.shapes[1].show()
+        self.timer = 0
+
+    def update(self, time, data):
+        self.timer += 1
+        animation_speed = 128  # The higher the slower
+        if (time % animation_speed) == 0:
+            self.shapes[0].update()  # Not supersure about this
+            self.shapes[1].update()  # Not supersure about this
+        movement_speed = 5  # The higher the slower
+        self.shapes[0].set_x((time / movement_speed) % 640)  # Not supersure about this
+        self.shapes[1].set_y((time / movement_speed) % 480)  # Not supersure about this
+
+        if self.timer > 200:
+            self.shapes[0].hide()
+            self.shapes[1].hide()

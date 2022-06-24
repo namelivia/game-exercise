@@ -59,9 +59,9 @@ class TurnSoundOffEventHandler(EventHandler):
 # ======= GAME STATE SYNC =======
 class UpdateGameEventHandler(EventHandler):
     def handle(self, event, client_state):
-        # What we are going to do know is to check for unprocessed events
+        # What we are going to do now is to check for unprocessed events
         # there may be new events that have not been processed by the client,
-        # How do we know that? using tha game_event_pointer.
+        # How do we know that? using the game_event_pointer.
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
         unprocessed_events = events[game_event_pointer + 1 :]
