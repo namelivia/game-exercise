@@ -15,6 +15,8 @@ from .events import (
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
+    GetGameListNetworkRequestEvent,
+    UpdateGameListEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
 )
@@ -76,6 +78,12 @@ class UpdateGame(Command):
     def __init__(self, profile, queue, events):
         super().__init__(profile, queue, "Locally updating game")
         self.events = [UpdateGameEvent(events)]
+
+
+class UpdateGameList(Command):
+    def __init__(self, profile, queue, games):
+        super().__init__(profile, queue, "Updating game list")
+        self.events = [UpdateGameListEvent(games)]
 
 
 # This says server events but these are GAME events (put on the game data by the server)
@@ -176,3 +184,9 @@ class PingTheServer(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Ping the server")
         self.events = [PingNetworkRequestEvent()]
+
+
+class GetGameList(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Get Game List")
+        self.events = [GetGameListNetworkRequestEvent()]

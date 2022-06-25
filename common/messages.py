@@ -47,3 +47,12 @@ class PingRequestMessage:
 
 class PingResponseMessage:
     pass
+
+
+class GameListRequestMessage:
+    pass
+
+
+class GameListResponseMessage:
+    def __init__(self, games):
+        self.games = games

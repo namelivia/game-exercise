@@ -106,3 +106,13 @@ class JoinAGameNetworkRequestEvent(Event):
 
 class PingNetworkRequestEvent(Event):
     pass
+
+
+class GetGameListNetworkRequestEvent(Event):
+    pass
+
+
+class UpdateGameListEvent(Event):
+    def __init__(self, games):
+        super().__init__()
+        self.games = games

@@ -10,6 +10,7 @@ from .events import (
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
+    GetGameListNetworkRequestEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
 )
@@ -20,6 +21,7 @@ from .commands import (
     CreateAGame,
     JoinAGame,
     InitiateGame,
+    UpdateGameList
 )
 from common.messages import (
     GameMessage,
@@ -29,6 +31,8 @@ from common.messages import (
     JoinAGameMessage,
     PingRequestMessage,
     PingResponseMessage,
+    GameListRequestMessage,
+    GameListResponseMessage,
 )
 from client.network.channel import Channel
 from .game_data import GameData
@@ -187,6 +191,27 @@ class PingNetworkRequestEventHandler(EventHandler):
         return PingRequestMessage()
 
 
+class GetGameListNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        request_data = self._encode()
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameListResponseMessage):
+                UpdateGameList(
+                    client_state.profile,
+                    client_state.queue,
+                    response.games
+                ).execute()
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Error retrieving the game list from the server")
+
+    def _encode(self):
+        return GameListRequestMessage()
+
+
 handlers_map = {
     QuitGameEvent: QuitGameEventHandler,
     UpdateGameEvent: UpdateGameEventHandler,
@@ -195,6 +220,7 @@ handlers_map = {
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
+    GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     TurnSoundOnEvent: TurnSoundOnEventHandler,

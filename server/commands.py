@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from os import walk
 from .game import Game
 from .errors import InvalidCommandError
 import pickle
@@ -6,6 +7,7 @@ import logging
 from common.messages import (
     GameMessage,
     PingResponseMessage,
+    GameListResponseMessage,
 )
 
 logger = logging.getLogger(__name__)
@@ -139,3 +141,21 @@ class Ping(Command):
     def execute(self):
         super().execute()
         return PingResponseMessage()
+
+
+class GetGameList(Command):
+    @property
+    def name(self):
+        return "Get game list"
+
+    def debug(self):
+        logger.info("Game list request")
+
+    # Retrieve the list of games current game from storage
+    def get_all_games(self):
+        return next(walk("server_data/games/"))[2]
+
+    def execute(self):
+        super().execute()
+        games = self.get_all_games()
+        return GameListResponseMessage(games)
