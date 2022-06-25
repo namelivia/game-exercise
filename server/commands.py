@@ -3,6 +3,10 @@ from .game import Game
 from .errors import InvalidCommandError
 import pickle
 import logging
+from common.messages import (
+    GameMessage,
+    PingResponseMessage,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +69,7 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return game
+        return GameMessage(game)
 
 
 class CreateGame(Command):
@@ -85,7 +89,7 @@ class CreateGame(Command):
         game = self.create_game(self.game_name, self.player_id)
         # Persist the new game on storage
         self.save_game(game)
-        return game
+        return GameMessage(game)
 
 
 class JoinGame(Command):
@@ -104,7 +108,7 @@ class JoinGame(Command):
         game = self.load_game(self.game_id)
         game.join(self.player_id)
         self.save_game(game)
-        return game
+        return GameMessage(game)
 
 
 class GameStatus(Command):
@@ -122,4 +126,16 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return game
+        return GameMessage(game)
+
+
+class Ping(Command):
+    def name(self):
+        return "Ping"
+
+    def debug(self):
+        logger.info("Ping request")
+
+    def execute(self):
+        super().execute()
+        return PingResponseMessage()

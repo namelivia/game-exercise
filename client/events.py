@@ -102,3 +102,7 @@ class JoinAGameNetworkRequestEvent(Event):
     def __init__(self, game_id):
         super().__init__()
         self.game_id = game_id
+
+
+class PingNetworkRequestEvent(Event):
+    pass

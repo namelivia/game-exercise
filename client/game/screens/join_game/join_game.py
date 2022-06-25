@@ -1,5 +1,5 @@
 from client.primitives.screen import Screen
-from .ui import GameIdMessage, Background
+from .ui import GameIdMessage, Background, ErrorPopup
 from client.events import UserTypedEvent
 from client.game.commands import PlaySound
 
@@ -13,6 +13,7 @@ class JoinGame(Screen):
         self.ui_elements = [
             Background(),
             GameIdMessage(self.data["game_id"]),
+            ErrorPopup()
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}

@@ -97,6 +97,15 @@ class GoToOptions(Command):
         ]
 
 
+class GoToCredits(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Move to options screen")
+        self.events = [
+            PlaySoundEvent("select"),
+            ScreenTransitionEvent("credits"),
+        ]
+
+
 # ===== SERVER OUTBOUND COMMUNICATIONS =====
 class PlaceASymbol(Command):
     def __init__(self, profile, queue, game_id, position):

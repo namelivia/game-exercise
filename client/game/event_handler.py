@@ -21,6 +21,7 @@ from .screens.join_game.join_game import JoinGame
 from .screens.game_list.game_list import GameList
 from .screens.options.options import Options
 from .screens.in_game.in_game import InGame
+from .screens.credits.credits import Credits
 from client.commands import (
     UpdateGame,
     GameCreatedInGameCommand,
@@ -133,6 +134,8 @@ class ScreenTransitionEventHandler(EventHandler):
             client_state.set_current_screen(GameList(client_state))
         if event.dest_screen == "options":
             client_state.set_current_screen(Options(client_state))
+        if event.dest_screen == "credits":
+            client_state.set_current_screen(Credits(client_state))
 
 
 class ClearInternalGameInformationEventHandler(EventHandler):

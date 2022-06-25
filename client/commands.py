@@ -14,6 +14,7 @@ from .events import (
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
+    PingNetworkRequestEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
 )
@@ -169,3 +170,9 @@ class JoinAGame(Command):
     def __init__(self, profile, queue, game_id):
         super().__init__(profile, queue, f"Join game {game_id}")
         self.events = [JoinAGameNetworkRequestEvent(game_id)]
+
+
+class PingTheServer(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Ping the server")
+        self.events = [PingNetworkRequestEvent()]

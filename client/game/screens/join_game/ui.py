@@ -20,3 +20,15 @@ class GameIdMessage(UIElement):
 class Background(UIElement):
     def __init__(self):
         self.shapes = [Image("client/game/images/background4.png", 0, 0)]
+
+
+class ErrorPopup(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Text("Error Joining Game", 200, 250),
+        ]
+
+        # self.shapes[0].hide()
+
+    def show(self):
+        self.shapes[0].show()

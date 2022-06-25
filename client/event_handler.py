@@ -9,6 +9,7 @@ from .events import (
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
+    PingNetworkRequestEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
 )
@@ -26,6 +27,8 @@ from common.messages import (
     GetGameStatus,
     CreateAGameMessage,
     JoinAGameMessage,
+    PingRequestMessage,
+    PingResponseMessage,
 )
 from client.network.channel import Channel
 from .game_data import GameData
@@ -167,6 +170,23 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
         return JoinAGameMessage(game_id, profile_id)
 
 
+class PingNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        request_data = self._encode()
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, PingResponseMessage):
+                print("Ping request OK")
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Error pinging the server")
+
+    def _encode(self):
+        return PingRequestMessage()
+
+
 handlers_map = {
     QuitGameEvent: QuitGameEventHandler,
     UpdateGameEvent: UpdateGameEventHandler,
@@ -174,6 +194,7 @@ handlers_map = {
     RefreshGameStatusNetworkRequestEvent: RefreshGameStatusNetworkRequestEventHandler,
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
+    PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     TurnSoundOnEvent: TurnSoundOnEventHandler,

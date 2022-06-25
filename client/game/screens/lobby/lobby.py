@@ -22,6 +22,7 @@ class Lobby(Screen):
                     "2": "Join an existing game",
                     "3": "Game list",
                     "4": "Options",
+                    "5": "Credits",
                 }
             ),
         ]
@@ -36,8 +37,9 @@ class Lobby(Screen):
             GoToJoinAGame,
             GoToOptions,
             GoToGameList,
+            GoToCredits
         )
-        from client.commands import QuitGame
+        from client.commands import QuitGame, PingTheServer
 
         # These actions, some may update the data, others run commands, who knows
         key = event.key
@@ -49,5 +51,9 @@ class Lobby(Screen):
             GoToGameList(self.client_state.profile, self.client_state.queue).execute()
         if key == "4":
             GoToOptions(self.client_state.profile, self.client_state.queue).execute()
+        if key == "5":
+            GoToCredits(self.client_state.profile, self.client_state.queue).execute()
+        if key == "p":
+            PingTheServer(self.client_state.profile, self.client_state.queue).execute()
         if event.key == "escape":
             QuitGame(self.client_state.profile, self.client_state.queue).execute()
