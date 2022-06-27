@@ -5,6 +5,7 @@ from .events import (
     UpdateGameEvent,
     InitiateGameEvent,
     SetInternalGameInformationEvent,
+    SetPlayerNameEvent,
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     RefreshGameStatusEvent,
@@ -19,6 +20,9 @@ from .events import (
     UpdateGameListEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
+    ErrorGettingGameListEvent,
+    ErrorCreatingGameEvent,
+    ErrorJoiningGameEvent,
 )
 
 """
@@ -71,6 +75,14 @@ class InitiateGame(Command):
                 game_data
             ),  # Event to be picked up by the game event handler
             SetInternalGameInformationEvent(game_data.id),
+        ]
+
+
+class SetPlayerName(Command):
+    def __init__(self, profile, queue, name):
+        super().__init__(profile, queue, "Setting player name")
+        self.events = [
+            SetPlayerNameEvent(name),
         ]
 
 
@@ -190,3 +202,22 @@ class GetGameList(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Get Game List")
         self.events = [GetGameListNetworkRequestEvent()]
+
+
+# ==== Errors
+class ErrorGettingGameList(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Error Getting Game List")
+        self.events = [ErrorGettingGameListEvent()]
+
+
+class ErrorCreatingGame(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Error Creating game")
+        self.events = [ErrorCreatingGameEvent()]
+
+
+class ErrorJoiningGame(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Error Joining game")
+        self.events = [ErrorJoiningGameEvent()]

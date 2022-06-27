@@ -1,6 +1,6 @@
 from client.primitives.screen import Screen
-from .ui import NewGameMessage, Background
-from client.events import UserTypedEvent
+from .ui import NewGameMessage, Background, ErrorPopup
+from client.events import UserTypedEvent, ErrorCreatingGameEvent
 from client.game.commands import PlaySound
 
 
@@ -13,9 +13,13 @@ class NewGame(Screen):
         self.ui_elements = [
             Background(),
             NewGameMessage(self.data["new_game_name"]),
+            ErrorPopup()
         ]
 
-        self.events = {UserTypedEvent: self.on_user_typed}
+        self.events = {
+            UserTypedEvent: self.on_user_typed,
+            ErrorCreatingGameEvent: self.on_error_creating_game,
+        }
 
     def on_user_typed(self, event):
         if event.key == "escape":
@@ -45,3 +49,6 @@ class NewGame(Screen):
                 self.client_state.profile, self.client_state.queue, "type"
             ).execute()
             self.data["new_game_name"] += event.key
+
+    def on_error_creating_game(self, event):
+        self.ui_elements[2].show()

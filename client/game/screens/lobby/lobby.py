@@ -22,7 +22,8 @@ class Lobby(Screen):
                     "2": "Join an existing game",
                     "3": "Game list",
                     "4": "Options",
-                    "5": "Credits",
+                    "5": "Set Name",
+                    "6": "Credits",
                 }
             ),
         ]
@@ -37,7 +38,8 @@ class Lobby(Screen):
             GoToJoinAGame,
             GoToOptions,
             GoToGameList,
-            GoToCredits
+            GoToCredits,
+            GoToSetName,
         )
         from client.commands import QuitGame, PingTheServer
 
@@ -52,6 +54,8 @@ class Lobby(Screen):
         if key == "4":
             GoToOptions(self.client_state.profile, self.client_state.queue).execute()
         if key == "5":
+            GoToSetName(self.client_state.profile, self.client_state.queue).execute()
+        if key == "6":
             GoToCredits(self.client_state.profile, self.client_state.queue).execute()
         if key == "p":
             PingTheServer(self.client_state.profile, self.client_state.queue).execute()

@@ -112,7 +112,25 @@ class GetGameListNetworkRequestEvent(Event):
     pass
 
 
+class ErrorGettingGameListEvent(Event):
+    pass
+
+
+class ErrorCreatingGameEvent(Event):
+    pass
+
+
+class ErrorJoiningGameEvent(Event):
+    pass
+
+
 class UpdateGameListEvent(Event):
     def __init__(self, games):
         super().__init__()
         self.games = games
+
+
+class SetPlayerNameEvent(Event):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name

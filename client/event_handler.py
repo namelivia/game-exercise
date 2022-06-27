@@ -13,6 +13,7 @@ from .events import (
     GetGameListNetworkRequestEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
+    SetPlayerNameEvent,
 )
 from .commands import (
     ProcessServerEvents,
@@ -21,7 +22,10 @@ from .commands import (
     CreateAGame,
     JoinAGame,
     InitiateGame,
-    UpdateGameList
+    UpdateGameList,
+    ErrorGettingGameList,
+    ErrorCreatingGame,
+    ErrorJoiningGame,
 )
 from common.messages import (
     GameMessage,
@@ -86,6 +90,11 @@ class SetInternalGameInformationEventHandler(EventHandler):
         client_state.profile.set_game_event_pointer(0)
 
 
+class SetPlayerNameEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        client_state.profile.set_name(event.name)
+
+
 class RefreshGameStatusEventHandler(EventHandler):
     def handle(self, event, client_state):
         RefreshGameStatus(
@@ -140,10 +149,18 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                 ).execute()
                 # This is too game specific, why not using hooks?
             if isinstance(response, ErrorMessage):
+                ErrorCreatingGame(
+                    client_state.profile,
+                    client_state.queue,
+                ).execute()
                 print("Error creating the game")
                 # This is too game specific, why not using hooks?
                 # BackToLobby(client_state.profile, client_state.queue).execute()
         else:
+            ErrorCreatingGame(
+                client_state.profile,
+                client_state.queue,
+            ).execute()
             print("Server error")
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
@@ -165,8 +182,16 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                     GameData(response.id, response.name, response.players),
                 ).execute()
             if isinstance(response, ErrorMessage):
+                ErrorJoiningGame(
+                    client_state.profile,
+                    client_state.queue,
+                ).execute()
                 print(response.__dict__)
         else:
+            ErrorJoiningGame(
+                client_state.profile,
+                client_state.queue,
+            ).execute()
             print("Error Joining Game")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
@@ -204,8 +229,16 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
                     response.games
                 ).execute()
             if isinstance(response, ErrorMessage):
+                ErrorGettingGameList(
+                    client_state.profile,
+                    client_state.queue,
+                ).execute()
                 print(response.__dict__)
         else:
+            ErrorGettingGameList(
+                client_state.profile,
+                client_state.queue,
+            ).execute()
             print("Error retrieving the game list from the server")
 
     def _encode(self):
@@ -226,6 +259,7 @@ handlers_map = {
     TurnSoundOnEvent: TurnSoundOnEventHandler,
     TurnSoundOffEvent: TurnSoundOffEventHandler,
     JoinExistingGameEvent: JoinExistingGameEventHandler,
+    SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
 

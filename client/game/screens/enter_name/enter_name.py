@@ -1,24 +1,22 @@
 from client.primitives.screen import Screen
-from .ui import GameIdMessage, Background, ErrorPopup
-from client.events import UserTypedEvent, ErrorJoiningGameEvent
+from .ui import EnterNameMessage, Background
+from client.events import UserTypedEvent
 from client.game.commands import PlaySound
 
 
-class JoinGame(Screen):
+class EnterName(Screen):
     def __init__(self, client_state):
         super().__init__(client_state)
 
-        self.data = {"game_id": ""}
+        self.data = {"name": ""}
 
         self.ui_elements = [
             Background(),
-            GameIdMessage(self.data["game_id"]),
-            ErrorPopup()
+            EnterNameMessage(self.data["name"]),
         ]
 
         self.events = {
-            UserTypedEvent: self.on_user_typed,
-            ErrorJoiningGameEvent: self.on_error_joining_game,
+            UserTypedEvent: self.on_user_typed
         }
 
     def on_user_typed(self, event):
@@ -30,25 +28,21 @@ class JoinGame(Screen):
             return
         if event.key == "return":
             # Avoid circular import
-            from client.commands import RequestJoiningAGame
+            # TODO: Run a comand to set the name
+            from client.commands import SetPlayerName
+            from client.game.commands import BackToLobby
 
-            RequestJoiningAGame(
-                self.client_state.profile,
-                self.client_state.queue,
-                self.data["game_id"],
-            ).execute()
-            return
+            SetPlayerName(self.client_state.profile, self.client_state.queue, self.data["name"]).execute()
+            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            pass
         if event.key == "backspace":
             PlaySound(
                 self.client_state.profile, self.client_state.queue, "erase"
             ).execute()
-            self.data["game_id"] = self.data["game_id"][:-1]
+            self.data["name"] = self.data["name"][:-1]
             return
         else:
             PlaySound(
                 self.client_state.profile, self.client_state.queue, "type"
             ).execute()
-            self.data["game_id"] += event.key
-
-    def on_error_joining_game(self, event):
-        self.ui_elements[2].show()
+            self.data["name"] += event.key

@@ -28,7 +28,19 @@ class ErrorPopup(UIElement):
             Text("Error Joining Game", 200, 250),
         ]
 
-        # self.shapes[0].hide()
+        self.shapes[0].hide()
+
+    def show(self):
+        self.shapes[0].show()
+
+
+class ErrorJoiningPopup(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Text("Error Joining Game", 200, 250),
+        ]
+
+        self.shapes[0].hide()
 
     def show(self):
         self.shapes[0].show()

@@ -15,8 +15,7 @@ class ClientState:
         self.queue.put(initial_event)
 
     def _get_new_profile(self) -> Profile:
-        name = input("Enter your name:")
-        profile = Factory.new_profile(name)
+        profile = Factory.new_profile()
         profile.save()
         return profile
 
