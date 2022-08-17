@@ -58,7 +58,6 @@ class TestClient(TestCase):
     def test_turning_sound_on(self):
         profile = Profile(
             id="id",
-            name="name",
             game_id="game_id",
             game_event_pointer=0,
             sound_on=False,
@@ -73,7 +72,7 @@ class TestClient(TestCase):
 
     def test_turning_sound_off(self):
         profile = Profile(
-            id="id", name="name", game_id="game_id", game_event_pointer=0, sound_on=True
+            id="id", game_id="game_id", game_event_pointer=0, sound_on=True
         )
         TurnSoundOff(self.profile, self.queue).execute()
         event = self.queue.pop()
@@ -102,7 +101,6 @@ class TestClient(TestCase):
         ]
         profile = Profile(
             id="id",
-            name="name",
             game_id="game_id",
             game_event_pointer=len(already_processed_events) - 1,
             sound_on=False,
@@ -134,7 +132,6 @@ class TestClient(TestCase):
 
         profile = Profile(
             id="id",
-            name="name",
             game_id=None,  # Internal game id is not set
             game_event_pointer=0,
             sound_on=False,

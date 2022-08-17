@@ -18,7 +18,7 @@ class Games(UIElement):
     def __init__(self, games):
         self.games = games
         self.shapes = [
-            SmallText(str(index) + " - " + str(event), 20, 50 + (20 * index))
+            SmallText(str(index) + " - " + str(event.name), 20, 50 + (20 * index))
             for index, event in enumerate(games)
         ]
 
@@ -26,7 +26,7 @@ class Games(UIElement):
         # What if data does not contain events? Throw an exception
         games = data["games"]
         self.shapes = [
-            SmallText(str(index) + " - " + str(event), 20, 50 + (20 * index))
+            SmallText(str(index) + " - " + str(event.name), 20, 50 + (20 * index))
             for index, event in enumerate(games)
         ]
 

@@ -16,42 +16,38 @@ class GameNameIndicator(UIElement):
 
 class Player1NameIndicator(UIElement):
     def __init__(self, name):
-        self.name = name
         self.shapes = [SmallText(f"Player 1 name: {name}", 20, 80)]
 
 
 class Player2NameIndicator(UIElement):
     def __init__(self, name):
-        self.name = name
+        self.shapes = [SmallText(f"Player 2 name: {name}", 20, 100)]
+
+    def update(self, time, data):
+        # What if data does not contain events? Throw an exception
+        name = data["players"][1]
         self.shapes = [SmallText(f"Player 2 name: {name}", 20, 100)]
 
 
 class Events(UIElement):
-    def __init__(self, events):
+    def _get_event_string(self, event, pointer, index):
+        return str(event) + " <= [POINTER]" if index == pointer else str(event)
+
+    def __init__(self, events, pointer):
         self.events = events
         self.shapes = [
-            SmallText(str(event), 20, 300 + (20 * index))
+            SmallText(self._get_event_string(event, pointer, index), 20, 300 + (20 * index))
             for index, event in enumerate(events)
         ]
 
     def update(self, time, data):
         # What if data does not contain events? Throw an exception
         events = data["events"]
+        pointer = data["event_pointer"]
         self.shapes = [
-            SmallText(str(event), 20, 300 + (20 * index))
+            SmallText(self._get_event_string(event, pointer, index), 20, 300 + (20 * index))
             for index, event in enumerate(events)
         ]
-
-
-class EventPointerIndicator(UIElement):
-    def __init__(self, event_pointer):
-        self.event_pointer = event_pointer
-        self.shapes = [SmallText(f"Event pointer at {self.event_pointer}", 20, 200)]
-
-    def update(self, time, data):
-        # What if data does not contain events? Throw an exception
-        event_pointer = data["event_pointer"]
-        self.shapes = [SmallText(f"Event pointer at {event_pointer}", 20, 200)]
 
 
 class Background(UIElement):

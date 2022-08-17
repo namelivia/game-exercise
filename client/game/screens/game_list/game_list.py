@@ -46,7 +46,7 @@ class GameList(Screen):
             RequestJoiningAGame(
                 self.client_state.profile,
                 self.client_state.queue,
-                self.data["games"][int(event.key)],
+                self.data["games"][int(event.key)].id,
             ).execute()
 
     def on_game_list_updated(self, event):

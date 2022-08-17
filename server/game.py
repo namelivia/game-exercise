@@ -42,7 +42,9 @@ class Game:
             self.players.append(player_id)
             self.events.append(PlayerJoined(player_id))
         else:
-            raise InvalidCommandError("This player is already in the game")
+            # TODO: Do I really want this to error? Prevents players from re-joining.
+            # raise InvalidCommandError("This player is already in the game")
+            pass
 
     def player_can_get_status(self, player_id):
         if player_id not in self.players:

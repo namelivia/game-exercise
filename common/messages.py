@@ -56,3 +56,9 @@ class GameListRequestMessage:
 class GameListResponseMessage:
     def __init__(self, games):
         self.games = games
+
+
+class GameListResponseEntry:
+    def __init__(self, game):
+        self.id = game.id
+        self.name = game.name

@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
-from os import walk
 from .game import Game
 from .errors import InvalidCommandError
-import pickle
+from .persistence import Persistence
 import logging
 from common.messages import (
     GameMessage,
     PingResponseMessage,
     GameListResponseMessage,
+    GameListResponseEntry,
 )
 
 logger = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ class Command(ABC):
     # Retrieve the current game from storage
     def load_game(self, game_id):
         try:
-            return pickle.load(open("server_data/games/" + str(game_id), "rb"))
+            return Persistence.load_game(str(game_id))
         except FileNotFoundError:
             logger.info("Invalid game id")
             raise InvalidCommandError("Invalid game id")
@@ -48,7 +48,7 @@ class Command(ABC):
         return Game(name, player_id)
 
     def save_game(self, new_game: Game):
-        pickle.dump(new_game, open("server_data/games/" + str(new_game.id), "wb"))
+        Persistence.save_game(new_game)
 
 
 class PlaceSymbol(Command):
@@ -151,11 +151,20 @@ class GetGameList(Command):
     def debug(self):
         logger.info("Game list request")
 
+    def _build_index_entry_from_game(self, game_id):
+        game = Persistence.load_game(game_id)
+        return GameListResponseEntry(game)
+
+    def _build_index_from_games(self, game_ids):
+        return [self._build_index_entry_from_game(game_id) for game_id in game_ids]
+
     # Retrieve the list of games current game from storage
     def get_all_games(self):
-        return next(walk("server_data/games/"))[2]
+        return Persistence.get_all_games()
 
     def execute(self):
         super().execute()
-        games = self.get_all_games()
-        return GameListResponseMessage(games)
+        game_ids = self.get_all_games()
+        return GameListResponseMessage(
+            self._build_index_from_games(game_ids)
+        )

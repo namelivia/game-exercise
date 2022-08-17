@@ -4,7 +4,6 @@ from .ui import (
     GameNameIndicator,
     Player1NameIndicator,
     Player2NameIndicator,
-    EventPointerIndicator,
     Background,
     IntroAnimation,
     Events,
@@ -37,8 +36,7 @@ class InGame(Screen):
             GameNameIndicator(self.data["name"]),
             Player1NameIndicator(self.data["players"][0]),
             Player2NameIndicator(None),
-            Events(self.data["events"]),
-            EventPointerIndicator(self.data["event_pointer"]),
+            Events(self.data["events"], self.data["event_pointer"]),
         ]
 
         self.events = {
@@ -51,17 +49,20 @@ class InGame(Screen):
     def _process_event(self, event):
         self.events[event.__class__](event)
 
+    # TODO: This_ is just for debugging
     def _advance_event_pointer(self):
-        self._process_event(self.data["events"][self.data["event_pointer"]])
         if self.data["event_pointer"] < len(self.data["events"]):
+            self._process_event(self.data["events"][self.data["event_pointer"]])
             self.data["event_pointer"] += 1
 
     def on_user_typed(self, event):
         # Avoid circular import
         from client.game.commands import BackToLobby, RequestPlaceASymbol
 
+        # TODO: This_ is just for debugging
         if event.key == "return":
             self._advance_event_pointer()
+
         if event.key == "escape":
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
         if event.key in "012345678":
@@ -78,7 +79,6 @@ class InGame(Screen):
         ).execute()
         # TODO: Could we play a UI animation here???
         self.ui_elements[1].play()
-        self.data["events"].append(event)
 
     def on_player_joined(self, event):
         print(
@@ -87,8 +87,7 @@ class InGame(Screen):
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
-        # self.data.player_2_id = event.player_id
-        self.data["events"].append(event)
+        self.data["players"][1] = event.player_id
 
     def on_player_placed_symbol(self, event):
         print(
@@ -97,4 +96,3 @@ class InGame(Screen):
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
         ).execute()
-        self.data["events"].append(event)
