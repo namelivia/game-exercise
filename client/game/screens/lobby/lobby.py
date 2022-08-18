@@ -46,7 +46,9 @@ class Lobby(Screen):
         # These actions, some may update the data, others run commands, who knows
         key = event.key
         if key == "1":
-            NewGame(self.client_state.profile, self.client_state.queue).execute()
+            command = NewGame(self.client_state.profile, self.client_state.queue)
+            print(command)
+            command.execute()
         if key == "2":
             GoToJoinAGame(self.client_state.profile, self.client_state.queue).execute()
         if key == "3":
