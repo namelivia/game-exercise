@@ -75,7 +75,7 @@ class UpdateGameEventHandler(EventHandler):
         # How do we know that? using the game_event_pointer.
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
-        unprocessed_events = events[game_event_pointer + 1 :]
+        unprocessed_events = events[game_event_pointer + 1:]
         game_event_pointer = client_state.profile.set_game_event_pointer(
             len(events) - 1
         )

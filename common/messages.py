@@ -30,6 +30,13 @@ class PlaceASymbolMessage:
         self.position = position
 
 
+class SendChatMessage:
+    def __init__(self, game_id, player_id, message):
+        self.game_id = game_id
+        self.player_id = player_id
+        self.message = message
+
+
 class ErrorMessage:
     def __init__(self, message):
         self.message = message

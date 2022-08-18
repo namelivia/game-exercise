@@ -2,7 +2,9 @@ from client.primitives.command import Command
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
+    SendChatRequestEvent,
     PlaceASymbolNetworkRequestEvent,
+    SendChatNetworkRequestEvent,
     ClearInternalGameInformationEvent,
     PlaySoundEvent,
     PlayMusicEvent,
@@ -23,6 +25,14 @@ class RequestPlaceASymbol(Command):
             profile, queue, f"Request placing a symbol on position {position}"
         )
         self.events = [PlaceASymbolRequestEvent(position)]
+
+
+class RequestSendChat(Command):
+    def __init__(self, profile, queue, message):
+        super().__init__(
+            profile, queue, f"Request sending the chat message:{message}"
+        )
+        self.events = [SendChatRequestEvent(message)]
 
 
 # ===== SCREEN CHANGE REQUESTS =====
@@ -122,3 +132,11 @@ class PlaceASymbol(Command):
             profile, queue, f"Place a symbol on game {game_id} on position {position}"
         )
         self.events = [PlaceASymbolNetworkRequestEvent(game_id, position)]
+
+
+class SendChat(Command):
+    def __init__(self, profile, queue, game_id, message):
+        super().__init__(
+            profile, queue, f"Send chat message on game {game_id}: {message}"
+        )
+        self.events = [SendChatNetworkRequestEvent(game_id, message)]

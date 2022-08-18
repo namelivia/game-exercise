@@ -84,3 +84,22 @@ class IntroAnimation(UIElement):
         if self.timer > 200:
             self.shapes[0].hide()
             self.shapes[1].hide()
+
+
+class ChatInput(UIElement):
+    def __init__(self):
+        self.shapes = [SmallText("Send message: ", 20, 450)]
+        self.visible = False
+
+    def focus(self):
+        self.visible = True
+
+    def unfocus(self):
+        self.visible = False
+
+    def update(self, time, data):
+        if self.visible:
+            # What if data does not contain events? Throw an exception
+            self.shapes = [SmallText(f"Send message: {data['chat_input']}", 20, 450)]
+        else:
+            self.shapes = []

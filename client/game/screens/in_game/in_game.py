@@ -6,6 +6,7 @@ from .ui import (
     Player2NameIndicator,
     Background,
     IntroAnimation,
+    ChatInput,
     Events,
 )
 from client.events import UserTypedEvent
@@ -27,6 +28,8 @@ class InGame(Screen):
             "name": name,
             "players": players,
             "event_pointer": 0,
+            "chat_input": '',
+            "chat_focused": False,
         }
 
         self.ui_elements = [
@@ -37,6 +40,7 @@ class InGame(Screen):
             Player1NameIndicator(self.data["players"][0]),
             Player2NameIndicator(None),
             Events(self.data["events"], self.data["event_pointer"]),
+            ChatInput(),
         ]
 
         self.events = {
@@ -57,18 +61,57 @@ class InGame(Screen):
 
     def on_user_typed(self, event):
         # Avoid circular import
-        from client.game.commands import BackToLobby, RequestPlaceASymbol
+        from client.game.commands import (
+            BackToLobby,
+            RequestPlaceASymbol,
+            RequestSendChat
+        )
 
         # TODO: This_ is just for debugging
         if event.key == "return":
-            self._advance_event_pointer()
+            if self.data["chat_focused"]:
+                RequestSendChat(
+                    self.client_state.profile,
+                    self.client_state.queue,
+                    self.data["chat_input"]
+                ).execute()
+                self.data["chat_input"] = ""
+                PlaySound(
+                    self.client_state.profile, self.client_state.queue, "select"
+                ).execute()
+                return
+            else:
+                self._advance_event_pointer()
+            return
 
         if event.key == "escape":
-            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            if self.data["chat_focused"]:
+                self.data["chat_focused"] = False
+                self.ui_elements[7].unfocus()
+            else:
+                BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+                return
+        if event.key == "t":
+            if not self.data["chat_focused"]:
+                self.data["chat_focused"] = True
+                self.ui_elements[7].focus()
+                return
         if event.key in "012345678":
             RequestPlaceASymbol(
                 self.client_state.profile, self.client_state.queue, event.key
             ).execute()
+            return
+        if event.key == "backspace" and self.data["chat_focused"]:
+            PlaySound(
+                self.client_state.profile, self.client_state.queue, "erase"
+            ).execute()
+            self.data["chat_input"] = self.data["chat_input"][:-1]
+            return
+        if self.data["chat_focused"]:
+            PlaySound(
+                self.client_state.profile, self.client_state.queue, "type"
+            ).execute()
+            self.data["chat_input"] += event.key
 
     def on_game_created(self, event):
         print(
