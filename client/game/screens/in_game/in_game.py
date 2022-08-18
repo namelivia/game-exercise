@@ -8,6 +8,7 @@ from .ui import (
     IntroAnimation,
     ChatInput,
     Events,
+    ChatMessages,
 )
 from client.events import UserTypedEvent
 from client.game.commands import PlaySound
@@ -15,6 +16,7 @@ from client.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerPlacedSymbolInGameEvent,
+    ChatMessageInGameEvent,
 )
 
 
@@ -30,6 +32,7 @@ class InGame(Screen):
             "event_pointer": 0,
             "chat_input": '',
             "chat_focused": False,
+            "chat_messages": [],
         }
 
         self.ui_elements = [
@@ -41,6 +44,7 @@ class InGame(Screen):
             Player2NameIndicator(None),
             Events(self.data["events"], self.data["event_pointer"]),
             ChatInput(),
+            ChatMessages(self.data["chat_messages"]),
         ]
 
         self.events = {
@@ -48,6 +52,7 @@ class InGame(Screen):
             GameCreatedInGameEvent: self.on_game_created,
             PlayerJoinedInGameEvent: self.on_player_joined,
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
+            ChatMessageInGameEvent: self.on_chat_message,
         }
 
     def _process_event(self, event):
@@ -138,4 +143,14 @@ class InGame(Screen):
         )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
+        ).execute()
+
+    def on_chat_message(self, event):
+        self.data["chat_messages"].append({
+            "player_id": event.player_id,
+            "message": event.message,
+        })
+        print(self.data["chat_messages"])
+        PlaySound(
+            self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()

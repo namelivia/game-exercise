@@ -25,8 +25,9 @@ class Player2NameIndicator(UIElement):
 
     def update(self, time, data):
         # What if data does not contain events? Throw an exception
-        name = data["players"][1]
-        self.shapes = [SmallText(f"Player 2 name: {name}", 20, 100)]
+        if len(data["players"]) > 1:
+            name = data["players"][1]
+            self.shapes = [SmallText(f"Player 2 name: {name}", 20, 100)]
 
 
 class Events(UIElement):
@@ -47,6 +48,27 @@ class Events(UIElement):
         self.shapes = [
             SmallText(self._get_event_string(event, pointer, index), 20, 300 + (20 * index))
             for index, event in enumerate(events)
+        ]
+
+
+class ChatMessages(UIElement):
+    def _get_message_string(self, message, index):
+        player_id = message["player_id"]
+        contents = message["message"]
+        return f"{player_id}: {contents}"
+
+    def __init__(self, messages):
+        self.shapes = [
+            SmallText(self._get_message_string(message, index), 20, 300 + (20 * index))
+            for index, message in enumerate(messages)
+        ]
+
+    def update(self, time, data):
+        # What if data does not contain events? Throw an exception
+        messages = data["chat_messages"]
+        self.shapes = [
+            SmallText(self._get_message_string(message, index), 20, 300 + (20 * index))
+            for index, message in enumerate(messages)
         ]
 
 

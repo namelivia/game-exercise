@@ -31,6 +31,7 @@ from client.commands import (
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerPlacedSymbolInGameCommand,
+    ChatMessageInGameCommand,
 )
 from .commands import (
     PlaceASymbol,
@@ -42,6 +43,7 @@ from common.events import (
     GameCreated as GameCreatedInGameEvent,  # TODO: akward
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
+    ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
 )
 from .sounds import (
     BackSound,
@@ -103,6 +105,13 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         PlayerPlacedSymbolInGameCommand(
             client_state.profile, client_state.queue, event.player_id, event.position
+        ).execute()
+
+
+class ChatMessageInGameEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        ChatMessageInGameCommand(
+            client_state.profile, client_state.queue, event.player_id, event.message
         ).execute()
 
 
@@ -229,6 +238,7 @@ handlers_map = {
     GameCreatedInGameEvent: GameCreatedInGameEventHandler,
     PlayerJoinedInGameEvent: PlayerJoinedInGameEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
+    ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }
 
 
