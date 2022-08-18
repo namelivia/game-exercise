@@ -1,10 +1,11 @@
 import logging
 import socketserver
 import pickle
-from .commands import PlaceSymbol, JoinGame, CreateGame, GameStatus, Ping, GetGameList
+from .commands import PlaceSymbol, SendChat, JoinGame, CreateGame, GameStatus, Ping, GetGameList
 from common.messages import (
     ErrorMessage,
     PlaceASymbolMessage,
+    SendChatMessage,
     CreateAGameMessage,
     JoinAGameMessage,
     GetGameStatus,
@@ -26,6 +27,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         # TODO: Deal with malformed commands
         if isinstance(decoded, PlaceASymbolMessage):
             return PlaceSymbol(decoded.game_id, decoded.player_id, decoded.position)
+        if isinstance(decoded, SendChatMessage):
+            return SendChat(decoded.game_id, decoded.player_id, decoded.message)
         if isinstance(decoded, CreateAGameMessage):
             return CreateGame(decoded.name, decoded.player_id)
         if isinstance(decoded, JoinAGameMessage):

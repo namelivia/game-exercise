@@ -1,6 +1,11 @@
 import uuid
 from .errors import InvalidCommandError
-from common.events import GameCreated, PlayerJoined, PlayerPlacedSymbol
+from common.events import (
+    GameCreated,
+    PlayerJoined,
+    PlayerPlacedSymbol,
+    ChatMessageEvent
+)
 
 
 """
@@ -64,3 +69,6 @@ class Game:
             self.turn = self._next_turn()
         except IndexError:
             raise InvalidCommandError("Position out of bounds")
+
+    def add_chat_message(self, player, message):
+        self.events.append(ChatMessageEvent(player, message))

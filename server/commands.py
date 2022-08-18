@@ -74,6 +74,29 @@ class PlaceSymbol(Command):
         return GameMessage(game)
 
 
+class SendChat(Command):
+    def __init__(self, game_id, player_id, message):
+        self.game_id = game_id
+        self.player_id = player_id
+        self.message = message
+
+    @property
+    def name(self):
+        return "Send chat message"
+
+    def debug(self):
+        logger.info(
+            f"Game {self.game_id}: Player {self.player_id} says: {self.message}"
+        )
+
+    def execute(self):
+        super().execute()
+        game = self.load_game(self.game_id)
+        game.add_chat_message(self.player_id, self.message)
+        self.save_game(game)
+        return GameMessage(game)
+
+
 class CreateGame(Command):
     def __init__(self, game_name, player_id):
         self.game_name = game_name
