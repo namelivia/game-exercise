@@ -24,7 +24,7 @@ class ScreenManager:
                     self.client_state.profile, self.client_state.queue, user_event
                 ).execute()
 
-    def push_polling_event(self):
+    def _push_polling_event(self):
         # Do the polling once every 1000 cycles
         polling_rate = 1000
         game_id = self.client_state.profile.game_id
@@ -35,7 +35,7 @@ class ScreenManager:
 
     def run(self):
         self.client_state.clock.tick()  # Update the clock
-        self.push_polling_event()
+        self._push_polling_event()
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
         self.event_processor.handle(  # Process the event
