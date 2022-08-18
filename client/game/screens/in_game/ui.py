@@ -1,4 +1,4 @@
-from client.graphics.shapes import SmallText, Image, Animation
+from client.graphics.shapes import SmallText, Image, Animation, Rectangle, WHITE
 from client.primitives.ui import UIElement
 
 
@@ -110,7 +110,10 @@ class IntroAnimation(UIElement):
 
 class ChatInput(UIElement):
     def __init__(self):
-        self.shapes = [SmallText("Send message: ", 20, 450)]
+        self.shapes = [
+            Rectangle(0, 430, 640, 30),
+            SmallText("Send message: ", 20, 440, WHITE)
+        ]
         self.visible = False
 
     def focus(self):
@@ -122,6 +125,9 @@ class ChatInput(UIElement):
     def update(self, time, data):
         if self.visible:
             # What if data does not contain events? Throw an exception
-            self.shapes = [SmallText(f"Send message: {data['chat_input']}", 20, 450)]
+            self.shapes = [
+                Rectangle(0, 430, 640, 30),
+                SmallText(f"Send message: {data['chat_input']}", 20, 440, WHITE)
+            ]
         else:
             self.shapes = []
