@@ -1,6 +1,7 @@
 from unittest import TestCase
 from client.game.screens.lobby.lobby import Lobby
 from client.events import UserTypedEvent
+from client.visual_regression.visual_regression import VisualRegression
 import mock
 
 
@@ -8,6 +9,7 @@ class TestLobby(TestCase):
     def setUp(self):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
+        self.client_state.profile.name = "TestPlayer"
         self.lobby = Lobby(self.client_state)
 
     @mock.patch("client.game.commands.NewGame")
@@ -65,3 +67,9 @@ class TestLobby(TestCase):
             UserTypedEvent("escape"),
         )
         m_quit.assert_called_once()
+
+    def test_visual_regression(self):
+        VisualRegression.assert_matches_snapshot(
+            self.lobby,
+            "./client/game/screens/lobby/tests/screenshots/lobby.png"
+        )
