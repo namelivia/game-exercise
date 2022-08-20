@@ -32,4 +32,4 @@ jobs:
         with:
           image: testing:latest
           shell: sh 
-          run: sh /app/run_tests
+          run: sh /app/run_tests_ci ${{ github.sha }} ${{ secrets.CODECOV_TOKEN }}

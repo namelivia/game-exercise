@@ -9,6 +9,8 @@ mock = "*"
 pudb = "*"
 black = "*"
 pre-commit = "*"
+pytest-cov = "*"
+codecov = "*"
 numpy = "*"
 
 [packages]
