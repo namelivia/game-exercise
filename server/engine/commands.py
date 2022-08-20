@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from .game import Game
+from server.game.game import Game
 from .errors import InvalidCommandError
 from .persistence import Persistence
 import logging

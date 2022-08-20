@@ -1,6 +1,6 @@
 from unittest import TestCase
-from server.commands import CreateGame, JoinGame, GameStatus, GetGameList
-from server.game import Game
+from server.engine.commands import CreateGame, JoinGame, GameStatus, GetGameList
+from server.game.game import Game
 from common.messages import (
     GameMessage,
     GameListResponseMessage,
@@ -13,7 +13,7 @@ class TestServer(TestCase):
     def setUp(self):
         pass
 
-    @mock.patch("server.persistence.Persistence.save_game")
+    @mock.patch("server.engine.persistence.Persistence.save_game")
     @mock.patch("uuid.uuid4")
     def test_creating_a_game(self, m_uuid, m_save_game):
         m_uuid.return_value = "game_id"
@@ -27,8 +27,8 @@ class TestServer(TestCase):
         assert response.events[0].player_id == "test_player_id"
         m_save_game.assert_called_once()  # TODO: Assert the parameters passed here
 
-    @mock.patch("server.persistence.Persistence.load_game")
-    @mock.patch("server.persistence.Persistence.save_game")
+    @mock.patch("server.engine.persistence.Persistence.load_game")
+    @mock.patch("server.engine.persistence.Persistence.save_game")
     @mock.patch("uuid.uuid4")
     def test_joining_a_game(self, m_uuid, m_save_game, m_load_game):
         m_uuid.return_value = "game_id"
@@ -46,7 +46,7 @@ class TestServer(TestCase):
         assert response.events[1].player_id == "player_2_id"
         m_save_game.assert_called_once()  # TODO: Assert the parameters passed here
 
-    @mock.patch("server.persistence.Persistence.load_game")
+    @mock.patch("server.engine.persistence.Persistence.load_game")
     @mock.patch("uuid.uuid4")
     def test_getting_game_status(self, m_uuid, m_load_game):
         m_uuid.return_value = "game_id"
@@ -61,8 +61,8 @@ class TestServer(TestCase):
         assert isinstance(response.events[0], GameCreated)
         assert response.events[0].player_id == "player_1_id"
 
-    @mock.patch("server.persistence.Persistence.get_all_games")
-    @mock.patch("server.persistence.Persistence.load_game")
+    @mock.patch("server.engine.persistence.Persistence.get_all_games")
+    @mock.patch("server.engine.persistence.Persistence.load_game")
     @mock.patch("uuid.uuid4")
     def test_getting_game_list(self, m_uuid, m_load_game, m_get_all_games):
         m_uuid.return_value = "game_id"

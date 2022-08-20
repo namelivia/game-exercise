@@ -1,6 +1,6 @@
 import pickle
 from os import walk
-from .game import Game
+from server.game.game import Game
 
 GAMES_PATH = "server_data/games/"
 

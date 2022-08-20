@@ -1,5 +1,5 @@
 import uuid
-from .errors import InvalidCommandError
+from server.engine.errors import InvalidCommandError
 from common.events import (
     GameCreated,
     PlayerJoined,

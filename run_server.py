@@ -1,6 +1,6 @@
 import threading
 import logging
-from server.server import ThreadedTCPRequestHandler, ThreadedTCPServer
+from server.engine.server import ThreadedTCPRequestHandler, ThreadedTCPServer
 
 """
 This is the main file for the server
