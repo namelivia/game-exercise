@@ -4,23 +4,28 @@ from client.engine.general_state.profile.profile import Profile
 from client.engine.event_handler import EventHandler
 from client.engine.events import (
     UserTypedEvent,
+    SetPlayerNameEvent,
     QuitGameEvent,
     UpdateGameEvent,
     JoinExistingGameEvent,
     NewGameRequestEvent,
     InitiateGameEvent,
     CreateAGameNetworkRequestEvent,
+    PingNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
+    ChatMessageInGameEvent,
+    UpdateGameListEvent,
 )
 from client.engine.commands import (
     QuitGame,
     UserTyped,
     UpdateGame,
     InitiateGame,
+    PingTheServer,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerPlacedSymbolInGameCommand,
@@ -28,9 +33,12 @@ from client.engine.commands import (
     RequestJoiningAGame,
     RequestGameCreation,
     TurnSoundOn,
+    SetPlayerName,
     TurnSoundOff,
+    ChatMessageInGameCommand,
+    UpdateGameList,
 )
-from common.messages import GameMessage
+from common.messages import GameMessage, PingResponseMessage, PingRequestMessage
 from client.engine.game_data import GameData
 import mock
 
@@ -322,3 +330,75 @@ class TestClient(TestCase):
         pass
         # The server will respond with a correct game message
         # m_send_command.return_value = ErrorMessage()
+
+    def test_setting_player_name(self):
+        # When there are new events to process these will be pushed to the queue
+        profile = Profile(
+            id="id",
+            game_id="game_id",
+            game_event_pointer=0,
+            sound_on=False,
+        )
+        assert profile.name is None
+        SetPlayerName(profile, self.queue, "Player name").execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, SetPlayerNameEvent)
+
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
+        client_state.profile = profile
+        client_state.queue = self.queue
+        self.event_handler.handle(event, client_state)
+        assert profile.name == "Player name"
+
+    @mock.patch("client.engine.event_handler.Channel.send_command")
+    def test_ping_the_server_success(self, m_send_command):
+
+        m_send_command.return_value = PingResponseMessage()
+
+        PingTheServer(self.profile, self.queue).execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PingNetworkRequestEvent)
+
+        client_state = mock.Mock()  # TODO: I don't like I have to define this
+        client_state.queue = self.queue
+        self.event_handler.handle(event, client_state)
+
+        # Assert the ping message has been correctly sent.
+        m_send_command.assert_called_once()
+        assert isinstance(m_send_command.call_args.args[0], PingRequestMessage)
+
+    def test_sending_an_ingame_chat_message(self):
+        # When there are new events to process these will be pushed to the queue
+        profile = Profile(
+            id="id",
+            game_id="game_id",
+            game_event_pointer=0,
+            sound_on=False,
+        )
+        assert profile.name is None
+        ChatMessageInGameCommand(profile, self.queue, "player_id", "test message").execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, ChatMessageInGameEvent)
+        # Event to be picked up by the game logic
+
+    def test_updating_the_game_list(self):
+        # When there are new events to process these will be pushed to the queue
+        profile = Profile(
+            id="id",
+            game_id="game_id",
+            game_event_pointer=0,
+            sound_on=False,
+        )
+        assert profile.name is None
+        UpdateGameList(profile, self.queue, ['game1', 'game2', 'game3']).execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, UpdateGameListEvent)
+        # Event to be picked up by the game logic

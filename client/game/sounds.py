@@ -1,5 +1,7 @@
 import pygame
 
+# TODO: This could be a dictionary
+
 
 class UserJoinedSound:
     def __init__(self):

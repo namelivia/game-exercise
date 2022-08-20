@@ -1,5 +1,7 @@
 import pygame
 
+# TODO: This could be a dictionary
+
 
 class MainThemeMusic:
     def __init__(self):

@@ -4,4 +4,5 @@ server_data/*
 client_data/*
 client_data/.gitkeep
 htmlcov
+.coverage
 tags
