@@ -13,7 +13,7 @@ class JoinGame(Screen):
         self.ui_elements = [
             Background(),
             GameIdMessage(self.data["game_id"]),
-            ErrorPopup()
+            ErrorPopup(),
         ]
 
         self.events = {

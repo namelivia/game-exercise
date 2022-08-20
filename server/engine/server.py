@@ -1,7 +1,15 @@
 import logging
 import socketserver
 import pickle
-from .commands import PlaceSymbol, SendChat, JoinGame, CreateGame, GameStatus, Ping, GetGameList
+from .commands import (
+    PlaceSymbol,
+    SendChat,
+    JoinGame,
+    CreateGame,
+    GameStatus,
+    Ping,
+    GetGameList,
+)
 from common.messages import (
     ErrorMessage,
     PlaceASymbolMessage,

@@ -12,9 +12,7 @@ class GameList(Screen):
     def __init__(self, client_state):
         super().__init__(client_state)
 
-        self.data = {
-            "games": []
-        }
+        self.data = {"games": []}
 
         self.ui_elements = [
             Background(),
@@ -32,6 +30,7 @@ class GameList(Screen):
         }
 
         from client.engine.commands import GetGameList
+
         GetGameList(self.client_state.profile, self.client_state.queue).execute()
 
     def on_user_typed(self, event):
@@ -43,6 +42,7 @@ class GameList(Screen):
             return
         if event.key in "012345678":
             from client.engine.commands import RequestJoiningAGame
+
             RequestJoiningAGame(
                 self.client_state.profile,
                 self.client_state.queue,

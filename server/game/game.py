@@ -4,7 +4,7 @@ from common.events import (
     GameCreated,
     PlayerJoined,
     PlayerPlacedSymbol,
-    ChatMessageEvent
+    ChatMessageEvent,
 )
 
 

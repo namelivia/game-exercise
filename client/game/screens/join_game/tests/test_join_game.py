@@ -17,7 +17,7 @@ class TestJoinGame(TestCase):
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.join_game,
-            "./client/game/screens/join_game/tests/screenshots/join_game_no_input.png"
+            "./client/game/screens/join_game/tests/screenshots/join_game_no_input.png",
         )
 
         # User types the word test
@@ -45,7 +45,8 @@ class TestJoinGame(TestCase):
 
         VisualRegression.assert_matches_snapshot(
             self.join_game,
-            "./client/game/screens/join_game/tests/screenshots/join_game_test_input.png")
+            "./client/game/screens/join_game/tests/screenshots/join_game_test_input.png",
+        )
 
         # User presses enter and creates the new game
         self.join_game.update(

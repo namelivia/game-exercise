@@ -30,7 +30,7 @@ class InGame(Screen):
             "name": name,
             "players": players,
             "event_pointer": 0,
-            "chat_input": '',
+            "chat_input": "",
             "chat_focused": False,
             "chat_messages": [],
         }
@@ -69,7 +69,7 @@ class InGame(Screen):
         from client.game.commands import (
             BackToLobby,
             RequestPlaceASymbol,
-            RequestSendChat
+            RequestSendChat,
         )
 
         # TODO: This_ is just for debugging
@@ -78,7 +78,7 @@ class InGame(Screen):
                 RequestSendChat(
                     self.client_state.profile,
                     self.client_state.queue,
-                    self.data["chat_input"]
+                    self.data["chat_input"],
                 ).execute()
                 self.data["chat_input"] = ""
                 PlaySound(
@@ -94,7 +94,9 @@ class InGame(Screen):
                 self.data["chat_focused"] = False
                 self.ui_elements[7].unfocus()
             else:
-                BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+                BackToLobby(
+                    self.client_state.profile, self.client_state.queue
+                ).execute()
                 return
         if event.key == "t":
             if not self.data["chat_focused"]:
@@ -146,10 +148,12 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message(self, event):
-        self.data["chat_messages"].append({
-            "player_id": event.player_id,
-            "message": event.message,
-        })
+        self.data["chat_messages"].append(
+            {
+                "player_id": event.player_id,
+                "message": event.message,
+            }
+        )
         print(self.data["chat_messages"])
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"

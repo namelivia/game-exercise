@@ -9,9 +9,7 @@ class TestScreenManager(TestCase):
         self.input_manager = mock.Mock()
         self.graphics = mock.Mock()
         self.screen_manager = ScreenManager(
-            self.client_state,
-            self.input_manager,
-            self.graphics
+            self.client_state, self.input_manager, self.graphics
         )
 
     def test_main_loop_iteration(self):

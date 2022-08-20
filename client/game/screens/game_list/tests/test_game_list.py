@@ -18,22 +18,24 @@ class TestGameList(TestCase):
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.game_list,
-            "./client/game/screens/game_list/tests/screenshots/game_list_empty.png"
+            "./client/game/screens/game_list/tests/screenshots/game_list_empty.png",
         )
 
         # Game list received from server
         self.game_list.update(
-            UpdateGameListEvent([
-                SimpleNamespace(**{"id": "game_id_1", "name": "test game 1"}),
-                SimpleNamespace(**{"id": "game_id_2", "name": "test game 2"}),
-                SimpleNamespace(**{"id": "game_id_3", "name": "test game 3"}),
-            ])
+            UpdateGameListEvent(
+                [
+                    SimpleNamespace(**{"id": "game_id_1", "name": "test game 1"}),
+                    SimpleNamespace(**{"id": "game_id_2", "name": "test game 2"}),
+                    SimpleNamespace(**{"id": "game_id_3", "name": "test game 3"}),
+                ]
+            )
         )
 
         # Screen lists all games
         VisualRegression.assert_matches_snapshot(
             self.game_list,
-            "./client/game/screens/game_list/tests/screenshots/game_list_show_games.png"
+            "./client/game/screens/game_list/tests/screenshots/game_list_show_games.png",
         )
 
         self.game_list.update(

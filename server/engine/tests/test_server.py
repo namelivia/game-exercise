@@ -20,7 +20,7 @@ class TestServer(TestCase):
         response = CreateGame("test_name", "test_player_id").execute()
         assert isinstance(response, GameMessage)
         assert response.id == "game_id"
-        assert response.name == 'test_name'
+        assert response.name == "test_name"
         assert response.players == ["test_player_id"]
         assert len(response.events) == 1
         assert isinstance(response.events[0], GameCreated)
@@ -37,7 +37,7 @@ class TestServer(TestCase):
         m_load_game.assert_called_once_with("game_id")
         assert isinstance(response, GameMessage)
         assert response.id == "game_id"
-        assert response.name == 'test_name'
+        assert response.name == "test_name"
         assert response.players == ["player_1_id", "player_2_id"]
         assert len(response.events) == 2
         assert isinstance(response.events[0], GameCreated)
@@ -55,7 +55,7 @@ class TestServer(TestCase):
         m_load_game.assert_called_once_with("game_id")
         assert isinstance(response, GameMessage)
         assert response.id == "game_id"
-        assert response.name == 'test_name'
+        assert response.name == "test_name"
         assert response.players == ["player_1_id"]
         assert len(response.events) == 1
         assert isinstance(response.events[0], GameCreated)

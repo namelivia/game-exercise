@@ -12,6 +12,5 @@ class TestOptions(TestCase):
 
     def test_visual_regression(self):
         VisualRegression.assert_matches_snapshot(
-            self.options,
-            "./client/game/screens/options/tests/screenshots/options.png"
+            self.options, "./client/game/screens/options/tests/screenshots/options.png"
         )

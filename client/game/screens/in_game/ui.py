@@ -37,7 +37,9 @@ class Events(UIElement):
     def __init__(self, events, pointer):
         self.events = events
         self.shapes = [
-            SmallText(self._get_event_string(event, pointer, index), 20, 300 + (20 * index))
+            SmallText(
+                self._get_event_string(event, pointer, index), 20, 300 + (20 * index)
+            )
             for index, event in enumerate(events)
         ]
 
@@ -46,7 +48,9 @@ class Events(UIElement):
         events = data["events"]
         pointer = data["event_pointer"]
         self.shapes = [
-            SmallText(self._get_event_string(event, pointer, index), 20, 300 + (20 * index))
+            SmallText(
+                self._get_event_string(event, pointer, index), 20, 300 + (20 * index)
+            )
             for index, event in enumerate(events)
         ]
 
@@ -112,7 +116,7 @@ class ChatInput(UIElement):
     def __init__(self):
         self.shapes = [
             Rectangle(0, 430, 640, 30),
-            SmallText("Send message: ", 20, 440, WHITE)
+            SmallText("Send message: ", 20, 440, WHITE),
         ]
         self.visible = False
 
@@ -127,7 +131,7 @@ class ChatInput(UIElement):
             # What if data does not contain events? Throw an exception
             self.shapes = [
                 Rectangle(0, 430, 640, 30),
-                SmallText(f"Send message: {data['chat_input']}", 20, 440, WHITE)
+                SmallText(f"Send message: {data['chat_input']}", 20, 440, WHITE),
             ]
         else:
             self.shapes = []

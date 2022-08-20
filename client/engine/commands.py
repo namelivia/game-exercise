@@ -154,9 +154,7 @@ class PlayerPlacedSymbolInGameCommand(Command):
 # This one seems specific
 class ChatMessageInGameCommand(Command):
     def __init__(self, profile, queue, player_id, message):
-        super().__init__(
-            profile, queue, f"Player {player_id} says: {message}"
-        )
+        super().__init__(profile, queue, f"Player {player_id} says: {message}")
         self.events = [
             ChatMessageInGameEvent(
                 player_id, message

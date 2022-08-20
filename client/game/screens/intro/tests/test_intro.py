@@ -1,6 +1,7 @@
 from unittest import TestCase
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.intro.intro import Intro
+
 # from client.engine.events import UserTypedEvent
 # from client.game.screens.intro.intro import Intro
 import mock
@@ -32,14 +33,14 @@ class TestIntroScreen(TestCase):
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,
-            "./client/game/screens/intro/tests/screenshots/intro_timestamp_0.png"
+            "./client/game/screens/intro/tests/screenshots/intro_timestamp_0.png",
         )
 
         self.client_state.clock.get.return_value = 5500  # Advance to 5500
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,
-            "./client/game/screens/intro/tests/screenshots/intro_timestamp_5500.png"
+            "./client/game/screens/intro/tests/screenshots/intro_timestamp_5500.png",
         )
 
         # Advance to 10000 (coins appear)
@@ -47,7 +48,7 @@ class TestIntroScreen(TestCase):
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,
-            "./client/game/screens/intro/tests/screenshots/intro_timestamp_10000.png"
+            "./client/game/screens/intro/tests/screenshots/intro_timestamp_10000.png",
         )
 
         # Advance to 10200
@@ -55,5 +56,5 @@ class TestIntroScreen(TestCase):
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,
-            "./client/game/screens/intro/tests/screenshots/intro_timestamp_10200.png"
+            "./client/game/screens/intro/tests/screenshots/intro_timestamp_10200.png",
         )

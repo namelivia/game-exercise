@@ -13,7 +13,7 @@ class NewGame(Screen):
         self.ui_elements = [
             Background(),
             NewGameMessage(self.data["new_game_name"]),
-            ErrorPopup()
+            ErrorPopup(),
         ]
 
         self.events = {

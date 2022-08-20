@@ -29,9 +29,7 @@ class RequestPlaceASymbol(Command):
 
 class RequestSendChat(Command):
     def __init__(self, profile, queue, message):
-        super().__init__(
-            profile, queue, f"Request sending the chat message:{message}"
-        )
+        super().__init__(profile, queue, f"Request sending the chat message:{message}")
         self.events = [SendChatRequestEvent(message)]
 
 

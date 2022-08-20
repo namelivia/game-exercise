@@ -70,6 +70,5 @@ class TestLobby(TestCase):
 
     def test_visual_regression(self):
         VisualRegression.assert_matches_snapshot(
-            self.lobby,
-            "./client/game/screens/lobby/tests/screenshots/lobby.png"
+            self.lobby, "./client/game/screens/lobby/tests/screenshots/lobby.png"
         )

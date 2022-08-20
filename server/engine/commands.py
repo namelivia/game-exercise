@@ -188,6 +188,4 @@ class GetGameList(Command):
     def execute(self):
         super().execute()
         game_ids = self.get_all_games()
-        return GameListResponseMessage(
-            self._build_index_from_games(game_ids)
-        )
+        return GameListResponseMessage(self._build_index_from_games(game_ids))

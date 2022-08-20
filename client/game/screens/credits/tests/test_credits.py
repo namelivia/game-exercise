@@ -12,6 +12,5 @@ class TestCredits(TestCase):
 
     def test_visual_regression(self):
         VisualRegression.assert_matches_snapshot(
-            self.credits,
-            "./client/game/screens/credits/tests/screenshots/credits.png"
+            self.credits, "./client/game/screens/credits/tests/screenshots/credits.png"
         )

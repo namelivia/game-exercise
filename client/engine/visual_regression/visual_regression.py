@@ -5,9 +5,9 @@ import numpy
 class VisualRegression:
     @staticmethod
     def _render_surface(screen):
-        '''
+        """
         Renders a new surface to be compared
-        '''
+        """
         ui_elements = screen.get_ui_elements()
         import pygame
 
@@ -20,6 +20,7 @@ class VisualRegression:
     @staticmethod
     def assert_matches_snapshot(screen, snapshot_key):
         import pygame
+
         new_surface = VisualRegression._render_surface(screen)
         # Convert matches the image pixel depth to the original surface
         screenshot = pygame.image.load(snapshot_key).convert(new_surface)
@@ -32,5 +33,6 @@ class VisualRegression:
     def generate_snapshot(screen, snapshot_key):
         # Used to generate snapshots
         import pygame
+
         new_surface = VisualRegression._render_surface(screen)
         pygame.image.save(new_surface, snapshot_key)

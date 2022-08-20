@@ -15,9 +15,7 @@ class EnterName(Screen):
             EnterNameMessage(self.data["name"]),
         ]
 
-        self.events = {
-            UserTypedEvent: self.on_user_typed
-        }
+        self.events = {UserTypedEvent: self.on_user_typed}
 
     def on_user_typed(self, event):
         if event.key == "escape":
@@ -32,7 +30,9 @@ class EnterName(Screen):
             from client.engine.commands import SetPlayerName
             from client.game.commands import BackToLobby
 
-            SetPlayerName(self.client_state.profile, self.client_state.queue, self.data["name"]).execute()
+            SetPlayerName(
+                self.client_state.profile, self.client_state.queue, self.data["name"]
+            ).execute()
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
             pass
         if event.key == "backspace":

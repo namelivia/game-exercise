@@ -17,7 +17,7 @@ class TestEnterName(TestCase):
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.enter_name,
-            "./client/game/screens/enter_name/tests/screenshots/enter_name_no_input.png"
+            "./client/game/screens/enter_name/tests/screenshots/enter_name_no_input.png",
         )
 
         # User types the word test
@@ -45,7 +45,8 @@ class TestEnterName(TestCase):
 
         VisualRegression.assert_matches_snapshot(
             self.enter_name,
-            "./client/game/screens/enter_name/tests/screenshots/enter_name_test_input.png")
+            "./client/game/screens/enter_name/tests/screenshots/enter_name_test_input.png",
+        )
 
         # User presses enter and creates the new game
         self.enter_name.update(
