@@ -3,4 +3,5 @@ server_data/*
 !server_data/.gitkeep
 client_data/*
 client_data/.gitkeep
+htmlcov
 tags
