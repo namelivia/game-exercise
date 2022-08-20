@@ -1,5 +1,5 @@
 from client.graphics.shapes import SmallText, Image, Animation, Rectangle, WHITE
-from client.primitives.ui import UIElement
+from client.engine.primitives.ui import UIElement
 
 
 class GameIdIndicator(UIElement):

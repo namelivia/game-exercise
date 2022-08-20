@@ -1,5 +1,5 @@
 from client.graphics.shapes import Text, Image, Animation
-from client.primitives.ui import UIElement
+from client.engine.primitives.ui import UIElement
 
 
 class Title(UIElement):

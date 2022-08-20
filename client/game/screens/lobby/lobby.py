@@ -1,4 +1,4 @@
-from client.primitives.screen import Screen
+from client.engine.primitives.screen import Screen
 from .ui import (
     WelcomeMessage,
     OptionList,

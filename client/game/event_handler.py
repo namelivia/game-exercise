@@ -1,4 +1,4 @@
-from client.primitives.event_handler import EventHandler
+from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     GameMessage,
     ErrorMessage,

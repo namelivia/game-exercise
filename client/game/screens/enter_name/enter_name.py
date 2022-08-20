@@ -1,4 +1,4 @@
-from client.primitives.screen import Screen
+from client.engine.primitives.screen import Screen
 from .ui import EnterNameMessage, Background
 from client.events import UserTypedEvent
 from client.game.commands import PlaySound

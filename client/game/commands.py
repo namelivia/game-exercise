@@ -1,4 +1,4 @@
-from client.primitives.command import Command
+from client.engine.primitives.command import Command
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,

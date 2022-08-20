@@ -1,6 +1,6 @@
 import pygame
 from .sprite import Sprite
-from client.primitives.shape import Shape
+from client.engine.primitives.shape import Shape
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)

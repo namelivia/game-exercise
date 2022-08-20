@@ -1,5 +1,5 @@
 from client.graphics.shapes import Text
-from client.primitives.ui import UIElement
+from client.engine.primitives.ui import UIElement
 
 
 # UI components than can be shared among many screens

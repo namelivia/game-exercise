@@ -6,7 +6,7 @@ Create a new folder in screens with the name of the new screen.
 Create `__init__.py` and the screen Python file `my_screen.py`.
 Create `ui.py` to place the ui elements that will conform the screen.
 
-In `my_screen.py` create `MyScreen` class, it should extend `from client.primitives.screen.Screen`
+In `my_screen.py` create `MyScreen` class, it should extend `from client.engine.primitives.screen.Screen`
 
 Then import and place the ui elements in the `__init__` method.
 Define the the event handler dict in `self.events` the handling functions must execute commands.
@@ -40,7 +40,7 @@ class MyScreen(Screen):
 
 # To make a command
 
-Commands go on `commands.py` and are classes that extend `from client.primitives.command.Command`.
+Commands go on `commands.py` and are classes that extend `from client.engine.primitives.command.Command`.
 Then the `__init__` function is defined, should have `profile` and `queue` parameters and then any arbitrary data needed.
 When calling `super().__init__` a third parameter with the description of the command is providen.
 Finally commands are just lists of `Events` with data associated to them, so to decribe what a command does we just have to define it's `self.events` array.
@@ -62,7 +62,7 @@ class MyCommand(Command):
 # To make an event
 
 Events go on `events.py` and are pushed to a queue to be processed. Events are classes
-extending `from client.primitives.event.Event` define the operation to be performed when extracted from the queue and also hold the data needed to perform such operation.
+extending `from client.engine.primitives.event.Event` define the operation to be performed when extracted from the queue and also hold the data needed to perform such operation.
 
 
 Example:
@@ -80,7 +80,7 @@ class AnotherCustomEvent(Event):
 # To make an event handler
 
 Events need to be processed when being extracted from the queue, there are two places to decide what to do with them, the first is on the screen events dictionary defined above. The second one is `event_handler.py`.
-This file contains a dictionary called `handlers_map` in which Events are paired with their event handlers, event handlers are classes that extend from `client.primitives.event_handler.EventHandler` and need to define a handle function that will recieve and process the event.
+This file contains a dictionary called `handlers_map` in which Events are paired with their event handlers, event handlers are classes that extend from `client.engine.primitives.event_handler.EventHandler` and need to define a handle function that will recieve and process the event.
 
 Processing the event can be accesing the sound manager, the network manager, altering the client state, or calling new commands.
 
