@@ -1,7 +1,7 @@
 from client.engine.primitives.screen import Screen
 from client.game.commands import PlaySound, PlayMusic
 from .ui import Title, Background, Coins
-from client.events import UserTypedEvent
+from client.engine.events import UserTypedEvent
 
 
 class Intro(Screen):

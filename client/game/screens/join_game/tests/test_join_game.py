@@ -1,7 +1,7 @@
 from unittest import TestCase
 from client.game.screens.join_game.join_game import JoinGame
-from client.events import UserTypedEvent
-from client.visual_regression.visual_regression import VisualRegression
+from client.engine.events import UserTypedEvent
+from client.engine.visual_regression.visual_regression import VisualRegression
 import mock
 
 
@@ -11,7 +11,7 @@ class TestJoinGame(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.join_game = JoinGame(self.client_state)
 
-    @mock.patch("client.commands.RequestJoiningAGame")
+    @mock.patch("client.engine.commands.RequestJoiningAGame")
     def test_join_game_screen(self, m_request_join_game):
 
         # Empty screen

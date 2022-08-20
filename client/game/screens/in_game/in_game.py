@@ -10,9 +10,9 @@ from .ui import (
     Events,
     ChatMessages,
 )
-from client.events import UserTypedEvent
+from client.engine.events import UserTypedEvent
 from client.game.commands import PlaySound
-from client.events import (
+from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerPlacedSymbolInGameEvent,

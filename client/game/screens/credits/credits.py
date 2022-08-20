@@ -1,6 +1,6 @@
 from client.engine.primitives.screen import Screen
 from .ui import CreditsUI, Background
-from client.events import UserTypedEvent
+from client.engine.events import UserTypedEvent
 
 
 class Credits(Screen):

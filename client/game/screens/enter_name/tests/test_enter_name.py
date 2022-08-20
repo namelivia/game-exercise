@@ -1,7 +1,7 @@
 from unittest import TestCase
 from client.game.screens.enter_name.enter_name import EnterName
-from client.events import UserTypedEvent
-from client.visual_regression.visual_regression import VisualRegression
+from client.engine.events import UserTypedEvent
+from client.engine.visual_regression.visual_regression import VisualRegression
 import mock
 
 
@@ -11,7 +11,7 @@ class TestEnterName(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.enter_name = EnterName(self.client_state)
 
-    @mock.patch("client.commands.SetPlayerName")
+    @mock.patch("client.engine.commands.SetPlayerName")
     def test_enter_name_screen(self, m_set_player_name):
 
         # Empty screen

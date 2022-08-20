@@ -38,7 +38,7 @@ from common.messages import (
     GameListRequestMessage,
     GameListResponseMessage,
 )
-from client.network.channel import Channel
+from client.engine.network.channel import Channel
 from .game_data import GameData
 
 """

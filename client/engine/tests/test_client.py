@@ -1,8 +1,8 @@
 from unittest import TestCase
-from client.general_state.queue import Queue
-from client.general_state.profile.profile import Profile
-from client.event_handler import EventHandler
-from client.events import (
+from client.engine.general_state.queue import Queue
+from client.engine.general_state.profile.profile import Profile
+from client.engine.event_handler import EventHandler
+from client.engine.events import (
     UserTypedEvent,
     QuitGameEvent,
     UpdateGameEvent,
@@ -16,7 +16,7 @@ from client.events import (
     TurnSoundOnEvent,
     TurnSoundOffEvent,
 )
-from client.commands import (
+from client.engine.commands import (
     QuitGame,
     UserTyped,
     UpdateGame,
@@ -31,7 +31,7 @@ from client.commands import (
     TurnSoundOff,
 )
 from common.messages import GameMessage
-from client.game_data import GameData
+from client.engine.game_data import GameData
 import mock
 
 
@@ -170,7 +170,7 @@ class TestClient(TestCase):
         ).execute()
         # TODO: Finish this test
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_game_status_success(self, m_send_command):
 
         # The server will respond with a correct game message
@@ -212,14 +212,14 @@ class TestClient(TestCase):
         # And it contains the new set of events from the server
         assert event.events == ["event_1", "event_2", "event_3"]
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_game_status_error(self, m_send_command):
         # TODO: Write this test, should source on event to be handled on the screen
         pass
         # The server will respond with a correct game message
         # m_send_command.return_value = ErrorMessage()
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_create_new_game_success(self, m_send_command):
         m_send_command.return_value = GameMessage(
             GameData(
@@ -264,14 +264,14 @@ class TestClient(TestCase):
             "players": ["player_1_id", "player_2_id"],
         }
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_create_new_game_error(self, m_send_command):
         # TODO: Write this test, should source on event to be handled on the screen
         pass
         # The server will respond with a correct game message
         # m_send_command.return_value = ErrorMessage()
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_join_a_game_success(self, m_send_command):
         m_send_command.return_value = GameMessage(
             GameData(
@@ -316,7 +316,7 @@ class TestClient(TestCase):
             "players": ["player_1_id", "player_2_id"],
         }
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_join_a_game_error(self, m_send_command):
         # TODO: Write this test, should source on event to be handled on the screen
         pass

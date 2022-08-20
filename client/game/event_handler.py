@@ -5,7 +5,7 @@ from common.messages import (
     PlaceASymbolMessage,
     SendChatMessage,
 )
-from client.events import InitiateGameEvent
+from client.engine.events import InitiateGameEvent
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
@@ -26,7 +26,7 @@ from .screens.options.options import Options
 from .screens.in_game.in_game import InGame
 from .screens.credits.credits import Credits
 from .screens.enter_name.enter_name import EnterName
-from client.commands import (
+from client.engine.commands import (
     UpdateGame,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
@@ -54,7 +54,7 @@ from .sounds import (
     UserJoinedSound,
 )
 
-from client.network.channel import Channel
+from client.engine.network.channel import Channel
 
 """
 Currently event handlers are the one that do the processing.

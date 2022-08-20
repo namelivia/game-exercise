@@ -1,7 +1,7 @@
-from client.screen_manager import ScreenManager
-from client.input.input import Input
-from client.general_state.client_state import ClientState
-from client.graphics.graphics import Graphics
+from client.engine.screen_manager import ScreenManager
+from client.engine.input.input import Input
+from client.engine.general_state.client_state import ClientState
+from client.engine.graphics.graphics import Graphics
 
 from client.game.events import ScreenTransitionEvent
 

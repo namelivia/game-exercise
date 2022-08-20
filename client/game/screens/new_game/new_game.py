@@ -1,6 +1,6 @@
 from client.engine.primitives.screen import Screen
 from .ui import NewGameMessage, Background, ErrorPopup
-from client.events import UserTypedEvent, ErrorCreatingGameEvent
+from client.engine.events import UserTypedEvent, ErrorCreatingGameEvent
 from client.game.commands import PlaySound
 
 
@@ -30,7 +30,7 @@ class NewGame(Screen):
             return
         if event.key == "return":
             # Avoid circular import
-            from client.commands import RequestGameCreation
+            from client.engine.commands import RequestGameCreation
 
             RequestGameCreation(
                 self.client_state.profile,

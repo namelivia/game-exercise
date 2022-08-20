@@ -1,4 +1,4 @@
-from client.persistence.persistence import Persistence
+from client.engine.persistence.persistence import Persistence
 
 
 class Profile:

@@ -1,4 +1,4 @@
-from client.graphics.shapes import SmallText, Image, Animation, Rectangle, WHITE
+from client.engine.graphics.shapes import SmallText, Image, Animation, Rectangle, WHITE
 from client.engine.primitives.ui import UIElement
 
 

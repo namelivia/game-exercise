@@ -7,7 +7,7 @@ from client.game.events import (
     SendChatNetworkRequestEvent,
 )
 import mock
-from client.general_state.queue import Queue
+from client.engine.general_state.queue import Queue
 from client.game.event_handler import EventHandler
 
 
@@ -17,7 +17,7 @@ class TestGame(TestCase):
         self.queue = Queue()
         self.event_handler = EventHandler()
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_placing_a_symbol(self, m_send_command):
         # When there are new events to process these will be pushed to the queue
         position = 2
@@ -39,7 +39,7 @@ class TestGame(TestCase):
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
 
-    @mock.patch("client.event_handler.Channel.send_command")
+    @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_sending_a_chat_message(self, m_send_command):
         # When there are new events to process these will be pushed to the queue
         message = "This is a test message"

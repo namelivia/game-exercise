@@ -1,4 +1,4 @@
-from client.graphics.shapes import Text, Image
+from client.engine.graphics.shapes import Text, Image
 from client.engine.primitives.ui import UIElement
 
 

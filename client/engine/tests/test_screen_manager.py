@@ -1,5 +1,5 @@
 from unittest import TestCase
-from client.screen_manager import ScreenManager
+from client.engine.screen_manager import ScreenManager
 import mock
 
 

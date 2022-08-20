@@ -4,7 +4,7 @@ from .ui import (
     OptionList,
     Background,
 )
-from client.events import UserTypedEvent
+from client.engine.events import UserTypedEvent
 
 
 class Lobby(Screen):
@@ -41,7 +41,7 @@ class Lobby(Screen):
             GoToCredits,
             GoToSetName,
         )
-        from client.commands import QuitGame, PingTheServer
+        from client.engine.commands import QuitGame, PingTheServer
 
         # These actions, some may update the data, others run commands, who knows
         key = event.key

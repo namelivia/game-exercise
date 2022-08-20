@@ -1,7 +1,7 @@
 from unittest import TestCase
 from client.game.screens.new_game.new_game import NewGame
-from client.events import UserTypedEvent
-from client.visual_regression.visual_regression import VisualRegression
+from client.engine.events import UserTypedEvent
+from client.engine.visual_regression.visual_regression import VisualRegression
 import mock
 
 
@@ -11,7 +11,7 @@ class TestNewGame(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.new_game = NewGame(self.client_state)
 
-    @mock.patch("client.commands.RequestGameCreation")
+    @mock.patch("client.engine.commands.RequestGameCreation")
     def test_new_game_screen(self, m_request_game_creation):
 
         # Empty screen

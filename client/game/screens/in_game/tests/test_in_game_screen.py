@@ -1,6 +1,6 @@
 from unittest import TestCase
-from client.events import UserTypedEvent
-from client.events import (
+from client.engine.events import UserTypedEvent
+from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerPlacedSymbolInGameEvent,

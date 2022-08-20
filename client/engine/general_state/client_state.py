@@ -1,7 +1,7 @@
 from .clock import Clock
 from .queue import Queue
 from .profile.profile import Profile
-from client.persistence.persistence import Persistence
+from client.engine.persistence.persistence import Persistence
 from .profile.factory import Factory
 
 

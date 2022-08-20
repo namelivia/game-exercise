@@ -1,6 +1,6 @@
 from client.engine.primitives.screen import Screen
 from .ui import GameListTitle, Games, Background, ErrorPopup, ErrorJoiningPopup
-from client.events import (
+from client.engine.events import (
     UserTypedEvent,
     UpdateGameListEvent,
     ErrorGettingGameListEvent,
@@ -31,7 +31,7 @@ class GameList(Screen):
             ErrorJoiningGameEvent: self.on_error_joining_game,
         }
 
-        from client.commands import GetGameList
+        from client.engine.commands import GetGameList
         GetGameList(self.client_state.profile, self.client_state.queue).execute()
 
     def on_user_typed(self, event):
@@ -42,7 +42,7 @@ class GameList(Screen):
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
             return
         if event.key in "012345678":
-            from client.commands import RequestJoiningAGame
+            from client.engine.commands import RequestJoiningAGame
             RequestJoiningAGame(
                 self.client_state.profile,
                 self.client_state.queue,

@@ -1,7 +1,7 @@
 from unittest import TestCase
 from client.game.screens.lobby.lobby import Lobby
-from client.events import UserTypedEvent
-from client.visual_regression.visual_regression import VisualRegression
+from client.engine.events import UserTypedEvent
+from client.engine.visual_regression.visual_regression import VisualRegression
 import mock
 
 
@@ -54,14 +54,14 @@ class TestLobby(TestCase):
         )
         m_go_to_credits.assert_called_once()
 
-    @mock.patch("client.commands.PingTheServer")
+    @mock.patch("client.engine.commands.PingTheServer")
     def test_pinging_the_server(self, m_ping):
         self.lobby.update(
             UserTypedEvent("p"),
         )
         m_ping.assert_called_once()
 
-    @mock.patch("client.commands.QuitGame")
+    @mock.patch("client.engine.commands.QuitGame")
     def test_quitting_the_game(self, m_quit):
         self.lobby.update(
             UserTypedEvent("escape"),

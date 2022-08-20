@@ -1,7 +1,7 @@
-from client.commands import UserTyped
-from client.event_handler import EventHandler
+from client.engine.commands import UserTyped
+from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
-from client.commands import RequestGameStatus
+from client.engine.commands import RequestGameStatus
 from .events_processor import EventsProcessor
 
 

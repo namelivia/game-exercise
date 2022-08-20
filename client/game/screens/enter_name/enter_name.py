@@ -1,6 +1,6 @@
 from client.engine.primitives.screen import Screen
 from .ui import EnterNameMessage, Background
-from client.events import UserTypedEvent
+from client.engine.events import UserTypedEvent
 from client.game.commands import PlaySound
 
 
@@ -29,7 +29,7 @@ class EnterName(Screen):
         if event.key == "return":
             # Avoid circular import
             # TODO: Run a comand to set the name
-            from client.commands import SetPlayerName
+            from client.engine.commands import SetPlayerName
             from client.game.commands import BackToLobby
 
             SetPlayerName(self.client_state.profile, self.client_state.queue, self.data["name"]).execute()

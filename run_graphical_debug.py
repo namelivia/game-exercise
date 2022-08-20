@@ -1,13 +1,13 @@
-from client.screen_manager import ScreenManager
-from client.events import InitiateGameEvent
-from client.input.input import Input
-from client.general_state.client_state import ClientState
-from client.graphics.graphics import Graphics
-from client.game_data import GameData
+from client.engine.screen_manager import ScreenManager
+from client.engine.events import InitiateGameEvent
+from client.engine.input.input import Input
+from client.engine.general_state.client_state import ClientState
+from client.engine.graphics.graphics import Graphics
+from client.engine.game_data import GameData
 
-from client.events import GameCreatedInGameEvent
-from client.events import PlayerJoinedInGameEvent
-from client.events import PlayerPlacedSymbolInGameEvent
+from client.engine.events import GameCreatedInGameEvent
+from client.engine.events import PlayerJoinedInGameEvent
+from client.engine.events import PlayerPlacedSymbolInGameEvent
 
 USES_PYGAME = True
 
