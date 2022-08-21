@@ -114,10 +114,7 @@ class IntroAnimation(UIElement):
 
 class ChatInput(UIElement):
     def __init__(self):
-        self.shapes = [
-            Rectangle(0, 430, 640, 30),
-            SmallText("Send message: ", 20, 440, WHITE),
-        ]
+        self.shapes = []
         self.visible = False
 
     def focus(self):
@@ -176,3 +173,20 @@ class Board(UIElement):
             Image("client/game/images/tile.png", self.positions[7][0], self.positions[7][1]),
             Image("client/game/images/tile.png", self.positions[8][0], self.positions[8][1]),
         ]
+
+        for index, ball in enumerate(data["board"]):
+            if ball is not None:
+                if ball == "blue":
+                    self.shapes.append(
+                        Image(
+                            "client/game/images/blue_ball.png",
+                            self.positions[index][0],
+                            self.positions[index][1])
+                    ),
+                else:
+                    self.shapes.append(
+                        Image(
+                            "client/game/images/red_ball.png",
+                            self.positions[index][0],
+                            self.positions[index][1])
+                    ),

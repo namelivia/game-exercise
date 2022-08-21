@@ -28,6 +28,12 @@ if __name__ == "__main__":
                 PlayerPlacedSymbolInGameEvent("player_1", 0),
                 PlayerPlacedSymbolInGameEvent("player_2", 1),
                 PlayerPlacedSymbolInGameEvent("player_1", 3),
+                PlayerPlacedSymbolInGameEvent("player_2", 6),
+                PlayerPlacedSymbolInGameEvent("player_1", 4),
+                PlayerPlacedSymbolInGameEvent("player_2", 2),
+                PlayerPlacedSymbolInGameEvent("player_1", 7),
+                PlayerPlacedSymbolInGameEvent("player_2", 5),
+                PlayerPlacedSymbolInGameEvent("player_1", 8),
             ],
         )
     )

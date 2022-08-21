@@ -34,6 +34,17 @@ class InGame(Screen):
             "chat_input": "",
             "chat_focused": False,
             "chat_messages": [],
+            "board": [
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+            ]
         }
 
         self.ui_elements = [
@@ -142,9 +153,10 @@ class InGame(Screen):
         self.data["players"][1] = event.player_id
 
     def on_player_placed_symbol(self, event):
-        print(
-            "New Player placed a symbol event, do something play some music, update the internal state or something"
-        )
+        if event.player_id == self.data["players"][0]:
+            self.data["board"][event.position] = "blue"
+        else:
+            self.data["board"][event.position] = "red"
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
         ).execute()
