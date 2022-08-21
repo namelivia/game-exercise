@@ -135,3 +135,44 @@ class ChatInput(UIElement):
             ]
         else:
             self.shapes = []
+
+
+class Board(UIElement):
+    def __init__(self):
+        self.positions = [
+            (310, 60),
+            (364, 60),
+            (418, 60),
+            (310, 117),
+            (364, 117),
+            (418, 117),
+            (310, 174),
+            (364, 174),
+            (418, 174),
+        ]
+        self.shapes = [
+            Image("client/game/images/board.png", 300, 50),
+            Image("client/game/images/tile.png", self.positions[0][0], self.positions[0][1]),
+            Image("client/game/images/tile.png", self.positions[1][0], self.positions[1][1]),
+            Image("client/game/images/tile.png", self.positions[2][0], self.positions[2][1]),
+            Image("client/game/images/tile.png", self.positions[3][0], self.positions[3][1]),
+            Image("client/game/images/tile.png", self.positions[4][0], self.positions[4][1]),
+            Image("client/game/images/tile.png", self.positions[5][0], self.positions[5][1]),
+            Image("client/game/images/tile.png", self.positions[6][0], self.positions[6][1]),
+            Image("client/game/images/tile.png", self.positions[7][0], self.positions[7][1]),
+            Image("client/game/images/tile.png", self.positions[8][0], self.positions[8][1]),
+        ]
+
+    def update(self, time, data):
+        self.shapes = [
+            Image("client/game/images/board.png", 300, 50),
+            Image("client/game/images/tile.png", self.positions[0][0], self.positions[0][1]),
+            Image("client/game/images/tile.png", self.positions[1][0], self.positions[1][1]),
+            Image("client/game/images/tile.png", self.positions[2][0], self.positions[2][1]),
+            Image("client/game/images/tile.png", self.positions[3][0], self.positions[3][1]),
+            Image("client/game/images/tile.png", self.positions[4][0], self.positions[4][1]),
+            Image("client/game/images/tile.png", self.positions[5][0], self.positions[5][1]),
+            Image("client/game/images/tile.png", self.positions[6][0], self.positions[6][1]),
+            Image("client/game/images/tile.png", self.positions[7][0], self.positions[7][1]),
+            Image("client/game/images/tile.png", self.positions[8][0], self.positions[8][1]),
+        ]
