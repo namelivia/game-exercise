@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="tiktaktoe.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient827">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop823" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop825" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient827"
+       id="linearGradient829"
+       x1="40.002842"
+       y1="51.360958"
+       x2="79.356983"
+       y2="51.360958"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.21959855,0,0,0.60655023,21.056864,-49.402171)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient827"
+       id="linearGradient833"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.13778732,0,0,0.23245034,-53.180092,6.52627)"
+       x1="40.002842"
+       y1="51.360958"
+       x2="79.356983"
+       y2="51.360958" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient827"
+       id="linearGradient929"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.21959855,0,0,0.60655023,56.579368,-49.402171)"
+       x1="40.002842"
+       y1="51.360958"
+       x2="79.356983"
+       y2="51.360958" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient827"
+       id="linearGradient931"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.13778732,0,0,0.23245034,-88.702596,6.52627)"
+       x1="40.002842"
+       y1="51.360958"
+       x2="79.356983"
+       y2="51.360958" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.601391"
+     inkscape:cx="-175.61355"
+     inkscape:cy="818.22762"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1061"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       r="27.893869"
+       cy="63.68615"
+       cx="59.896141"
+       id="ellipse817"
+       style="opacity:1;vector-effect:none;fill:#d40000;fill-opacity:0.99504945;stroke:none;stroke-width:0.26499999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       ry="0"
+       y="22.701374"
+       x="-111.51955"
+       height="106.6404"
+       width="104.08919"
+       id="rect1033"
+       style="opacity:1;vector-effect:none;fill:#6b6652;fill-opacity:1;stroke:none;stroke-width:0.2772705;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/board.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#784421;fill-opacity:1;stroke:none;stroke-width:0.2772705;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1029"
+       width="104.08919"
+       height="106.6404"
+       x="-116.81121"
+       y="17.409708"
+       ry="0"
+       inkscape:export-filename="/home/nacho/board.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       ry="0"
+       y="93.728203"
+       x="4.9413009"
+       height="32.293362"
+       width="30.42128"
+       id="rect849"
+       style="opacity:1;vector-effect:none;fill:#454837;fill-opacity:0.99504945;stroke:none;stroke-width:0.28678799;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/tile.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#6c6753;fill-opacity:0.99504945;stroke:none;stroke-width:0.26499999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect847"
+       width="28.1101"
+       height="29.839954"
+       x="6.0968871"
+       y="94.954903"
+       ry="6.7173738"
+       inkscape:export-filename="/home/nacho/tile.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       ry="6.4762254"
+       y="96.026138"
+       x="7.1060119"
+       height="28.768724"
+       width="27.100969"
+       id="rect860"
+       style="opacity:1;vector-effect:none;fill:#c8c4b7;fill-opacity:0.99504945;stroke:none;stroke-width:0.2554867;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/tile.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <circle
+       r="11.639936"
+       cy="40.837399"
+       cx="20.689713"
+       id="circle864"
+       style="opacity:1;vector-effect:none;fill:#6b6652;fill-opacity:1;stroke:none;stroke-width:0.11058283;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/red_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <circle
+       style="opacity:1;vector-effect:none;fill:#d40000;fill-opacity:0.99504945;stroke:none;stroke-width:0.10587388;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path815"
+       cx="18.508335"
+       cy="39.185192"
+       r="11.144273"
+       inkscape:export-filename="/home/nacho/red_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <circle
+       r="9.8916206"
+       cy="38.553349"
+       cx="18.3106"
+       id="circle819"
+       style="opacity:1;vector-effect:none;fill:#ff0000;fill-opacity:0.99504945;stroke:none;stroke-width:0.09397333;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/red_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <ellipse
+       style="opacity:1;vector-effect:none;fill:url(#linearGradient829);fill-opacity:1;stroke:none;stroke-width:0.05304035;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="circle821"
+       cx="34.162487"
+       cy="-18.249168"
+       rx="4.3210559"
+       ry="7.2135406"
+       transform="rotate(90)"
+       inkscape:export-filename="/home/nacho/red_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <ellipse
+       transform="rotate(-90)"
+       ry="2.7644696"
+       rx="2.7112505"
+       cy="18.465141"
+       cx="-44.956955"
+       id="ellipse831"
+       style="opacity:1;vector-effect:none;fill:url(#linearGradient833);fill-opacity:1;stroke:none;stroke-width:0.02600926;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/red_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#454837;fill-opacity:0.99504945;stroke:none;stroke-width:0.28678799;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect885"
+       width="30.42128"
+       height="32.293362"
+       x="4.9413009"
+       y="93.728203"
+       ry="0"
+       inkscape:export-filename="/home/nacho/tile.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       ry="6.7173738"
+       y="94.954903"
+       x="6.0968871"
+       height="29.839954"
+       width="28.1101"
+       id="rect887"
+       style="opacity:1;vector-effect:none;fill:#6c6753;fill-opacity:0.99504945;stroke:none;stroke-width:0.26499999;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/tile.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       style="opacity:1;vector-effect:none;fill:#c8c4b7;fill-opacity:0.99504945;stroke:none;stroke-width:0.2554867;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect889"
+       width="27.100969"
+       height="28.768724"
+       x="7.1060119"
+       y="96.026138"
+       ry="6.4762254"
+       inkscape:export-filename="/home/nacho/tile.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <circle
+       style="opacity:1;vector-effect:none;fill:#6b6652;fill-opacity:1;stroke:none;stroke-width:0.11058283;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="circle919"
+       cx="20.689713"
+       cy="76.359901"
+       r="11.639936"
+       inkscape:export-filename="/home/nacho/blue_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <circle
+       r="11.144273"
+       cy="74.707695"
+       cx="18.508335"
+       id="circle921"
+       style="opacity:1;vector-effect:none;fill:#2ca089;fill-opacity:0.99504945;stroke:none;stroke-width:0.10587388;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/blue_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <circle
+       style="opacity:1;vector-effect:none;fill:#5fd3bc;fill-opacity:0.99504945;stroke:none;stroke-width:0.09397333;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="circle923"
+       cx="18.3106"
+       cy="74.075851"
+       r="9.8916206"
+       inkscape:export-filename="/home/nacho/blue_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <ellipse
+       transform="rotate(90)"
+       ry="7.2135406"
+       rx="4.3210559"
+       cy="-18.249168"
+       cx="69.68499"
+       id="ellipse925"
+       style="opacity:1;vector-effect:none;fill:url(#linearGradient929);fill-opacity:1;stroke:none;stroke-width:0.05304035;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       inkscape:export-filename="/home/nacho/blue_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <ellipse
+       style="opacity:1;vector-effect:none;fill:url(#linearGradient931);fill-opacity:1;stroke:none;stroke-width:0.02600926;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="ellipse927"
+       cx="-80.479462"
+       cy="18.465141"
+       rx="2.7112505"
+       ry="2.7644696"
+       transform="rotate(-90)"
+       inkscape:export-filename="/home/nacho/blue_ball.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <rect
+       ry="0"
+       y="20.053244"
+       x="-114.23092"
+       height="101.35333"
+       width="98.928604"
+       id="rect1031"
+       style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#ebff5f;stroke-width:1.00000003;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:1.00000003,4.00000011;stroke-dashoffset:0;stroke-opacity:1;paint-order:markers fill stroke"
+       inkscape:export-filename="/home/nacho/board.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+  </g>
+</svg>
