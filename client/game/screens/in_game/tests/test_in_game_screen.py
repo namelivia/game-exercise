@@ -291,3 +291,12 @@ class TestInGameScreen(TestCase):
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_response.png",
         )
+
+        # Chat unfocused
+
+        self.in_game.update(UserTypedEvent("escape"))
+
+        VisualRegression.assert_matches_snapshot(
+            self.in_game,
+            "./client/game/screens/in_game/tests/screenshots/in_game_chat_unfocused.png",
+        )
