@@ -17,21 +17,21 @@ class Background(UIElement):
 class ProfileList(UIElement):
     def __init__(self, profiles):
         self.profiles = profiles
-        self.shapes = [
-            SmallText("0 - New profile", 20, 50)
-        ]
+        self.shapes = [SmallText("0 - New profile", 20, 50)]
         self.shapes += [
-            SmallText(str(index + 1) + " - " + str(event["name"]), 20, 50 + (20 * (index + 1)))
+            SmallText(
+                str(index + 1) + " - " + str(event["name"]), 20, 50 + (20 * (index + 1))
+            )
             for index, event in enumerate(profiles)
         ]
 
     def update(self, time, data):
         # What if data does not contain events? Throw an exception
         profiles = data["profiles"]
-        self.shapes = [
-            SmallText("0 - New profile", 20, 50)
-        ]
+        self.shapes = [SmallText("0 - New profile", 20, 50)]
         self.shapes += [
-            SmallText(str(index + 1) + " - " + str(event["name"]), 20, 50 + (20 * (index + 1)))
+            SmallText(
+                str(index + 1) + " - " + str(event["name"]), 20, 50 + (20 * (index + 1))
+            )
             for index, event in enumerate(profiles)
         ]

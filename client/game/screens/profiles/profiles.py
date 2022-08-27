@@ -3,7 +3,7 @@ from .ui import ProfilesTitle, ProfileList, Background
 from client.engine.events import (
     UserTypedEvent,
     UpdateProfilesInGameEvent,
-    ProfileSetInGameEvent
+    ProfileSetInGameEvent,
 )
 
 
@@ -58,6 +58,4 @@ class Profiles(Screen):
         # Avoid circular import
         from client.game.commands import BackToLobby
 
-        BackToLobby(
-            self.client_state.profile, self.client_state.queue
-        ).execute()
+        BackToLobby(self.client_state.profile, self.client_state.queue).execute()

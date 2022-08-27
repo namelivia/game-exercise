@@ -149,29 +149,101 @@ class Board(UIElement):
         ]
         self.shapes = [
             Image("client/game/images/board.png", 300, 50),
-            Image("client/game/images/tile.png", self.positions[0][0], self.positions[0][1]),
-            Image("client/game/images/tile.png", self.positions[1][0], self.positions[1][1]),
-            Image("client/game/images/tile.png", self.positions[2][0], self.positions[2][1]),
-            Image("client/game/images/tile.png", self.positions[3][0], self.positions[3][1]),
-            Image("client/game/images/tile.png", self.positions[4][0], self.positions[4][1]),
-            Image("client/game/images/tile.png", self.positions[5][0], self.positions[5][1]),
-            Image("client/game/images/tile.png", self.positions[6][0], self.positions[6][1]),
-            Image("client/game/images/tile.png", self.positions[7][0], self.positions[7][1]),
-            Image("client/game/images/tile.png", self.positions[8][0], self.positions[8][1]),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[0][0],
+                self.positions[0][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[1][0],
+                self.positions[1][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[2][0],
+                self.positions[2][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[3][0],
+                self.positions[3][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[4][0],
+                self.positions[4][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[5][0],
+                self.positions[5][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[6][0],
+                self.positions[6][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[7][0],
+                self.positions[7][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[8][0],
+                self.positions[8][1],
+            ),
         ]
 
     def update(self, time, data):
         self.shapes = [
             Image("client/game/images/board.png", 300, 50),
-            Image("client/game/images/tile.png", self.positions[0][0], self.positions[0][1]),
-            Image("client/game/images/tile.png", self.positions[1][0], self.positions[1][1]),
-            Image("client/game/images/tile.png", self.positions[2][0], self.positions[2][1]),
-            Image("client/game/images/tile.png", self.positions[3][0], self.positions[3][1]),
-            Image("client/game/images/tile.png", self.positions[4][0], self.positions[4][1]),
-            Image("client/game/images/tile.png", self.positions[5][0], self.positions[5][1]),
-            Image("client/game/images/tile.png", self.positions[6][0], self.positions[6][1]),
-            Image("client/game/images/tile.png", self.positions[7][0], self.positions[7][1]),
-            Image("client/game/images/tile.png", self.positions[8][0], self.positions[8][1]),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[0][0],
+                self.positions[0][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[1][0],
+                self.positions[1][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[2][0],
+                self.positions[2][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[3][0],
+                self.positions[3][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[4][0],
+                self.positions[4][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[5][0],
+                self.positions[5][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[6][0],
+                self.positions[6][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[7][0],
+                self.positions[7][1],
+            ),
+            Image(
+                "client/game/images/tile.png",
+                self.positions[8][0],
+                self.positions[8][1],
+            ),
         ]
 
         for index, ball in enumerate(data["board"]):
@@ -181,12 +253,14 @@ class Board(UIElement):
                         Image(
                             "client/game/images/blue_ball.png",
                             self.positions[index][0],
-                            self.positions[index][1])
+                            self.positions[index][1],
+                        )
                     ),
                 else:
                     self.shapes.append(
                         Image(
                             "client/game/images/red_ball.png",
                             self.positions[index][0],
-                            self.positions[index][1])
+                            self.positions[index][1],
+                        )
                     ),

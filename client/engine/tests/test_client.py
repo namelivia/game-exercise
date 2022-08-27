@@ -391,7 +391,9 @@ class TestClient(TestCase):
             sound_on=False,
         )
         assert profile.name is None
-        ChatMessageInGameCommand(profile, self.queue, "player_id", "test message").execute()
+        ChatMessageInGameCommand(
+            profile, self.queue, "player_id", "test message"
+        ).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -408,7 +410,7 @@ class TestClient(TestCase):
             sound_on=False,
         )
         assert profile.name is None
-        UpdateGameList(profile, self.queue, ['game1', 'game2', 'game3']).execute()
+        UpdateGameList(profile, self.queue, ["game1", "game2", "game3"]).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events

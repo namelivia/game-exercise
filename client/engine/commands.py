@@ -257,7 +257,9 @@ class UpdateProfiles(Command):
     def __init__(self, profile, queue, profiles):
         super().__init__(profile, queue, "Profile list retrieved")
         self.events = [
-            UpdateProfilesInGameEvent(profiles)  # Event to be picked up by the screen event handler
+            UpdateProfilesInGameEvent(
+                profiles
+            )  # Event to be picked up by the screen event handler
         ]
 
 
