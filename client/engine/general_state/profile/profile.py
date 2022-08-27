@@ -2,7 +2,8 @@ from client.engine.persistence.persistence import Persistence
 
 
 class Profile:
-    def __init__(self, *, id, game_id, game_event_pointer, sound_on):
+    def __init__(self, *, key, id, game_id, game_event_pointer, sound_on):
+        self.key = key
         self.id = id
         self.game_id = game_id
         self.game_event_pointer = game_event_pointer
@@ -27,4 +28,4 @@ class Profile:
         self.save()
 
     def save(self):
-        Persistence.save(self)
+        Persistence.save(self, self.key)
