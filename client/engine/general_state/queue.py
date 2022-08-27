@@ -8,8 +8,8 @@ class Queue:
     def put(self, new_data):
         self.data.put(new_data)
 
-    def empty(self):
-        self.data.empty()
+    def empty(self) -> bool:
+        return self.data.empty()
 
     def pop(self):
         try:
