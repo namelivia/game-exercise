@@ -26,6 +26,7 @@ from .screens.options.options import Options
 from .screens.in_game.in_game import InGame
 from .screens.credits.credits import Credits
 from .screens.enter_name.enter_name import EnterName
+from .screens.profiles.profiles import Profiles
 from client.engine.commands import (
     UpdateGame,
     GameCreatedInGameCommand,
@@ -152,6 +153,8 @@ class ScreenTransitionEventHandler(EventHandler):
             client_state.set_current_screen(Credits(client_state))
         if event.dest_screen == "enter_name":
             client_state.set_current_screen(EnterName(client_state))
+        if event.dest_screen == "profiles":
+            client_state.set_current_screen(Profiles(client_state))
 
 
 class ClearInternalGameInformationEventHandler(EventHandler):

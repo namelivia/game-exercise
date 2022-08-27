@@ -123,6 +123,15 @@ class GoToSetName(Command):
         ]
 
 
+class GoToProfiles(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Move to the profiles screen")
+        self.events = [
+            PlaySoundEvent("select"),
+            ScreenTransitionEvent("profiles"),
+        ]
+
+
 # ===== SERVER OUTBOUND COMMUNICATIONS =====
 class PlaceASymbol(Command):
     def __init__(self, profile, queue, game_id, position):

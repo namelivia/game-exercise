@@ -14,6 +14,7 @@ from .events import (
     TurnSoundOnEvent,
     TurnSoundOffEvent,
     SetPlayerNameEvent,
+    GetProfilesEvent,
 )
 from .commands import (
     ProcessServerEvents,
@@ -26,6 +27,7 @@ from .commands import (
     ErrorGettingGameList,
     ErrorCreatingGame,
     ErrorJoiningGame,
+    UpdateProfiles,
 )
 from common.messages import (
     GameMessage,
@@ -216,6 +218,15 @@ class PingNetworkRequestEventHandler(EventHandler):
         return PingRequestMessage()
 
 
+class GetProfilesEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        # TODO retrieve profiles from disk
+        profiles = [{"name": "My profile"}]
+        UpdateProfiles(
+            client_state.profile, client_state.queue, profiles
+        ).execute()
+
+
 class GetGameListNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode()
@@ -252,6 +263,7 @@ handlers_map = {
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
+    GetProfilesEvent: GetProfilesEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     TurnSoundOnEvent: TurnSoundOnEventHandler,

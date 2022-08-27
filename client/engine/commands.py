@@ -12,6 +12,7 @@ from .events import (
     RefreshGameStatusNetworkRequestEvent,
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
+    UpdateProfilesInGameEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
@@ -24,6 +25,7 @@ from .events import (
     ErrorGettingGameListEvent,
     ErrorCreatingGameEvent,
     ErrorJoiningGameEvent,
+    GetProfilesEvent,
 )
 
 """
@@ -216,6 +218,20 @@ class GetGameList(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Get Game List")
         self.events = [GetGameListNetworkRequestEvent()]
+
+
+class GetProfiles(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Get Profiles List")
+        self.events = [GetProfilesEvent()]
+
+
+class UpdateProfiles(Command):
+    def __init__(self, profile, queue, profiles):
+        super().__init__(profile, queue, "Profile list retrieved")
+        self.events = [
+            UpdateProfilesInGameEvent(profiles)  # Event to be picked up by the screen event handler
+        ]
 
 
 # ==== Errors
