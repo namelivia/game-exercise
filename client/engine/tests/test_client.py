@@ -63,7 +63,8 @@ class TestClient(TestCase):
         m_pygame_quit.assert_called_once_with()
         m_exit.assert_called_once_with()
 
-    def test_turning_sound_on(self):
+    @mock.patch("client.engine.persistence.persistence.Persistence.save")
+    def test_turning_sound_on(self, m_save):
         profile = Profile(
             id="id",
             game_id="game_id",
@@ -77,8 +78,10 @@ class TestClient(TestCase):
         client_state.profile = profile
         self.event_handler.handle(event, client_state)
         assert client_state.profile.sound_on is True
+        m_save.assert_called_once_with(profile)
 
-    def test_turning_sound_off(self):
+    @mock.patch("client.engine.persistence.persistence.Persistence.save")
+    def test_turning_sound_off(self, m_save):
         profile = Profile(
             id="id", game_id="game_id", game_event_pointer=0, sound_on=True
         )
@@ -89,6 +92,7 @@ class TestClient(TestCase):
         client_state.profile = profile
         self.event_handler.handle(event, client_state)
         assert client_state.profile.sound_on is False
+        m_save.assert_called_once_with(profile)
 
     def test_user_typing(self):
         UserTyped(self.profile, self.queue, "f").execute()
