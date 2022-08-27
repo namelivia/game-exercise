@@ -12,6 +12,7 @@ from .events import (
     RefreshGameStatusNetworkRequestEvent,
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
+    UpdateProfilesInGameEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
@@ -24,6 +25,10 @@ from .events import (
     ErrorGettingGameListEvent,
     ErrorCreatingGameEvent,
     ErrorJoiningGameEvent,
+    GetProfilesEvent,
+    SetProfileEvent,
+    NewProfileEvent,
+    ProfileSetInGameEvent,
 )
 
 """
@@ -56,6 +61,30 @@ class TurnSoundOn(Command):
         super().__init__(profile, queue, "Turning sound ON")
         self.events = [
             TurnSoundOnEvent(),
+        ]
+
+
+class SetProfile(Command):
+    def __init__(self, profile, queue, key):
+        super().__init__(profile, queue, f"Setting profile {key}")
+        self.events = [
+            SetProfileEvent(key),
+        ]
+
+
+class NewProfile(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Setting new profile")
+        self.events = [
+            NewProfileEvent(),
+        ]
+
+
+class ProfileIsSet(Command):
+    def __init__(self, profile, queue, key):
+        super().__init__(profile, queue, f"Profile set to {key}")
+        self.events = [
+            ProfileSetInGameEvent(key),
         ]
 
 
@@ -216,6 +245,22 @@ class GetGameList(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Get Game List")
         self.events = [GetGameListNetworkRequestEvent()]
+
+
+class GetProfiles(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Get Profiles List")
+        self.events = [GetProfilesEvent()]
+
+
+class UpdateProfiles(Command):
+    def __init__(self, profile, queue, profiles):
+        super().__init__(profile, queue, "Profile list retrieved")
+        self.events = [
+            UpdateProfilesInGameEvent(
+                profiles
+            )  # Event to be picked up by the screen event handler
+        ]
 
 
 # ==== Errors

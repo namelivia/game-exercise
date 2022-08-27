@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     # The initial event is game specific
     initial_event = ScreenTransitionEvent("intro")
-    client_state = ClientState(initial_event)
+    client_state = ClientState(initial_event, "Default profile")
 
     # Only if using pygame
     input_manager = None

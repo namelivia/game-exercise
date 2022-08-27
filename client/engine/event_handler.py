@@ -14,6 +14,9 @@ from .events import (
     TurnSoundOnEvent,
     TurnSoundOffEvent,
     SetPlayerNameEvent,
+    GetProfilesEvent,
+    SetProfileEvent,
+    NewProfileEvent,
 )
 from .commands import (
     ProcessServerEvents,
@@ -26,6 +29,9 @@ from .commands import (
     ErrorGettingGameList,
     ErrorCreatingGame,
     ErrorJoiningGame,
+    UpdateProfiles,
+    ProfileIsSet,
+    SetProfile,
 )
 from common.messages import (
     GameMessage,
@@ -39,6 +45,7 @@ from common.messages import (
     GameListResponseMessage,
 )
 from client.engine.network.channel import Channel
+from client.engine.persistence.persistence import Persistence
 from .game_data import GameData
 
 """
@@ -216,6 +223,28 @@ class PingNetworkRequestEventHandler(EventHandler):
         return PingRequestMessage()
 
 
+class GetProfilesEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        # TODO retrieve profiles from disk
+        profiles = self._build_profiles_index(Persistence.list())
+        UpdateProfiles(client_state.profile, client_state.queue, profiles).execute()
+
+    def _build_profiles_index(self, profiles):
+        return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
+
+
+class SetProfileEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        client_state.set_profile(event.key)
+        ProfileIsSet(client_state.profile, client_state.queue, event.key).execute()
+
+
+class NewProfileEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        new_profile_key = client_state.new_profile().key
+        SetProfile(client_state.profile, client_state.queue, new_profile_key).execute()
+
+
 class GetGameListNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode()
@@ -252,6 +281,9 @@ handlers_map = {
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
+    GetProfilesEvent: GetProfilesEventHandler,
+    SetProfileEvent: SetProfileEventHandler,
+    NewProfileEvent: NewProfileEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     TurnSoundOnEvent: TurnSoundOnEventHandler,

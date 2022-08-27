@@ -66,6 +66,7 @@ class TestClient(TestCase):
     @mock.patch("client.engine.persistence.persistence.Persistence.save")
     def test_turning_sound_on(self, m_save):
         profile = Profile(
+            key="key",
             id="id",
             game_id="game_id",
             game_event_pointer=0,
@@ -78,12 +79,12 @@ class TestClient(TestCase):
         client_state.profile = profile
         self.event_handler.handle(event, client_state)
         assert client_state.profile.sound_on is True
-        m_save.assert_called_once_with(profile)
+        m_save.assert_called_once_with(profile, "key")
 
     @mock.patch("client.engine.persistence.persistence.Persistence.save")
     def test_turning_sound_off(self, m_save):
         profile = Profile(
-            id="id", game_id="game_id", game_event_pointer=0, sound_on=True
+            key="key", id="id", game_id="game_id", game_event_pointer=0, sound_on=True
         )
         TurnSoundOff(self.profile, self.queue).execute()
         event = self.queue.pop()
@@ -92,7 +93,7 @@ class TestClient(TestCase):
         client_state.profile = profile
         self.event_handler.handle(event, client_state)
         assert client_state.profile.sound_on is False
-        m_save.assert_called_once_with(profile)
+        m_save.assert_called_once_with(profile, "key")
 
     def test_user_typing(self):
         UserTyped(self.profile, self.queue, "f").execute()
@@ -112,6 +113,7 @@ class TestClient(TestCase):
             "event_3",
         ]
         profile = Profile(
+            key="key",
             id="id",
             game_id="game_id",
             game_event_pointer=len(already_processed_events) - 1,
@@ -143,6 +145,7 @@ class TestClient(TestCase):
         )
 
         profile = Profile(
+            key="key",
             id="id",
             game_id=None,  # Internal game id is not set
             game_event_pointer=0,
@@ -335,9 +338,11 @@ class TestClient(TestCase):
         # The server will respond with a correct game message
         # m_send_command.return_value = ErrorMessage()
 
-    def test_setting_player_name(self):
+    @mock.patch("client.engine.persistence.persistence.Persistence.save")
+    def test_setting_player_name(self, m_save):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(
+            key="key",
             id="id",
             game_id="game_id",
             game_event_pointer=0,
@@ -355,6 +360,7 @@ class TestClient(TestCase):
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
         assert profile.name == "Player name"
+        m_save.assert_called_once_with(profile, "key")
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_ping_the_server_success(self, m_send_command):
@@ -378,13 +384,16 @@ class TestClient(TestCase):
     def test_sending_an_ingame_chat_message(self):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(
+            key="key",
             id="id",
             game_id="game_id",
             game_event_pointer=0,
             sound_on=False,
         )
         assert profile.name is None
-        ChatMessageInGameCommand(profile, self.queue, "player_id", "test message").execute()
+        ChatMessageInGameCommand(
+            profile, self.queue, "player_id", "test message"
+        ).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -394,13 +403,14 @@ class TestClient(TestCase):
     def test_updating_the_game_list(self):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(
+            key="key",
             id="id",
             game_id="game_id",
             game_event_pointer=0,
             sound_on=False,
         )
         assert profile.name is None
-        UpdateGameList(profile, self.queue, ['game1', 'game2', 'game3']).execute()
+        UpdateGameList(profile, self.queue, ["game1", "game2", "game3"]).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events

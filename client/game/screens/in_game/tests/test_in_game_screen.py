@@ -98,10 +98,7 @@ class TestInGameScreen(TestCase):
             [],
             "some_game_id",
             "some_game_name",
-            [
-                "player_1_id",
-                None
-            ],
+            ["player_1_id", None],
         )
 
         # Empty screen
@@ -112,9 +109,7 @@ class TestInGameScreen(TestCase):
 
         # Player 2 joins the game
         self.in_game.update(
-            PlayerJoinedInGameEvent(
-                player_id="player_2_id"
-            ),
+            PlayerJoinedInGameEvent(player_id="player_2_id"),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -124,10 +119,7 @@ class TestInGameScreen(TestCase):
 
         # A chat message comes
         self.in_game.update(
-            ChatMessageInGameEvent(
-                player_id="player_2_id",
-                message="good luck"
-            ),
+            ChatMessageInGameEvent(player_id="player_2_id", message="good luck"),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -137,10 +129,7 @@ class TestInGameScreen(TestCase):
 
         # Player 1 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id",
-                position=0
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=0),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -150,10 +139,7 @@ class TestInGameScreen(TestCase):
 
         # Player 2 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id",
-                position=1
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_2_id", position=1),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -163,10 +149,7 @@ class TestInGameScreen(TestCase):
 
         # Player 1 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id",
-                position=3
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=3),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -176,10 +159,7 @@ class TestInGameScreen(TestCase):
 
         # Player 2 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id",
-                position=6
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_2_id", position=6),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -189,10 +169,7 @@ class TestInGameScreen(TestCase):
 
         # Player 1 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id",
-                position=4
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=4),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -202,10 +179,7 @@ class TestInGameScreen(TestCase):
 
         # Player 2 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id",
-                position=2
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_2_id", position=2),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -215,10 +189,7 @@ class TestInGameScreen(TestCase):
 
         # Player 1 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id",
-                position=7
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=7),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -228,10 +199,7 @@ class TestInGameScreen(TestCase):
 
         # Player 2 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id",
-                position=5
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_2_id", position=5),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -241,10 +209,7 @@ class TestInGameScreen(TestCase):
 
         # Player 2 places symbol
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id",
-                position=8
-            ),
+            PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=8),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -281,10 +246,7 @@ class TestInGameScreen(TestCase):
         # TODO: Assert that the event has been sourced here.
 
         self.in_game.update(
-            ChatMessageInGameEvent(
-                player_id="player_1_id",
-                message="gg bro"
-            ),
+            ChatMessageInGameEvent(player_id="player_1_id", message="gg bro"),
         )
 
         VisualRegression.assert_matches_snapshot(

@@ -11,11 +11,11 @@ class Lobby(Screen):
     def __init__(self, client_state):
         super().__init__(client_state)
 
-        self.data = {"name": client_state.profile.name}
+        self.data = {"name": client_state.profile.name, "id": client_state.profile.id}
 
         self.ui_elements = [
             Background(),
-            WelcomeMessage(self.data["name"]),
+            WelcomeMessage(self.data["name"], self.data["id"]),
             OptionList(
                 {
                     "1": "Create a new game",
@@ -24,6 +24,7 @@ class Lobby(Screen):
                     "4": "Options",
                     "5": "Set Name",
                     "6": "Credits",
+                    "7": "Profiles",
                 }
             ),
         ]
@@ -40,6 +41,7 @@ class Lobby(Screen):
             GoToGameList,
             GoToCredits,
             GoToSetName,
+            GoToProfiles,
         )
         from client.engine.commands import QuitGame, PingTheServer
 
@@ -59,6 +61,8 @@ class Lobby(Screen):
             GoToSetName(self.client_state.profile, self.client_state.queue).execute()
         if key == "6":
             GoToCredits(self.client_state.profile, self.client_state.queue).execute()
+        if key == "7":
+            GoToProfiles(self.client_state.profile, self.client_state.queue).execute()
         if key == "p":
             PingTheServer(self.client_state.profile, self.client_state.queue).execute()
         if event.key == "escape":

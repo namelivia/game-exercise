@@ -44,7 +44,7 @@ class InGame(Screen):
                 None,
                 None,
                 None,
-            ]
+            ],
         }
 
         self.ui_elements = [
