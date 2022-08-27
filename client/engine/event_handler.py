@@ -41,6 +41,7 @@ from common.messages import (
     GameListResponseMessage,
 )
 from client.engine.network.channel import Channel
+from client.engine.persistence.persistence import Persistence
 from .game_data import GameData
 
 """
@@ -221,10 +222,13 @@ class PingNetworkRequestEventHandler(EventHandler):
 class GetProfilesEventHandler(EventHandler):
     def handle(self, event, client_state):
         # TODO retrieve profiles from disk
-        profiles = [{"name": "My profile"}]
+        profiles = self._build_profiles_index(Persistence.list())
         UpdateProfiles(
             client_state.profile, client_state.queue, profiles
         ).execute()
+
+    def _build_profiles_index(self, profiles):
+        return [{"name": profile} for profile in profiles if profile != '.gitkeep']
 
 
 class GetGameListNetworkRequestEventHandler(EventHandler):
