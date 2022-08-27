@@ -157,3 +157,19 @@ class UpdateProfilesInGameEvent(Event):
     def __init__(self, profiles):
         super().__init__()
         self.profiles = profiles
+
+
+class SetProfileEvent(Event):
+    def __init__(self, key):
+        super().__init__()
+        self.key = key
+
+
+class NewProfileEvent(Event):
+    pass
+
+
+class ProfileSetInGameEvent(Event):
+    def __init__(self, key):
+        super().__init__()
+        self.key = key

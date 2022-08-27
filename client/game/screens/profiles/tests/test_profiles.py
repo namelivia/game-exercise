@@ -1,8 +1,7 @@
-from types import SimpleNamespace
 from unittest import TestCase
 from client.game.screens.profiles.profiles import Profiles
 from client.engine.visual_regression.visual_regression import VisualRegression
-from client.engine.events import UpdateProfilesEvent, UserTypedEvent
+from client.engine.events import UpdateProfilesInGameEvent, UserTypedEvent
 import mock
 
 
@@ -12,8 +11,8 @@ class TestProfiles(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.profiles = Profiles(self.client_state)
 
-    @mock.patch("client.engine.commands.RequestJoiningAGame")
-    def test_profiles(self, m_request_joining_game):
+    @mock.patch("client.engine.commands.SetProfile")
+    def test_profiles(self, m_set_profile):
 
         # Empty screen
         VisualRegression.assert_matches_snapshot(
@@ -21,24 +20,24 @@ class TestProfiles(TestCase):
             "./client/game/screens/profiles/tests/screenshots/profiles_empty.png",
         )
 
-        # Game list received from server
+        # Profile list retrieved from disk
         self.profiles.update(
-            UpdateProfilesEvent(
+            UpdateProfilesInGameEvent(
                 [
-                    SimpleNamespace(**{"id": "game_id_1", "name": "test game 1"}),
-                    SimpleNamespace(**{"id": "game_id_2", "name": "test game 2"}),
-                    SimpleNamespace(**{"id": "game_id_3", "name": "test game 3"}),
+                    {"name": "some profile"},
+                    {"name": "another profile"},
+                    {"name": "yet another profile"},
                 ]
             )
         )
 
-        # Screen lists all games
+        # Screen lists all profiles
         VisualRegression.assert_matches_snapshot(
             self.profiles,
-            "./client/game/screens/profiles/tests/screenshots/profiles_show_games.png",
+            "./client/game/screens/profiles/tests/screenshots/profiles_show_profiles.png",
         )
 
         self.profiles.update(
             UserTypedEvent("2"),
         )
-        m_request_joining_game.assert_called_once_with(mock.ANY, mock.ANY, "game_id_3")
+        m_set_profile.assert_called_once_with(mock.ANY, mock.ANY, "another profile")

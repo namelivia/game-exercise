@@ -26,7 +26,6 @@ class EnterName(Screen):
             return
         if event.key == "return":
             # Avoid circular import
-            # TODO: Run a comand to set the name
             from client.engine.commands import SetPlayerName
             from client.game.commands import BackToLobby
 

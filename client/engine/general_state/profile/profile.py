@@ -15,6 +15,7 @@ class Profile:
 
     def set_name(self, name):
         self.name = name
+        self.save()
 
     def set_game_event_pointer(self, game_event_pointer):
         self.game_event_pointer = game_event_pointer

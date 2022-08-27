@@ -3,9 +3,10 @@ from client.engine.primitives.ui import UIElement
 
 
 class WelcomeMessage(UIElement):
-    def __init__(self, name):
+    def __init__(self, name, id):
         self.name = name
-        self.shapes = [Text(f"Welcome to game, {name}", 20, 0)]
+        self.name = id
+        self.shapes = [Text(f"Welcome to game, {name} {id}", 20, 0)]
 
 
 class Background(UIElement):

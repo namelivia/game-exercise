@@ -18,7 +18,10 @@ class ProfileList(UIElement):
     def __init__(self, profiles):
         self.profiles = profiles
         self.shapes = [
-            SmallText(str(index) + " - " + str(event["name"]), 20, 50 + (20 * index))
+            SmallText("0 - New profile", 20, 50)
+        ]
+        self.shapes += [
+            SmallText(str(index + 1) + " - " + str(event["name"]), 20, 50 + (20 * (index + 1)))
             for index, event in enumerate(profiles)
         ]
 
@@ -26,6 +29,9 @@ class ProfileList(UIElement):
         # What if data does not contain events? Throw an exception
         profiles = data["profiles"]
         self.shapes = [
-            SmallText(str(index) + " - " + str(event["name"]), 20, 50 + (20 * index))
+            SmallText("0 - New profile", 20, 50)
+        ]
+        self.shapes += [
+            SmallText(str(index + 1) + " - " + str(event["name"]), 20, 50 + (20 * (index + 1)))
             for index, event in enumerate(profiles)
         ]

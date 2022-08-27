@@ -338,7 +338,8 @@ class TestClient(TestCase):
         # The server will respond with a correct game message
         # m_send_command.return_value = ErrorMessage()
 
-    def test_setting_player_name(self):
+    @mock.patch("client.engine.persistence.persistence.Persistence.save")
+    def test_setting_player_name(self, m_save):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(
             key="key",
@@ -359,6 +360,7 @@ class TestClient(TestCase):
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
         assert profile.name == "Player name"
+        m_save.assert_called_once_with(profile, "key")
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_ping_the_server_success(self, m_send_command):

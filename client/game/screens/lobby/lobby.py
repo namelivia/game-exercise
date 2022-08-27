@@ -11,11 +11,11 @@ class Lobby(Screen):
     def __init__(self, client_state):
         super().__init__(client_state)
 
-        self.data = {"name": client_state.profile.name}
+        self.data = {"name": client_state.profile.name, "id": client_state.profile.id}
 
         self.ui_elements = [
             Background(),
-            WelcomeMessage(self.data["name"]),
+            WelcomeMessage(self.data["name"], self.data["id"]),
             OptionList(
                 {
                     "1": "Create a new game",

@@ -1,3 +1,4 @@
+import uuid
 from .clock import Clock
 from .queue import Queue
 from .profile.profile import Profile
@@ -30,3 +31,9 @@ class ClientState:
 
     def set_current_screen(self, current_screen):
         self.current_screen = current_screen
+
+    def set_profile(self, profile_key):
+        self.profile = self._initialize_status(profile_key)
+
+    def new_profile(self):
+        return self._get_new_profile(uuid.uuid4())
