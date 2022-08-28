@@ -1,4 +1,4 @@
-from client.engine.graphics.shapes import Text
+from client.engine.graphics.shapes import Text, Animation
 from client.engine.primitives.ui import UIElement
 
 
@@ -9,3 +9,13 @@ class ClockUI(UIElement):
 
     def update(self, time, data):
         self.shapes[0].set_message(f"Time is {time}")  # Not supersure about this
+
+
+class AnimationDebug(UIElement):
+    def __init__(self):
+        self.shapes = [
+            Animation("client/game/images/debug", 250, 0, 3),
+        ]
+
+    def update(self, time, data):
+        self.shapes[0].update()

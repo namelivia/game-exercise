@@ -1,4 +1,3 @@
-import time
 from client.engine.commands import UserTyped
 from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
@@ -35,7 +34,6 @@ class ScreenManager:
             ).execute()
 
     def run(self):
-        time.sleep(1)
         self.client_state.clock.tick()  # Update the clock
         self._push_polling_event()
         queued_event = self.client_state.queue.pop()  # Fetch the latest event

@@ -275,7 +275,9 @@ class Balls(UIElement):
     def __init__(self):
         self.shapes = []
         for position in BOARD_POSITIONS:
-            new_shape = Animation("client/game/images/debug", position[0], position[1])
+            new_shape = Animation(
+                "client/game/images/new_ball", position[0], position[1]
+            )
             # new_shape.hide()
             self.shapes.append(new_shape)
 

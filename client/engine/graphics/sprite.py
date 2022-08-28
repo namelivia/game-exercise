@@ -5,7 +5,7 @@ import pygame
 class Sprite(pygame.sprite.Sprite):
     def _get_frames_path(self, folder):
         path, _, files = next(os.walk(folder))
-        return [os.path.join(path, file) for file in files]
+        return sorted([os.path.join(path, file) for file in files])
 
     def _animation_length(self):
         return len(self.sprites)
