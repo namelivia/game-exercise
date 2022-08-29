@@ -1,11 +1,16 @@
 import os
 import pygame
+from re import sub
 
 
 class Sprite(pygame.sprite.Sprite):
     def _get_frames_path(self, folder):
         path, _, files = next(os.walk(folder))
-        return sorted([os.path.join(path, file) for file in files])
+        files = [os.path.join(path, file) for file in files]
+        files.sort(
+            key=lambda f: int(sub(r"\D", "", f))
+        )  # Sort filenames by the number included in it
+        return files
 
     def _animation_length(self):
         return len(self.sprites)
