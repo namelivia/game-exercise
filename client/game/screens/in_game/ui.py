@@ -134,154 +134,133 @@ class ChatInput(UIElement):
             self.shapes = []
 
 
-BOARD_POSITIONS = [
-    (310, 60),
-    (364, 60),
-    (418, 60),
-    (310, 117),
-    (364, 117),
-    (418, 117),
-    (310, 174),
-    (364, 174),
-    (418, 174),
-]
-
-
 class Board(UIElement):
     def __init__(self):
+        self.positions = [
+            (310, 60),
+            (364, 60),
+            (418, 60),
+            (310, 117),
+            (364, 117),
+            (418, 117),
+            (310, 174),
+            (364, 174),
+            (418, 174),
+        ]
         self.shapes = [
             Image("client/game/images/board.png", 300, 50),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[0][0],
-                BOARD_POSITIONS[0][1],
+                self.positions[0][0],
+                self.positions[0][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[1][0],
-                BOARD_POSITIONS[1][1],
+                self.positions[1][0],
+                self.positions[1][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[2][0],
-                BOARD_POSITIONS[2][1],
+                self.positions[2][0],
+                self.positions[2][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[3][0],
-                BOARD_POSITIONS[3][1],
+                self.positions[3][0],
+                self.positions[3][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[4][0],
-                BOARD_POSITIONS[4][1],
+                self.positions[4][0],
+                self.positions[4][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[5][0],
-                BOARD_POSITIONS[5][1],
+                self.positions[5][0],
+                self.positions[5][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[6][0],
-                BOARD_POSITIONS[6][1],
+                self.positions[6][0],
+                self.positions[6][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[7][0],
-                BOARD_POSITIONS[7][1],
+                self.positions[7][0],
+                self.positions[7][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[8][0],
-                BOARD_POSITIONS[8][1],
+                self.positions[8][0],
+                self.positions[8][1],
             ),
         ]
 
     def update(self, time, data):
-        # This is not a very good pattern, I cannot animate the balls like these
         self.shapes = [
             Image("client/game/images/board.png", 300, 50),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[0][0],
-                BOARD_POSITIONS[0][1],
+                self.positions[0][0],
+                self.positions[0][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[1][0],
-                BOARD_POSITIONS[1][1],
+                self.positions[1][0],
+                self.positions[1][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[2][0],
-                BOARD_POSITIONS[2][1],
+                self.positions[2][0],
+                self.positions[2][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[3][0],
-                BOARD_POSITIONS[3][1],
+                self.positions[3][0],
+                self.positions[3][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[4][0],
-                BOARD_POSITIONS[4][1],
+                self.positions[4][0],
+                self.positions[4][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[5][0],
-                BOARD_POSITIONS[5][1],
+                self.positions[5][0],
+                self.positions[5][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[6][0],
-                BOARD_POSITIONS[6][1],
+                self.positions[6][0],
+                self.positions[6][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[7][0],
-                BOARD_POSITIONS[7][1],
+                self.positions[7][0],
+                self.positions[7][1],
             ),
             Image(
                 "client/game/images/tile.png",
-                BOARD_POSITIONS[8][0],
-                BOARD_POSITIONS[8][1],
+                self.positions[8][0],
+                self.positions[8][1],
             ),
         ]
 
-        """
         for index, ball in enumerate(data["board"]):
             if ball is not None:
                 if ball == "blue":
                     self.shapes.append(
                         Image(
                             "client/game/images/blue_ball.png",
-                            BOARD_POSITIONS[index][0],
-                            BOARD_POSITIONS[index][1],
+                            self.positions[index][0],
+                            self.positions[index][1],
                         )
                     ),
                 else:
                     self.shapes.append(
                         Image(
-                            "client/game/images/blue_red.png",
-                            BOARD_POSITIONS[index][0],
-                            BOARD_POSITIONS[index][1],
+                            "client/game/images/red_ball.png",
+                            self.positions[index][0],
+                            self.positions[index][1],
                         )
                     ),
-        """
-
-
-class Balls(UIElement):
-    def __init__(self):
-        self.shapes = []
-        for position in BOARD_POSITIONS:
-            new_shape = Animation(
-                "client/game/images/new_ball", position[0], position[1]
-            )
-            # new_shape.hide()
-            self.shapes.append(new_shape)
-
-    def update(self, time, data):
-        for shape in self.shapes:
-            shape.update()  # Not supersure about this
-            shape.update()  # Not supersure about this

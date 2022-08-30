@@ -10,7 +10,6 @@ from .ui import (
     Events,
     ChatMessages,
     Board,
-    Balls,
 )
 from client.engine.events import UserTypedEvent
 from client.game.commands import PlaySound
@@ -59,7 +58,6 @@ class InGame(Screen):
             ChatInput(),
             ChatMessages(self.data["chat_messages"]),
             Board(),
-            Balls(),
         ]
 
         self.events = {
