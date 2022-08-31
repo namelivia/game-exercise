@@ -264,3 +264,12 @@ class Board(UIElement):
                             self.positions[index][1],
                         )
                     ),
+
+
+class StatusIndicator(UIElement):
+    def __init__(self, status):
+        self.shapes = [SmallText(f"Status: {status}", 20, 150)]
+
+    def update(self, time, data):
+        status = data["status"]
+        self.shapes = [SmallText(f"Status: {status}", 20, 150)]
