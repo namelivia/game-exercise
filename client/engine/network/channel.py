@@ -17,3 +17,6 @@ class Channel:
         except ConnectionRefusedError:
             print("Could not connect to the server")
             return None
+        except EOFError:
+            print("EOF pickle error, the message could not be sent")
+            return None
