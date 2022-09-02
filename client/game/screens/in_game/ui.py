@@ -20,14 +20,16 @@ class Player1NameIndicator(UIElement):
 
 
 class Player2NameIndicator(UIElement):
-    def __init__(self, name):
-        self.shapes = [SmallText(f"Player 2 name: {name}", 20, 100)]
+    def __init__(self):
+        self.shapes = [SmallText("No player 2 yet", 20, 100)]
 
     def update(self, time, data):
         # What if data does not contain events? Throw an exception
         if len(data["players"]) > 1:
             name = data["players"][1]
             self.shapes = [SmallText(f"Player 2 name: {name}", 20, 100)]
+        else:
+            self.shapes = [SmallText("No player 2 yet", 20, 100)]
 
 
 class Events(UIElement):

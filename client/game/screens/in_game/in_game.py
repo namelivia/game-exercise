@@ -58,7 +58,7 @@ class InGame(Screen):
             GameIdIndicator(self.data["game_id"]),
             GameNameIndicator(self.data["name"]),
             Player1NameIndicator(self.data["players"][0]),
-            Player2NameIndicator(None),
+            Player2NameIndicator(),
             Events(self.data["events"], self.data["event_pointer"]),
             ChatInput(),
             ChatMessages(self.data["chat_messages"]),
@@ -158,7 +158,7 @@ class InGame(Screen):
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
-        self.data["players"][1] = event.player_id
+        self.data["players"].append(event.player_id)
         self.data["status"] = "It is player 1 turn"
 
     def on_player_wins(self, event):

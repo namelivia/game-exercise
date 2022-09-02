@@ -67,13 +67,14 @@ class TestInGameScreen(TestCase):
             [PlayerJoinedInGameEvent("player_2_id")],
             "some_game_id",
             "some_game_name",
-            [
-                "player_1_id",
-                "player_2_id",
-            ],
+            ["player_1_id"],
         )
         screen._advance_event_pointer()
         # Assert the command has been issued
+        assert screen.data["players"] == [
+            "player_1_id",
+            "player_2_id",
+        ]
 
     def test_player_has_placed_a_symbol(self):
         # When a player has placed a symbol on the board music plays
@@ -99,7 +100,7 @@ class TestInGameScreen(TestCase):
             [],
             "some_game_id",
             "some_game_name",
-            ["player_1_id", None],
+            ["player_1_id"],
         )
 
         # Empty screen
