@@ -69,7 +69,9 @@ class ChatMessages(UIElement):
 
     def update(self, time, data):
         # What if data does not contain events? Throw an exception
-        messages = data["chat_messages"]
+        messages = data["chat_messages"][
+            -6:
+        ]  # Show only the last 6 to fit in the screen
         self.shapes = [
             SmallText(self._get_message_string(message, index), 20, 300 + (20 * index))
             for index, message in enumerate(messages)
@@ -264,3 +266,12 @@ class Board(UIElement):
                             self.positions[index][1],
                         )
                     ),
+
+
+class StatusIndicator(UIElement):
+    def __init__(self, status):
+        self.shapes = [SmallText(f"Status: {status}", 20, 150)]
+
+    def update(self, time, data):
+        status = data["status"]
+        self.shapes = [SmallText(f"Status: {status}", 20, 150)]

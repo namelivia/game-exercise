@@ -262,3 +262,55 @@ class TestInGameScreen(TestCase):
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_unfocused.png",
         )
+
+    @mock.patch("client.engine.commands.SetPlayerName")
+    def test_many_chat_messages(self, m_set_player_name):
+        self.client_state = mock.Mock()
+        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        self.in_game = InGame(
+            self.client_state,
+            [],
+            "some_game_id",
+            "some_game_name",
+            ["player_1_id", "player_2_id"],
+        )
+
+        # Focus chat to check positioning
+        self.in_game.update(UserTypedEvent("t"))
+
+        # Many chat messages come
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 1"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 2"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 3"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 4"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 5"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 6"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 7"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 8"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 9"),
+        )
+        self.in_game.update(
+            ChatMessageInGameEvent(player_id="player_1_id", message="message 10"),
+        )
+
+        VisualRegression.assert_matches_snapshot(
+            self.in_game,
+            "./client/game/screens/in_game/tests/screenshots/many_chat_messages.png",
+        )

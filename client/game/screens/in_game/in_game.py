@@ -10,6 +10,7 @@ from .ui import (
     Events,
     ChatMessages,
     Board,
+    StatusIndicator,
 )
 from client.engine.events import UserTypedEvent
 from client.game.commands import PlaySound
@@ -30,6 +31,7 @@ class InGame(Screen):
             "game_id": game_id,
             "name": name,
             "players": players,
+            "status": "waiting for player 2",
             "event_pointer": 0,
             "chat_input": "",
             "chat_focused": False,
@@ -58,6 +60,7 @@ class InGame(Screen):
             ChatInput(),
             ChatMessages(self.data["chat_messages"]),
             Board(),
+            StatusIndicator(self.data["status"]),
         ]
 
         self.events = {
@@ -151,12 +154,15 @@ class InGame(Screen):
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
         self.data["players"][1] = event.player_id
+        self.data["status"] = "It is player 1 turn"
 
     def on_player_placed_symbol(self, event):
         if event.player_id == self.data["players"][0]:
             self.data["board"][event.position] = "blue"
+            self.data["status"] = "It is player 2 turn"
         else:
             self.data["board"][event.position] = "red"
+            self.data["status"] = "It is player 1 turn"
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
         ).execute()
