@@ -58,6 +58,12 @@ class PlayerJoinedInGameEvent(Event):
         self.player_id = player_id
 
 
+class PlayerWinsInGameEvent(Event):
+    def __init__(self, player_id):
+        super().__init__()
+        self.player_id = player_id
+
+
 # This one seems specific
 class PlayerPlacedSymbolInGameEvent(Event):
     def __init__(self, player_id, position):

@@ -31,6 +31,7 @@ from client.engine.commands import (
     UpdateGame,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
+    PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
     ChatMessageInGameCommand,
 )
@@ -43,6 +44,7 @@ from .commands import (
 from common.events import (
     GameCreated as GameCreatedInGameEvent,  # TODO: akward
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
+    PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
     ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
 )
@@ -98,6 +100,13 @@ class GameCreatedInGameEventHandler(EventHandler):
 class PlayerJoinedInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         PlayerJoinedInGameCommand(
+            client_state.profile, client_state.queue, event.player_id
+        ).execute()
+
+
+class PlayerWinsInGameEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        PlayerWinsInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
@@ -240,6 +249,7 @@ handlers_map = {
     # In game events, these events define the status of the game
     GameCreatedInGameEvent: GameCreatedInGameEventHandler,
     PlayerJoinedInGameEvent: PlayerJoinedInGameEventHandler,
+    PlayerWinsInGameEvent: PlayerWinsInGameEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }

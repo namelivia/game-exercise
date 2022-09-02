@@ -28,6 +28,7 @@ from client.engine.commands import (
     PingTheServer,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
+    PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
     RequestGameStatus,
     RequestJoiningAGame,
@@ -177,6 +178,10 @@ class TestClient(TestCase):
 
     def test_player_joined(self):
         PlayerJoinedInGameCommand(self.profile, self.queue, "some_player_id").execute()
+        # TODO: Finish this test
+
+    def test_player_wins(self):
+        PlayerWinsInGameCommand(self.profile, self.queue, "some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_placed_symbol(self):

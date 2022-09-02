@@ -11,12 +11,14 @@ from .ui import (
     ChatMessages,
     Board,
     StatusIndicator,
+    WinnerIndicator,
 )
 from client.engine.events import UserTypedEvent
 from client.game.commands import PlaySound
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
+    PlayerWinsInGameEvent,
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
 )
@@ -30,6 +32,7 @@ class InGame(Screen):
             "events": events,
             "game_id": game_id,
             "name": name,
+            "winner": None,
             "players": players,
             "status": "waiting for player 2",
             "event_pointer": 0,
@@ -61,12 +64,14 @@ class InGame(Screen):
             ChatMessages(self.data["chat_messages"]),
             Board(),
             StatusIndicator(self.data["status"]),
+            WinnerIndicator(self.data["winner"]),
         ]
 
         self.events = {
             UserTypedEvent: self.on_user_typed,
             GameCreatedInGameEvent: self.on_game_created,
             PlayerJoinedInGameEvent: self.on_player_joined,
+            PlayerWinsInGameEvent: self.on_player_wins,
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
             ChatMessageInGameEvent: self.on_chat_message,
         }
@@ -155,6 +160,16 @@ class InGame(Screen):
         ).execute()
         self.data["players"][1] = event.player_id
         self.data["status"] = "It is player 1 turn"
+
+    def on_player_wins(self, event):
+        print(
+            "A player won the game, do something play some music, update the internal state or something"
+        )
+        PlaySound(
+            self.client_state.profile, self.client_state.queue, "start_game"
+        ).execute()
+        self.data["winner"] = event.player_id
+        self.data["status"] = "The game is finished"
 
     def on_player_placed_symbol(self, event):
         if event.player_id == self.data["players"][0]:

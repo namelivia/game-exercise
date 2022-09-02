@@ -275,3 +275,15 @@ class StatusIndicator(UIElement):
     def update(self, time, data):
         status = data["status"]
         self.shapes = [SmallText(f"Status: {status}", 20, 150)]
+
+
+class WinnerIndicator(UIElement):
+    def __init__(self, status):
+        self.shapes = []
+
+    def update(self, time, data):
+        winner = data["winner"]
+        if winner is None:
+            self.shapes = []
+        else:
+            self.shapes = [SmallText(f"{winner} wins the game!!!", 20, 170)]

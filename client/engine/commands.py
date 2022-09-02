@@ -8,6 +8,7 @@ from .events import (
     SetPlayerNameEvent,
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
+    PlayerWinsInGameEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
     PlayerPlacedSymbolInGameEvent,
@@ -158,6 +159,18 @@ class PlayerJoinedInGameCommand(Command):
         super().__init__(profile, queue, f"Player {player_id} joined the game")
         self.events = [
             PlayerJoinedInGameEvent(
+                player_id
+            )  # Event to be picked up by the screen event handler
+            # I should pick this event on the game but
+            # Still don't do anything with this event
+        ]
+
+
+class PlayerWinsInGameCommand(Command):
+    def __init__(self, profile, queue, player_id):
+        super().__init__(profile, queue, f"Player {player_id} wins the game")
+        self.events = [
+            PlayerWinsInGameEvent(
                 player_id
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but

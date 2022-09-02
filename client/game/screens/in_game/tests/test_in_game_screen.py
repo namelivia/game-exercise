@@ -4,6 +4,7 @@ from client.engine.events import (
     GameCreatedInGameEvent,
     ChatMessageInGameEvent,
     PlayerJoinedInGameEvent,
+    PlayerWinsInGameEvent,
     PlayerPlacedSymbolInGameEvent,
 )
 from client.game.screens.in_game.in_game import InGame
@@ -207,7 +208,7 @@ class TestInGameScreen(TestCase):
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_8.png",
         )
 
-        # Player 2 places symbol
+        # Player 1 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=8),
         )
@@ -215,6 +216,16 @@ class TestInGameScreen(TestCase):
         VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_9.png",
+        )
+
+        # Player 1 wins
+        self.in_game.update(
+            PlayerWinsInGameEvent(player_id="player_1_id"),
+        )
+
+        VisualRegression.assert_matches_snapshot(
+            self.in_game,
+            "./client/game/screens/in_game/tests/screenshots/player_wins.png",
         )
 
         # Player focuses chat
