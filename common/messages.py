@@ -54,9 +54,10 @@ class ErrorMessage:
         self.message = message
 
 
-class GetGameStatus:
-    def __init__(self, game_id, player_id):
+class GetGameEventsPage:
+    def __init__(self, game_id, page, player_id):
         self.game_id = game_id
+        self.page = page
         self.player_id = player_id
 
 

@@ -6,7 +6,7 @@ from .commands import (
     SendChat,
     JoinGame,
     CreateGame,
-    GameStatus,
+    GameEventsPage,
     Ping,
     GetGameList,
 )
@@ -16,7 +16,7 @@ from common.messages import (
     SendChatMessage,
     CreateAGameMessage,
     JoinAGameMessage,
-    GetGameStatus,
+    GetGameEventsPage,
     PingRequestMessage,
     GameListRequestMessage,
 )
@@ -41,8 +41,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             return CreateGame(decoded.name, decoded.player_id)
         if isinstance(decoded, JoinAGameMessage):
             return JoinGame(decoded.game_id, decoded.player_id)
-        if isinstance(decoded, GetGameStatus):
-            return GameStatus(decoded.game_id, decoded.player_id)
+        if isinstance(decoded, GetGameEventsPage):
+            return GameEventsPage(decoded.game_id, decoded.page, decoded.player_id)
         if isinstance(decoded, PingRequestMessage):
             return Ping()
         if isinstance(decoded, GameListRequestMessage):

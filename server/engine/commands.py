@@ -141,24 +141,34 @@ class JoinGame(Command):
         return GameInfoMessage(game)
 
 
-class GameStatus(Command):
-    def __init__(self, game_id, player_id):
+class GameEventsPage(Command):
+    def __init__(self, game_id, page, player_id):
         self.game_id = game_id
+        self.page = page
         self.player_id = player_id
 
     def name(self):
-        return "Get game status"
+        return "Get game events page"
 
     def debug(self):
-        logger.info(f"Player {self.player_id} requested info for game: {self.game_id}")
+        logger.info(
+            f"Player {self.player_id} requested events page {self.page} info for game: {self.game_id}"
+        )
 
     def execute(self):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameEventsPageMessage(
-            0, None, game.events[-5:]  # page  # next_page  # games
-        )
+        # TODO: This code is sketchy
+        # TODO: Marking an arbitrary page size
+        pagesize = 5
+        start = self.page * pagesize
+        end = start + pagesize
+        next_page = self.page + 1
+        if end > len(game.events):
+            end = len(game.events)
+            next_page = None
+        return GameEventsPageMessage(self.page, next_page, game.events[start:end])
 
 
 class Ping(Command):

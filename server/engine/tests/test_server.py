@@ -1,5 +1,5 @@
 from unittest import TestCase
-from server.engine.commands import CreateGame, JoinGame, GameStatus, GetGameList
+from server.engine.commands import CreateGame, JoinGame, GameEventsPage, GetGameList
 from server.game.game import Game
 from common.messages import (
     GameInfoMessage,
@@ -41,15 +41,20 @@ class TestServer(TestCase):
 
     @mock.patch("server.engine.persistence.Persistence.load_game")
     @mock.patch("uuid.uuid4")
-    def test_getting_game_status(self, m_uuid, m_load_game):
+    def test_getting_game_events_page(self, m_uuid, m_load_game):
+        # TODO: This is just a game with 1 event, for testing pagination
+        # property create a game with many events
         m_uuid.return_value = "game_id"
         m_load_game.return_value = Game("test_name", "player_1_id")
-        response = GameStatus("game_id", "player_1_id").execute()
+        # Askin for page 0
+        response = GameEventsPage("game_id", 0, "player_1_id").execute()
         m_load_game.assert_called_once_with("game_id")
         assert isinstance(response, GameEventsPageMessage)
         assert len(response.events) == 1
         assert isinstance(response.events[0], GameCreated)
         assert response.events[0].player_id == "player_1_id"
+        assert response.next_page is None
+        assert response.page == 0
 
     @mock.patch("server.engine.persistence.Persistence.get_all_games")
     @mock.patch("server.engine.persistence.Persistence.load_game")

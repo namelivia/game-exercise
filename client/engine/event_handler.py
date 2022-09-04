@@ -37,7 +37,7 @@ from common.messages import (
     GameInfoMessage,
     GameEventsPageMessage,
     ErrorMessage,
-    GetGameStatus,
+    GetGameEventsPage,
     CreateAGameMessage,
     JoinAGameMessage,
     PingRequestMessage,
@@ -124,15 +124,18 @@ class JoinExistingGameEventHandler(EventHandler):
 
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
-        request_data = self._encode(event.game_id, client_state.profile.id)
-
+        # TODO: Asking just for the first page
+        request_data = self._encode(event.game_id, 0, client_state.profile.id)
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameEventsPageMessage):
-                # TODO: This may require doing more queries to get more pages
+                # TODO: Is it the last page?
+                # IF YES:
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
+                # IF NOT:
+                # APPEND EVENTS AND REQUEST NEXT
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
         else:
@@ -140,8 +143,8 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, game_id, profile_id):
-        return GetGameStatus(game_id, profile_id)
+    def _encode(self, game_id, page, profile_id):
+        return GetGameEventsPage(game_id, page, profile_id)
 
 
 class CreateAGameNetworkRequestEventHandler(EventHandler):

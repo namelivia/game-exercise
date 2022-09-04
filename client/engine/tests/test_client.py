@@ -197,7 +197,7 @@ class TestClient(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_game_status_success(self, m_send_command):
-
+        # TODO: Here I'm not testing pagination
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsPageMessage(
             0,  # page
