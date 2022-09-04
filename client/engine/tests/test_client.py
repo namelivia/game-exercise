@@ -200,16 +200,11 @@ class TestClient(TestCase):
 
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsPageMessage(
-            GameData(
-                "game_id",
-                "game_name",
-                ["player_1_id", "player_2_id"],
-                [
-                    "event_1",
-                    "event_2",
-                    "event_3",
-                ],
-            )
+            [
+                "event_1",
+                "event_2",
+                "event_3",
+            ]
         )
 
         # A request to get the game status is sourced
