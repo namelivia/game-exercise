@@ -17,7 +17,7 @@ class GameEventsPageMessage(PaginatedResponseMessage):
         self.events = events
 
 
-class GameListPageMessage:
+class GameListPageMessage(PaginatedResponseMessage):
     def __init__(self, page, next_page, game_list):
         super().__init__(page, next_page)
         self.game_list = game_list
@@ -72,7 +72,7 @@ class GameListRequestMessage:
     pass
 
 
-class GameListResponsePageMessage:
+class GameListResponsePageMessage(PaginatedResponseMessage):
     def __init__(self, page, next_page, games):
         super().__init__(page, next_page)
         self.games = games

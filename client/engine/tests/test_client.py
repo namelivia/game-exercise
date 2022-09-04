@@ -200,11 +200,13 @@ class TestClient(TestCase):
 
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsPageMessage(
+            0,  # page
+            None,  # next_page
             [
                 "event_1",
                 "event_2",
                 "event_3",
-            ]
+            ],
         )
 
         # A request to get the game status is sourced
