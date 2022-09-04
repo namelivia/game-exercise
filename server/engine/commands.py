@@ -72,7 +72,9 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return GameEventsPageMessage(game.events[-5:0])
+        return GameEventsPageMessage(
+            game.events[-5:]
+        )  # TODO: there will be pagination here
 
 
 class SendChat(Command):
@@ -95,7 +97,9 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
-        return GameEventsPageMessage(game.events[-5:0])
+        return GameEventsPageMessage(
+            game.events[-5:]
+        )  # TODO: there will be pagination here
 
 
 class CreateGame(Command):
@@ -152,7 +156,9 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameEventsPageMessage(game.events[-5:0])
+        return GameEventsPageMessage(
+            game.events[-5:]
+        )  # TODO: There will be pagination here
 
 
 class Ping(Command):
@@ -189,4 +195,5 @@ class GetGameList(Command):
     def execute(self):
         super().execute()
         game_ids = self.get_all_games()
-        return GameListResponsePageMessage(self._build_index_from_games(game_ids))
+        # TODO: There will be pagination here
+        return GameListResponsePageMessage(self._build_index_from_games(game_ids)[-5:])
