@@ -129,6 +129,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameEventsPageMessage):
+                # TODO: This may require doing more queries to get more pages
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
@@ -253,6 +254,7 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameListResponsePageMessage):
+                # TODO: This may require doing more queries to get more pages
                 UpdateGameList(
                     client_state.profile, client_state.queue, response.games
                 ).execute()

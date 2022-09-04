@@ -1,3 +1,9 @@
+class PaginatedResponseMessage:
+    def __init__(self, page, next_page):
+        self.page = page
+        self.next_page = next_page
+
+
 class GameInfoMessage:
     def __init__(self, game):
         self.id = game.id
@@ -5,14 +11,16 @@ class GameInfoMessage:
         self.players = game.players
 
 
-class GameEventsPageMessage:
-    def __init__(self, events):
-        self.events = events  # TODO: This could be too big for the channel
+class GameEventsPageMessage(PaginatedResponseMessage):
+    def __init__(self, page, next_page, events):
+        super().__init__(page, next_page)
+        self.events = events
 
 
 class GameListPageMessage:
-    def __init__(self, game_list):
-        self.game_list = game_list  # TODO: This could be too big for the channel
+    def __init__(self, page, next_page, game_list):
+        super().__init__(page, next_page)
+        self.game_list = game_list
 
 
 class CreateAGameMessage:
@@ -65,8 +73,9 @@ class GameListRequestMessage:
 
 
 class GameListResponsePageMessage:
-    def __init__(self, games):
-        self.games = games  # TODO:  This could be too big for the channel
+    def __init__(self, page, next_page, games):
+        super().__init__(page, next_page)
+        self.games = games
 
 
 class GameListResponseEntry:
