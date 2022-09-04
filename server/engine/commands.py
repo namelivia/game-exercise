@@ -4,7 +4,8 @@ from .errors import InvalidCommandError
 from .persistence import Persistence
 import logging
 from common.messages import (
-    GameMessage,
+    GameInfoMessage,
+    GameEventsMessage,
     PingResponseMessage,
     GameListResponseMessage,
     GameListResponseEntry,
@@ -71,7 +72,7 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return GameMessage(game)
+        return GameEventsMessage(game)
 
 
 class SendChat(Command):
@@ -94,7 +95,7 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
-        return GameMessage(game)
+        return GameEventsMessage(game)
 
 
 class CreateGame(Command):
@@ -114,7 +115,7 @@ class CreateGame(Command):
         game = self.create_game(self.game_name, self.player_id)
         # Persist the new game on storage
         self.save_game(game)
-        return GameMessage(game)
+        return GameInfoMessage(game)
 
 
 class JoinGame(Command):
@@ -133,7 +134,7 @@ class JoinGame(Command):
         game = self.load_game(self.game_id)
         game.join(self.player_id)
         self.save_game(game)
-        return GameMessage(game)
+        return GameInfoMessage(game)
 
 
 class GameStatus(Command):
@@ -151,7 +152,7 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameMessage(game)
+        return GameEventsMessage(game)
 
 
 class Ping(Command):

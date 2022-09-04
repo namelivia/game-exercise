@@ -1,8 +1,12 @@
-class GameMessage:
+class GameInfoMessage:
     def __init__(self, game):
         self.id = game.id
         self.name = game.name
         self.players = game.players
+
+
+class GameEventsMessage:
+    def __init__(self, game):
         self.events = game.events  # TODO: This could be too big for the channel
 
 

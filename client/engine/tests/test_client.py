@@ -39,7 +39,12 @@ from client.engine.commands import (
     ChatMessageInGameCommand,
     UpdateGameList,
 )
-from common.messages import GameMessage, PingResponseMessage, PingRequestMessage
+from common.messages import (
+    GameInfoMessage,
+    GameEventsMessage,
+    PingResponseMessage,
+    PingRequestMessage,
+)
 from client.engine.game_data import GameData
 import mock
 
@@ -194,7 +199,7 @@ class TestClient(TestCase):
     def test_request_game_status_success(self, m_send_command):
 
         # The server will respond with a correct game message
-        m_send_command.return_value = GameMessage(
+        m_send_command.return_value = GameEventsMessage(
             GameData(
                 "game_id",
                 "game_name",
@@ -241,7 +246,7 @@ class TestClient(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_create_new_game_success(self, m_send_command):
-        m_send_command.return_value = GameMessage(
+        m_send_command.return_value = GameInfoMessage(
             GameData(
                 "game_id",
                 "game_name",
@@ -293,7 +298,7 @@ class TestClient(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_join_a_game_success(self, m_send_command):
-        m_send_command.return_value = GameMessage(
+        m_send_command.return_value = GameInfoMessage(
             GameData(
                 "game_id",
                 "game_name",

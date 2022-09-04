@@ -34,7 +34,8 @@ from .commands import (
     SetProfile,
 )
 from common.messages import (
-    GameMessage,
+    GameInfoMessage,
+    GameEventsMessage,
     ErrorMessage,
     GetGameStatus,
     CreateAGameMessage,
@@ -127,7 +128,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameMessage):
+            if isinstance(response, GameEventsMessage):
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
@@ -148,7 +149,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameMessage):
+            if isinstance(response, GameInfoMessage):
                 InitiateGame(
                     client_state.profile,
                     client_state.queue,
@@ -182,7 +183,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameMessage):
+            if isinstance(response, GameInfoMessage):
                 InitiateGame(
                     client_state.profile,
                     client_state.queue,
