@@ -6,8 +6,8 @@ class GameInfoMessage:
 
 
 class GameEventsPageMessage:
-    def __init__(self, game):
-        self.events = game.events  # TODO: This could be too big for the channel
+    def __init__(self, events):
+        self.events = events  # TODO: This could be too big for the channel
 
 
 class GameListPageMessage:

@@ -72,7 +72,7 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return GameEventsPageMessage(game)
+        return GameEventsPageMessage(game.events)
 
 
 class SendChat(Command):
@@ -95,7 +95,7 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
-        return GameEventsPageMessage(game)
+        return GameEventsPageMessage(game.events)
 
 
 class CreateGame(Command):
@@ -152,7 +152,7 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameEventsPageMessage(game)
+        return GameEventsPageMessage(game.events)
 
 
 class Ping(Command):
