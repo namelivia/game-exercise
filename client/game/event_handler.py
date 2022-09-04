@@ -1,6 +1,6 @@
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
-    GameMessage,
+    GameEventsMessage,
     ErrorMessage,
     PlaceASymbolMessage,
     SendChatMessage,
@@ -200,7 +200,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameMessage):
+            if isinstance(response, GameEventsMessage):
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
@@ -222,7 +222,7 @@ class SendChatNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameMessage):
+            if isinstance(response, GameEventsMessage):
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()

@@ -2,10 +2,11 @@ from unittest import TestCase
 from server.engine.commands import CreateGame, JoinGame, GameStatus, GetGameList
 from server.game.game import Game
 from common.messages import (
-    GameMessage,
+    GameInfoMessage,
+    GameEventsMessage,
     GameListResponseMessage,
 )
-from common.events import GameCreated, PlayerJoined
+from common.events import GameCreated
 import mock
 
 
@@ -18,13 +19,10 @@ class TestServer(TestCase):
     def test_creating_a_game(self, m_uuid, m_save_game):
         m_uuid.return_value = "game_id"
         response = CreateGame("test_name", "test_player_id").execute()
-        assert isinstance(response, GameMessage)
+        assert isinstance(response, GameInfoMessage)
         assert response.id == "game_id"
         assert response.name == "test_name"
         assert response.players == ["test_player_id"]
-        assert len(response.events) == 1
-        assert isinstance(response.events[0], GameCreated)
-        assert response.events[0].player_id == "test_player_id"
         m_save_game.assert_called_once()  # TODO: Assert the parameters passed here
 
     @mock.patch("server.engine.persistence.Persistence.load_game")
@@ -35,15 +33,10 @@ class TestServer(TestCase):
         m_load_game.return_value = Game("test_name", "player_1_id")
         response = JoinGame("game_id", "player_2_id").execute()
         m_load_game.assert_called_once_with("game_id")
-        assert isinstance(response, GameMessage)
+        assert isinstance(response, GameInfoMessage)
         assert response.id == "game_id"
         assert response.name == "test_name"
         assert response.players == ["player_1_id", "player_2_id"]
-        assert len(response.events) == 2
-        assert isinstance(response.events[0], GameCreated)
-        assert response.events[0].player_id == "player_1_id"
-        assert isinstance(response.events[1], PlayerJoined)
-        assert response.events[1].player_id == "player_2_id"
         m_save_game.assert_called_once()  # TODO: Assert the parameters passed here
 
     @mock.patch("server.engine.persistence.Persistence.load_game")
@@ -53,10 +46,7 @@ class TestServer(TestCase):
         m_load_game.return_value = Game("test_name", "player_1_id")
         response = GameStatus("game_id", "player_1_id").execute()
         m_load_game.assert_called_once_with("game_id")
-        assert isinstance(response, GameMessage)
-        assert response.id == "game_id"
-        assert response.name == "test_name"
-        assert response.players == ["player_1_id"]
+        assert isinstance(response, GameEventsMessage)
         assert len(response.events) == 1
         assert isinstance(response.events[0], GameCreated)
         assert response.events[0].player_id == "player_1_id"

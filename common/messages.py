@@ -1,14 +1,18 @@
-class GameMessage:
+class GameInfoMessage:
     def __init__(self, game):
         self.id = game.id
         self.name = game.name
         self.players = game.players
-        self.events = game.events
+
+
+class GameEventsMessage:
+    def __init__(self, game):
+        self.events = game.events  # TODO: This could be too big for the channel
 
 
 class GameListMessage:
     def __init__(self, game_list):
-        self.game_list = game_list
+        self.game_list = game_list  # TODO: This could be too big for the channel
 
 
 class CreateAGameMessage:
@@ -62,7 +66,7 @@ class GameListRequestMessage:
 
 class GameListResponseMessage:
     def __init__(self, games):
-        self.games = games
+        self.games = games  # TODO:  This could be too big for the channel
 
 
 class GameListResponseEntry:
