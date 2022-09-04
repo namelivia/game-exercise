@@ -35,7 +35,7 @@ from .commands import (
 )
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
+    GameEventsPageMessage,
     ErrorMessage,
     GetGameStatus,
     CreateAGameMessage,
@@ -43,7 +43,7 @@ from common.messages import (
     PingRequestMessage,
     PingResponseMessage,
     GameListRequestMessage,
-    GameListResponseMessage,
+    GameListResponsePageMessage,
 )
 from client.engine.network.channel import Channel
 from client.engine.persistence.persistence import Persistence
@@ -128,7 +128,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameEventsMessage):
+            if isinstance(response, GameEventsPageMessage):
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
@@ -252,7 +252,7 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameListResponseMessage):
+            if isinstance(response, GameListResponsePageMessage):
                 UpdateGameList(
                     client_state.profile, client_state.queue, response.games
                 ).execute()

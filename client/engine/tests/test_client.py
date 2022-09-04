@@ -41,7 +41,7 @@ from client.engine.commands import (
 )
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
+    GameEventsPageMessage,
     PingResponseMessage,
     PingRequestMessage,
 )
@@ -199,7 +199,7 @@ class TestClient(TestCase):
     def test_request_game_status_success(self, m_send_command):
 
         # The server will respond with a correct game message
-        m_send_command.return_value = GameEventsMessage(
+        m_send_command.return_value = GameEventsPageMessage(
             GameData(
                 "game_id",
                 "game_name",

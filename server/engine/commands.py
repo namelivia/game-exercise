@@ -5,9 +5,9 @@ from .persistence import Persistence
 import logging
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
+    GameEventsPageMessage,
     PingResponseMessage,
-    GameListResponseMessage,
+    GameListResponsePageMessage,
     GameListResponseEntry,
 )
 
@@ -72,7 +72,7 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return GameEventsMessage(game)
+        return GameEventsPageMessage(game)
 
 
 class SendChat(Command):
@@ -95,7 +95,7 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
-        return GameEventsMessage(game)
+        return GameEventsPageMessage(game)
 
 
 class CreateGame(Command):
@@ -152,7 +152,7 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameEventsMessage(game)
+        return GameEventsPageMessage(game)
 
 
 class Ping(Command):
@@ -189,4 +189,4 @@ class GetGameList(Command):
     def execute(self):
         super().execute()
         game_ids = self.get_all_games()
-        return GameListResponseMessage(self._build_index_from_games(game_ids))
+        return GameListResponsePageMessage(self._build_index_from_games(game_ids))

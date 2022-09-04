@@ -3,8 +3,8 @@ from server.engine.commands import CreateGame, JoinGame, GameStatus, GetGameList
 from server.game.game import Game
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
-    GameListResponseMessage,
+    GameEventsPageMessage,
+    GameListResponsePageMessage,
 )
 from common.events import GameCreated
 import mock
@@ -46,7 +46,7 @@ class TestServer(TestCase):
         m_load_game.return_value = Game("test_name", "player_1_id")
         response = GameStatus("game_id", "player_1_id").execute()
         m_load_game.assert_called_once_with("game_id")
-        assert isinstance(response, GameEventsMessage)
+        assert isinstance(response, GameEventsPageMessage)
         assert len(response.events) == 1
         assert isinstance(response.events[0], GameCreated)
         assert response.events[0].player_id == "player_1_id"
@@ -59,7 +59,7 @@ class TestServer(TestCase):
         m_get_all_games.return_value = ["game_1_id", "game_2_id"]
         m_load_game.return_value = Game("test_name", "player_1_id")
         response = GetGameList().execute()
-        assert isinstance(response, GameListResponseMessage)
+        assert isinstance(response, GameListResponsePageMessage)
         assert len(response.games) == 2
         assert response.games[0].id == "game_id"
         assert response.games[1].name == "test_name"

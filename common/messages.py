@@ -5,12 +5,12 @@ class GameInfoMessage:
         self.players = game.players
 
 
-class GameEventsMessage:
+class GameEventsPageMessage:
     def __init__(self, game):
         self.events = game.events  # TODO: This could be too big for the channel
 
 
-class GameListMessage:
+class GameListPageMessage:
     def __init__(self, game_list):
         self.game_list = game_list  # TODO: This could be too big for the channel
 
@@ -64,7 +64,7 @@ class GameListRequestMessage:
     pass
 
 
-class GameListResponseMessage:
+class GameListResponsePageMessage:
     def __init__(self, games):
         self.games = games  # TODO:  This could be too big for the channel
 
