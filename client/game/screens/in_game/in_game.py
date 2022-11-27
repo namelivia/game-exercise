@@ -6,21 +6,20 @@ from .ui import (
     Player2NameIndicator,
     Background,
     IntroAnimation,
-    ChatInput,
     Events,
-    ChatMessages,
     Board,
     StatusIndicator,
     WinnerIndicator,
 )
+from client.game.chat.ui import ChatInput, ChatMessages
 from client.engine.events import UserTypedEvent
 from client.game.commands import PlaySound
+from client.engine.chat.events import ChatMessageInGameEvent
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
     PlayerPlacedSymbolInGameEvent,
-    ChatMessageInGameEvent,
 )
 
 
@@ -90,6 +89,8 @@ class InGame(Screen):
         from client.game.commands import (
             BackToLobby,
             RequestPlaceASymbol,
+        )
+        from client.game.chat.commands import (
             RequestSendChat,
         )
 

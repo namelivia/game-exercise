@@ -3,18 +3,16 @@ from common.messages import (
     GameEventsMessage,
     ErrorMessage,
     PlaceASymbolMessage,
-    SendChatMessage,
 )
 from client.engine.events import InitiateGameEvent
+from .chat.event_handler import handlers_map as chat_handlers_map
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
-    SendChatRequestEvent,
     PlaySoundEvent,
     PlayMusicEvent,
     ClearInternalGameInformationEvent,
     PlaceASymbolNetworkRequestEvent,
-    SendChatNetworkRequestEvent,
 )
 from client.game.music import MainThemeMusic
 from .screens.intro.intro import Intro
@@ -33,11 +31,9 @@ from client.engine.commands import (
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
-    ChatMessageInGameCommand,
 )
 from .commands import (
     PlaceASymbol,
-    SendChat,
     BackToLobby,
     PlaySound,
 )
@@ -46,7 +42,6 @@ from common.events import (
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
-    ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
 )
 from .sounds import (
     BackSound,
@@ -118,13 +113,6 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
         ).execute()
 
 
-class ChatMessageInGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        ChatMessageInGameCommand(
-            client_state.profile, client_state.queue, event.player_id, event.message
-        ).execute()
-
-
 #################################################################
 
 
@@ -182,16 +170,6 @@ class PlaceASymbolRequestEventHandler(EventHandler):
         ).execute()
 
 
-class SendChatRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        SendChat(
-            client_state.profile,
-            client_state.queue,
-            client_state.profile.game_id,
-            event.message,
-        ).execute()
-
-
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
@@ -214,45 +192,24 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         return PlaceASymbolMessage(game_id, profile_id, position)
 
 
-class SendChatNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        request_data = self._encode(
-            client_state.profile.game_id, client_state.profile.id, event.message
-        )
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameEventsMessage):
-                UpdateGame(
-                    client_state.profile, client_state.queue, response.events
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                print(response.__dict__)
-        else:
-            print("Server error")
-            BackToLobby(client_state.profile, client_state.queue).execute()
-
-    def _encode(self, game_id, profile_id, message):
-        return SendChatMessage(game_id, profile_id, message)
-
-
+# TODO: Extend this one with the event handler from chat
 handlers_map = {
     ScreenTransitionEvent: ScreenTransitionEventHandler,
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
-    SendChatRequestEvent: SendChatRequestEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
     PlayMusicEvent: PlayMusicEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
-    SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
     InitiateGameEvent: InitiateGameEventHandler,
     # In game events, these events define the status of the game
     GameCreatedInGameEvent: GameCreatedInGameEventHandler,
     PlayerJoinedInGameEvent: PlayerJoinedInGameEventHandler,
     PlayerWinsInGameEvent: PlayerWinsInGameEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
-    ChatMessageInGameEvent: ChatMessageInGameEventHandler,
-}
+}  # Python 3.9 only syntax: dict1 | dict2
+
+# Python 3.7 syntax
+handlers_map.update(chat_handlers_map)
 
 
 class EventHandler:

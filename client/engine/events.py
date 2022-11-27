@@ -72,13 +72,6 @@ class PlayerPlacedSymbolInGameEvent(Event):
         self.position = position
 
 
-class ChatMessageInGameEvent(Event):
-    def __init__(self, player_id, message):
-        super().__init__()
-        self.player_id = player_id
-        self.message = message
-
-
 # This one is for polling
 class RefreshGameStatusEvent(Event):
     def __init__(self, game_id):
