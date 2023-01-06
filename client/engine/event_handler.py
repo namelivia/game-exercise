@@ -80,9 +80,7 @@ class UpdateGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
-        client_state.profile.set_game_event_pointer(
-            game_event_pointer + len(events) - 1
-        )
+        client_state.profile.set_game_event_pointer(game_event_pointer + len(events))
         ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
 
