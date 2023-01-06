@@ -192,6 +192,7 @@ class SendChatRequestEventHandler(EventHandler):
         ).execute()
 
 
+# TODO: Here I will return somethin different
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
@@ -208,12 +209,13 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Server error")
-            BackToLobby(client_state.profile, client_state.queue).execute()
+            # BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, game_id, profile_id, position):
         return PlaceASymbolMessage(game_id, profile_id, position)
 
 
+# TODO: Here I will return somethin different
 class SendChatNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
@@ -230,7 +232,7 @@ class SendChatNetworkRequestEventHandler(EventHandler):
                 print(response.__dict__)
         else:
             print("Server error")
-            BackToLobby(client_state.profile, client_state.queue).execute()
+            # BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, game_id, profile_id, message):
         return SendChatMessage(game_id, profile_id, message)
