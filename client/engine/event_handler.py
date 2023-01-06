@@ -35,7 +35,8 @@ from .commands import (
 )
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
+    # GameEventsMessage,
+    GameEventMessage,
     ErrorMessage,
     GetGameStatus,
     CreateAGameMessage,
@@ -122,6 +123,7 @@ class JoinExistingGameEventHandler(EventHandler):
         JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
 
 
+"""
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(event.game_id, client_state.profile.id)
@@ -129,6 +131,29 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameEventsMessage):
+                UpdateGame(
+                    client_state.profile, client_state.queue, response.events
+                ).execute()
+            if isinstance(response, ErrorMessage):
+                print(response.__dict__)
+        else:
+            print("Server error")
+            # This should be done at game level
+            # BackToLobby(client_state.profile, client_state.queue).execute()
+
+    def _encode(self, game_id, profile_id):
+        return GetGameStatus(game_id, profile_id)
+"""
+
+# Here instead of getting all events all the time, the client should only ask for new events
+# based on its pointer. And get one or many single event messages
+class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        request_data = self._encode(event.game_id, client_state.profile.id)
+
+        response = Channel.send_command(request_data)
+        if response is not None:
+            if isinstance(response, GameEventMessage):
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
