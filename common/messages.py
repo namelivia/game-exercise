@@ -47,8 +47,9 @@ class ErrorMessage:
 
 
 class GetGameStatus:
-    def __init__(self, game_id, player_id):
+    def __init__(self, game_id, pointer, player_id):
         self.game_id = game_id
+        self.pointer = pointer
         self.player_id = player_id
 
 

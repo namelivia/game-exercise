@@ -202,20 +202,15 @@ class TestClient(TestCase):
 
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsMessage(
-            GameData(
-                "game_id",
-                "game_name",
-                ["player_1_id", "player_2_id"],
-                [
-                    "event_1",
-                    "event_2",
-                    "event_3",
-                ],
-            )
+            [
+                "event_1",
+                "event_2",
+                "event_3",
+            ]
         )
 
         # A request to get the game status is sourced
-        RequestGameStatus(self.profile, self.queue, "some_game_id").execute()
+        RequestGameStatus(self.profile, self.queue, "some_game_id", 2).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events

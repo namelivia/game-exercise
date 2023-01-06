@@ -208,11 +208,13 @@ class ChatMessageInGameCommand(Command):
 
 # ==== This one is to request the game status (polling)
 class RequestGameStatus(Command):
-    def __init__(self, profile, queue, game_id):
+    def __init__(self, profile, queue, game_id, pointer):
         super().__init__(
-            profile, queue, f"Request refreshing the status of game {game_id}"
+            profile,
+            queue,
+            f"Request refreshing the status of game {game_id} pointer {pointer}",
         )
-        self.events = [RefreshGameStatusEvent(game_id)]
+        self.events = [RefreshGameStatusEvent(game_id, pointer)]
 
 
 class RequestGameCreation(Command):
