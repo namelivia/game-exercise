@@ -78,18 +78,10 @@ class TurnSoundOffEventHandler(EventHandler):
 # ======= GAME STATE SYNC =======
 class UpdateGameEventHandler(EventHandler):
     def handle(self, event, client_state):
-        # What we are going to do now is to check for unprocessed events
-        # there may be new events that have not been processed by the client,
-        # How do we know that? using the game_event_pointer.
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
-        unprocessed_events = events[game_event_pointer + 1 :]
-        game_event_pointer = client_state.profile.set_game_event_pointer(
-            len(events) - 1
-        )
-        ProcessServerEvents(
-            client_state.profile, client_state.queue, unprocessed_events
-        ).execute()
+        client_state.profile.set_game_event_pointer(game_event_pointer + len(events))
+        ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
 
 class SetInternalGameInformationEventHandler(EventHandler):
@@ -106,7 +98,7 @@ class SetPlayerNameEventHandler(EventHandler):
 class RefreshGameStatusEventHandler(EventHandler):
     def handle(self, event, client_state):
         RefreshGameStatus(
-            client_state.profile, client_state.queue, event.game_id
+            client_state.profile, client_state.queue, event.game_id, event.pointer
         ).execute()
 
 
@@ -124,7 +116,9 @@ class JoinExistingGameEventHandler(EventHandler):
 
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
-        request_data = self._encode(event.game_id, client_state.profile.id)
+        request_data = self._encode(
+            event.game_id, event.pointer, client_state.profile.id
+        )
 
         response = Channel.send_command(request_data)
         if response is not None:
@@ -139,8 +133,8 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, game_id, profile_id):
-        return GetGameStatus(game_id, profile_id)
+    def _encode(self, game_id, pointer, profile_id):
+        return GetGameStatus(game_id, pointer, profile_id)
 
 
 class CreateAGameNetworkRequestEventHandler(EventHandler):

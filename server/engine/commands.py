@@ -72,7 +72,10 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return GameEventsMessage(game)
+        # Send just an ACK
+        # This becomes is too big
+        # return GameEventsMessage(game)
+        # Instead of doing this send a confirmation response
 
 
 class SendChat(Command):
@@ -95,7 +98,10 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
-        return GameEventsMessage(game)
+        # Send just an ACK
+        # This becomes is too big
+        # return GameEventsMessage(game)
+        # Instead of doing this send a confirmation response
 
 
 class CreateGame(Command):
@@ -138,21 +144,25 @@ class JoinGame(Command):
 
 
 class GameStatus(Command):
-    def __init__(self, game_id, player_id):
+    def __init__(self, game_id, pointer, player_id):
         self.game_id = game_id
+        self.pointer = pointer
         self.player_id = player_id
 
     def name(self):
         return "Get game status"
 
     def debug(self):
-        logger.info(f"Player {self.player_id} requested info for game: {self.game_id}")
+        logger.info(
+            f"Player {self.player_id} requested info for game: {self.game_id}, pointer {self.pointer}"
+        )
 
     def execute(self):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameEventsMessage(game)
+        events = game.events[self.pointer :]
+        return GameEventsMessage(events)
 
 
 class Ping(Command):

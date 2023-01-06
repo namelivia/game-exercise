@@ -111,8 +111,8 @@ class TestClient(TestCase):
         # There is no generic handler for this one, it is handled by the game on each screen
 
     def test_updating(self):
-        # When there are new events to process these will be pushed to the queue
-        already_processed_events = ["event_1"]
+        # There is already one processed event, so the pointer
+        # will be at 1.
         game_events = [
             "event_1",
             "event_2",
@@ -122,7 +122,7 @@ class TestClient(TestCase):
             key="key",
             id="id",
             game_id="game_id",
-            game_event_pointer=len(already_processed_events) - 1,
+            game_event_pointer=1,
             sound_on=False,
         )
         UpdateGame(profile, self.queue, game_events).execute()
@@ -136,14 +136,16 @@ class TestClient(TestCase):
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
 
-        # Unprocessed events have been calculated and pushed to the queue
+        # The server is responding with the three events
+        unprocessed_event_1 = self.queue.pop()
+        assert unprocessed_event_1 == "event_1"
         unprocessed_event_1 = self.queue.pop()
         assert unprocessed_event_1 == "event_2"
         unprocessed_event_1 = self.queue.pop()
         assert unprocessed_event_1 == "event_3"
         assert (
-            client_state.profile.game_event_pointer == 2
-        )  # And the event pointer has been updated
+            client_state.profile.game_event_pointer == 4
+        )  # And now the event pointer is at 3
 
     def test_initializating_game(self):
         game_data = GameData(
@@ -200,20 +202,15 @@ class TestClient(TestCase):
 
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsMessage(
-            GameData(
-                "game_id",
-                "game_name",
-                ["player_1_id", "player_2_id"],
-                [
-                    "event_1",
-                    "event_2",
-                    "event_3",
-                ],
-            )
+            [
+                "event_1",
+                "event_2",
+                "event_3",
+            ]
         )
 
         # A request to get the game status is sourced
-        RequestGameStatus(self.profile, self.queue, "some_game_id").execute()
+        RequestGameStatus(self.profile, self.queue, "some_game_id", 2).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events

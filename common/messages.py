@@ -6,8 +6,8 @@ class GameInfoMessage:
 
 
 class GameEventsMessage:
-    def __init__(self, game):
-        self.events = game.events  # TODO: This could be too big for the channel
+    def __init__(self, events):
+        self.events = events  # TODO: This could be too big for the channel
 
 
 class GameListMessage:
@@ -47,8 +47,9 @@ class ErrorMessage:
 
 
 class GetGameStatus:
-    def __init__(self, game_id, player_id):
+    def __init__(self, game_id, pointer, player_id):
         self.game_id = game_id
+        self.pointer = pointer
         self.player_id = player_id
 
 

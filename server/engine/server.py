@@ -42,7 +42,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         if isinstance(decoded, JoinAGameMessage):
             return JoinGame(decoded.game_id, decoded.player_id)
         if isinstance(decoded, GetGameStatus):
-            return GameStatus(decoded.game_id, decoded.player_id)
+            return GameStatus(decoded.game_id, decoded.pointer, decoded.player_id)
         if isinstance(decoded, PingRequestMessage):
             return Ping()
         if isinstance(decoded, GameListRequestMessage):
