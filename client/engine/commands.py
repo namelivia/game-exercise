@@ -231,9 +231,11 @@ class RequestJoiningAGame(Command):
 
 # ==== These are network requests
 class RefreshGameStatus(Command):
-    def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, f"Refresh game status {game_id}")
-        self.events = [RefreshGameStatusNetworkRequestEvent(game_id)]
+    def __init__(self, profile, queue, game_id, pointer):
+        super().__init__(
+            profile, queue, f"Refresh game status {game_id} pointer {pointer}"
+        )
+        self.events = [RefreshGameStatusNetworkRequestEvent(game_id, pointer)]
 
 
 class CreateAGame(Command):

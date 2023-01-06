@@ -81,9 +81,10 @@ class ChatMessageInGameEvent(Event):
 
 # This one is for polling
 class RefreshGameStatusEvent(Event):
-    def __init__(self, game_id):
+    def __init__(self, game_id, pointer):
         super().__init__()
         self.game_id = game_id
+        self.pointer = pointer
 
 
 class NewGameRequestEvent(Event):
@@ -100,9 +101,10 @@ class JoinExistingGameEvent(Event):
 
 # These are network requests
 class RefreshGameStatusNetworkRequestEvent(Event):
-    def __init__(self, game_id):
+    def __init__(self, game_id, pointer):
         super().__init__()
         self.game_id = game_id
+        self.pointer = pointer
 
 
 class CreateAGameNetworkRequestEvent(Event):

@@ -143,20 +143,24 @@ class JoinGame(Command):
 
 
 class GameStatus(Command):
-    def __init__(self, game_id, player_id):
+    def __init__(self, game_id, pointer, player_id):
         self.game_id = game_id
+        self.pointer = pointer
         self.player_id = player_id
 
     def name(self):
         return "Get game status"
 
     def debug(self):
-        logger.info(f"Player {self.player_id} requested info for game: {self.game_id}")
+        logger.info(
+            f"Player {self.player_id} requested info for game: {self.game_id}, pointer {self.pointer}"
+        )
 
     def execute(self):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
+        # TODO: Get the events from the pointer and add them to the message
         # This becomes is too big
         # return GameEventsMessage(game)
         # Instead of sendin the whole game status message
