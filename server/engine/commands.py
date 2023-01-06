@@ -72,6 +72,7 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
+        # Send just an ACK
         # This becomes is too big
         # return GameEventsMessage(game)
         # Instead of doing this send a confirmation response
@@ -97,6 +98,7 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
+        # Send just an ACK
         # This becomes is too big
         # return GameEventsMessage(game)
         # Instead of doing this send a confirmation response
