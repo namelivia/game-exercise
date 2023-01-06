@@ -35,8 +35,7 @@ from .commands import (
 )
 from common.messages import (
     GameInfoMessage,
-    # GameEventsMessage,
-    GameEventMessage,
+    GameEventsMessage,
     ErrorMessage,
     GetGameStatus,
     CreateAGameMessage,
@@ -78,19 +77,8 @@ class TurnSoundOffEventHandler(EventHandler):
 
 # ======= GAME STATE SYNC =======
 class UpdateGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        # What we are going to do now is to check for unprocessed events
-        # there may be new events that have not been processed by the client,
-        # How do we know that? using the game_event_pointer.
-        events = event.events
-        game_event_pointer = client_state.profile.game_event_pointer
-        unprocessed_events = events[game_event_pointer + 1 :]
-        game_event_pointer = client_state.profile.set_game_event_pointer(
-            len(events) - 1
-        )
-        ProcessServerEvents(
-            client_state.profile, client_state.queue, unprocessed_events
-        ).execute()
+    def handle(self, events, client_state):
+        ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
 
 class SetInternalGameInformationEventHandler(EventHandler):
@@ -131,15 +119,12 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            # This will new be new events, not all
-            """TODO
             if isinstance(response, GameEventsMessage):
                 UpdateGame(
                     client_state.profile, client_state.queue, response.events
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
-            """
         else:
             print("Server error")
             # This should be done at game level
