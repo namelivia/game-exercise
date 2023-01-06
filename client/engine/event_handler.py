@@ -78,6 +78,10 @@ class TurnSoundOffEventHandler(EventHandler):
 # ======= GAME STATE SYNC =======
 class UpdateGameEventHandler(EventHandler):
     def handle(self, events, client_state):
+        game_event_pointer = client_state.profile.game_event_pointer
+        client_state.profile.set_game_event_pointer(
+            game_event_pointer + len(events) - 1
+        )
         ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
 
