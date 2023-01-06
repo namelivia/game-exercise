@@ -5,7 +5,8 @@ from .persistence import Persistence
 import logging
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
+    GameEventMessage,
+    # GameEventsMessage,
     PingResponseMessage,
     GameListResponseMessage,
     GameListResponseEntry,
@@ -72,7 +73,9 @@ class PlaceSymbol(Command):
         game = self.load_game(self.game_id)
         game.place(self.player_id, self.position)
         self.save_game(game)
-        return GameEventsMessage(game)
+        # This becomes is too big
+        # return GameEventsMessage(game)
+        # Instead of doing this send a confirmation response
 
 
 class SendChat(Command):
@@ -95,7 +98,9 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.player_id, self.message)
         self.save_game(game)
-        return GameEventsMessage(game)
+        # This becomes is too big
+        # return GameEventsMessage(game)
+        # Instead of doing this send a confirmation response
 
 
 class CreateGame(Command):
@@ -152,7 +157,12 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        return GameEventsMessage(game)
+        # This becomes is too big
+        # return GameEventsMessage(game)
+        # Instead of sendin the whole game status message
+        # do a more efficient sync mechanism
+        # And send single GameEvent Message messages
+        # for the unprocessed events
 
 
 class Ping(Command):

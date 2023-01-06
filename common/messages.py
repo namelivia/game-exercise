@@ -5,6 +5,13 @@ class GameInfoMessage:
         self.players = game.players
 
 
+# This is the new sync mechanism
+class GameEventMessage:
+    def __init__(self, event):
+        self.event = event
+
+
+# This is the old sync mechanism
 class GameEventsMessage:
     def __init__(self, game):
         self.events = game.events  # TODO: This could be too big for the channel
