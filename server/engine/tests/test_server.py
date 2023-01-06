@@ -6,7 +6,7 @@ from common.messages import (
     GameEventsMessage,
     GameListResponseMessage,
 )
-from common.events import GameCreated
+from common.events import ChatMessageEvent
 import mock
 
 
@@ -42,14 +42,25 @@ class TestServer(TestCase):
     @mock.patch("server.engine.persistence.Persistence.load_game")
     @mock.patch("uuid.uuid4")
     def test_getting_game_status(self, m_uuid, m_load_game):
+        # A client is requesting the new events that happened in the game
+        # the client has its event pointer set at 2 so only events 3 and 4 are sent.
         m_uuid.return_value = "game_id"
-        m_load_game.return_value = Game("test_name", "player_1_id")
-        response = GameStatus("game_id", "player_1_id").execute()
+        mocked_game = Game("test_name", "player_1_id")
+        mocked_game.events += [
+            ChatMessageEvent("player_1_id", "message1"),
+            ChatMessageEvent("player_1_id", "message2"),
+            ChatMessageEvent("player_1_id", "message3"),
+        ]
+        m_load_game.return_value = mocked_game
+        # When requesting the pointer is set to 2
+        response = GameStatus("game_id", 2, "player_1_id").execute()
         m_load_game.assert_called_once_with("game_id")
         assert isinstance(response, GameEventsMessage)
-        assert len(response.events) == 1
-        assert isinstance(response.events[0], GameCreated)
-        assert response.events[0].player_id == "player_1_id"
+        assert len(response.events) == 2
+        assert isinstance(response.events[0], ChatMessageEvent)
+        assert response.events[0].message == "message2"
+        assert isinstance(response.events[1], ChatMessageEvent)
+        assert response.events[1].message == "message3"
 
     @mock.patch("server.engine.persistence.Persistence.get_all_games")
     @mock.patch("server.engine.persistence.Persistence.load_game")
