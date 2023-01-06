@@ -5,8 +5,7 @@ from .persistence import Persistence
 import logging
 from common.messages import (
     GameInfoMessage,
-    GameEventMessage,
-    # GameEventsMessage,
+    GameEventsMessage,
     PingResponseMessage,
     GameListResponseMessage,
     GameListResponseEntry,
@@ -160,13 +159,8 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        # TODO: Get the events from the pointer and add them to the message
-        # This becomes is too big
-        # return GameEventsMessage(game)
-        # Instead of sendin the whole game status message
-        # do a more efficient sync mechanism
-        # And send single GameEvent Message messages
-        # for the unprocessed events
+        events = game.events[self.pointer :]
+        return GameEventsMessage(events)
 
 
 class Ping(Command):
