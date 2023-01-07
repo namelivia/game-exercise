@@ -200,7 +200,7 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message_errored(self, event):
-        # TODO: Lookup for the message with event.event_id
+        # TODO: Lookup for the message with event.chat_message_event_id
         # that equals event.id and remove  it.
         # Maybe inform the user too with a popup or something.
         PlaySound(
@@ -208,7 +208,7 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message_confirmed(self, event):
-        # TODO: Lookup for the message with event.event_id
+        # TODO: Lookup for the message with event.chat_message_event_id
         # Currently I'm not doing anything when a message is
         # confirmed. I could add a check like Whatsapp.
         pass
