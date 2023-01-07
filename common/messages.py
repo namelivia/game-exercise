@@ -41,6 +41,16 @@ class SendChatMessage:
         self.message = message
 
 
+class ChatMessageConfirmation:
+    def __init__(self, event_id):
+        self.event_id = event_id
+
+
+class ChatMessageError:
+    def __init__(self, event_id):
+        self.event_id = event_id
+
+
 class ErrorMessage:
     def __init__(self, message):
         self.message = message
