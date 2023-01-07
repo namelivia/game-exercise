@@ -47,9 +47,9 @@ class TestServer(TestCase):
         m_uuid.return_value = "game_id"
         mocked_game = Game("test_name", "player_1_id")
         mocked_game.events += [
-            ChatMessageEvent("player_1_id", "message1"),
-            ChatMessageEvent("player_1_id", "message2"),
-            ChatMessageEvent("player_1_id", "message3"),
+            ChatMessageEvent("id_1", "player_1_id", "message1"),
+            ChatMessageEvent("id_2", "player_1_id", "message2"),
+            ChatMessageEvent("id_3", "player_1_id", "message3"),
         ]
         m_load_game.return_value = mocked_game
         # When requesting the pointer is set to 2
@@ -58,8 +58,10 @@ class TestServer(TestCase):
         assert isinstance(response, GameEventsMessage)
         assert len(response.events) == 2
         assert isinstance(response.events[0], ChatMessageEvent)
+        assert response.events[0].event_id == "id_2"
         assert response.events[0].message == "message2"
         assert isinstance(response.events[1], ChatMessageEvent)
+        assert response.events[1].event_id == "id_3"
         assert response.events[1].message == "message3"
 
     @mock.patch("server.engine.persistence.Persistence.get_all_games")
