@@ -34,7 +34,7 @@ class PlaceASymbolMessage:
         self.position = position
 
 
-class PlaceSymbolError:
+class PlaceSymbolConfirmation:
     def __init__(self, event_id):
         self.event_id = event_id
 
