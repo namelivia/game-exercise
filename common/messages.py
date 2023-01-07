@@ -34,6 +34,11 @@ class PlaceASymbolMessage:
         self.position = position
 
 
+class PlaceSymbolError:
+    def __init__(self, event_id):
+        self.event_id = event_id
+
+
 class SendChatMessage:
     def __init__(self, game_id, event_id, player_id, message):
         self.game_id = game_id
