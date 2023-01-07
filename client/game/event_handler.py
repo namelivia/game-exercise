@@ -4,6 +4,7 @@ from common.messages import (
     ErrorMessage,
     PlaceASymbolMessage,
     SendChatMessage,
+    ChatMessageConfirmation,
 )
 from client.engine.events import InitiateGameEvent
 from .events import (
@@ -125,13 +126,6 @@ class ChatMessageConfirmationHandler(EventHandler):
         ).execute()
 
 
-class ChatMessageErrorHandler(EventHandler):
-    def handle(self, event, client_state):
-        ChatMessageErroredCommand(
-            client_state.profile, client_state.queue, event.event_id
-        ).execute()
-
-
 #################################################################
 
 
@@ -222,7 +216,6 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         return PlaceASymbolMessage(game_id, profile_id, position)
 
 
-# TODO: Here I will return somethin different
 class SendChatNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
@@ -231,9 +224,9 @@ class SendChatNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameEventsMessage):
-                UpdateGame(
-                    client_state.profile, client_state.queue, response.events
+            if isinstance(response, ChatMessageConfirmation):
+                ChatMessageConfirmedCommand(
+                    client_state.profile, client_state.queue, response.event_id
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)
@@ -261,7 +254,6 @@ handlers_map = {
     PlayerWinsInGameEvent: PlayerWinsInGameEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
     ChatMessageConfirmation: ChatMessageConfirmationHandler,
-    ChatMessageError: ChatMessageErrorHandler,
 }
 
 

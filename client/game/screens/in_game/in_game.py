@@ -22,7 +22,7 @@ from client.engine.events import (
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
     ChatMessageErroredEvent,
-    ChatMessageConfirmedEvent,
+    ChatMessageConfirmedInGameEvent,
 )
 
 
@@ -77,7 +77,7 @@ class InGame(Screen):
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
             ChatMessageInGameEvent: self.on_chat_message,
             ChatMessageErroredEvent: self.on_chat_message_errored,
-            ChatMessageConfirmedEvent: self.on_chat_message_confirmed,
+            ChatMessageConfirmedInGameEvent: self.on_chat_message_confirmed,
         }
 
     def _process_event(self, event):
