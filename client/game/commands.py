@@ -25,7 +25,12 @@ class RequestPlaceASymbol(Command):
         super().__init__(
             profile, queue, f"Request placing a symbol on position {position}"
         )
-        self.events = [PlaceASymbolRequestEvent(position)]
+        # We need to attach the in_game event id to the network request
+        in_game_event = PlayerPlacedSymbolInGameEvent(profile.id, position)
+        self.events = [
+            PlaceASymbolRequestEvent(in_game_event.id, position),
+            in_game_event,
+        ]
 
 
 class RequestSendChat(Command):
@@ -140,11 +145,11 @@ class GoToProfiles(Command):
 
 # ===== SERVER OUTBOUND COMMUNICATIONS =====
 class PlaceASymbol(Command):
-    def __init__(self, profile, queue, game_id, position):
+    def __init__(self, profile, queue, game_id, event_id, position):
         super().__init__(
             profile, queue, f"Place a symbol on game {game_id} on position {position}"
         )
-        self.events = [PlaceASymbolNetworkRequestEvent(game_id, position)]
+        self.events = [PlaceASymbolNetworkRequestEvent(game_id, event_id, position)]
 
 
 class SendChat(Command):

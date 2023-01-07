@@ -5,6 +5,7 @@ from common.messages import (
     PlaceASymbolMessage,
     SendChatMessage,
     ChatMessageConfirmation,
+    PlaceSymbolConfirmation,
 )
 from client.engine.events import InitiateGameEvent
 from .events import (
@@ -35,6 +36,7 @@ from client.engine.commands import (
     PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
     ChatMessageConfirmedCommand,
+    PlaceSymbolConfirmedCommand,
 )
 from .commands import (
     PlaceASymbol,

@@ -13,6 +13,8 @@ from .events import (
     RefreshGameStatusNetworkRequestEvent,
     PlayerPlacedSymbolInGameEvent,
     ChatMessageConfirmedInGameEvent,
+    PlayerPlacedSymbolConfirmedInGameEvent,
+    PlayerPlacedSymbolErroredInGameEvent,
     ChatMessageErroredEvent,
     UpdateProfilesInGameEvent,
     NewGameRequestEvent,
@@ -192,6 +194,24 @@ class PlayerPlacedSymbolInGameCommand(Command):
             # I should pick this event on the game but
             # Still don't do anything with this event
         ]
+
+
+# This one seems specific
+class PlaceSymbolConfirmedCommand(Command):
+    def __init__(self, profile, queue, event_id):
+        super().__init__(
+            profile, queue, f"Player placed symbol event {event_id} confirmed"
+        )
+        self.events = [PlayerPlacedSymbolConfirmedInGameEvent(event_id)]
+
+
+# This one seems specific
+class PlaceSymbolErroredCommand(Command):
+    def __init__(self, profile, queue, event_id):
+        super().__init__(
+            profile, queue, f"Player placed symbol event {event_id} errored"
+        )
+        self.events = [PlayerPlacedSymbolErroredInGameEvent(event_id)]
 
 
 # This one seems specific

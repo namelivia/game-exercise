@@ -66,6 +66,18 @@ class ChatMessageConfirmedInGameEvent(InGameEvent):
         self.chat_message_event_id = chat_message_event_id
 
 
+class PlayerPlacedSymbolConfirmedInGameEvent(InGameEvent):
+    def __init__(self, placed_symbol_event_id):
+        super().__init__()
+        self.placed_symbol_message_event_id = placed_symbol_event_id
+
+
+class PlayerPlacedSymbolErroredInGameEvent(InGameEvent):
+    def __init__(self, placed_symbol_event_id):
+        super().__init__()
+        self.placed_symbol_message_event_id = placed_symbol_event_id
+
+
 class PlayerJoinedInGameEvent(InGameEvent):
     def __init__(self, player_id):
         super().__init__()
