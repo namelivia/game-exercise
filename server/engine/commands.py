@@ -9,6 +9,7 @@ from common.messages import (
     PingResponseMessage,
     GameListResponseMessage,
     GameListResponseEntry,
+    ChatMessageConfirmation,
 )
 
 logger = logging.getLogger(__name__)
@@ -79,8 +80,9 @@ class PlaceSymbol(Command):
 
 
 class SendChat(Command):
-    def __init__(self, game_id, player_id, message):
+    def __init__(self, game_id, event_id, player_id, message):
         self.game_id = game_id
+        self.event_id = event_id
         self.player_id = player_id
         self.message = message
 
@@ -96,12 +98,9 @@ class SendChat(Command):
     def execute(self):
         super().execute()
         game = self.load_game(self.game_id)
-        game.add_chat_message(self.player_id, self.message)
+        game.add_chat_message(self.event_id, self.player_id, self.message)
         self.save_game(game)
-        # Send just an ACK
-        # This becomes is too big
-        # return GameEventsMessage(game)
-        # Instead of doing this send a confirmation response
+        return ChatMessageConfirmation(self.event_id)
 
 
 class CreateGame(Command):

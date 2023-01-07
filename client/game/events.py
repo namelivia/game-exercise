@@ -20,15 +20,17 @@ class PlaceASymbolRequestEvent(Event):
 
 
 class SendChatRequestEvent(Event):
-    def __init__(self, message):
+    def __init__(self, event_id, message):
         super().__init__()
+        self.event_id = event_id
         self.message = message
 
 
 class SendChatNetworkRequestEvent(Event):
-    def __init__(self, game_id, message):
+    def __init__(self, game_id, event_id, message):
         super().__init__()
         self.game_id = game_id
+        self.event_id = event_id
         self.message = message
 
 

@@ -21,6 +21,8 @@ from client.engine.events import (
     PlayerWinsInGameEvent,
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
+    ChatMessageErroredEvent,
+    ChatMessageConfirmedInGameEvent,
 )
 
 
@@ -74,6 +76,8 @@ class InGame(Screen):
             PlayerWinsInGameEvent: self.on_player_wins,
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
             ChatMessageInGameEvent: self.on_chat_message,
+            ChatMessageErroredEvent: self.on_chat_message_errored,
+            ChatMessageConfirmedInGameEvent: self.on_chat_message_confirmed,
         }
 
     def _process_event(self, event):
@@ -185,11 +189,30 @@ class InGame(Screen):
     def on_chat_message(self, event):
         self.data["chat_messages"].append(
             {
+                "event_id": event.id,
                 "player_id": event.player_id,
                 "message": event.message,
+                "confirmation": "pending",
             }
         )
         print(self.data["chat_messages"])
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
+
+    def _get_chat_message_by_event_id(self, event_id):
+        for message in self.data["chat_messages"]:
+            if message["event_id"] == event_id:
+                return message
+        return None  # This should not happen
+
+    def on_chat_message_errored(self, event):
+        PlaySound(
+            self.client_state.profile, self.client_state.queue, "start_game"
+        ).execute()
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        message["confirmation"] = "ERROR"
+
+    def on_chat_message_confirmed(self, event):
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        message["confirmation"] = "OK"
