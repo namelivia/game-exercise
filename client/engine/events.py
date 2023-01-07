@@ -60,6 +60,12 @@ class ChatMessageErroredEvent(InGameEvent):
         self.chat_message_event_id = chat_message_event_id
 
 
+class ChatMessageConfirmedInGameEvent(InGameEvent):
+    def __init__(self, chat_message_event_id):
+        super().__init__()
+        self.chat_message_event_id = chat_message_event_id
+
+
 class PlayerJoinedInGameEvent(InGameEvent):
     def __init__(self, player_id):
         super().__init__()
