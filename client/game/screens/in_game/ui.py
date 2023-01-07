@@ -61,7 +61,8 @@ class ChatMessages(UIElement):
     def _get_message_string(self, message, index):
         player_id = message["player_id"]
         contents = message["message"]
-        return f"{player_id}: {contents}"
+        confirmation = message["confirmation"]
+        return f"{player_id}: {contents} | {confirmation}"
 
     def __init__(self, messages):
         self.shapes = [

@@ -192,6 +192,7 @@ class InGame(Screen):
                 "event_id": event.id,
                 "player_id": event.player_id,
                 "message": event.message,
+                "confirmation": "pending",
             }
         )
         print(self.data["chat_messages"])
@@ -199,16 +200,19 @@ class InGame(Screen):
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
 
+    def _get_chat_message_by_event_id(self, event_id):
+        for message in self.data["chat_messages"]:
+            if message["event_id"] == event_id:
+                return message
+        return None  # This should not happen
+
     def on_chat_message_errored(self, event):
-        # TODO: Lookup for the message with event.chat_message_event_id
-        # that equals event.id and remove  it.
-        # Maybe inform the user too with a popup or something.
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        message["confirmation"] = "ERROR"
 
     def on_chat_message_confirmed(self, event):
-        # TODO: Lookup for the message with event.chat_message_event_id
-        # Currently I'm not doing anything when a message is
-        # confirmed. I could add a check like Whatsapp.
-        pass
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        message["confirmation"] = "OK"
