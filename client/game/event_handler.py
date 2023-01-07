@@ -47,8 +47,6 @@ from common.events import (
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
-    ChatMessageConfirmation,
-    ChatMessageError,
 )
 from .sounds import (
     BackSound,

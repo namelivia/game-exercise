@@ -22,6 +22,7 @@ from client.engine.events import (
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
     ChatMessageErroredEvent,
+    ChatMessageConfirmedEvent,
 )
 
 
@@ -76,6 +77,7 @@ class InGame(Screen):
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
             ChatMessageInGameEvent: self.on_chat_message,
             ChatMessageErroredEvent: self.on_chat_message_errored,
+            ChatMessageConfirmedEvent: self.on_chat_message_confirmed,
         }
 
     def _process_event(self, event):
@@ -198,9 +200,15 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message_errored(self, event):
-        # TODO: Lookup for the message with event_id
+        # TODO: Lookup for the message with event.event_id
         # that equals event.id and remove  it.
         # Maybe inform the user too with a popup or something.
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
+
+    def on_chat_message_confirmed(self, event):
+        # TODO: Lookup for the message with event.event_id
+        # Currently I'm not doing anything when a message is
+        # confirmed. I could add a check like Whatsapp.
+        pass
