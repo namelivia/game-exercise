@@ -35,7 +35,6 @@ from client.engine.commands import (
     PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
     ChatMessageConfirmedCommand,
-    ChatMessageErroredCommand,
 )
 from .commands import (
     PlaceASymbol,
@@ -189,6 +188,7 @@ class SendChatRequestEventHandler(EventHandler):
             client_state.profile,
             client_state.queue,
             client_state.profile.game_id,
+            event.event_id,
             event.message,
         ).execute()
 
@@ -219,7 +219,10 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
 class SendChatNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
-            client_state.profile.game_id, client_state.profile.id, event.message
+            client_state.profile.game_id,
+            event.event_id,
+            client_state.profile.id,
+            event.message,
         )
 
         response = Channel.send_command(request_data)
@@ -234,8 +237,8 @@ class SendChatNetworkRequestEventHandler(EventHandler):
             print("Server error")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, game_id, profile_id, message):
-        return SendChatMessage(game_id, profile_id, message)
+    def _encode(self, game_id, event_id, profile_id, message):
+        return SendChatMessage(game_id, event_id, profile_id, message)
 
 
 handlers_map = {
