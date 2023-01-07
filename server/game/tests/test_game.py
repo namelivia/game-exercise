@@ -72,14 +72,14 @@ class TestGame(TestCase):
     def test_only_players_in_games_can_get_place_symbols(self):
         game = Game("Test game", "player_1_id")
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("other_player_id", 2)
+            game.place("event_1", "other_player_id", 2)
         assert str(e.exception) == "Player has no access to the game"
         assert len(game.events) == 1
 
     def test_symbols_cannot_be_placed_until_the_game_is_full(self):
         game = Game("Test game", "player_1_id")
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("player_1_id", 2)
+            game.place("event_1", "player_1_id", 2)
         assert str(e.exception) == "No player 2 yet"
         assert len(game.events) == 1
 
@@ -87,30 +87,32 @@ class TestGame(TestCase):
         game = Game("Test game", "player_1_id")
         game.join("player_2_id")
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("player_2_id", 0)
+            game.place("event_1", "player_2_id", 0)
         assert str(e.exception) == "Not your turn"
         assert len(game.events) == 2
 
-        game.place("player_1_id", 0)  # Player 1 places, now it is player's 2 turn
+        game.place(
+            "event_2", "player_1_id", 0
+        )  # Player 1 places, now it is player's 2 turn
         assert len(game.events) == 3
 
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("player_1_id", 2)
+            game.place("event_3", "player_1_id", 2)
         assert str(e.exception) == "Not your turn"
         assert len(game.events) == 3
 
-        game.place("player_2_id", 1)  # Player 2 places
+        game.place("event_4", "player_2_id", 1)  # Player 2 places
         assert len(game.events) == 4
 
     def test_symbols_cannot_be_taken_twice_in_the_same_place(self):
         game = Game("Test game", "player_1_id")
         game.join("player_2_id")
 
-        game.place("player_1_id", 0)
+        game.place("event_1", "player_1_id", 0)
         assert len(game.events) == 3
 
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("player_2_id", 0)  # Same position as Player 1
+            game.place("event_2", "player_2_id", 0)  # Same position as Player 1
         assert str(e.exception) == "Position already taken"
         assert len(game.events) == 3
 
@@ -119,7 +121,7 @@ class TestGame(TestCase):
         game.join("player_2_id")
 
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("player_1_id", 99)
+            game.place("event_1", "player_1_id", 99)
         assert str(e.exception) == "Position out of bounds"
         assert len(game.events) == 2
 
@@ -129,7 +131,7 @@ class TestGame(TestCase):
         game.winner = "player_1_id"  # A winner is set, the game is finished
 
         with self.assertRaises(InvalidCommandError) as e:
-            game.place("player_1_id", 0)
+            game.place("event_1", "player_1_id", 0)
         assert str(e.exception) == "The game is already finished"
         assert len(game.events) == 2
 
@@ -141,32 +143,32 @@ class TestGame(TestCase):
         # _ _  _
         # _ _  _
 
-        game.place("player_1_id", 0)
+        game.place("event_1", "player_1_id", 0)
 
         # 1 _  _
         # _ _  _
         # _ _  _
 
-        game.place("player_2_id", 2)
+        game.place("event_2", "player_2_id", 2)
 
         # 1 _  2
         # _ _  _
         # _ _  _
 
-        game.place("player_1_id", 3)
+        game.place("event_3", "player_1_id", 3)
 
         # 1 _  2
         # 1 _  _
         # _ _  _
 
-        game.place("player_2_id", 5)
+        game.place("event_4", "player_2_id", 5)
 
         # 1 _  2
         # 1 _  2
         # _ _  _
 
         assert game.winner is None
-        game.place("player_1_id", 6)
+        game.place("event_5", "player_1_id", 6)
 
         # 1 _  2
         # 1 _  2
