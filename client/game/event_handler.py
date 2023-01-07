@@ -33,7 +33,7 @@ from client.engine.commands import (
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
-    ChatMessageInGameCommand,
+    ChatMessageConfirmedCommand,
 )
 from .commands import (
     PlaceASymbol,
@@ -46,7 +46,7 @@ from common.events import (
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
-    ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
+    ChatMessageEvent as ChatMessageServerEvent,  # TODO: akward
 )
 from .sounds import (
     BackSound,
@@ -118,10 +118,10 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
         ).execute()
 
 
-class ChatMessageInGameEventHandler(EventHandler):
+class ChatMessageSeverEventHandler(EventHandler):
     def handle(self, event, client_state):
-        ChatMessageInGameCommand(
-            client_state.profile, client_state.queue, event.player_id, event.message
+        ChatMessageConfirmedCommand(
+            client_state.profile, client_state.queue, event.event_id
         ).execute()
 
 
@@ -253,7 +253,7 @@ handlers_map = {
     PlayerJoinedInGameEvent: PlayerJoinedInGameEventHandler,
     PlayerWinsInGameEvent: PlayerWinsInGameEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
-    ChatMessageInGameEvent: ChatMessageInGameEventHandler,
+    ChatMessageServerEvent: ChatMessageSeverEventHandler,
 }
 
 
