@@ -1,4 +1,5 @@
 from client.engine.primitives.command import Command
+from client.engine.events import ChatMessageInGameEvent
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
@@ -30,7 +31,10 @@ class RequestPlaceASymbol(Command):
 class RequestSendChat(Command):
     def __init__(self, profile, queue, message):
         super().__init__(profile, queue, f"Request sending the chat message:{message}")
-        self.events = [SendChatRequestEvent(message)]
+        self.events = [
+            SendChatRequestEvent(message),
+            ChatMessageInGameEvent(profile.id, message),
+        ]
 
 
 # ===== SCREEN CHANGE REQUESTS =====

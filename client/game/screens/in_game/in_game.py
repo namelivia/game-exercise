@@ -21,6 +21,7 @@ from client.engine.events import (
     PlayerWinsInGameEvent,
     PlayerPlacedSymbolInGameEvent,
     ChatMessageInGameEvent,
+    ChatMessageErroredEvent,
 )
 
 
@@ -74,6 +75,7 @@ class InGame(Screen):
             PlayerWinsInGameEvent: self.on_player_wins,
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
             ChatMessageInGameEvent: self.on_chat_message,
+            ChatMessageErroredEvent: self.on_chat_message_errored,
         }
 
     def _process_event(self, event):
@@ -185,11 +187,20 @@ class InGame(Screen):
     def on_chat_message(self, event):
         self.data["chat_messages"].append(
             {
+                "event_id": event.id,
                 "player_id": event.player_id,
                 "message": event.message,
             }
         )
         print(self.data["chat_messages"])
+        PlaySound(
+            self.client_state.profile, self.client_state.queue, "start_game"
+        ).execute()
+
+    def on_chat_message_errored(self, event):
+        # TODO: Lookup for the message with event_id
+        # that equals event.id and remove  it.
+        # Maybe inform the user too with a popup or something.
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
