@@ -54,9 +54,8 @@ class Command(ABC):
 
 
 class PlaceSymbol(Command):
-    def __init__(self, game_id, event_id, player_id, position):
+    def __init__(self, game_id, player_id, position):
         self.game_id = game_id
-        self.event_id = event_id
         self.player_id = player_id
         self.position = position
 
@@ -72,7 +71,7 @@ class PlaceSymbol(Command):
     def execute(self):
         super().execute()
         game = self.load_game(self.game_id)
-        game.place(self.event_id, self.player_id, self.position)
+        game.place(self.player_id, self.position)
         self.save_game(game)
         # Send just an ACK
         # This becomes is too big
