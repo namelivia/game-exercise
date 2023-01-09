@@ -1,5 +1,4 @@
 from client.engine.primitives.command import Command
-from client.engine.events import ChatMessageInGameEvent
 from .events import (
     ScreenTransitionEvent,
     PlaceASymbolRequestEvent,
@@ -31,12 +30,7 @@ class RequestPlaceASymbol(Command):
 class RequestSendChat(Command):
     def __init__(self, profile, queue, message):
         super().__init__(profile, queue, f"Request sending the chat message:{message}")
-        # We need to attach the in_game event id to the network request
-        in_game_event = ChatMessageInGameEvent(profile.id, message)
-        self.events = [
-            SendChatRequestEvent(in_game_event.id, message),
-            in_game_event,
-        ]
+        self.events = [SendChatRequestEvent(message)]
 
 
 # ===== SCREEN CHANGE REQUESTS =====
@@ -148,8 +142,8 @@ class PlaceASymbol(Command):
 
 
 class SendChat(Command):
-    def __init__(self, profile, queue, game_id, event_id, message):
+    def __init__(self, profile, queue, game_id, message):
         super().__init__(
             profile, queue, f"Send chat message on game {game_id}: {message}"
         )
-        self.events = [SendChatNetworkRequestEvent(game_id, event_id, message)]
+        self.events = [SendChatNetworkRequestEvent(game_id, message)]

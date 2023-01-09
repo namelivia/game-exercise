@@ -1,8 +1,5 @@
 from unittest import TestCase
 from client.game.commands import RequestPlaceASymbol, RequestSendChat
-from client.engine.events import (
-    ChatMessageInGameEvent,
-)
 from client.game.events import (
     PlaceASymbolRequestEvent,
     PlaceASymbolNetworkRequestEvent,
@@ -56,20 +53,10 @@ class TestGame(TestCase):
         client_state.queue = self.queue
         self.event_handler.handle(event, client_state)
 
-        # A request for the game to render the message is issued
-        event = self.queue.pop()
-        assert isinstance(event, ChatMessageInGameEvent)
-        # TODO: We are no processing this one right now, I don't care for the moment
-        # self.event_handler.handle(event, client_state)
-
-        in_game_event_id = event.id
-
-        # And network request to ask for setting the message on the server is sent
+        # A network request to ask for setting the message on the server is sent
         event = self.queue.pop()
         assert isinstance(event, SendChatNetworkRequestEvent)
         self.event_handler.handle(event, client_state)
-        # Assert the event_id is attached
-        assert event.event_id == in_game_event_id
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()

@@ -17,6 +17,7 @@ from client.engine.events import (
     RefreshGameStatusNetworkRequestEvent,
     TurnSoundOnEvent,
     TurnSoundOffEvent,
+    ChatMessageInGameEvent,
     UpdateGameListEvent,
 )
 from client.engine.commands import (
@@ -35,6 +36,7 @@ from client.engine.commands import (
     TurnSoundOn,
     SetPlayerName,
     TurnSoundOff,
+    ChatMessageInGameCommand,
     UpdateGameList,
 )
 from common.messages import (
@@ -396,7 +398,14 @@ class TestClient(TestCase):
             sound_on=False,
         )
         assert profile.name is None
-        # TODO: Finish writing this test
+        ChatMessageInGameCommand(
+            profile, self.queue, "player_id", "test message"
+        ).execute()
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, ChatMessageInGameEvent)
+        # Event to be picked up by the game logic
 
     def test_updating_the_game_list(self):
         # When there are new events to process these will be pushed to the queue

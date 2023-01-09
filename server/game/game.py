@@ -99,8 +99,8 @@ class Game:
         except IndexError:
             raise InvalidCommandError("Position out of bounds")
 
-    def add_chat_message(self, event_id, player, message):
+    def add_chat_message(self, player, message):
         if player not in self.players:
             raise InvalidCommandError("Player has no access to the game")
         # Only players in the game can send chat messages
-        self.events.append(ChatMessageEvent(event_id, player, message))
+        self.events.append(ChatMessageEvent(player, message))
