@@ -56,16 +56,15 @@ class TestGame(TestCase):
 
     def test_sending_a_chat_message(self):
         game = Game("Test game", "player_1_id")
-        game.add_chat_message("event_id_1", "player_1_id", "hello")
+        game.add_chat_message("player_1_id", "hello")
         assert len(game.events) == 2
         last_event = game.events[1]
         assert isinstance(last_event, ChatMessageEvent)
-        assert last_event.event_id == "event_id_1"
         assert last_event.player_id == "player_1_id"
         assert last_event.message == "hello"
 
         with self.assertRaises(InvalidCommandError) as e:
-            game.add_chat_message("event_id_2", "other_player_id", "bye")
+            game.add_chat_message("other_player_id", "bye")
         assert str(e.exception) == "Player has no access to the game"
         assert len(game.events) == 2
 

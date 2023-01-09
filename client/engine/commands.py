@@ -12,8 +12,7 @@ from .events import (
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
     PlayerPlacedSymbolInGameEvent,
-    ChatMessageConfirmedInGameEvent,
-    ChatMessageErroredEvent,
+    ChatMessageInGameEvent,
     UpdateProfilesInGameEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
@@ -195,25 +194,15 @@ class PlayerPlacedSymbolInGameCommand(Command):
 
 
 # This one seems specific
-class ChatMessageConfirmedCommand(Command):
-    def __init__(self, profile, queue, event_id):
-        super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
+class ChatMessageInGameCommand(Command):
+    def __init__(self, profile, queue, player_id, message):
+        super().__init__(profile, queue, f"Player {player_id} says: {message}")
         self.events = [
-            ChatMessageConfirmedInGameEvent(
-                event_id
+            ChatMessageInGameEvent(
+                player_id, message
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
-        ]
-
-
-class ChatMessageErroredCommand(Command):
-    def __init__(self, profile, queue, player_id, event_id):
-        super().__init__(profile, queue, f"Chat message event {event_id} errored")
-        self.events = [
-            ChatMessageErroredEvent(
-                event_id
-            )  # Event to be picked up by the screen event handler
-            # I should pick this event on the game but
+            # Still don't do anything with this event
         ]
 
 

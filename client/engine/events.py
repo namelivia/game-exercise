@@ -1,4 +1,4 @@
-from client.engine.primitives.event import Event, InGameEvent
+from client.engine.primitives.event import Event
 
 """
 Events contain an operation and the data needed in order to perform
@@ -46,47 +46,33 @@ class SetInternalGameInformationEvent(Event):
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
-class GameCreatedInGameEvent(InGameEvent):
+class GameCreatedInGameEvent(Event):
     def __init__(self, player_id):
         super().__init__()
         self.player_id = player_id
 
 
-class ChatMessageErroredEvent(InGameEvent):
-    # This indicates that a chat message wasn't sucessfully processed
-    # by the server and therefore it needs to be rolled back.
-    def __init__(self, chat_message_event_id):
-        super().__init__()
-        self.chat_message_event_id = chat_message_event_id
-
-
-class ChatMessageConfirmedInGameEvent(InGameEvent):
-    def __init__(self, chat_message_event_id):
-        super().__init__()
-        self.chat_message_event_id = chat_message_event_id
-
-
-class PlayerJoinedInGameEvent(InGameEvent):
+class PlayerJoinedInGameEvent(Event):
     def __init__(self, player_id):
         super().__init__()
         self.player_id = player_id
 
 
-class PlayerWinsInGameEvent(InGameEvent):
+class PlayerWinsInGameEvent(Event):
     def __init__(self, player_id):
         super().__init__()
         self.player_id = player_id
 
 
 # This one seems specific
-class PlayerPlacedSymbolInGameEvent(InGameEvent):
+class PlayerPlacedSymbolInGameEvent(Event):
     def __init__(self, player_id, position):
         super().__init__()
         self.player_id = player_id
         self.position = position
 
 
-class ChatMessageInGameEvent(InGameEvent):
+class ChatMessageInGameEvent(Event):
     def __init__(self, player_id, message):
         super().__init__()
         self.player_id = player_id
@@ -175,7 +161,7 @@ class ProfilesUpdatedEvent(Event):
         self.profiles = profiles
 
 
-class UpdateProfilesInGameEvent(InGameEvent):
+class UpdateProfilesInGameEvent(Event):
     def __init__(self, profiles):
         super().__init__()
         self.profiles = profiles
@@ -191,7 +177,7 @@ class NewProfileEvent(Event):
     pass
 
 
-class ProfileSetInGameEvent(InGameEvent):
+class ProfileSetInGameEvent(Event):
     def __init__(self, key):
         super().__init__()
         self.key = key
