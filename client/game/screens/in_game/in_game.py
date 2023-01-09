@@ -187,18 +187,20 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message(self, event):
-        self.data["chat_messages"].append(
-            {
-                "event_id": event.id,
-                "player_id": event.player_id,
-                "message": event.message,
-                "confirmation": "pending",
-            }
-        )
-        print(self.data["chat_messages"])
-        PlaySound(
-            self.client_state.profile, self.client_state.queue, "start_game"
-        ).execute()
+        # Check  if the message is already there waiting for confirmation
+        already_there = self._get_chat_message_by_event_id(event.id)
+        if not already_there:
+            self.data["chat_messages"].append(
+                {
+                    "event_id": event.id,
+                    "player_id": event.player_id,
+                    "message": event.message,
+                    "confirmation": "pending",
+                }
+            )
+            PlaySound(
+                self.client_state.profile, self.client_state.queue, "start_game"
+            ).execute()
 
     def _get_chat_message_by_event_id(self, event_id):
         for message in self.data["chat_messages"]:
