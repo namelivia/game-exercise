@@ -121,7 +121,11 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
 class ChatMessageConfirmationHandler(EventHandler):
     def handle(self, event, client_state):
         ChatMessageConfirmedCommand(
-            client_state.profile, client_state.queue, event.event_id
+            client_state.profile,
+            client_state.queue,
+            event.event_id,
+            event.player_id,
+            event.message,
         ).execute()
 
 
@@ -229,7 +233,11 @@ class SendChatNetworkRequestEventHandler(EventHandler):
         if response is not None:
             if isinstance(response, ChatMessageConfirmation):
                 ChatMessageConfirmedCommand(
-                    client_state.profile, client_state.queue, response.event_id
+                    client_state.profile,
+                    client_state.queue,
+                    response.event_id,
+                    response.player_id,
+                    response.message,
                 ).execute()
             if isinstance(response, ErrorMessage):
                 print(response.__dict__)

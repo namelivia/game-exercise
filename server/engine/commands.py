@@ -100,7 +100,7 @@ class SendChat(Command):
         game = self.load_game(self.game_id)
         game.add_chat_message(self.event_id, self.player_id, self.message)
         self.save_game(game)
-        return ChatMessageConfirmation(self.event_id)
+        return ChatMessageConfirmation(self.event_id, self.player_id, self.message)
 
 
 class CreateGame(Command):

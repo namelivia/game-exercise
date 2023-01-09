@@ -196,11 +196,11 @@ class PlayerPlacedSymbolInGameCommand(Command):
 
 # This one seems specific
 class ChatMessageConfirmedCommand(Command):
-    def __init__(self, profile, queue, event_id):
+    def __init__(self, profile, queue, event_id, player_id, message):
         super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
         self.events = [
             ChatMessageConfirmedInGameEvent(
-                event_id
+                event_id, player_id, message
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
         ]

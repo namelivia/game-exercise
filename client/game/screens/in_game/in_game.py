@@ -215,4 +215,14 @@ class InGame(Screen):
 
     def on_chat_message_confirmed(self, event):
         message = self._get_chat_message_by_event_id(event.chat_message_event_id)
-        message["confirmation"] = "OK"
+        if message is not None:
+            message["confirmation"] = "OK"
+        else:
+            self.data["chat_messages"].append(
+                {
+                    "event_id": event.chat_message_id,
+                    "player_id": event.player_id,
+                    "message": event.message,
+                    "confirmation": "OK",
+                }
+            )
