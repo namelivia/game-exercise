@@ -35,6 +35,7 @@ from client.engine.commands import (
     PlayerWinsInGameCommand,
     PlayerPlacedSymbolInGameCommand,
     ChatMessageConfirmedCommand,
+    ChatMessageInGameCommand,
 )
 from .commands import (
     PlaceASymbol,
@@ -47,6 +48,7 @@ from common.events import (
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
+    ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
 )
 from .sounds import (
     BackSound,
@@ -122,6 +124,13 @@ class ChatMessageConfirmationHandler(EventHandler):
     def handle(self, event, client_state):
         ChatMessageConfirmedCommand(
             client_state.profile, client_state.queue, event.event_id
+        ).execute()
+
+
+class ChatMessageInGameEventHandler(EventHandler):
+    def handle(self, event, client_state):
+        ChatMessageInGameCommand(
+            client_state.profile, client_state.queue, event.player_id, event.message
         ).execute()
 
 
@@ -257,6 +266,7 @@ handlers_map = {
     PlayerWinsInGameEvent: PlayerWinsInGameEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
     ChatMessageConfirmation: ChatMessageConfirmationHandler,
+    ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }
 
 
