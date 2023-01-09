@@ -52,20 +52,6 @@ class GameCreatedInGameEvent(InGameEvent):
         self.player_id = player_id
 
 
-class ChatMessageErroredEvent(InGameEvent):
-    # This indicates that a chat message wasn't sucessfully processed
-    # by the server and therefore it needs to be rolled back.
-    def __init__(self, chat_message_event_id):
-        super().__init__()
-        self.chat_message_event_id = chat_message_event_id
-
-
-class ChatMessageConfirmedInGameEvent(InGameEvent):
-    def __init__(self, chat_message_event_id):
-        super().__init__()
-        self.chat_message_event_id = chat_message_event_id
-
-
 class PlayerJoinedInGameEvent(InGameEvent):
     def __init__(self, player_id):
         super().__init__()
@@ -84,13 +70,6 @@ class PlayerPlacedSymbolInGameEvent(InGameEvent):
         super().__init__()
         self.player_id = player_id
         self.position = position
-
-
-class ChatMessageInGameEvent(InGameEvent):
-    def __init__(self, player_id, message):
-        super().__init__()
-        self.player_id = player_id
-        self.message = message
 
 
 # This one is for polling
