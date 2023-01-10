@@ -9,7 +9,8 @@ class PlayerJoined:
 
 
 class PlayerPlacedSymbol:
-    def __init__(self, player_id, position):
+    def __init__(self, event_id, player_id, position):
+        self.event_id = event_id
         self.player_id = player_id
         self.position = position
 
