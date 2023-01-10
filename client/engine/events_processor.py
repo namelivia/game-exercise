@@ -8,7 +8,6 @@ class EventsProcessor:
     def handle(self, event, client_state):
         if event is None:
             return
-        print(event)
         handled = False
         for event_handler in self.event_handlers:
             try:

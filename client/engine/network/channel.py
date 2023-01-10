@@ -1,8 +1,10 @@
 import socket
 import pickle
+import logging
 
 IP = "localhost"
 PORT = 1234
+logger = logging.getLogger(__name__)
 
 
 class Channel:
@@ -15,8 +17,8 @@ class Channel:
                 response = pickle.loads(sock.recv(1024))
                 return response
         except ConnectionRefusedError:
-            print("Could not connect to the server")
+            logger.erro("Could not connect to the server")
             return None
         except EOFError:
-            print("EOF pickle error, the message could not be sent")
+            logger.error("EOF pickle error, the message could not be sent")
             return None

@@ -2,6 +2,7 @@ from client.engine.screen_manager import ScreenManager
 from client.engine.input.input import Input
 from client.engine.general_state.client_state import ClientState
 from client.engine.graphics.graphics import Graphics
+import logging
 
 from client.game.events import ScreenTransitionEvent
 
@@ -12,6 +13,12 @@ This initializes the client
 """
 
 if __name__ == "__main__":
+
+    logging.basicConfig(
+        filename="client_data/logs/client.log",
+        level=logging.DEBUG,
+        format="[%(asctime)s] %(message)s",
+    )
 
     # The initial event is game specific
     initial_event = ScreenTransitionEvent("intro")

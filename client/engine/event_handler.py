@@ -1,3 +1,4 @@
+import logging
 from client.engine.primitives.event_handler import EventHandler
 from .events import (
     QuitGameEvent,
@@ -51,6 +52,7 @@ from .chat.event_handler import handlers_map as chat_event_handlers
 from .pieces.event_handler import handlers_map as pieces_event_handlers
 from .game_data import GameData
 
+logger = logging.getLogger(__name__)
 """
 Currently event handlers are the one that do the processing.
 They do the actual procssing and can execute commands.
@@ -129,9 +131,9 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
                     client_state.profile, client_state.queue, response.events
                 ).execute()
             if isinstance(response, ErrorMessage):
-                print(response.__dict__)
+                logger.error(response.__dict__)
         else:
-            print("Server error")
+            logger.error("Server error")
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
@@ -157,7 +159,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                     client_state.profile,
                     client_state.queue,
                 ).execute()
-                print("Error creating the game")
+                logger.error("Error creating the game")
                 # This is too game specific, why not using hooks?
                 # BackToLobby(client_state.profile, client_state.queue).execute()
         else:
@@ -165,7 +167,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
                 client_state.profile,
                 client_state.queue,
             ).execute()
-            print("Server error")
+            logger.error("Server error")
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
@@ -190,13 +192,13 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
                     client_state.profile,
                     client_state.queue,
                 ).execute()
-                print(response.__dict__)
+                logger.error(response.__dict__)
         else:
             ErrorJoiningGame(
                 client_state.profile,
                 client_state.queue,
             ).execute()
-            print("Error Joining Game")
+            logger.error("Error Joining Game")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, profile_id, game_id):
@@ -210,11 +212,11 @@ class PingNetworkRequestEventHandler(EventHandler):
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, PingResponseMessage):
-                print("Ping request OK")
+                logger.info("Ping request OK")
             if isinstance(response, ErrorMessage):
-                print(response.__dict__)
+                logger.error(response.__dict__)
         else:
-            print("Error pinging the server")
+            logger.error("Error pinging the server")
 
     def _encode(self):
         return PingRequestMessage()
@@ -257,13 +259,13 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
                     client_state.profile,
                     client_state.queue,
                 ).execute()
-                print(response.__dict__)
+                logger.info(response.__dict__)
         else:
             ErrorGettingGameList(
                 client_state.profile,
                 client_state.queue,
             ).execute()
-            print("Error retrieving the game list from the server")
+            logger.error("Error retrieving the game list from the server")
 
     def _encode(self):
         return GameListRequestMessage()

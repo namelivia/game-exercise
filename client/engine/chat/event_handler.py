@@ -1,3 +1,4 @@
+import logging
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
@@ -20,6 +21,8 @@ from common.events import (
 )
 
 from client.engine.network.channel import Channel
+
+logger = logging.getLogger(__name__)
 
 """
 Currently event handlers are the one that do the processing.
@@ -70,10 +73,10 @@ class SendChatNetworkRequestEventHandler(EventHandler):
                 ).execute()
             if isinstance(response, ErrorMessage):
                 # TODO: Deal with the error properly
-                print(response.__dict__)
+                logger.error(response.__dict__)
         else:
             # TODO: Deal with the error properly
-            print("Server error")
+            logger.error("Server error")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, game_id, event_id, profile_id, message):

@@ -154,9 +154,6 @@ class InGame(Screen):
             self.data["chat_input"] += event.key
 
     def on_game_created(self, event):
-        print(
-            "New Game created event, do something play some music, update the internal state or something"
-        )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
@@ -164,9 +161,6 @@ class InGame(Screen):
         self.ui_elements[1].play()
 
     def on_player_joined(self, event):
-        print(
-            "New Player Joined event, do something play some music, update the internal state or something"
-        )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
@@ -174,9 +168,6 @@ class InGame(Screen):
         self.data["status"] = "It is player 1 turn"
 
     def on_player_wins(self, event):
-        print(
-            "A player won the game, do something play some music, update the internal state or something"
-        )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
