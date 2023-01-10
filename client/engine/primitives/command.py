@@ -12,6 +12,6 @@ class Command(ABC):
         self.events = []
 
     def execute(self):
-        logger.info(f"COMMAND: {self.description}")
+        logger.info(f"[Command] {self.description}")
         for event in self.events:
             self.queue.put(event)

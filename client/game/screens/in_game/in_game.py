@@ -228,10 +228,10 @@ class InGame(Screen):
 
     def _get_symbol_placement_by_event_id(self, event_id):
         for place in self.data["board"]:
-            if place["event_id"] == event_id:
+            if place is not None and place["event_id"] == event_id:
                 return place
         return None  # This should not happen
 
     def on_symbol_placement_confirmed(self, event):
-        message = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)
-        message["confirmation"] = "OK"
+        place = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)
+        place["confirmation"] = "OK"
