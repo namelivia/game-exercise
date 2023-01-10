@@ -22,10 +22,11 @@ class ChatMessageConfirmedInGameEvent(InGameEvent):
 
 
 class ChatMessageInGameEvent(InGameEvent):
-    def __init__(self, player_id, message):
+    def __init__(self, player_id, message, original_event_id=None):
         super().__init__()
         self.player_id = player_id
         self.message = message
+        self.original_event_id = original_event_id
 
 
 class SendChatNetworkRequestEvent(Event):

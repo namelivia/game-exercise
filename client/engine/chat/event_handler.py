@@ -40,8 +40,13 @@ class ChatMessageConfirmationHandler(EventHandler):
 
 class ChatMessageInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
+        # This is a chat message coming from the server
         ChatMessageInGameCommand(
-            client_state.profile, client_state.queue, event.player_id, event.message
+            client_state.profile,
+            client_state.queue,
+            event.event_id,
+            event.player_id,
+            event.message,
         ).execute()
 
 

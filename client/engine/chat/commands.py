@@ -20,14 +20,12 @@ class ChatMessageConfirmedCommand(Command):
 
 
 class ChatMessageInGameCommand(Command):
-    def __init__(self, profile, queue, player_id, message):
+    def __init__(self, profile, queue, event_id, player_id, message):
         super().__init__(profile, queue, f"Player {player_id} says: {message}")
         self.events = [
             ChatMessageInGameEvent(
-                player_id, message
-            )  # Event to be picked up by the screen event handler
-            # I should pick this event on the game but
-            # Still don't do anything with this event
+                player_id, message, event_id  # This is the original event_id
+            )
         ]
 
 

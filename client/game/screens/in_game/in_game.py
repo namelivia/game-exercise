@@ -194,8 +194,9 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message(self, event):
+        # This is not working because the ingame event has another id
         # Check  if the message is already there waiting for confirmation
-        already_there = self._get_chat_message_by_event_id(event.id)
+        already_there = self._get_chat_message_by_event_id(event.original_event_id)
         if not already_there:
             self.data["chat_messages"].append(
                 {
