@@ -36,6 +36,7 @@ class PlaceASymbolRequestEventHandler(EventHandler):
             client_state.profile,
             client_state.queue,
             client_state.profile.game_id,
+            event.event_id,
             event.position,
         ).execute()
 

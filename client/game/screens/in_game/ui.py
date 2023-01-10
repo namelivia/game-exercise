@@ -253,22 +253,38 @@ class Board(UIElement):
 
         for index, ball in enumerate(data["board"]):
             if ball is not None:
-                if ball["color"] == "blue":
+                if ball["color"] == "blue" and ball["confirmation"] == "OK":
                     self.shapes.append(
                         Image(
                             "client/game/images/blue_ball.png",
                             self.positions[index][0],
                             self.positions[index][1],
                         )
-                    ),
-                else:
+                    )
+                if ball["color"] == "blue" and ball["confirmation"] == "pending":
+                    self.shapes.append(
+                        Image(
+                            "client/game/images/blue_ball_pending.png",
+                            self.positions[index][0],
+                            self.positions[index][1],
+                        )
+                    )
+                if ball["color"] == "red" and ball["confirmation"] == "OK":
                     self.shapes.append(
                         Image(
                             "client/game/images/red_ball.png",
                             self.positions[index][0],
                             self.positions[index][1],
                         )
-                    ),
+                    )
+                if ball["color"] == "red" and ball["confirmation"] == "pending":
+                    self.shapes.append(
+                        Image(
+                            "client/game/images/red_ball_pending.png",
+                            self.positions[index][0],
+                            self.positions[index][1],
+                        )
+                    )
 
 
 class StatusIndicator(UIElement):

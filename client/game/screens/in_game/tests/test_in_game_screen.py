@@ -3,11 +3,9 @@ from client.engine.events import UserTypedEvent
 from client.engine.chat.events import (
     ChatMessageInGameEvent,
 )
-from client.engine.chat.events import (
-    ChatMessageInGameEvent,
-)
 from client.engine.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
+    SymbolPlacedConfirmedInGameEvent,
 )
 from client.engine.events import (
     GameCreatedInGameEvent,
@@ -136,14 +134,25 @@ class TestInGameScreen(TestCase):
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_message.png",
         )
 
+        placement_event = PlayerPlacedSymbolInGameEvent(
+            player_id="player_1_id", position=0
+        )
         # Player 1 places symbol
+        self.in_game.update(placement_event)
+
+        VisualRegression.assert_matches_snapshot(
+            self.in_game,
+            "./client/game/screens/in_game/tests/screenshots/in_game_movement_1_pending.png",
+        )
+
+        # Player 1 placement is confirmed
         self.in_game.update(
-            PlayerPlacedSymbolInGameEvent(player_id="player_1_id", position=0),
+            SymbolPlacedConfirmedInGameEvent(placement_event.id),
         )
 
         VisualRegression.assert_matches_snapshot(
             self.in_game,
-            "./client/game/screens/in_game/tests/screenshots/in_game_movement_1.png",
+            "./client/game/screens/in_game/tests/screenshots/in_game_movement_1_confirmed.png",
         )
 
         # Player 2 places symbol

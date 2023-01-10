@@ -235,6 +235,12 @@ class InGame(Screen):
         message = self._get_chat_message_by_event_id(event.chat_message_event_id)
         message["confirmation"] = "OK"
 
+    def _get_symbol_placement_by_event_id(self, event_id):
+        for place in self.data["board"]:
+            if place["event_id"] == event_id:
+                return place
+        return None  # This should not happen
+
     def on_symbol_placement_confirmed(self, event):
-        # TODO: WIP
-        pass
+        message = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)
+        message["confirmation"] = "OK"
