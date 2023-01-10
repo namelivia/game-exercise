@@ -17,7 +17,7 @@ class Channel:
                 response = pickle.loads(sock.recv(1024))
                 return response
         except ConnectionRefusedError:
-            logger.erro("Could not connect to the server")
+            logger.error("Could not connect to the server")
             return None
         except EOFError:
             logger.error("EOF pickle error, the message could not be sent")
