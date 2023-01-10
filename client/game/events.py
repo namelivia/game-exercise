@@ -13,21 +13,8 @@ class ScreenTransitionEvent(Event):
         self.dest_screen = dest_screen
 
 
-class PlaceASymbolRequestEvent(Event):
-    def __init__(self, position):
-        super().__init__()
-        self.position = position
-
-
 class ClearInternalGameInformationEvent:
     pass
-
-
-class PlaceASymbolNetworkRequestEvent(Event):
-    def __init__(self, game_id, position):
-        super().__init__()
-        self.game_id = game_id
-        self.position = position
 
 
 class PlaySoundEvent(Event):

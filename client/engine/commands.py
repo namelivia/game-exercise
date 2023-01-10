@@ -11,7 +11,6 @@ from .events import (
     PlayerWinsInGameEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
-    PlayerPlacedSymbolInGameEvent,
     UpdateProfilesInGameEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
@@ -171,21 +170,6 @@ class PlayerWinsInGameCommand(Command):
         self.events = [
             PlayerWinsInGameEvent(
                 player_id
-            )  # Event to be picked up by the screen event handler
-            # I should pick this event on the game but
-            # Still don't do anything with this event
-        ]
-
-
-# This one seems specific
-class PlayerPlacedSymbolInGameCommand(Command):
-    def __init__(self, profile, queue, player_id, position):
-        super().__init__(
-            profile, queue, f"Player {player_id} placed a symbol on position {position}"
-        )
-        self.events = [
-            PlayerPlacedSymbolInGameEvent(
-                player_id, position
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
             # Still don't do anything with this event

@@ -64,14 +64,6 @@ class PlayerWinsInGameEvent(InGameEvent):
         self.player_id = player_id
 
 
-# This one seems specific
-class PlayerPlacedSymbolInGameEvent(InGameEvent):
-    def __init__(self, player_id, position):
-        super().__init__()
-        self.player_id = player_id
-        self.position = position
-
-
 # This one is for polling
 class RefreshGameStatusEvent(Event):
     def __init__(self, game_id, pointer):

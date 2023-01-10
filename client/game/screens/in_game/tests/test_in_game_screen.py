@@ -3,11 +3,16 @@ from client.engine.events import UserTypedEvent
 from client.engine.chat.events import (
     ChatMessageInGameEvent,
 )
+from client.engine.chat.events import (
+    ChatMessageInGameEvent,
+)
+from client.engine.pieces.events import (
+    PlayerPlacedSymbolInGameEvent,
+)
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
-    PlayerPlacedSymbolInGameEvent,
 )
 from client.game.screens.in_game.in_game import InGame
 from client.engine.visual_regression.visual_regression import VisualRegression
@@ -31,7 +36,7 @@ class TestInGameScreen(TestCase):
         screen._advance_event_pointer()
         m_back_to_lobby.assert_called_once()
 
-    @mock.patch("client.game.commands.RequestPlaceASymbol")
+    @mock.patch("client.game.screens.in_game.in_game.RequestPlaceASymbol")
     def test_user_places_a_symbol_on_the_board(self, m_place_a_symbol):
         # User presses the number 5 to request placing a symbol
         screen = InGame(

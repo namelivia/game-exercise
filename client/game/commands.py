@@ -1,8 +1,6 @@
 from client.engine.primitives.command import Command
 from .events import (
     ScreenTransitionEvent,
-    PlaceASymbolRequestEvent,
-    PlaceASymbolNetworkRequestEvent,
     ClearInternalGameInformationEvent,
     PlaySoundEvent,
     PlayMusicEvent,
@@ -13,16 +11,6 @@ Commands are called externally, and are defined by 1 or many events.
 When the commands are executed these events are placed on the queue to be
 processed.
 """
-
-
-# These put events on the queue requesting server interactions.
-# ===== REQUESTS =====
-class RequestPlaceASymbol(Command):
-    def __init__(self, profile, queue, position):
-        super().__init__(
-            profile, queue, f"Request placing a symbol on position {position}"
-        )
-        self.events = [PlaceASymbolRequestEvent(position)]
 
 
 # ===== SCREEN CHANGE REQUESTS =====
@@ -122,12 +110,3 @@ class GoToProfiles(Command):
             PlaySoundEvent("select"),
             ScreenTransitionEvent("profiles"),
         ]
-
-
-# ===== SERVER OUTBOUND COMMUNICATIONS =====
-class PlaceASymbol(Command):
-    def __init__(self, profile, queue, game_id, position):
-        super().__init__(
-            profile, queue, f"Place a symbol on game {game_id} on position {position}"
-        )
-        self.events = [PlaceASymbolNetworkRequestEvent(game_id, position)]

@@ -17,9 +17,8 @@ class TestChat(TestCase):
         self.queue = Queue()
         self.event_handler = mock.Mock()
 
-    @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("uuid.uuid4")
-    def test_sending_a_chat_message(self, m_uuid, m_send_command):
+    def test_sending_a_chat_message(self, m_uuid):
         # The command is invoked whith a new chat message
         m_uuid.return_value = "event_id"
         RequestSendChat(self.profile, self.queue, "This is a test message").execute()

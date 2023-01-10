@@ -28,7 +28,6 @@ from client.engine.commands import (
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
-    PlayerPlacedSymbolInGameCommand,
     RequestGameStatus,
     RequestJoiningAGame,
     RequestGameCreation,
@@ -187,12 +186,6 @@ class TestClient(TestCase):
 
     def test_player_wins(self):
         PlayerWinsInGameCommand(self.profile, self.queue, "some_player_id").execute()
-        # TODO: Finish this test
-
-    def test_player_placed_symbol(self):
-        PlayerPlacedSymbolInGameCommand(
-            self.profile, self.queue, "some_player_id", 2
-        ).execute()
         # TODO: Finish this test
 
     @mock.patch("client.engine.event_handler.Channel.send_command")

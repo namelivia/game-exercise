@@ -8,7 +8,7 @@ from common.messages import SendChatMessage
 import mock
 
 
-class TestClient(TestCase):
+class TestChat(TestCase):
     def setUp(self):
         self.profile = mock.Mock()
         self.profile.game_id = "game_id"

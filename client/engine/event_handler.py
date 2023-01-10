@@ -48,6 +48,7 @@ from common.messages import (
 from client.engine.network.channel import Channel
 from client.engine.persistence.persistence import Persistence
 from .chat.event_handler import handlers_map as chat_event_handlers
+from .pieces.event_handler import handlers_map as pieces_event_handlers
 from .game_data import GameData
 
 """
@@ -288,7 +289,7 @@ common_handlers = {
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map = {**common_handlers, **chat_event_handlers}
+handlers_map = {**common_handlers, **chat_event_handlers, **pieces_event_handlers}
 
 
 class EventHandler:

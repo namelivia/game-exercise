@@ -1,17 +1,10 @@
 from client.engine.primitives.event_handler import EventHandler
-from common.messages import (
-    GameEventsMessage,
-    ErrorMessage,
-    PlaceASymbolMessage,
-)
 from client.engine.events import InitiateGameEvent
 from .events import (
     ScreenTransitionEvent,
-    PlaceASymbolRequestEvent,
     PlaySoundEvent,
     PlayMusicEvent,
     ClearInternalGameInformationEvent,
-    PlaceASymbolNetworkRequestEvent,
 )
 from client.game.music import MainThemeMusic
 from .screens.intro.intro import Intro
@@ -25,22 +18,17 @@ from .screens.credits.credits import Credits
 from .screens.enter_name.enter_name import EnterName
 from .screens.profiles.profiles import Profiles
 from client.engine.commands import (
-    UpdateGame,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
-    PlayerPlacedSymbolInGameCommand,
 )
 from .commands import (
-    PlaceASymbol,
-    BackToLobby,
     PlaySound,
 )
 from common.events import (
     GameCreated as GameCreatedInGameEvent,  # TODO: akward
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
-    PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
 )
 from .sounds import (
     BackSound,
@@ -50,8 +38,6 @@ from .sounds import (
     EraseSound,
     UserJoinedSound,
 )
-
-from client.engine.network.channel import Channel
 
 """
 Currently event handlers are the one that do the processing.
@@ -105,13 +91,6 @@ class PlayerWinsInGameEventHandler(EventHandler):
         ).execute()
 
 
-class PlayerPlacedSymbolInGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        PlayerPlacedSymbolInGameCommand(
-            client_state.profile, client_state.queue, event.player_id, event.position
-        ).execute()
-
-
 #################################################################
 
 
@@ -159,52 +138,16 @@ class ClearInternalGameInformationEventHandler(EventHandler):
         client_state.profile.set_game_event_pointer(None)
 
 
-class PlaceASymbolRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        PlaceASymbol(
-            client_state.profile,
-            client_state.queue,
-            client_state.profile.game_id,
-            event.position,
-        ).execute()
-
-
-# TODO: Here I will return somethin different
-class PlaceASymbolNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        request_data = self._encode(
-            client_state.profile.game_id, client_state.profile.id, event.position
-        )
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameEventsMessage):
-                UpdateGame(
-                    client_state.profile, client_state.queue, response.events
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                print(response.__dict__)
-        else:
-            print("Server error")
-            # BackToLobby(client_state.profile, client_state.queue).execute()
-
-    def _encode(self, game_id, profile_id, position):
-        return PlaceASymbolMessage(game_id, profile_id, position)
-
-
 handlers_map = {
     ScreenTransitionEvent: ScreenTransitionEventHandler,
-    PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
     PlayMusicEvent: PlayMusicEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
-    PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
     InitiateGameEvent: InitiateGameEventHandler,
     # In game events, these events define the status of the game
     GameCreatedInGameEvent: GameCreatedInGameEventHandler,
     PlayerJoinedInGameEvent: PlayerJoinedInGameEventHandler,
     PlayerWinsInGameEvent: PlayerWinsInGameEventHandler,
-    PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
 }
 
 

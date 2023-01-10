@@ -19,13 +19,14 @@ from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
-    PlayerPlacedSymbolInGameEvent,
 )
 from client.engine.chat.events import (
     ChatMessageInGameEvent,
     ChatMessageErroredEvent,
     ChatMessageConfirmedInGameEvent,
 )
+from client.engine.pieces.events import PlayerPlacedSymbolInGameEvent
+from client.game.pieces.commands import RequestPlaceASymbol
 
 
 class InGame(Screen):
@@ -95,7 +96,6 @@ class InGame(Screen):
         # Avoid circular import
         from client.game.commands import (
             BackToLobby,
-            RequestPlaceASymbol,
         )
         from client.game.chat.commands import (
             RequestSendChat,
