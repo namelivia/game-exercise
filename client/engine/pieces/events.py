@@ -20,3 +20,9 @@ class PlaceASymbolNetworkRequestEvent(Event):
         self.game_id = game_id
         self.event_id = event_id
         self.position = position
+
+
+class SymbolPlacedConfirmedInGameEvent(InGameEvent):
+    def __init__(self, place_symbol_event_id):
+        super().__init__()
+        self.place_symbol_event_id = place_symbol_event_id

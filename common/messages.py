@@ -48,6 +48,11 @@ class ChatMessageConfirmation:
         self.event_id = event_id
 
 
+class SymbolPlacedConfirmation:
+    def __init__(self, event_id):
+        self.event_id = event_id
+
+
 class ChatMessageError:
     def __init__(self, event_id):
         self.event_id = event_id

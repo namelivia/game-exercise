@@ -1,11 +1,21 @@
 from client.engine.primitives.command import Command
-from .events import PlayerPlacedSymbolInGameEvent, PlaceASymbolNetworkRequestEvent
+from .events import (
+    PlayerPlacedSymbolInGameEvent,
+    PlaceASymbolNetworkRequestEvent,
+    SymbolPlacedConfirmedInGameEvent,
+)
 
 """
 Commands are called externally, and are defined by 1 or many events.
 When the commands are executed these events are placed on the queue to be
 processed.
 """
+
+
+class SymbolPlacedConfirmedCommand(Command):
+    def __init__(self, profile, queue, event_id):
+        super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
+        self.events = [SymbolPlacedConfirmedInGameEvent(event_id)]
 
 
 class PlayerPlacedSymbolInGameCommand(Command):

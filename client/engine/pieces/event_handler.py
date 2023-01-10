@@ -1,16 +1,19 @@
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
-    GameEventsMessage,
+    SymbolPlacedConfirmation,
     ErrorMessage,
     PlaceASymbolMessage,
 )
-from client.engine.commands import UpdateGame
 from client.game.pieces.events import PlaceASymbolRequestEvent
 from .events import (
     PlaceASymbolNetworkRequestEvent,
     PlayerPlacedSymbolInGameEvent,
 )
-from .commands import PlayerPlacedSymbolInGameCommand, PlaceASymbol
+from .commands import (
+    PlayerPlacedSymbolInGameCommand,
+    PlaceASymbol,
+    SymbolPlacedConfirmedCommand,
+)
 
 from client.engine.network.channel import Channel
 
@@ -48,13 +51,15 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
 
         response = Channel.send_command(request_data)
         if response is not None:
-            if isinstance(response, GameEventsMessage):
-                UpdateGame(
-                    client_state.profile, client_state.queue, response.events
+            if isinstance(response, SymbolPlacedConfirmation):
+                SymbolPlacedConfirmedCommand(
+                    client_state.profile, client_state.queue, response.event_id
                 ).execute()
             if isinstance(response, ErrorMessage):
+                # TODO: Deal with the error properly
                 print(response.__dict__)
         else:
+            # TODO: Deal with the error properly
             print("Server error")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 

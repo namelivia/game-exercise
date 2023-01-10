@@ -69,8 +69,10 @@ class SendChatNetworkRequestEventHandler(EventHandler):
                     client_state.profile, client_state.queue, response.event_id
                 ).execute()
             if isinstance(response, ErrorMessage):
+                # TODO: Deal with the error properly
                 print(response.__dict__)
         else:
+            # TODO: Deal with the error properly
             print("Server error")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
@@ -81,7 +83,6 @@ class SendChatNetworkRequestEventHandler(EventHandler):
 handlers_map = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
-    # In game events, these events define the status of the game
     ChatMessageConfirmation: ChatMessageConfirmationHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }
