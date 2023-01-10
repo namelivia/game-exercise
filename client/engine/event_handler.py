@@ -47,6 +47,7 @@ from common.messages import (
 )
 from client.engine.network.channel import Channel
 from client.engine.persistence.persistence import Persistence
+from .chat.event_handler import handlers_map as chat_event_handlers
 from .game_data import GameData
 
 """
@@ -267,7 +268,7 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
         return GameListRequestMessage()
 
 
-handlers_map = {
+common_handlers = {
     QuitGameEvent: QuitGameEventHandler,
     UpdateGameEvent: UpdateGameEventHandler,
     RefreshGameStatusEvent: RefreshGameStatusEventHandler,
@@ -286,6 +287,8 @@ handlers_map = {
     JoinExistingGameEvent: JoinExistingGameEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
+
+handlers_map = {**common_handlers, **chat_event_handlers}
 
 
 class EventHandler:

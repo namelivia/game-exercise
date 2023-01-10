@@ -4,11 +4,11 @@ from common.messages import (
     SendChatMessage,
     ChatMessageConfirmation,
 )
+from client.game.chat.events import SendChatRequestEvent
 from .events import (
-    SendChatRequestEvent,
     SendChatNetworkRequestEvent,
 )
-from client.engine.commands import (
+from client.engine.chat.commands import (
     ChatMessageConfirmedCommand,
     ChatMessageInGameCommand,
 )
@@ -85,11 +85,3 @@ handlers_map = {
     ChatMessageConfirmation: ChatMessageConfirmationHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }
-
-
-class EventHandler:
-    def handle(self, event, client_state):
-        try:
-            handlers_map[type(event)]().handle(event, client_state)
-        except KeyError:
-            pass  # Unhandled event

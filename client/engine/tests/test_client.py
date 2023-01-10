@@ -386,18 +386,6 @@ class TestClient(TestCase):
         m_send_command.assert_called_once()
         assert isinstance(m_send_command.call_args.args[0], PingRequestMessage)
 
-    def test_sending_an_ingame_chat_message(self):
-        # When there are new events to process these will be pushed to the queue
-        profile = Profile(
-            key="key",
-            id="id",
-            game_id="game_id",
-            game_event_pointer=0,
-            sound_on=False,
-        )
-        assert profile.name is None
-        # TODO: Finish writing this test
-
     def test_updating_the_game_list(self):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(

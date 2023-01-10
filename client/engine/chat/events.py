@@ -1,4 +1,4 @@
-from client.engine.primitives.event import InGameEvent
+from client.engine.primitives.event import InGameEvent, Event
 
 """
 Events contain an operation and the data needed in order to perform
@@ -25,4 +25,12 @@ class ChatMessageInGameEvent(InGameEvent):
     def __init__(self, player_id, message):
         super().__init__()
         self.player_id = player_id
+        self.message = message
+
+
+class SendChatNetworkRequestEvent(Event):
+    def __init__(self, game_id, event_id, message):
+        super().__init__()
+        self.game_id = game_id
+        self.event_id = event_id
         self.message = message

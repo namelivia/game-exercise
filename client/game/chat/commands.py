@@ -1,9 +1,6 @@
 from client.engine.primitives.command import Command
-from client.engine.events import ChatMessageInGameEvent
-from .events import (
-    SendChatRequestEvent,
-    SendChatNetworkRequestEvent,
-)
+from client.engine.chat.events import ChatMessageInGameEvent
+from .events import SendChatRequestEvent
 
 """
 Commands are called externally, and are defined by 1 or many events.
@@ -12,23 +9,12 @@ processed.
 """
 
 
-# These put events on the queue requesting server interactions.
-# ===== REQUESTS =====
 class RequestSendChat(Command):
     def __init__(self, profile, queue, message):
         super().__init__(profile, queue, f"Request sending the chat message:{message}")
         # We need to attach the in_game event id to the network request
         in_game_event = ChatMessageInGameEvent(profile.id, message)
         self.events = [
-            SendChatRequestEvent(in_game_event.id, message),
             in_game_event,
+            SendChatRequestEvent(in_game_event.id, message),
         ]
-
-
-# ===== SERVER OUTBOUND COMMUNICATIONS =====
-class SendChat(Command):
-    def __init__(self, profile, queue, game_id, event_id, message):
-        super().__init__(
-            profile, queue, f"Send chat message on game {game_id}: {message}"
-        )
-        self.events = [SendChatNetworkRequestEvent(game_id, event_id, message)]

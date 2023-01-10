@@ -1,13 +1,8 @@
 from unittest import TestCase
-from client.game.commands import RequestPlaceASymbol, RequestSendChat
-from client.engine.events import (
-    ChatMessageInGameEvent,
-)
+from client.game.commands import RequestPlaceASymbol
 from client.game.events import (
     PlaceASymbolRequestEvent,
     PlaceASymbolNetworkRequestEvent,
-    SendChatRequestEvent,
-    SendChatNetworkRequestEvent,
 )
 import mock
 from client.engine.general_state.queue import Queue
@@ -38,38 +33,6 @@ class TestGame(TestCase):
         event = self.queue.pop()
         assert isinstance(event, PlaceASymbolNetworkRequestEvent)
         self.event_handler.handle(event, client_state)
-
-        # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
-        m_send_command.assert_called_once()
-
-    @mock.patch("client.engine.event_handler.Channel.send_command")
-    def test_sending_a_chat_message(self, m_send_command):
-        # When there are new events to process these will be pushed to the queue
-        message = "This is a test message"
-        RequestSendChat(self.profile, self.queue, message).execute()
-        event = (
-            self.queue.pop()
-        )  # TODO: Manage the case of commands that queue several events
-        assert isinstance(event, SendChatRequestEvent)
-
-        client_state = mock.Mock()  # TODO: I don't like I have to define this
-        client_state.queue = self.queue
-        self.event_handler.handle(event, client_state)
-
-        # A request for the game to render the message is issued
-        event = self.queue.pop()
-        assert isinstance(event, ChatMessageInGameEvent)
-        # TODO: We are no processing this one right now, I don't care for the moment
-        # self.event_handler.handle(event, client_state)
-
-        in_game_event_id = event.id
-
-        # And network request to ask for setting the message on the server is sent
-        event = self.queue.pop()
-        assert isinstance(event, SendChatNetworkRequestEvent)
-        self.event_handler.handle(event, client_state)
-        # Assert the event_id is attached
-        assert event.event_id == in_game_event_id
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()

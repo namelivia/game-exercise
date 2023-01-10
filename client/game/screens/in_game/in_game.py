@@ -20,6 +20,8 @@ from client.engine.events import (
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
     PlayerPlacedSymbolInGameEvent,
+)
+from client.engine.chat.events import (
     ChatMessageInGameEvent,
     ChatMessageErroredEvent,
     ChatMessageConfirmedInGameEvent,
@@ -94,6 +96,8 @@ class InGame(Screen):
         from client.game.commands import (
             BackToLobby,
             RequestPlaceASymbol,
+        )
+        from client.game.chat.commands import (
             RequestSendChat,
         )
 

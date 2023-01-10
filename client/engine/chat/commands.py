@@ -3,6 +3,7 @@ from .events import (
     ChatMessageConfirmedInGameEvent,
     ChatMessageErroredEvent,
     ChatMessageInGameEvent,
+    SendChatNetworkRequestEvent,
 )
 
 """
@@ -12,7 +13,6 @@ processed.
 """
 
 
-# This one seems specific
 class ChatMessageConfirmedCommand(Command):
     def __init__(self, profile, queue, event_id):
         super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
@@ -45,3 +45,12 @@ class ChatMessageErroredCommand(Command):
             )  # Event to be picked up by the screen event handler
             # I should pick this event on the game but
         ]
+
+
+class SendChat(Command):
+    # Send a chat message request to the server
+    def __init__(self, profile, queue, game_id, event_id, message):
+        super().__init__(
+            profile, queue, f"Send chat message on game {game_id}: {message}"
+        )
+        self.events = [SendChatNetworkRequestEvent(game_id, event_id, message)]
