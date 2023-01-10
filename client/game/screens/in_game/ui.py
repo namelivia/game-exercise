@@ -253,7 +253,7 @@ class Board(UIElement):
 
         for index, ball in enumerate(data["board"]):
             if ball is not None:
-                if ball == "blue":
+                if ball["color"] == "blue":
                     self.shapes.append(
                         Image(
                             "client/game/images/blue_ball.png",

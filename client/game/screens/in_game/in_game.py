@@ -25,7 +25,10 @@ from client.engine.chat.events import (
     ChatMessageErroredEvent,
     ChatMessageConfirmedInGameEvent,
 )
-from client.engine.pieces.events import PlayerPlacedSymbolInGameEvent
+from client.engine.pieces.events import (
+    PlayerPlacedSymbolInGameEvent,
+    SymbolPlacedConfirmedInGameEvent,
+)
 from client.game.pieces.commands import RequestPlaceASymbol
 
 
@@ -81,6 +84,7 @@ class InGame(Screen):
             ChatMessageInGameEvent: self.on_chat_message,
             ChatMessageErroredEvent: self.on_chat_message_errored,
             ChatMessageConfirmedInGameEvent: self.on_chat_message_confirmed,
+            SymbolPlacedConfirmedInGameEvent: self.on_symbol_placement_confirmed,
         }
 
     def _process_event(self, event):
@@ -181,10 +185,18 @@ class InGame(Screen):
 
     def on_player_placed_symbol(self, event):
         if event.player_id == self.data["players"][0]:
-            self.data["board"][event.position] = "blue"
+            self.data["board"][event.position] = {
+                "event_id": event.id,
+                "color": "blue",
+                "confirmation": "pending",
+            }
             self.data["status"] = "It is player 2 turn"
         else:
-            self.data["board"][event.position] = "red"
+            self.data["board"][event.position] = {
+                "event_id": event.id,
+                "color": "red",
+                "confirmation": "pending",
+            }
             self.data["status"] = "It is player 1 turn"
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
@@ -222,3 +234,7 @@ class InGame(Screen):
     def on_chat_message_confirmed(self, event):
         message = self._get_chat_message_by_event_id(event.chat_message_event_id)
         message["confirmation"] = "OK"
+
+    def on_symbol_placement_confirmed(self, event):
+        # TODO: WIP
+        pass
