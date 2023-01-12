@@ -3,6 +3,8 @@ from .events import (
     SetProfileEvent,
     NewProfileEvent,
     ProfileSetInGameEvent,
+    GetProfilesEvent,
+    UpdateProfilesInGameEvent,
 )
 
 
@@ -28,3 +30,15 @@ class ProfileIsSet(Command):
         self.events = [
             ProfileSetInGameEvent(key),
         ]
+
+
+class GetProfiles(Command):
+    def __init__(self, profile, queue):
+        super().__init__(profile, queue, "Get Profiles List")
+        self.events = [GetProfilesEvent()]
+
+
+class UpdateProfiles(Command):
+    def __init__(self, profile, queue, profiles):
+        super().__init__(profile, queue, "Profile list retrieved")
+        self.events = [UpdateProfilesInGameEvent(profiles)]

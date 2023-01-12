@@ -2,10 +2,12 @@ from client.engine.primitives.screen import Screen
 from .ui import ProfilesTitle, ProfileList, Background
 from client.engine.events import (
     UserTypedEvent,
+)
+from client.engine.profile.events import (
+    ProfileSetInGameEvent,
     UpdateProfilesInGameEvent,
 )
-from client.engine.profile.events import ProfileSetInGameEvent
-from client.engine.profile.commands import NewProfile, SetProfile
+from client.engine.profile.commands import NewProfile, SetProfile, GetProfiles
 
 
 class Profiles(Screen):
@@ -25,9 +27,6 @@ class Profiles(Screen):
             UpdateProfilesInGameEvent: self.on_profiles_updated,
             ProfileSetInGameEvent: self.on_profile_set,
         }
-
-        from client.engine.commands import GetProfiles
-
         GetProfiles(self.client_state.profile, self.client_state.queue).execute()
 
     def on_user_typed(self, event):

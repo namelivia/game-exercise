@@ -134,19 +134,3 @@ class SetPlayerNameEvent(Event):
     def __init__(self, name):
         super().__init__()
         self.name = name
-
-
-class GetProfilesEvent(Event):
-    pass
-
-
-class ProfilesUpdatedEvent(Event):
-    def __init__(self, profiles):
-        super().__init__()
-        self.profiles = profiles
-
-
-class UpdateProfilesInGameEvent(InGameEvent):
-    def __init__(self, profiles):
-        super().__init__()
-        self.profiles = profiles

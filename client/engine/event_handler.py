@@ -15,7 +15,6 @@ from .events import (
     TurnSoundOnEvent,
     TurnSoundOffEvent,
     SetPlayerNameEvent,
-    GetProfilesEvent,
 )
 from .commands import (
     ProcessServerEvents,
@@ -28,7 +27,6 @@ from .commands import (
     ErrorGettingGameList,
     ErrorCreatingGame,
     ErrorJoiningGame,
-    UpdateProfiles,
 )
 
 from common.messages import (
@@ -44,7 +42,6 @@ from common.messages import (
     GameListResponseMessage,
 )
 from client.engine.network.channel import Channel
-from client.engine.persistence.persistence import Persistence
 from .chat.event_handler import handlers_map as chat_event_handlers
 from .pieces.event_handler import handlers_map as pieces_event_handlers
 from .profile.event_handler import handlers_map as profile_event_handlers
@@ -220,16 +217,6 @@ class PingNetworkRequestEventHandler(EventHandler):
         return PingRequestMessage()
 
 
-class GetProfilesEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        # TODO retrieve profiles from disk
-        profiles = self._build_profiles_index(Persistence.list())
-        UpdateProfiles(client_state.profile, client_state.queue, profiles).execute()
-
-    def _build_profiles_index(self, profiles):
-        return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
-
-
 class GetGameListNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode()
@@ -266,7 +253,6 @@ common_handlers = {
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
-    GetProfilesEvent: GetProfilesEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     TurnSoundOnEvent: TurnSoundOnEventHandler,

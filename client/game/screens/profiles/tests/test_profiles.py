@@ -1,7 +1,8 @@
 from unittest import TestCase
 from client.game.screens.profiles.profiles import Profiles
 from client.engine.visual_regression.visual_regression import VisualRegression
-from client.engine.events import UpdateProfilesInGameEvent, UserTypedEvent
+from client.engine.events import UserTypedEvent
+from client.engine.profile.events import UpdateProfilesInGameEvent
 import mock
 
 
