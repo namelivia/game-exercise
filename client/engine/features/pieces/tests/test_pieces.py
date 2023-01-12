@@ -1,8 +1,8 @@
 from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.event_handler import EventHandler
-from client.engine.pieces.commands import PlaceASymbol
-from client.engine.pieces.events import PlaceASymbolNetworkRequestEvent
+from client.engine.features.pieces.commands import PlaceASymbol
+from client.engine.features.pieces.events import PlaceASymbolNetworkRequestEvent
 from common.messages import (
     PlaceASymbolMessage,
     SymbolPlacedConfirmation,
@@ -20,7 +20,9 @@ class TestPieces(TestCase):
         self.event_handler = EventHandler()
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    @mock.patch("client.engine.pieces.event_handler.SymbolPlacedConfirmedCommand")
+    @mock.patch(
+        "client.engine.features.pieces.event_handler.SymbolPlacedConfirmedCommand"
+    )
     def test_requesting_placing_a_symbol_success(
         self, m_piece_placed_confirmed, m_send_command
     ):

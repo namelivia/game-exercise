@@ -1,5 +1,5 @@
 from client.engine.primitives.command import Command
-from client.engine.pieces.events import (
+from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
 )
 from .events import PlaceASymbolRequestEvent

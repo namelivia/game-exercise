@@ -1,5 +1,5 @@
 from client.engine.primitives.command import Command
-from client.engine.chat.events import ChatMessageInGameEvent
+from client.engine.features.chat.events import ChatMessageInGameEvent
 from .events import SendChatRequestEvent
 
 """

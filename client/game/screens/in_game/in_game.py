@@ -20,12 +20,12 @@ from client.engine.events import (
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
 )
-from client.engine.chat.events import (
+from client.engine.features.chat.events import (
     ChatMessageInGameEvent,
     ChatMessageErroredEvent,
     ChatMessageConfirmedInGameEvent,
 )
-from client.engine.pieces.events import (
+from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
 )

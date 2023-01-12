@@ -1,6 +1,6 @@
 from unittest import TestCase
 from client.game.chat.commands import RequestSendChat
-from client.engine.chat.events import (
+from client.engine.features.chat.events import (
     ChatMessageInGameEvent,
 )
 from client.game.chat.events import (

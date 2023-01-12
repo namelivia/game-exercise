@@ -1,8 +1,8 @@
 from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.event_handler import EventHandler
-from client.engine.sound.commands import TurnSoundOn, TurnSoundOff
-from client.engine.sound.events import TurnSoundOnEvent, TurnSoundOffEvent
+from client.engine.features.sound.commands import TurnSoundOn, TurnSoundOff
+from client.engine.features.sound.events import TurnSoundOnEvent, TurnSoundOffEvent
 import mock
 
 

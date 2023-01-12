@@ -1,14 +1,14 @@
 from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.event_handler import EventHandler
-from client.engine.profile.commands import (
+from client.engine.features.profile.commands import (
     SetProfile,
     NewProfile,
     ProfileIsSet,
     GetProfiles,
     UpdateProfiles,
 )
-from client.engine.profile.events import (
+from client.engine.features.profile.events import (
     SetProfileEvent,
     NewProfileEvent,
     ProfileSetInGameEvent,
@@ -27,7 +27,7 @@ class TestProfile(TestCase):
         self.queue = Queue()
         self.event_handler = EventHandler()
 
-    @mock.patch("client.engine.profile.event_handler.ProfileIsSet")
+    @mock.patch("client.engine.features.profile.event_handler.ProfileIsSet")
     def test_setting_a_profile(self, m_profile_is_set_command):
         # The command is invoked whith an existing profile key
         SetProfile(self.profile, self.queue, "profile_1").execute()
@@ -51,7 +51,7 @@ class TestProfile(TestCase):
             self.profile, self.queue, "profile_1"
         )
 
-    @mock.patch("client.engine.profile.event_handler.SetProfile")
+    @mock.patch("client.engine.features.profile.event_handler.SetProfile")
     def test_creating_a_profile(self, m_set_profile):
         # The command is invoked
         NewProfile(self.profile, self.queue).execute()
@@ -90,8 +90,8 @@ class TestProfile(TestCase):
         assert isinstance(event, ProfileSetInGameEvent)
         assert event.key == "profile_1"
 
-    @mock.patch("client.engine.profile.event_handler.Persistence")
-    @mock.patch("client.engine.profile.event_handler.UpdateProfiles")
+    @mock.patch("client.engine.features.profile.event_handler.Persistence")
+    @mock.patch("client.engine.features.profile.event_handler.UpdateProfiles")
     def test_getting_all_profiles(self, m_update_command, m_persistence):
         # Command is invoked
         GetProfiles(self.profile, self.queue).execute()

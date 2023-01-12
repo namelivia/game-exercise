@@ -1,6 +1,6 @@
 from unittest import TestCase
 from client.game.pieces.commands import RequestPlaceASymbol
-from client.engine.pieces.events import (
+from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
 )
 from client.game.pieces.events import (

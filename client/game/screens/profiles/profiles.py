@@ -3,11 +3,11 @@ from .ui import ProfilesTitle, ProfileList, Background
 from client.engine.events import (
     UserTypedEvent,
 )
-from client.engine.profile.events import (
+from client.engine.features.profile.events import (
     ProfileSetInGameEvent,
     UpdateProfilesInGameEvent,
 )
-from client.engine.profile.commands import NewProfile, SetProfile, GetProfiles
+from client.engine.features.profile.commands import NewProfile, SetProfile, GetProfiles
 
 
 class Profiles(Screen):

@@ -40,10 +40,18 @@ from common.messages import (
     GameListResponseMessage,
 )
 from client.engine.network.channel import Channel
-from .chat.event_handler import handlers_map as chat_event_handlers
-from .pieces.event_handler import handlers_map as pieces_event_handlers
-from .profile.event_handler import handlers_map as profile_event_handlers
-from .sound.event_handler import handlers_map as sound_event_handlers
+from client.engine.features.chat.event_handler import (
+    handlers_map as chat_event_handlers,
+)
+from client.engine.features.pieces.event_handler import (
+    handlers_map as pieces_event_handlers,
+)
+from client.engine.features.profile.event_handler import (
+    handlers_map as profile_event_handlers,
+)
+from client.engine.features.sound.event_handler import (
+    handlers_map as sound_event_handlers,
+)
 from .game_data import GameData
 
 logger = logging.getLogger(__name__)

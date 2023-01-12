@@ -1,9 +1,9 @@
 from unittest import TestCase
 from client.engine.events import UserTypedEvent
-from client.engine.chat.events import (
+from client.engine.features.chat.events import (
     ChatMessageInGameEvent,
 )
-from client.engine.pieces.events import (
+from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
 )

@@ -2,8 +2,8 @@ from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.general_state.profile.profile import Profile
 from client.engine.event_handler import EventHandler
-from client.engine.chat.commands import SendChat
-from client.engine.chat.events import SendChatNetworkRequestEvent
+from client.engine.features.chat.commands import SendChat
+from client.engine.features.chat.events import SendChatNetworkRequestEvent
 from common.messages import (
     SendChatMessage,
     ChatMessageConfirmation,
@@ -57,7 +57,7 @@ class TestChat(TestCase):
         # TODO: Finish writing this test
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    @mock.patch("client.engine.chat.event_handler.ChatMessageConfirmedCommand")
+    @mock.patch("client.engine.features.chat.event_handler.ChatMessageConfirmedCommand")
     def test_sending_a_chat_message_success(
         self, m_chat_message_confirmed, m_send_command
     ):

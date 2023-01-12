@@ -9,7 +9,7 @@ from client.game.chat.events import SendChatRequestEvent
 from .events import (
     SendChatNetworkRequestEvent,
 )
-from client.engine.chat.commands import (
+from client.engine.features.chat.commands import (
     ChatMessageConfirmedCommand,
     ChatMessageInGameCommand,
 )
