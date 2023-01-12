@@ -1,11 +1,19 @@
 from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.event_handler import EventHandler
-from client.engine.profile.commands import SetProfile, NewProfile, ProfileIsSet
+from client.engine.profile.commands import (
+    SetProfile,
+    NewProfile,
+    ProfileIsSet,
+    GetProfiles,
+    UpdateProfiles,
+)
 from client.engine.profile.events import (
     SetProfileEvent,
     NewProfileEvent,
     ProfileSetInGameEvent,
+    GetProfilesEvent,
+    UpdateProfilesInGameEvent,
 )
 from client.engine.general_state.profile.profile import Profile
 import mock
@@ -81,3 +89,62 @@ class TestProfile(TestCase):
         event = self.queue.pop()
         assert isinstance(event, ProfileSetInGameEvent)
         assert event.key == "profile_1"
+
+    @mock.patch("client.engine.profile.event_handler.Persistence")
+    @mock.patch("client.engine.profile.event_handler.UpdateProfiles")
+    def test_getting_all_profiles(self, m_update_command, m_persistence):
+        # Command is invoked
+        GetProfiles(self.profile, self.queue).execute()
+
+        event = self.queue.pop()
+        assert isinstance(event, GetProfilesEvent)
+
+        client_state = mock.Mock()
+        client_state.profile = self.profile
+        client_state.queue = self.queue
+
+        m_persistence.list = mock.Mock()
+        # The persistence layer will retrieve the list of all profile namefiles
+        m_persistence.list.return_value = [
+            "profile_1",
+            "profile_2",
+            "profile_3",
+            ".gitkeep",
+        ]
+        self.event_handler.handle(event, client_state)
+
+        # The persistence layer has been queried
+        m_persistence.list.assert_called_once_with()
+
+        # The comand updating the profiles as the profile is invoked
+        m_update_command.assert_called_once_with(
+            self.profile,
+            self.queue,
+            [
+                {"name": "profile_1"},
+                {"name": "profile_2"},
+                {"name": "profile_3"},
+            ],
+        )
+
+    def test_updating_profiles(self):
+        # Command is invoked
+        UpdateProfiles(
+            self.profile,
+            self.queue,
+            [
+                {"name": "profile_1"},
+                {"name": "profile_2"},
+                {"name": "profile_3"},
+            ],
+        ).execute()
+
+        event = self.queue.pop()
+
+        # An event is raised for the screen to pickup
+        assert isinstance(event, UpdateProfilesInGameEvent)
+        assert event.profiles == [
+            {"name": "profile_1"},
+            {"name": "profile_2"},
+            {"name": "profile_3"},
+        ]

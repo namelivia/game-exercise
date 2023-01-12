@@ -34,6 +34,7 @@ class GetProfilesEventHandler(EventHandler):
         UpdateProfiles(client_state.profile, client_state.queue, profiles).execute()
 
     def _build_profiles_index(self, profiles):
+        # TODO: Excluding gitkeep should happen in the persistence layer, not here
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 
 
