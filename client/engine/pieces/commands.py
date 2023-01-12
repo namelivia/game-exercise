@@ -3,38 +3,36 @@ from .events import (
     PlayerPlacedSymbolInGameEvent,
     PlaceASymbolNetworkRequestEvent,
     SymbolPlacedConfirmedInGameEvent,
+    SymbolPlacedErroredEvent,
 )
-
-"""
-Commands are called externally, and are defined by 1 or many events.
-When the commands are executed these events are placed on the queue to be
-processed.
-"""
 
 
 class SymbolPlacedConfirmedCommand(Command):
+    # Let the game know that the symbol has been correctly placed
     def __init__(self, profile, queue, event_id):
         super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
         self.events = [SymbolPlacedConfirmedInGameEvent(event_id)]
 
 
 class PlayerPlacedSymbolInGameCommand(Command):
+    # Let the game know that there is a new symbol placed on the screen
     def __init__(self, profile, queue, player_id, position):
         super().__init__(
             profile, queue, f"Player {player_id} placed a symbol on position {position}"
         )
-        self.events = [
-            PlayerPlacedSymbolInGameEvent(
-                player_id, position
-            )  # Event to be picked up by the screen event handler
-            # I should pick this event on the game but
-            # Still don't do anything with this event
-        ]
+        self.events = [PlayerPlacedSymbolInGameEvent(player_id, position)]
 
 
 class PlaceASymbol(Command):
+    # Send a symbol placement to the server
     def __init__(self, profile, queue, game_id, event_id, position):
         super().__init__(
             profile, queue, f"Place a symbol on game {game_id} on position {position}"
         )
         self.events = [PlaceASymbolNetworkRequestEvent(game_id, event_id, position)]
+
+
+class SymbolPlacedErroredCommand(Command):
+    def __init__(self, profile, queue, player_id, event_id):
+        super().__init__(profile, queue, f"Symbol place event {event_id} errored")
+        self.events = [SymbolPlacedErroredEvent(event_id)]

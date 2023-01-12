@@ -16,8 +16,6 @@ from .events import (
     TurnSoundOffEvent,
     SetPlayerNameEvent,
     GetProfilesEvent,
-    SetProfileEvent,
-    NewProfileEvent,
 )
 from .commands import (
     ProcessServerEvents,
@@ -31,9 +29,8 @@ from .commands import (
     ErrorCreatingGame,
     ErrorJoiningGame,
     UpdateProfiles,
-    ProfileIsSet,
-    SetProfile,
 )
+
 from common.messages import (
     GameInfoMessage,
     GameEventsMessage,
@@ -50,6 +47,7 @@ from client.engine.network.channel import Channel
 from client.engine.persistence.persistence import Persistence
 from .chat.event_handler import handlers_map as chat_event_handlers
 from .pieces.event_handler import handlers_map as pieces_event_handlers
+from .profile.event_handler import handlers_map as profile_event_handlers
 from .game_data import GameData
 
 logger = logging.getLogger(__name__)
@@ -232,18 +230,6 @@ class GetProfilesEventHandler(EventHandler):
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 
 
-class SetProfileEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        client_state.set_profile(event.key)
-        ProfileIsSet(client_state.profile, client_state.queue, event.key).execute()
-
-
-class NewProfileEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        new_profile_key = client_state.new_profile().key
-        SetProfile(client_state.profile, client_state.queue, new_profile_key).execute()
-
-
 class GetGameListNetworkRequestEventHandler(EventHandler):
     def handle(self, event, client_state):
         request_data = self._encode()
@@ -281,8 +267,6 @@ common_handlers = {
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
     GetProfilesEvent: GetProfilesEventHandler,
-    SetProfileEvent: SetProfileEventHandler,
-    NewProfileEvent: NewProfileEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     TurnSoundOnEvent: TurnSoundOnEventHandler,
@@ -291,7 +275,12 @@ common_handlers = {
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map = {**common_handlers, **chat_event_handlers, **pieces_event_handlers}
+handlers_map = {
+    **common_handlers,
+    **chat_event_handlers,
+    **pieces_event_handlers,
+    **profile_event_handlers,
+}
 
 
 class EventHandler:

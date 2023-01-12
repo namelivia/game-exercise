@@ -11,7 +11,7 @@ class TestProfiles(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.profiles = Profiles(self.client_state)
 
-    @mock.patch("client.engine.commands.SetProfile")
+    @mock.patch("client.game.screens.profiles.profiles.SetProfile")
     def test_profiles(self, m_set_profile):
 
         # Empty screen

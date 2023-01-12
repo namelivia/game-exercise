@@ -1,11 +1,5 @@
 from client.engine.primitives.event import InGameEvent, Event
 
-"""
-Events contain an operation and the data needed in order to perform
-the operation. Will be put on a queue and when handler will execute
-that operation.
-"""
-
 
 class PlayerPlacedSymbolInGameEvent(InGameEvent):
     def __init__(self, player_id, position):
@@ -26,3 +20,11 @@ class SymbolPlacedConfirmedInGameEvent(InGameEvent):
     def __init__(self, place_symbol_event_id):
         super().__init__()
         self.place_symbol_event_id = place_symbol_event_id
+
+
+class SymbolPlacedErroredEvent(InGameEvent):
+    # This indicates that a chat message wasn't sucessfully processed
+    # by the server and therefore it needs to be rolled back.
+    def __init__(self, chat_message_event_id):
+        super().__init__()
+        self.chat_message_event_id = chat_message_event_id
