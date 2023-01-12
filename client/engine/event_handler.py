@@ -12,8 +12,6 @@ from .events import (
     JoinAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
     GetGameListNetworkRequestEvent,
-    TurnSoundOnEvent,
-    TurnSoundOffEvent,
     SetPlayerNameEvent,
 )
 from .commands import (
@@ -45,6 +43,7 @@ from client.engine.network.channel import Channel
 from .chat.event_handler import handlers_map as chat_event_handlers
 from .pieces.event_handler import handlers_map as pieces_event_handlers
 from .profile.event_handler import handlers_map as profile_event_handlers
+from .sound.event_handler import handlers_map as sound_event_handlers
 from .game_data import GameData
 
 logger = logging.getLogger(__name__)
@@ -62,16 +61,6 @@ class QuitGameEventHandler(EventHandler):
 
         pygame.quit()
         sys.exit()
-
-
-class TurnSoundOnEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        client_state.profile.set_sound_on()
-
-
-class TurnSoundOffEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        client_state.profile.set_sound_off()
 
 
 # ======= GAME STATE SYNC =======
@@ -255,8 +244,6 @@ common_handlers = {
     GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
-    TurnSoundOnEvent: TurnSoundOnEventHandler,
-    TurnSoundOffEvent: TurnSoundOffEventHandler,
     JoinExistingGameEvent: JoinExistingGameEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
@@ -266,6 +253,7 @@ handlers_map = {
     **chat_event_handlers,
     **pieces_event_handlers,
     **profile_event_handlers,
+    **sound_event_handlers,
 }
 
 

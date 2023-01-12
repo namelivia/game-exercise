@@ -15,8 +15,6 @@ from client.engine.events import (
     JoinAGameNetworkRequestEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
-    TurnSoundOnEvent,
-    TurnSoundOffEvent,
     UpdateGameListEvent,
 )
 from client.engine.commands import (
@@ -31,9 +29,7 @@ from client.engine.commands import (
     RequestGameStatus,
     RequestJoiningAGame,
     RequestGameCreation,
-    TurnSoundOn,
     SetPlayerName,
-    TurnSoundOff,
     UpdateGameList,
 )
 from common.messages import (
@@ -65,38 +61,6 @@ class TestClient(TestCase):
         self.event_handler.handle(event, client_state)
         m_pygame_quit.assert_called_once_with()
         m_exit.assert_called_once_with()
-
-    @mock.patch("client.engine.persistence.persistence.Persistence.save")
-    def test_turning_sound_on(self, m_save):
-        profile = Profile(
-            key="key",
-            id="id",
-            game_id="game_id",
-            game_event_pointer=0,
-            sound_on=False,
-        )
-        TurnSoundOn(self.profile, self.queue).execute()
-        event = self.queue.pop()
-        assert isinstance(event, TurnSoundOnEvent)
-        client_state = mock.Mock()  # TODO: I don't like I have to define this
-        client_state.profile = profile
-        self.event_handler.handle(event, client_state)
-        assert client_state.profile.sound_on is True
-        m_save.assert_called_once_with(profile, "key")
-
-    @mock.patch("client.engine.persistence.persistence.Persistence.save")
-    def test_turning_sound_off(self, m_save):
-        profile = Profile(
-            key="key", id="id", game_id="game_id", game_event_pointer=0, sound_on=True
-        )
-        TurnSoundOff(self.profile, self.queue).execute()
-        event = self.queue.pop()
-        assert isinstance(event, TurnSoundOffEvent)
-        client_state = mock.Mock()  # TODO: I don't like I have to define this
-        client_state.profile = profile
-        self.event_handler.handle(event, client_state)
-        assert client_state.profile.sound_on is False
-        m_save.assert_called_once_with(profile, "key")
 
     def test_user_typing(self):
         UserTyped(self.profile, self.queue, "f").execute()

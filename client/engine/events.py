@@ -18,14 +18,6 @@ class UserTypedEvent(Event):
         self.key = key
 
 
-class TurnSoundOnEvent(Event):
-    pass
-
-
-class TurnSoundOffEvent(Event):
-    pass
-
-
 # ======= GAME STATE SYNC =======
 class UpdateGameEvent(Event):
     def __init__(self, events):
