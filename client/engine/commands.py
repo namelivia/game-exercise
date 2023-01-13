@@ -1,7 +1,6 @@
 from client.engine.primitives.command import Command
 from .events import (
     QuitGameEvent,
-    UserTypedEvent,
     UpdateGameEvent,
     InitiateGameEvent,
     SetInternalGameInformationEvent,
@@ -38,15 +37,6 @@ class QuitGame(Command):
 
     def execute(self):
         self.queue.put(QuitGameEvent())
-
-
-class UserTyped(Command):
-    def __init__(self, profile, queue, key):
-        super().__init__(profile, queue, f"User typed key {key}")
-        self.key = key
-
-    def execute(self):
-        self.queue.put(UserTypedEvent(self.key))
 
 
 # ======= GAME STATE SYNC =======

@@ -13,7 +13,7 @@ from .ui import (
     StatusIndicator,
     WinnerIndicator,
 )
-from client.engine.events import UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.sound.commands import PlaySound
 from client.engine.events import (
     GameCreatedInGameEvent,

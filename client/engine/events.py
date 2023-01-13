@@ -12,12 +12,6 @@ class QuitGameEvent(Event):
     pass
 
 
-class UserTypedEvent(Event):
-    def __init__(self, key):
-        super().__init__()
-        self.key = key
-
-
 # ======= GAME STATE SYNC =======
 class UpdateGameEvent(Event):
     def __init__(self, events):

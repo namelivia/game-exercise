@@ -4,7 +4,7 @@ from .ui import (
     OptionList,
     Background,
 )
-from client.engine.events import UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
 
 
 class Lobby(Screen):

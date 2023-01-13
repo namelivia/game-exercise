@@ -1,7 +1,9 @@
 from client.engine.primitives.screen import Screen
 from .ui import GameListTitle, Games, Background, ErrorPopup, ErrorJoiningPopup
-from client.engine.events import (
+from client.engine.features.user_input.events import (
     UserTypedEvent,
+)
+from client.engine.events import (
     UpdateGameListEvent,
     ErrorGettingGameListEvent,
     ErrorJoiningGameEvent,

@@ -1,4 +1,4 @@
-from client.engine.commands import UserTyped
+from client.engine.features.user_input.commands import UserTyped
 from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
 from client.engine.commands import RequestGameStatus

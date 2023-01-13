@@ -1,6 +1,7 @@
 from client.engine.primitives.screen import Screen
 from .ui import NewGameMessage, Background, ErrorPopup
-from client.engine.events import UserTypedEvent, ErrorCreatingGameEvent
+from client.engine.events import ErrorCreatingGameEvent
+from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.sound.commands import PlaySound
 
 

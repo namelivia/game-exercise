@@ -1,6 +1,6 @@
 from client.engine.primitives.screen import Screen
 from .ui import EnterNameMessage, Background
-from client.engine.events import UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.sound.commands import PlaySound
 
 

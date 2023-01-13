@@ -2,8 +2,10 @@ from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.general_state.profile.profile import Profile
 from client.engine.event_handler import EventHandler
-from client.engine.events import (
+from client.engine.features.user_input.events import (
     UserTypedEvent,
+)
+from client.engine.events import (
     SetPlayerNameEvent,
     QuitGameEvent,
     UpdateGameEvent,
@@ -17,9 +19,11 @@ from client.engine.events import (
     RefreshGameStatusNetworkRequestEvent,
     UpdateGameListEvent,
 )
+from client.engine.features.user_input.commands import (
+    UserTyped,
+)
 from client.engine.commands import (
     QuitGame,
-    UserTyped,
     UpdateGame,
     InitiateGame,
     PingTheServer,

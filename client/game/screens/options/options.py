@@ -1,6 +1,6 @@
 from client.engine.primitives.screen import Screen
 from .ui import Background, OptionsTitle, OptionList
-from client.engine.events import UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
 
 
 class Options(Screen):

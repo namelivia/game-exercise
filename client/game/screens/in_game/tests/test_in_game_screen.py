@@ -1,5 +1,5 @@
 from unittest import TestCase
-from client.engine.events import UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.chat.events import (
     ChatMessageInGameEvent,
 )
