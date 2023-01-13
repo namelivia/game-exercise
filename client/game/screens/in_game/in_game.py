@@ -14,7 +14,7 @@ from .ui import (
     WinnerIndicator,
 )
 from client.engine.events import UserTypedEvent
-from client.game.commands import PlaySound
+from client.engine.features.sound.commands import PlaySound
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,

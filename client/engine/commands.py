@@ -22,6 +22,7 @@ from .events import (
     ErrorCreatingGameEvent,
     ErrorJoiningGameEvent,
 )
+from client.engine.features.sound.events import PlaySoundEvent
 
 """
 Commands are called externally, and are defined by 1 or many events.
@@ -53,6 +54,7 @@ class InitiateGame(Command):
     def __init__(self, profile, queue, game_data):
         super().__init__(profile, queue, f"Locally initializing game {game_data.id}")
         self.events = [
+            PlaySoundEvent("start_game"),
             InitiateGameEvent(
                 game_data
             ),  # Event to be picked up by the game event handler

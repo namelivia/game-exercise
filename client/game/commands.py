@@ -1,9 +1,8 @@
 from client.engine.primitives.command import Command
+from client.engine.features.sound.events import PlaySoundEvent
 from .events import (
     ScreenTransitionEvent,
     ClearInternalGameInformationEvent,
-    PlaySoundEvent,
-    PlayMusicEvent,
 )
 
 """
@@ -30,22 +29,6 @@ class ToLobby(Command):
         self.events = [
             PlaySoundEvent("select"),
             ScreenTransitionEvent("lobby"),
-        ]
-
-
-class PlaySound(Command):
-    def __init__(self, profile, queue, sound_id):
-        super().__init__(profile, queue, f"Playing sound {sound_id}")
-        self.events = [
-            PlaySoundEvent(sound_id),
-        ]
-
-
-class PlayMusic(Command):
-    def __init__(self, profile, queue, music_id):
-        super().__init__(profile, queue, f"Playing music {music_id}")
-        self.events = [
-            PlayMusicEvent(music_id),
         ]
 
 

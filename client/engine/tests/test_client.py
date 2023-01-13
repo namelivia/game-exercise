@@ -39,6 +39,7 @@ from common.messages import (
     PingRequestMessage,
 )
 from client.engine.game_data import GameData
+from client.engine.features.sound.events import PlaySoundEvent
 import mock
 
 
@@ -125,6 +126,11 @@ class TestClient(TestCase):
 
         client_state = mock.Mock()  # TODO: I don't like I have to define this
         client_state.profile = profile
+
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PlaySoundEvent)
 
         event = (
             self.queue.pop()
@@ -229,6 +235,11 @@ class TestClient(TestCase):
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
 
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PlaySoundEvent)
+
         # An event to initalize the game locally is sourced
         event = self.queue.pop()
         assert isinstance(event, InitiateGameEvent)
@@ -280,6 +291,11 @@ class TestClient(TestCase):
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
+
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PlaySoundEvent)
 
         # An event to initalize the game locally is sourced
         event = self.queue.pop()

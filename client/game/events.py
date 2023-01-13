@@ -15,15 +15,3 @@ class ScreenTransitionEvent(Event):
 
 class ClearInternalGameInformationEvent:
     pass
-
-
-class PlaySoundEvent(Event):
-    def __init__(self, sound):
-        super().__init__()
-        self.sound = sound
-
-
-class PlayMusicEvent(Event):
-    def __init__(self, music):
-        super().__init__()
-        self.music = music

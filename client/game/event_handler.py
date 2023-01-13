@@ -2,11 +2,8 @@ from client.engine.primitives.event_handler import EventHandler
 from client.engine.events import InitiateGameEvent
 from .events import (
     ScreenTransitionEvent,
-    PlaySoundEvent,
-    PlayMusicEvent,
     ClearInternalGameInformationEvent,
 )
-from client.game.music import MainThemeMusic
 from .screens.intro.intro import Intro
 from .screens.lobby.lobby import Lobby
 from .screens.new_game.new_game import NewGame
@@ -22,51 +19,16 @@ from client.engine.commands import (
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
 )
-from .commands import (
-    PlaySound,
-)
 from common.events import (
     GameCreated as GameCreatedInGameEvent,  # TODO: akward
     PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
-)
-from .sounds import (
-    BackSound,
-    SelectSound,
-    StartGameSound,
-    TypeSound,
-    EraseSound,
-    UserJoinedSound,
 )
 
 """
 Currently event handlers are the one that do the processing.
 They do the actual procssing and can execute commands.
 """
-
-
-class PlaySoundEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        if client_state.profile.sound_on:
-            if event.sound == "back":
-                BackSound().play()
-            if event.sound == "select":
-                SelectSound().play()
-            if event.sound == "start_game":
-                StartGameSound().play()
-            if event.sound == "type":
-                TypeSound().play()
-            if event.sound == "erase":
-                EraseSound().play()
-            if event.sound == "user_joined":
-                UserJoinedSound().play()
-
-
-class PlayMusicEventHandler(EventHandler):
-    def handle(self, event, client_state):
-        if client_state.profile.sound_on:
-            if event.music == "main_theme":
-                MainThemeMusic().play()
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
@@ -97,7 +59,6 @@ class PlayerWinsInGameEventHandler(EventHandler):
 class InitiateGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
-        PlaySound(client_state.profile, client_state.queue, "start_game").execute()
         client_state.set_current_screen(
             InGame(
                 client_state,
@@ -140,8 +101,6 @@ class ClearInternalGameInformationEventHandler(EventHandler):
 
 handlers_map = {
     ScreenTransitionEvent: ScreenTransitionEventHandler,
-    PlaySoundEvent: PlaySoundEventHandler,
-    PlayMusicEvent: PlayMusicEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
     InitiateGameEvent: InitiateGameEventHandler,
     # In game events, these events define the status of the game

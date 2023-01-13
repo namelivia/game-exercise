@@ -1,5 +1,5 @@
 from client.engine.primitives.screen import Screen
-from client.game.commands import PlaySound, PlayMusic
+from client.engine.features.sound.commands import PlaySound, PlayMusic
 from .ui import Title, Background, Coins
 from client.engine.events import UserTypedEvent
 

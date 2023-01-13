@@ -1,7 +1,7 @@
 from client.engine.primitives.screen import Screen
 from .ui import NewGameMessage, Background, ErrorPopup
 from client.engine.events import UserTypedEvent, ErrorCreatingGameEvent
-from client.game.commands import PlaySound
+from client.engine.features.sound.commands import PlaySound
 
 
 class NewGame(Screen):
