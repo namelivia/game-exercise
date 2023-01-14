@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List
+from typing import Any
 import logging
 from client.engine.primitives.event_handler import EventHandler
 from .events import (
@@ -13,8 +13,6 @@ from .commands import (
 )
 from client.engine.persistence.persistence import Persistence
 
-if TYPE_CHECKING:
-    from client.engine.general_state.profile.profile import Profile
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +35,7 @@ class GetProfilesEventHandler(EventHandler):
         profiles = self._build_profiles_index(Persistence.list())
         UpdateProfiles(client_state.profile, client_state.queue, profiles).execute()
 
-    def _build_profiles_index(self, profiles: List[Profile]):
+    def _build_profiles_index(self, profiles):
         # TODO: Excluding gitkeep should happen in the persistence layer, not here
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 

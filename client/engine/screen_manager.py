@@ -1,21 +1,12 @@
-from typing import TYPE_CHECKING
-
 from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
 from .events_processor import EventsProcessor
 
-if TYPE_CHECKING:
-    from client.engine.input.input import Input
-    from client.engine.general_state.client_state import ClientState
-    from client.engine.graphics.graphics import Graphics
-
 
 class ScreenManager:
-    def __init__(
-        self, client_state: ClientState, input_manager: Input, graphics: Graphics
-    ):
+    def __init__(self, client_state, input_manager, graphics):
         self.client_state = client_state
         self.graphics = graphics
         self.input_manager = input_manager

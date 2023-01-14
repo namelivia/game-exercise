@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import Any
 from client.engine.primitives.event_handler import EventHandler
 from client.engine.sound.sound import Sound
 from client.engine.sound.music import Music
@@ -10,20 +10,17 @@ from .events import (
     PlayMusicEvent,
 )
 
-if TYPE_CHECKING:
-    from client.engine.primitives.event import Event
-
 
 logger = logging.getLogger(__name__)
 
 
 class TurnSoundOnEventHandler(EventHandler):
-    def handle(self, event: Event, client_state: Any) -> None:
+    def handle(self, event, client_state: Any) -> None:
         client_state.profile.set_sound_on()
 
 
 class TurnSoundOffEventHandler(EventHandler):
-    def handle(self, event: Event, client_state: Any) -> None:
+    def handle(self, event, client_state: Any) -> None:
         client_state.profile.set_sound_off()
 
 

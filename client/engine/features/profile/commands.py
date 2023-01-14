@@ -1,4 +1,4 @@
-from typing import Any, TYPE_CHECKING, List
+from typing import Any
 from client.engine.primitives.command import Command
 from .events import (
     SetProfileEvent,
@@ -7,9 +7,6 @@ from .events import (
     GetProfilesEvent,
     UpdateProfilesInGameEvent,
 )
-
-if TYPE_CHECKING:
-    from client.engine.general_state.profile.profile import Profile
 
 
 class SetProfile(Command):
@@ -43,6 +40,6 @@ class GetProfiles(Command):
 
 
 class UpdateProfiles(Command):
-    def __init__(self, profile: Any, queue: Any, profiles: List[Profile]):
+    def __init__(self, profile: Any, queue: Any, profiles):
         super().__init__(profile, queue, "Profile list retrieved")
         self.events = [UpdateProfilesInGameEvent(profiles)]
