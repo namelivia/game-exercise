@@ -3,9 +3,11 @@ name: Typecheck
 on: [push, pull_request]
 
 jobs:
-  lint:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - uses: jpetrucciani/mypy-check@master
+        with:
+          mypy_flags: "--config-file .mypy.ini"
