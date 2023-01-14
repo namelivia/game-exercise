@@ -13,6 +13,7 @@ from .ui import (
     StatusIndicator,
     WinnerIndicator,
 )
+import logging
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.sound.commands import PlaySound
 from client.engine.events import (
@@ -30,6 +31,8 @@ from client.engine.features.pieces.events import (
     SymbolPlacedConfirmedInGameEvent,
 )
 from client.game.pieces.commands import RequestPlaceASymbol
+
+logger = logging.getLogger(__name__)
 
 
 class InGame(Screen):
@@ -194,6 +197,7 @@ class InGame(Screen):
         ).execute()
 
     def on_chat_message(self, event):
+        logger.info("[Screen] Incoming chat message")
         # This is not working because the ingame event has another id
         # Check  if the message is already there waiting for confirmation
         already_there = self._get_chat_message_by_event_id(event.original_event_id)
@@ -217,6 +221,7 @@ class InGame(Screen):
         return None  # This should not happen
 
     def on_chat_message_errored(self, event):
+        logger.info("[Screen] Chat message errored")
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
@@ -224,6 +229,7 @@ class InGame(Screen):
         message["confirmation"] = "ERROR"
 
     def on_chat_message_confirmed(self, event):
+        logger.info("[Screen] Chat message confirmed")
         message = self._get_chat_message_by_event_id(event.chat_message_event_id)
         message["confirmation"] = "OK"
 
