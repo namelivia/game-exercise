@@ -10,17 +10,21 @@ from .events import (
 class SymbolPlacedConfirmedCommand(Command):
     # Let the game know that the symbol has been correctly placed
     def __init__(self, profile, queue, event_id):
-        super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
+        super().__init__(profile, queue, f"Symbol placement event {event_id} confirmed")
         self.events = [SymbolPlacedConfirmedInGameEvent(event_id)]
 
 
 class PlayerPlacedSymbolInGameCommand(Command):
     # Let the game know that there is a new symbol placed on the screen
-    def __init__(self, profile, queue, player_id, position):
+    def __init__(self, profile, queue, event_id, player_id, position):
         super().__init__(
             profile, queue, f"Player {player_id} placed a symbol on position {position}"
         )
-        self.events = [PlayerPlacedSymbolInGameEvent(player_id, position)]
+        self.events = [
+            PlayerPlacedSymbolInGameEvent(
+                player_id, position, "OK", event_id  # This is the original event_id
+            )
+        ]
 
 
 class PlaceASymbol(Command):

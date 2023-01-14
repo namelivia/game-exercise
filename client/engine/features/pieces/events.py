@@ -1,11 +1,19 @@
 from client.engine.primitives.event import InGameEvent, Event
 
 
+class SymbolPlacedConfirmedInGameEvent(InGameEvent):
+    def __init__(self, place_symbol_event_id):
+        super().__init__()
+        self.place_symbol_event_id = place_symbol_event_id
+
+
 class PlayerPlacedSymbolInGameEvent(InGameEvent):
-    def __init__(self, player_id, position):
+    def __init__(self, player_id, position, confirmation, original_event_id=None):
         super().__init__()
         self.player_id = player_id
         self.position = position
+        self.confirmation = confirmation
+        self.original_event_id = original_event_id
 
 
 class PlaceASymbolNetworkRequestEvent(Event):
@@ -14,12 +22,6 @@ class PlaceASymbolNetworkRequestEvent(Event):
         self.game_id = game_id
         self.event_id = event_id
         self.position = position
-
-
-class SymbolPlacedConfirmedInGameEvent(InGameEvent):
-    def __init__(self, place_symbol_event_id):
-        super().__init__()
-        self.place_symbol_event_id = place_symbol_event_id
 
 
 class SymbolPlacedErroredEvent(InGameEvent):

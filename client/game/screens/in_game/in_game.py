@@ -182,14 +182,14 @@ class InGame(Screen):
             self.data["board"][event.position] = {
                 "event_id": event.id,
                 "color": "blue",
-                "confirmation": "pending",
+                "confirmation": event.confirmation,
             }
             self.data["status"] = "It is player 2 turn"
         else:
             self.data["board"][event.position] = {
                 "event_id": event.id,
                 "color": "red",
-                "confirmation": "pending",
+                "confirmation": event.confirmation,
             }
             self.data["status"] = "It is player 1 turn"
         PlaySound(
@@ -240,5 +240,6 @@ class InGame(Screen):
         return None  # This should not happen
 
     def on_symbol_placement_confirmed(self, event):
+        logger.info("[Screen] Symbol placement confirmed")
         place = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)
         place["confirmation"] = "OK"

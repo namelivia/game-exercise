@@ -1,34 +1,43 @@
 import logging
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
-    SymbolPlacedConfirmation,
     ErrorMessage,
     PlaceASymbolMessage,
+    SymbolPlacedConfirmation,
 )
 from client.game.pieces.events import PlaceASymbolRequestEvent
 from .events import (
     PlaceASymbolNetworkRequestEvent,
-    PlayerPlacedSymbolInGameEvent,
 )
 from .commands import (
     PlayerPlacedSymbolInGameCommand,
     PlaceASymbol,
     SymbolPlacedConfirmedCommand,
 )
+from common.events import (
+    PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
+)
 
 from client.engine.network.channel import Channel
 
 logger = logging.getLogger(__name__)
-"""
-Currently event handlers are the one that do the processing.
-They do the actual procssing and can execute commands.
-"""
+
+
+class PlayerPlacedSymbolConfirmationHandler(EventHandler):
+    def handle(self, event, client_state):
+        SymbolPlacedConfirmedCommand(
+            client_state.profile, client_state.queue, event.event_id
+        ).execute()
 
 
 class PlayerPlacedSymbolInGameEventHandler(EventHandler):
     def handle(self, event, client_state):
         PlayerPlacedSymbolInGameCommand(
-            client_state.profile, client_state.queue, event.player_id, event.position
+            client_state.profile,
+            client_state.queue,
+            event.event_id,
+            event.player_id,
+            event.position,
         ).execute()
 
 
@@ -73,5 +82,6 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
 handlers_map = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
+    SymbolPlacedConfirmation: PlayerPlacedSymbolConfirmationHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
 }

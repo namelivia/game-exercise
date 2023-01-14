@@ -11,10 +11,8 @@ from .events import (
 )
 from client.engine.features.chat.commands import (
     ChatMessageConfirmedCommand,
-    ChatMessageInGameCommand,
-)
-from .commands import (
     SendChat,
+    ChatMessageInGameCommand,
 )
 from common.events import (
     ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
@@ -24,13 +22,7 @@ from client.engine.network.channel import Channel
 
 logger = logging.getLogger(__name__)
 
-"""
-Currently event handlers are the one that do the processing.
-They do the actual procssing and can execute commands.
-"""
 
-
-# ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class ChatMessageConfirmationHandler(EventHandler):
     def handle(self, event, client_state):
         ChatMessageConfirmedCommand(

@@ -17,7 +17,9 @@ class RequestPlaceASymbol(Command):
             profile, queue, f"Request placing a symbol on position {position}"
         )
         # We need to attach the in_game event id to the network request
-        in_game_event = PlayerPlacedSymbolInGameEvent(profile.id, int(position))
+        in_game_event = PlayerPlacedSymbolInGameEvent(
+            profile.id, int(position), "pending"
+        )
         self.events = [
             in_game_event,
             PlaceASymbolRequestEvent(in_game_event.id, position),
