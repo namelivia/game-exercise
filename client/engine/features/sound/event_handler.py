@@ -29,7 +29,7 @@ class TurnSoundOffEventHandler(EventHandler):
 
 # TODO: The paths should not be here, should be passed in
 class PlaySoundEventHandler(EventHandler):
-    def handle(self, event: Event, client_state: Any) -> None:
+    def handle(self, event: PlaySoundEvent, client_state: Any) -> None:
         if client_state.profile.sound_on:
             if event.sound == "back":
                 Sound.play("client/game/sounds/back.mp3")
@@ -47,7 +47,7 @@ class PlaySoundEventHandler(EventHandler):
 
 # TODO: The paths should not be here, should be passed in
 class PlayMusicEventHandler(EventHandler):
-    def handle(self, event: Event, client_state: Any) -> None:
+    def handle(self, event: PlayMusicEvent, client_state: Any) -> None:
         if client_state.profile.sound_on:
             if event.music == "main_theme":
                 Music.load("client/game/music/main_theme.mp3")

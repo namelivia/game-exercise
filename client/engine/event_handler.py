@@ -1,5 +1,5 @@
 import logging
-from client.engine.primitives.event_handler import EventHandler
+from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from .events import (
     QuitGameEvent,
     UpdateGameEvent,
@@ -62,7 +62,7 @@ They do the actual procssing and can execute commands.
 
 
 # ======= GENERIC =======
-class QuitGameEventHandler(EventHandler):
+class QuitGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         import pygame  # This is pygame dependent
         import sys
@@ -72,7 +72,7 @@ class QuitGameEventHandler(EventHandler):
 
 
 # ======= GAME STATE SYNC =======
-class UpdateGameEventHandler(EventHandler):
+class UpdateGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
@@ -80,37 +80,37 @@ class UpdateGameEventHandler(EventHandler):
         ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
 
-class SetInternalGameInformationEventHandler(EventHandler):
+class SetInternalGameInformationEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         client_state.profile.set_game(event.game_id)
         client_state.profile.set_game_event_pointer(0)
 
 
-class SetPlayerNameEventHandler(EventHandler):
+class SetPlayerNameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         client_state.profile.set_name(event.name)
 
 
-class RefreshGameStatusEventHandler(EventHandler):
+class RefreshGameStatusEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         RefreshGameStatus(
             client_state.profile, client_state.queue, event.game_id, event.pointer
         ).execute()
 
 
-class NewGameRequestEventHandler(EventHandler):
+class NewGameRequestEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         CreateAGame(
             client_state.profile, client_state.queue, event.new_game_name
         ).execute()
 
 
-class JoinExistingGameEventHandler(EventHandler):
+class JoinExistingGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
 
 
-class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
+class RefreshGameStatusNetworkRequestEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(
             event.game_id, event.pointer, client_state.profile.id
@@ -133,7 +133,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         return GetGameStatus(game_id, pointer, profile_id)
 
 
-class CreateAGameNetworkRequestEventHandler(EventHandler):
+class CreateAGameNetworkRequestEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(client_state.profile.id, event.new_game_name)
 
@@ -167,7 +167,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
         return CreateAGameMessage(new_game_name, profile_id)
 
 
-class JoinAGameNetworkRequestEventHandler(EventHandler):
+class JoinAGameNetworkRequestEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         request_data = self._encode(client_state.profile.id, event.game_id)
 
@@ -197,7 +197,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
         return JoinAGameMessage(game_id, profile_id)
 
 
-class PingNetworkRequestEventHandler(EventHandler):
+class PingNetworkRequestEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         request_data = self._encode()
 
@@ -214,7 +214,7 @@ class PingNetworkRequestEventHandler(EventHandler):
         return PingRequestMessage()
 
 
-class GetGameListNetworkRequestEventHandler(EventHandler):
+class GetGameListNetworkRequestEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         request_data = self._encode()
 

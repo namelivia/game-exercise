@@ -1,4 +1,4 @@
-from client.engine.primitives.event_handler import EventHandler
+from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from client.engine.events import InitiateGameEvent
 from .events import (
     ScreenTransitionEvent,
@@ -32,21 +32,21 @@ They do the actual procssing and can execute commands.
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
-class GameCreatedInGameEventHandler(EventHandler):
+class GameCreatedInGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         GameCreatedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
-class PlayerJoinedInGameEventHandler(EventHandler):
+class PlayerJoinedInGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         PlayerJoinedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
-class PlayerWinsInGameEventHandler(EventHandler):
+class PlayerWinsInGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         PlayerWinsInGameCommand(
             client_state.profile, client_state.queue, event.player_id
@@ -56,7 +56,7 @@ class PlayerWinsInGameEventHandler(EventHandler):
 #################################################################
 
 
-class InitiateGameEventHandler(EventHandler):
+class InitiateGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
         client_state.set_current_screen(
@@ -70,7 +70,7 @@ class InitiateGameEventHandler(EventHandler):
         )
 
 
-class ScreenTransitionEventHandler(EventHandler):
+class ScreenTransitionEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
@@ -93,7 +93,7 @@ class ScreenTransitionEventHandler(EventHandler):
             client_state.set_current_screen(Profiles(client_state))
 
 
-class ClearInternalGameInformationEventHandler(EventHandler):
+class ClearInternalGameInformationEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         client_state.profile.set_game(None)
         client_state.profile.set_game_event_pointer(None)
