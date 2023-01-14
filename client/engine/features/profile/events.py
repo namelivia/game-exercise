@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, List
 from client.engine.primitives.event import Event, InGameEvent
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state.profile.profile import Profile
+    from client.engine.general_state.profile.profile import Profile
 
 
 class SetProfileEvent(Event):

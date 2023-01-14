@@ -14,7 +14,7 @@ from .commands import (
 from client.engine.persistence.persistence import Persistence
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state.profile.profile import Profile
+    from client.engine.general_state.profile.profile import Profile
 
 logger = logging.getLogger(__name__)
 

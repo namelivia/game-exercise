@@ -9,7 +9,7 @@ from .events import (
 )
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state.profile.profile import Profile
+    from client.engine.general_state.profile.profile import Profile
 
 
 class SetProfile(Command):
