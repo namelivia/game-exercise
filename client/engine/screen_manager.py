@@ -11,7 +11,7 @@ class ScreenManager:
         self.graphics = graphics
         self.input_manager = input_manager
         self.event_processor = EventsProcessor(
-            [EventHandler(), GameEventHandler()]  # Regular events  # In game events
+            [EventHandler(), GameEventHandler()]  # Regular events and in game events
         )
 
     # Main loop
