@@ -54,7 +54,7 @@ class TestGame(TestCase):
             game.player_can_get_status("other_player_id")
         assert str(e.exception) == "Player has no access to the game"
 
-    def test_sending_a_chat_message(self):
+    def test_adding_a_chat_message_event(self):
         game = Game("Test game", "player_1_id")
         game.add_chat_message("event_id_1", "player_1_id", "hello")
         assert len(game.events) == 2
