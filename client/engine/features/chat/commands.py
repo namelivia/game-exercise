@@ -20,7 +20,7 @@ class ChatMessageInGameCommand(Command):
         super().__init__(profile, queue, f"Player {player_id} says: {message}")
         self.events = [
             ChatMessageInGameEvent(
-                player_id, message, event_id  # This is the original event_id
+                player_id, message, "OK", event_id  # This is the original event_id
             )
         ]
 

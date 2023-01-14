@@ -8,10 +8,11 @@ class ChatMessageConfirmedInGameEvent(InGameEvent):
 
 
 class ChatMessageInGameEvent(InGameEvent):
-    def __init__(self, player_id, message, original_event_id=None):
+    def __init__(self, player_id, message, confirmation, original_event_id=None):
         super().__init__()
         self.player_id = player_id
         self.message = message
+        self.confirmation = confirmation
         self.original_event_id = original_event_id
 
 

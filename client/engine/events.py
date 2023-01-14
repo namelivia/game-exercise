@@ -110,7 +110,7 @@ class ErrorJoiningGameEvent(Event):
     pass
 
 
-class UpdateGameListEvent(Event):
+class UpdateGameListEvent(InGameEvent):
     def __init__(self, games):
         super().__init__()
         self.games = games

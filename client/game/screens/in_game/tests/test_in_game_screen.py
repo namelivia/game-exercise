@@ -126,7 +126,9 @@ class TestInGameScreen(TestCase):
 
         # A chat message comes
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_2_id", message="good luck"),
+            ChatMessageInGameEvent(
+                player_id="player_2_id", message="good luck", confirmation="ok"
+            ),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -274,7 +276,9 @@ class TestInGameScreen(TestCase):
         # TODO: Assert that the event has been sourced here.
 
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="gg bro"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="gg bro", confirmation="ok"
+            ),
         )
 
         VisualRegression.assert_matches_snapshot(
@@ -308,34 +312,54 @@ class TestInGameScreen(TestCase):
 
         # Many chat messages come
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 1"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 1", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 2"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 2", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 3"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 3", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 4"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 4", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 5"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 5", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 6"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 6", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 7"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 7", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 8"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 8", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 9"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 9", confirmation="ok"
+            ),
         )
         self.in_game.update(
-            ChatMessageInGameEvent(player_id="player_1_id", message="message 10"),
+            ChatMessageInGameEvent(
+                player_id="player_1_id", message="message 10", confirmation="ok"
+            ),
         )
 
         VisualRegression.assert_matches_snapshot(

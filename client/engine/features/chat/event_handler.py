@@ -91,7 +91,7 @@ class SendChatNetworkRequestEventHandler(EventHandler):
 handlers_map = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
-    # TODO: These two are not of type EVENT
-    # ChatMessageConfirmation: ChatMessageConfirmationHandler,
-    # ChatMessageInGameEvent: ChatMessageInGameEventHandler,
+    # TODO: Typing issue: These two are not of type Event
+    ChatMessageConfirmation: ChatMessageConfirmationHandler,
+    ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }

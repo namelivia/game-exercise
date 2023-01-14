@@ -267,7 +267,4 @@ handlers_map = {
 
 class EventHandler:
     def handle(self, event, client_state):
-        try:
-            handlers_map[type(event)]().handle(event, client_state)
-        except KeyError:
-            pass  # Unhandled event
+        handlers_map[type(event)]().handle(event, client_state)

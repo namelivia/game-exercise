@@ -2,6 +2,8 @@ from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
+
+# from client.engine.primitives.event import InGameEvent
 from .events_processor import EventsProcessor
 
 
@@ -25,6 +27,11 @@ class ScreenManager:
 
         # 3 - Fetch and handle the latest event
         event = self.client_state.queue.pop()
+        """
+        # TODO: I don't like this if
+        if not isinstance(event, InGameEvent):
+            self.event_processor.handle(event, self.client_state)
+        """
         self.event_processor.handle(event, self.client_state)
 
         # 4 - Draw the screen
@@ -34,4 +41,11 @@ class ScreenManager:
         UserInput.process(self.input_manager, self.client_state)
 
         # 6 - Update the current screen
-        self.client_state.get_current_screen().update(event)
+        """
+        # TODO: I don't like this if
+        in_game_event = None
+        if isinstance(event, InGameEvent):
+            in_game_event = event
+        """
+        in_game_event = event
+        self.client_state.get_current_screen().update(in_game_event)

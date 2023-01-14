@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 class EventsProcessor:
     def __init__(self, event_handlers):
         self.event_handlers = event_handlers  # Initial list of event handlers
@@ -13,7 +18,7 @@ class EventsProcessor:
             try:
                 event_handler.handle(event, client_state)
                 handled = True
-            except KeyError:  # TODO: Restrict this, it should only catch non-handeable events
+            except KeyError:
                 pass
         if not handled:
-            pass  # TODO: Inform that no handler was able to handle the event
+            logger.error(f"[ERROR] Unhandled event {event.__class__.__name__}")

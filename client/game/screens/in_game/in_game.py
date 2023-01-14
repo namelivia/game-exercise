@@ -207,7 +207,7 @@ class InGame(Screen):
                     "event_id": event.id,
                     "player_id": event.player_id,
                     "message": event.message,
-                    "confirmation": "pending",
+                    "confirmation": event.confirmation,
                 }
             )
             PlaySound(
