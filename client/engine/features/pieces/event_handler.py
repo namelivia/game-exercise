@@ -69,10 +69,10 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                 ).execute()
             if isinstance(response, ErrorMessage):
                 # TODO: Deal with the error properly
-                logger.error(response.__dict__)
+                logger.error(f"[ERROR][Server] {response.message}")
         else:
             # TODO: Deal with the error properly
-            logger.error("Server error")
+            logger.error("[ERROR][Server] Server unreacheable")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
     def _encode(self, game_id, event_id, profile_id, position):
