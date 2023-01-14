@@ -15,7 +15,8 @@ class TestScreenManager(TestCase):
     @mock.patch(
         "client.engine.screen_manager.ServerPolling.push_polling_event_if_needed"
     )
-    def test_main_loop_iteration(self, m_push_polling_event):
+    @mock.patch("client.engine.screen_manager.UserInput.process")
+    def test_main_loop_iteration(self, m_process_input, m_push_polling_event):
         self.client_state.clock.get.return_value = 120
         self.client_state.queue.pop.return_value = "some_event"  # Event from the queue
         current_screen = mock.Mock()
@@ -38,7 +39,7 @@ class TestScreenManager(TestCase):
         self.graphics.render.assert_called_once_with(current_screen)
 
         # The user input is read
-        # TODO: This assertion is missing
+        m_process_input.assert_called_once_with(self.input_manager, self.client_state)
 
         # The screen is updated
         current_screen.update.assert_called_once_with(
