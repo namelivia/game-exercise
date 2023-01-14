@@ -1,4 +1,5 @@
 import logging
+from typing import TYPE_CHECKING, Any
 from client.engine.primitives.event_handler import EventHandler
 from client.engine.sound.sound import Sound
 from client.engine.sound.music import Music
@@ -9,22 +10,26 @@ from .events import (
     PlayMusicEvent,
 )
 
+if TYPE_CHECKING:
+    from client.engine.primitives.event import Event
+
+
 logger = logging.getLogger(__name__)
 
 
 class TurnSoundOnEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: Event, client_state: Any) -> None:
         client_state.profile.set_sound_on()
 
 
 class TurnSoundOffEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: Event, client_state: Any) -> None:
         client_state.profile.set_sound_off()
 
 
 # TODO: The paths should not be here, should be passed in
 class PlaySoundEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: Event, client_state: Any) -> None:
         if client_state.profile.sound_on:
             if event.sound == "back":
                 Sound.play("client/game/sounds/back.mp3")
@@ -42,7 +47,7 @@ class PlaySoundEventHandler(EventHandler):
 
 # TODO: The paths should not be here, should be passed in
 class PlayMusicEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: Event, client_state: Any) -> None:
         if client_state.profile.sound_on:
             if event.music == "main_theme":
                 Music.load("client/game/music/main_theme.mp3")

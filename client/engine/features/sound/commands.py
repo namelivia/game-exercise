@@ -1,3 +1,4 @@
+from typing import Any
 from client.engine.primitives.command import Command
 from .events import (
     TurnSoundOnEvent,
@@ -8,7 +9,7 @@ from .events import (
 
 
 class TurnSoundOn(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: Any, queue: Any) -> None:
         super().__init__(profile, queue, "Turning sound ON")
         self.events = [
             TurnSoundOnEvent(),
@@ -16,7 +17,7 @@ class TurnSoundOn(Command):
 
 
 class TurnSoundOff(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: Any, queue: Any) -> None:
         super().__init__(profile, queue, "Turning sound OFF")
         self.events = [
             TurnSoundOffEvent(),
@@ -24,7 +25,7 @@ class TurnSoundOff(Command):
 
 
 class PlaySound(Command):
-    def __init__(self, profile, queue, sound_id):
+    def __init__(self, profile: Any, queue: Any, sound_id: str) -> None:
         super().__init__(profile, queue, f"Playing sound {sound_id}")
         self.events = [
             PlaySoundEvent(sound_id),
@@ -32,7 +33,7 @@ class PlaySound(Command):
 
 
 class PlayMusic(Command):
-    def __init__(self, profile, queue, music_id):
+    def __init__(self, profile: Any, queue: Any, music_id: str) -> None:
         super().__init__(profile, queue, f"Playing music {music_id}")
         self.events = [
             PlayMusicEvent(music_id),
