@@ -1,7 +1,7 @@
 from client.engine.features.user_input.commands import UserTyped
 from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
-from client.engine.commands import RequestGameStatus
+from client.engine.server_polling import ServerPolling
 from .events_processor import EventsProcessor
 
 
@@ -24,21 +24,12 @@ class ScreenManager:
                     self.client_state.profile, self.client_state.queue, user_event
                 ).execute()
 
-    def _push_polling_event(self):
-        # Do the polling once every 100 cycles
-        polling_rate = 100
-        game_id = self.client_state.profile.game_id
-        if self.client_state.clock.get() % polling_rate == 0 and game_id is not None:
-            RequestGameStatus(
-                self.client_state.profile,
-                self.client_state.queue,
-                game_id,
-                self.client_state.profile.game_event_pointer,
-            ).execute()
-
     def run(self):
         self.client_state.clock.tick()  # Update the clock
-        self._push_polling_event()
+
+        # Push a sever polling event if needed
+        ServerPolling.push_polling_event_if_needed(self.client_state)
+
         queued_event = self.client_state.queue.pop()  # Fetch the latest event
 
         self.event_processor.handle(  # Process the event
