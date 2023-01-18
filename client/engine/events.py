@@ -13,12 +13,6 @@ class QuitGameEvent(Event):
 
 
 # ======= GAME STATE SYNC =======
-class UpdateGameEvent(Event):
-    def __init__(self, events):
-        super().__init__()
-        self.events = events
-
-
 class InitiateGameEvent(Event):
     def __init__(self, game_data):
         super().__init__()
@@ -51,11 +45,6 @@ class PlayerWinsInGameEvent(InGameEvent):
 
 
 # This one is for polling
-class RefreshGameStatusEvent(Event):
-    def __init__(self, game_id, pointer):
-        super().__init__()
-        self.game_id = game_id
-        self.pointer = pointer
 
 
 class NewGameRequestEvent(Event):
@@ -71,11 +60,6 @@ class JoinExistingGameEvent(Event):
 
 
 # These are network requests
-class RefreshGameStatusNetworkRequestEvent(Event):
-    def __init__(self, game_id, pointer):
-        super().__init__()
-        self.game_id = game_id
-        self.pointer = pointer
 
 
 class CreateAGameNetworkRequestEvent(Event):

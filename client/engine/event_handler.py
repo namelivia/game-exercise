@@ -2,10 +2,7 @@ import logging
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from .events import (
     QuitGameEvent,
-    UpdateGameEvent,
-    RefreshGameStatusEvent,
     SetInternalGameInformationEvent,
-    RefreshGameStatusNetworkRequestEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
@@ -15,9 +12,6 @@ from .events import (
     SetPlayerNameEvent,
 )
 from .commands import (
-    ProcessServerEvents,
-    RefreshGameStatus,
-    UpdateGame,
     CreateAGame,
     JoinAGame,
     InitiateGame,
@@ -29,9 +23,7 @@ from .commands import (
 
 from common.messages import (
     GameInfoMessage,
-    GameEventsMessage,
     ErrorMessage,
-    GetGameStatus,
     CreateAGameMessage,
     JoinAGameMessage,
     PingRequestMessage,
@@ -51,6 +43,9 @@ from client.engine.features.profile.event_handler import (
 )
 from client.engine.features.sound.event_handler import (
     handlers_map as sound_event_handlers,
+)
+from client.engine.features.synchronization.event_handler import (
+    handlers_map as synchronization_event_handlers,
 )
 from .game_data import GameData
 
@@ -72,14 +67,6 @@ class QuitGameEventHandler(BaseEventHandler):
 
 
 # ======= GAME STATE SYNC =======
-class UpdateGameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
-        events = event.events
-        game_event_pointer = client_state.profile.game_event_pointer
-        client_state.profile.set_game_event_pointer(game_event_pointer + len(events))
-        ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
-
-
 class SetInternalGameInformationEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         client_state.profile.set_game(event.game_id)
@@ -89,13 +76,6 @@ class SetInternalGameInformationEventHandler(BaseEventHandler):
 class SetPlayerNameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         client_state.profile.set_name(event.name)
-
-
-class RefreshGameStatusEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
-        RefreshGameStatus(
-            client_state.profile, client_state.queue, event.game_id, event.pointer
-        ).execute()
 
 
 class NewGameRequestEventHandler(BaseEventHandler):
@@ -108,29 +88,6 @@ class NewGameRequestEventHandler(BaseEventHandler):
 class JoinExistingGameEventHandler(BaseEventHandler):
     def handle(self, event, client_state):
         JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
-
-
-class RefreshGameStatusNetworkRequestEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
-        request_data = self._encode(
-            event.game_id, event.pointer, client_state.profile.id
-        )
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameEventsMessage):
-                UpdateGame(
-                    client_state.profile, client_state.queue, response.events
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                logger.error(response.__dict__)
-        else:
-            logger.error("Server error")
-            # This should be done at game level
-            # BackToLobby(client_state.profile, client_state.queue).execute()
-
-    def _encode(self, game_id, pointer, profile_id):
-        return GetGameStatus(game_id, pointer, profile_id)
 
 
 class CreateAGameNetworkRequestEventHandler(BaseEventHandler):
@@ -243,9 +200,6 @@ class GetGameListNetworkRequestEventHandler(BaseEventHandler):
 
 common_handlers = {
     QuitGameEvent: QuitGameEventHandler,
-    UpdateGameEvent: UpdateGameEventHandler,
-    RefreshGameStatusEvent: RefreshGameStatusEventHandler,
-    RefreshGameStatusNetworkRequestEvent: RefreshGameStatusNetworkRequestEventHandler,
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
@@ -262,6 +216,7 @@ handlers_map = {
     **pieces_event_handlers,
     **profile_event_handlers,
     **sound_event_handlers,
+    **synchronization_event_handlers,
 }
 
 

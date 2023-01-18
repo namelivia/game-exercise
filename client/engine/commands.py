@@ -1,15 +1,12 @@
 from client.engine.primitives.command import Command
 from .events import (
     QuitGameEvent,
-    UpdateGameEvent,
     InitiateGameEvent,
     SetInternalGameInformationEvent,
     SetPlayerNameEvent,
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
-    RefreshGameStatusEvent,
-    RefreshGameStatusNetworkRequestEvent,
     NewGameRequestEvent,
     JoinExistingGameEvent,
     CreateAGameNetworkRequestEvent,
@@ -60,25 +57,10 @@ class SetPlayerName(Command):
         ]
 
 
-class UpdateGame(Command):
-    def __init__(self, profile, queue, events):
-        super().__init__(profile, queue, "Locally updating game")
-        self.events = [UpdateGameEvent(events)]
-
-
 class UpdateGameList(Command):
     def __init__(self, profile, queue, games):
         super().__init__(profile, queue, "Updating game list")
         self.events = [UpdateGameListEvent(games)]
-
-
-# This says server events but these are GAME events (put on the game data by the server)
-class ProcessServerEvents(Command):
-    def __init__(self, profile, queue, events):
-        super().__init__(
-            profile, queue, f"Processing {len(events)} unprocessed server events"
-        )
-        self.events = events
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
@@ -121,17 +103,6 @@ class PlayerWinsInGameCommand(Command):
         ]
 
 
-# ==== This one is to request the game status (polling)
-class RequestGameStatus(Command):
-    def __init__(self, profile, queue, game_id, pointer):
-        super().__init__(
-            profile,
-            queue,
-            f"Request refreshing the status of game {game_id} pointer {pointer}",
-        )
-        self.events = [RefreshGameStatusEvent(game_id, pointer)]
-
-
 class RequestGameCreation(Command):
     def __init__(self, profile, queue, new_game_name):
         super().__init__(
@@ -147,14 +118,6 @@ class RequestJoiningAGame(Command):
 
 
 # ==== These are network requests
-class RefreshGameStatus(Command):
-    def __init__(self, profile, queue, game_id, pointer):
-        super().__init__(
-            profile, queue, f"Refresh game status {game_id} pointer {pointer}"
-        )
-        self.events = [RefreshGameStatusNetworkRequestEvent(game_id, pointer)]
-
-
 class CreateAGame(Command):
     def __init__(self, profile, queue, new_game_name):
         super().__init__(profile, queue, f"Create a new game called {new_game_name}")
