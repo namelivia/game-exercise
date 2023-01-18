@@ -13,6 +13,7 @@ from client.engine.features.chat.commands import (
     ChatMessageConfirmedCommand,
     SendChat,
     ChatMessageInGameCommand,
+    ChatMessageErroredCommand,
 )
 from common.events import (
     ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
@@ -69,12 +70,15 @@ class SendChatNetworkRequestEventHandler(EventHandler):
                     client_state.profile, client_state.queue, response.event_id
                 ).execute()
             if isinstance(response, ErrorMessage):
-                # TODO: Deal with the error properly
                 logger.error(f"[ERROR][Server] {response.message}")
+                ChatMessageErroredCommand(
+                    client_state.profile, client_state.queue, event.event_id
+                ).execute()
         else:
-            # TODO: Deal with the error properly
             logger.error("[ERROR][Server] Server unreacheable")
-            # BackToLobby(client_state.profile, client_state.queue).execute()
+            ChatMessageErroredCommand(
+                client_state.profile, client_state.queue, event.event_id
+            ).execute()
 
     def _encode(self, game_id, event_id, profile_id, message):
         return SendChatMessage(game_id, event_id, profile_id, message)

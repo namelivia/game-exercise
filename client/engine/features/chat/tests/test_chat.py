@@ -94,7 +94,8 @@ class TestChat(TestCase):
         )
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    def test_sending_a_chat_message_error_response(self, m_send_command):
+    @mock.patch("client.engine.features.chat.event_handler.ChatMessageErroredCommand")
+    def test_sending_a_chat_message_error_response(self, m_error, m_send_command):
         # The command is invoked whith a new chat message
         SendChat(
             self.profile, self.queue, "game_id", "event_id", "This is a test message"
@@ -107,6 +108,7 @@ class TestChat(TestCase):
         # And network request to ask for setting the message on the server is sent
         client_state = mock.Mock()
         client_state.profile = self.profile
+        client_state.queue = self.queue
 
         # The response won't be sucessful
         m_send_command.return_value = ErrorMessage("Error message")
@@ -120,10 +122,12 @@ class TestChat(TestCase):
         assert request_message.event_id == "event_id"
         assert request_message.player_id == "player_id"
         assert request_message.message == "This is a test message"
-        # TODO: Check the error was properly dealt with
+
+        m_error.assert_called_once_with(self.profile, self.queue, "event_id")
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    def test_sending_a_chat_message_no_response(self, m_send_command):
+    @mock.patch("client.engine.features.chat.event_handler.ChatMessageErroredCommand")
+    def test_sending_a_chat_message_no_response(self, m_error, m_send_command):
         # The command is invoked whith a new chat message
         SendChat(
             self.profile, self.queue, "game_id", "event_id", "This is a test message"
@@ -136,6 +140,7 @@ class TestChat(TestCase):
         # And network request to ask for setting the message on the server is sent
         client_state = mock.Mock()
         client_state.profile = self.profile
+        client_state.queue = self.queue
 
         # The response won't be sucessful
         m_send_command.return_value = None
@@ -149,4 +154,5 @@ class TestChat(TestCase):
         assert request_message.event_id == "event_id"
         assert request_message.player_id == "player_id"
         assert request_message.message == "This is a test message"
-        # TODO: Check the error was properly dealt with
+
+        m_error.assert_called_once_with(self.profile, self.queue, "event_id")
