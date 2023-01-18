@@ -1,7 +1,8 @@
 from client.engine.primitives.screen import Screen
 from .ui import GameIdMessage, Background, ErrorPopup
-from client.engine.events import ErrorJoiningGameEvent
+from client.engine.features.game_management.events import ErrorJoiningGameEvent
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.features.game_management.commands import RequestJoiningAGame
 from client.engine.features.sound.commands import PlaySound
 
 
@@ -30,8 +31,6 @@ class JoinGame(Screen):
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
             return
         if event.key == "return":
-            # Avoid circular import
-            from client.engine.commands import RequestJoiningAGame
 
             RequestJoiningAGame(
                 self.client_state.profile,

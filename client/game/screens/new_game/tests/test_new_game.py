@@ -11,7 +11,7 @@ class TestNewGame(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.new_game = NewGame(self.client_state)
 
-    @mock.patch("client.engine.commands.RequestGameCreation")
+    @mock.patch("client.game.screens.new_game.new_game.RequestGameCreation")
     def test_new_game_screen(self, m_request_game_creation):
 
         # Empty screen

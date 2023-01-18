@@ -13,7 +13,7 @@ class TestGameList(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.game_list = GameList(self.client_state)
 
-    @mock.patch("client.engine.commands.RequestJoiningAGame")
+    @mock.patch("client.game.screens.game_list.game_list.RequestJoiningAGame")
     def test_game_list(self, m_request_joining_game):
 
         # Empty screen

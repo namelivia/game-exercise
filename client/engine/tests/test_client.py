@@ -13,15 +13,17 @@ from client.engine.features.synchronization.events import (
 from client.engine.features.game_list.events import (
     UpdateGameListEvent,
 )
+from client.engine.features.game_management.events import (
+    JoinExistingGameEvent,
+    NewGameRequestEvent,
+    CreateAGameNetworkRequestEvent,
+    JoinAGameNetworkRequestEvent,
+)
 from client.engine.events import (
     SetPlayerNameEvent,
     QuitGameEvent,
-    JoinExistingGameEvent,
-    NewGameRequestEvent,
     InitiateGameEvent,
-    CreateAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
-    JoinAGameNetworkRequestEvent,
 )
 from client.engine.features.user_input.commands import (
     UserTyped,
@@ -40,9 +42,11 @@ from client.engine.commands import (
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
+    SetPlayerName,
+)
+from client.engine.features.game_management.commands import (
     RequestJoiningAGame,
     RequestGameCreation,
-    SetPlayerName,
 )
 from common.messages import (
     GameInfoMessage,
