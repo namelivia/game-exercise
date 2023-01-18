@@ -5,10 +5,12 @@ from client.engine.features.pieces.commands import (
     PlaceASymbol,
     SymbolPlacedConfirmedCommand,
     SymbolPlacedErroredCommand,
+    PlayerPlacedSymbolInGameCommand,
 )
 from client.engine.features.pieces.events import (
     PlaceASymbolNetworkRequestEvent,
     SymbolPlacedConfirmedInGameEvent,
+    PlayerPlacedSymbolInGameEvent,
     SymbolPlacedErroredEvent,
 )
 from common.messages import (
@@ -145,3 +147,17 @@ class TestPieces(TestCase):
         in_game_error_event = self.queue.pop()
         assert isinstance(in_game_error_event, SymbolPlacedErroredEvent)
         in_game_error_event.event_id = "event_id"
+
+    def test_adding_an_incoming_symbol_placed(self):
+        # Let the game know there is a new chat symbol placed
+        PlayerPlacedSymbolInGameCommand(
+            self.profile, self.queue, "event_id", "player_1", "Hello"
+        ).execute()
+
+        # The command creates an ingame event
+        in_game_event = self.queue.pop()
+        assert isinstance(in_game_event, PlayerPlacedSymbolInGameEvent)
+        in_game_event.event_id = "event_id"
+        in_game_event.player_id = "player_1"
+        in_game_event.message = "hello"
+        in_game_event.confirmation = "OK"  # Incoming messages are always confirmed

@@ -6,11 +6,13 @@ from client.engine.features.chat.commands import (
     SendChat,
     ChatMessageConfirmedCommand,
     ChatMessageErroredCommand,
+    ChatMessageInGameCommand,
 )
 from client.engine.features.chat.events import (
     SendChatNetworkRequestEvent,
     ChatMessageConfirmedInGameEvent,
     ChatMessageErroredEvent,
+    ChatMessageInGameEvent,
 )
 from common.messages import (
     SendChatMessage,
@@ -158,3 +160,17 @@ class TestChat(TestCase):
         in_game_error_event = self.queue.pop()
         assert isinstance(in_game_error_event, ChatMessageErroredEvent)
         in_game_error_event.event_id = "event_id"
+
+    def test_adding_an_incoming_chat_message(self):
+        # Let the game know there is a new chat message
+        ChatMessageInGameCommand(
+            self.profile, self.queue, "event_id", "player_1", "Hello"
+        ).execute()
+
+        # The command creates an ingame event
+        in_game_event = self.queue.pop()
+        assert isinstance(in_game_event, ChatMessageInGameEvent)
+        in_game_event.event_id = "event_id"
+        in_game_event.player_id = "player_1"
+        in_game_event.message = "hello"
+        in_game_event.confirmation = "OK"  # Incoming messages are always confirmed
