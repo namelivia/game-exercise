@@ -29,6 +29,7 @@ from client.engine.features.chat.events import (
 from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
+    SymbolPlacedErroredEvent,
 )
 from client.game.pieces.commands import RequestPlaceASymbol
 
@@ -88,6 +89,7 @@ class InGame(Screen):
             ChatMessageErroredEvent: self.on_chat_message_errored,
             ChatMessageConfirmedInGameEvent: self.on_chat_message_confirmed,
             SymbolPlacedConfirmedInGameEvent: self.on_symbol_placement_confirmed,
+            SymbolPlacedErroredEvent: self.on_symbol_placement_errored,
         }
 
     def _process_event(self, event):
@@ -234,12 +236,17 @@ class InGame(Screen):
         message["confirmation"] = "OK"
 
     def _get_symbol_placement_by_event_id(self, event_id):
-        for place in self.data["board"]:
-            if place is not None and place["event_id"] == event_id:
-                return place
+        for board_entry in enumerate(self.data["board"]):
+            if board_entry[1] is not None and board_entry[1]["event_id"] == event_id:
+                return board_entry
         return None  # This should not happen
 
     def on_symbol_placement_confirmed(self, event):
         logger.info("[Screen] Symbol placement confirmed")
-        place = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)
+        place = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[1]
         place["confirmation"] = "OK"
+
+    def on_symbol_placement_errored(self, event):
+        logger.info("[Screen] Symbol placement errored")
+        index = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[0]
+        self.data["board"][index] = None

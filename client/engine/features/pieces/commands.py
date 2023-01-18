@@ -37,6 +37,7 @@ class PlaceASymbol(Command):
 
 
 class SymbolPlacedErroredCommand(Command):
-    def __init__(self, profile, queue, player_id, event_id):
+    # Let the game know that the symbol was not correctly placed and needs to be rolled back
+    def __init__(self, profile, queue, event_id):
         super().__init__(profile, queue, f"Symbol place event {event_id} errored")
         self.events = [SymbolPlacedErroredEvent(event_id)]

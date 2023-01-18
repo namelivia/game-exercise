@@ -13,6 +13,7 @@ from .commands import (
     PlayerPlacedSymbolInGameCommand,
     PlaceASymbol,
     SymbolPlacedConfirmedCommand,
+    SymbolPlacedErroredCommand,
 )
 from common.events import (
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
@@ -68,12 +69,15 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                     client_state.profile, client_state.queue, response.event_id
                 ).execute()
             if isinstance(response, ErrorMessage):
-                # TODO: Deal with the error properly
                 logger.error(f"[ERROR][Server] {response.message}")
+                SymbolPlacedErroredCommand(
+                    client_state.profile, client_state.queue, event.event_id
+                ).execute()
         else:
-            # TODO: Deal with the error properly
             logger.error("[ERROR][Server] Server unreacheable")
-            # BackToLobby(client_state.profile, client_state.queue).execute()
+            SymbolPlacedErroredCommand(
+                client_state.profile, client_state.queue, event.event_id
+            ).execute()
 
     def _encode(self, game_id, event_id, profile_id, position):
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)

@@ -27,6 +27,6 @@ class PlaceASymbolNetworkRequestEvent(Event):
 class SymbolPlacedErroredEvent(InGameEvent):
     # This indicates that a chat message wasn't sucessfully processed
     # by the server and therefore it needs to be rolled back.
-    def __init__(self, chat_message_event_id):
+    def __init__(self, place_symbol_event_id):
         super().__init__()
-        self.chat_message_event_id = chat_message_event_id
+        self.place_symbol_event_id = place_symbol_event_id

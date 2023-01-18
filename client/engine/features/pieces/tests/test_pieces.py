@@ -1,8 +1,16 @@
 from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.event_handler import EventHandler
-from client.engine.features.pieces.commands import PlaceASymbol
-from client.engine.features.pieces.events import PlaceASymbolNetworkRequestEvent
+from client.engine.features.pieces.commands import (
+    PlaceASymbol,
+    SymbolPlacedConfirmedCommand,
+    SymbolPlacedErroredCommand,
+)
+from client.engine.features.pieces.events import (
+    PlaceASymbolNetworkRequestEvent,
+    SymbolPlacedConfirmedInGameEvent,
+    SymbolPlacedErroredEvent,
+)
 from common.messages import (
     PlaceASymbolMessage,
     SymbolPlacedConfirmation,
@@ -57,7 +65,10 @@ class TestPieces(TestCase):
         )
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    def test_requesting_placing_a_symbol_error_response(self, m_send_command):
+    @mock.patch(
+        "client.engine.features.pieces.event_handler.SymbolPlacedErroredCommand"
+    )
+    def test_requesting_placing_a_symbol_error_response(self, m_error, m_send_command):
         # The command is invoked whith a new symbol placement
         PlaceASymbol(self.profile, self.queue, "game_id", "event_id", 2).execute()
 
@@ -67,6 +78,7 @@ class TestPieces(TestCase):
 
         # And network request to ask for setting the message on the server is sent
         client_state = mock.Mock()
+        client_state.queue = self.queue
         client_state.profile = self.profile
 
         # The response won't be sucessful
@@ -81,10 +93,14 @@ class TestPieces(TestCase):
         assert request_message.event_id == "event_id"
         assert request_message.player_id == "player_id"
         assert request_message.position == 2
-        # TODO: Check the error was properly dealt with
+
+        m_error.assert_called_once_with(self.profile, self.queue, "event_id")
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    def test_requesting_placing_a_symbol_no_response(self, m_send_command):
+    @mock.patch(
+        "client.engine.features.pieces.event_handler.SymbolPlacedErroredCommand"
+    )
+    def test_requesting_placing_a_symbol_no_response(self, m_error, m_send_command):
         # The command is invoked whith a new symbol placement
         PlaceASymbol(self.profile, self.queue, "game_id", "event_id", 2).execute()
 
@@ -94,6 +110,7 @@ class TestPieces(TestCase):
 
         # And network request to ask for setting the message on the server is sent
         client_state = mock.Mock()
+        client_state.queue = self.queue
         client_state.profile = self.profile
 
         # The response won't be sucessful
@@ -108,4 +125,23 @@ class TestPieces(TestCase):
         assert request_message.event_id == "event_id"
         assert request_message.player_id == "player_id"
         assert request_message.position == 2
-        # TODO: Check the error was properly dealt with
+
+        m_error.assert_called_once_with(self.profile, self.queue, "event_id")
+
+    def test_confirm_a_symbol_has_been_placed(self):
+        # The command is invoked confirming the symbol placement
+        SymbolPlacedConfirmedCommand(self.profile, self.queue, "event_id").execute()
+
+        # The command creates an ingame event
+        in_game_confirm_event = self.queue.pop()
+        assert isinstance(in_game_confirm_event, SymbolPlacedConfirmedInGameEvent)
+        in_game_confirm_event.event_id = "event_id"
+
+    def test_error_when_a_symbol_has_been_placed(self):
+        # The command is invoked signaling something went wrong
+        SymbolPlacedErroredCommand(self.profile, self.queue, "event_id").execute()
+
+        # The command creates an ingame event
+        in_game_error_event = self.queue.pop()
+        assert isinstance(in_game_error_event, SymbolPlacedErroredEvent)
+        in_game_error_event.event_id = "event_id"
