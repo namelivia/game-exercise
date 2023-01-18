@@ -142,9 +142,10 @@ class InGame(Screen):
                 self.ui_elements[7].focus()
                 return
         if event.key in "012345678":
-            RequestPlaceASymbol(
-                self.client_state.profile, self.client_state.queue, event.key
-            ).execute()
+            if self._position_is_valid(int(event.key)):
+                RequestPlaceASymbol(
+                    self.client_state.profile, self.client_state.queue, event.key
+                ).execute()
             return
         if event.key == "backspace" and self.data["chat_focused"]:
             PlaySound(
@@ -157,6 +158,12 @@ class InGame(Screen):
                 self.client_state.profile, self.client_state.queue, "type"
             ).execute()
             self.data["chat_input"] += event.key
+
+    def _position_is_valid(self, position):
+        # TODO: Write these validation rules, this is to validate in the client
+        # to avoid always validating on the server side.
+        # But it will be validated on the server anyway.
+        return True
 
     def on_game_created(self, event):
         PlaySound(
