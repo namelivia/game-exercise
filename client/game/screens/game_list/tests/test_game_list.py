@@ -3,7 +3,7 @@ from unittest import TestCase
 from client.game.screens.game_list.game_list import GameList
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.events import UpdateGameListEvent
+from client.engine.features.game_list.events import UpdateGameListEvent
 import mock
 
 

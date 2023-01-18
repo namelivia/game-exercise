@@ -8,15 +8,12 @@ from .events import (
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
-    GetGameListNetworkRequestEvent,
     SetPlayerNameEvent,
 )
 from .commands import (
     CreateAGame,
     JoinAGame,
     InitiateGame,
-    UpdateGameList,
-    ErrorGettingGameList,
     ErrorCreatingGame,
     ErrorJoiningGame,
 )
@@ -28,8 +25,6 @@ from common.messages import (
     JoinAGameMessage,
     PingRequestMessage,
     PingResponseMessage,
-    GameListRequestMessage,
-    GameListResponseMessage,
 )
 from client.engine.network.channel import Channel
 from client.engine.features.chat.event_handler import (
@@ -46,6 +41,9 @@ from client.engine.features.sound.event_handler import (
 )
 from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
+)
+from client.engine.features.game_list.event_handler import (
+    handlers_map as game_list_event_handlers,
 )
 from .game_data import GameData
 
@@ -171,39 +169,11 @@ class PingNetworkRequestEventHandler(BaseEventHandler):
         return PingRequestMessage()
 
 
-class GetGameListNetworkRequestEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
-        request_data = self._encode()
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameListResponseMessage):
-                UpdateGameList(
-                    client_state.profile, client_state.queue, response.games
-                ).execute()
-            if isinstance(response, ErrorMessage):
-                ErrorGettingGameList(
-                    client_state.profile,
-                    client_state.queue,
-                ).execute()
-                logger.info(response.__dict__)
-        else:
-            ErrorGettingGameList(
-                client_state.profile,
-                client_state.queue,
-            ).execute()
-            logger.error("Error retrieving the game list from the server")
-
-    def _encode(self):
-        return GameListRequestMessage()
-
-
 common_handlers = {
     QuitGameEvent: QuitGameEventHandler,
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
-    GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
     JoinExistingGameEvent: JoinExistingGameEventHandler,
@@ -217,6 +187,7 @@ handlers_map = {
     **profile_event_handlers,
     **sound_event_handlers,
     **synchronization_event_handlers,
+    **game_list_event_handlers,
 }
 
 

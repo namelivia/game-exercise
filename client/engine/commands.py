@@ -12,9 +12,6 @@ from .events import (
     CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
-    GetGameListNetworkRequestEvent,
-    UpdateGameListEvent,
-    ErrorGettingGameListEvent,
     ErrorCreatingGameEvent,
     ErrorJoiningGameEvent,
 )
@@ -55,12 +52,6 @@ class SetPlayerName(Command):
         self.events = [
             SetPlayerNameEvent(name),
         ]
-
-
-class UpdateGameList(Command):
-    def __init__(self, profile, queue, games):
-        super().__init__(profile, queue, "Updating game list")
-        self.events = [UpdateGameListEvent(games)]
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
@@ -136,19 +127,7 @@ class PingTheServer(Command):
         self.events = [PingNetworkRequestEvent()]
 
 
-class GetGameList(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Get Game List")
-        self.events = [GetGameListNetworkRequestEvent()]
-
-
 # ==== Errors
-class ErrorGettingGameList(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Error Getting Game List")
-        self.events = [ErrorGettingGameListEvent()]
-
-
 class ErrorCreatingGame(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Error Creating game")

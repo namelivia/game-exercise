@@ -78,26 +78,12 @@ class PingNetworkRequestEvent(Event):
     pass
 
 
-class GetGameListNetworkRequestEvent(Event):
-    pass
-
-
-class ErrorGettingGameListEvent(Event):
-    pass
-
-
 class ErrorCreatingGameEvent(Event):
     pass
 
 
 class ErrorJoiningGameEvent(Event):
     pass
-
-
-class UpdateGameListEvent(InGameEvent):
-    def __init__(self, games):
-        super().__init__()
-        self.games = games
 
 
 class SetPlayerNameEvent(Event):

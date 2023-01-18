@@ -10,6 +10,9 @@ from client.engine.features.synchronization.events import (
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
 )
+from client.engine.features.game_list.events import (
+    UpdateGameListEvent,
+)
 from client.engine.events import (
     SetPlayerNameEvent,
     QuitGameEvent,
@@ -19,7 +22,6 @@ from client.engine.events import (
     CreateAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
-    UpdateGameListEvent,
 )
 from client.engine.features.user_input.commands import (
     UserTyped,
@@ -27,6 +29,9 @@ from client.engine.features.user_input.commands import (
 from client.engine.features.synchronization.commands import (
     UpdateGame,
     RequestGameStatus,
+)
+from client.engine.features.game_list.commands import (
+    UpdateGameList,
 )
 from client.engine.commands import (
     QuitGame,
@@ -38,7 +43,6 @@ from client.engine.commands import (
     RequestJoiningAGame,
     RequestGameCreation,
     SetPlayerName,
-    UpdateGameList,
 )
 from common.messages import (
     GameInfoMessage,

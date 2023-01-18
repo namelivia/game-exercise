@@ -3,9 +3,12 @@ from .ui import GameListTitle, Games, Background, ErrorPopup, ErrorJoiningPopup
 from client.engine.features.user_input.events import (
     UserTypedEvent,
 )
-from client.engine.events import (
+from client.engine.features.game_list.events import (
     UpdateGameListEvent,
     ErrorGettingGameListEvent,
+)
+from client.engine.features.game_list.commands import GetGameList
+from client.engine.events import (
     ErrorJoiningGameEvent,
 )
 
@@ -30,8 +33,6 @@ class GameList(Screen):
             ErrorGettingGameListEvent: self.on_error_getting_game_list,
             ErrorJoiningGameEvent: self.on_error_joining_game,
         }
-
-        from client.engine.commands import GetGameList
 
         GetGameList(self.client_state.profile, self.client_state.queue).execute()
 
