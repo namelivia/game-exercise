@@ -50,10 +50,10 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
                 ).execute()
             if isinstance(response, ErrorMessage):
                 logger.error(response.__dict__)
+                # TODO: Currently I'm not doing anything with this
         else:
             logger.error("Server error")
-            # This should be done at game level
-            # BackToLobby(client_state.profile, client_state.queue).execute()
+            # TODO: Currently I'm not doing anything with this
 
     def _encode(self, game_id, pointer, profile_id):
         return GetGameStatus(game_id, pointer, profile_id)
