@@ -217,9 +217,9 @@ class InGame(Screen):
             ).execute()
 
     def _get_chat_message_by_event_id(self, event_id):
-        for message in self.data["chat_messages"]:
-            if message["event_id"] == event_id:
-                return message
+        for entry in enumerate(self.data["chat_messages"]):
+            if entry[1]["event_id"] == event_id:
+                return entry
         return None  # This should not happen
 
     def on_chat_message_errored(self, event):
@@ -227,12 +227,12 @@ class InGame(Screen):
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
-        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
-        message["confirmation"] = "ERROR"
+        index = self._get_chat_message_by_event_id(event.chat_message_event_id)[0]
+        del self.data["chat_messages"][index]
 
     def on_chat_message_confirmed(self, event):
         logger.info("[Screen] Chat message confirmed")
-        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)[1]
         message["confirmation"] = "OK"
 
     def _get_symbol_placement_by_event_id(self, event_id):
