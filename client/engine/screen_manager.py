@@ -1,55 +1,51 @@
-from client.engine.commands import UserTyped
 from client.engine.event_handler import EventHandler
 from client.game.event_handler import EventHandler as GameEventHandler
-from client.engine.commands import RequestGameStatus
+from client.engine.server_polling import ServerPolling
+from client.engine.user_input import UserInput
+
+# from client.engine.primitives.event import InGameEvent
 from .events_processor import EventsProcessor
 
 
 class ScreenManager:
-
-    # Would I need all this? Maybe not, only someties if using pygame
     def __init__(self, client_state, input_manager, graphics):
-        self.client_state = client_state  # Always
-        self.graphics = graphics  # Only pygame
-        self.input_manager = input_manager  # Only pygame
-
-        self.event_processor = EventsProcessor([EventHandler(), GameEventHandler()])
-
-    def _read_user_input(self):
-        if self.input_manager is not None:
-            user_events = self.input_manager.read()  # Get the user input
-            for user_event in user_events:
-                # Execute a command that will push the user input event to the queue
-                UserTyped(
-                    self.client_state.profile, self.client_state.queue, user_event
-                ).execute()
-
-    def _push_polling_event(self):
-        # Do the polling once every 100 cycles
-        polling_rate = 100
-        game_id = self.client_state.profile.game_id
-        if self.client_state.clock.get() % polling_rate == 0 and game_id is not None:
-            RequestGameStatus(
-                self.client_state.profile,
-                self.client_state.queue,
-                game_id,
-                self.client_state.profile.game_event_pointer,
-            ).execute()
-
-    def run(self):
-        self.client_state.clock.tick()  # Update the clock
-        self._push_polling_event()
-        queued_event = self.client_state.queue.pop()  # Fetch the latest event
-
-        self.event_processor.handle(  # Process the event
-            queued_event, self.client_state
+        self.client_state = client_state
+        self.graphics = graphics
+        self.input_manager = input_manager
+        self.event_processor = EventsProcessor(
+            [EventHandler(), GameEventHandler()]  # Regular events and in game events
         )
 
-        self.graphics.render(
-            self.client_state.get_current_screen()
-        )  # Render the screen
+    # Main loop
+    def run(self) -> None:
 
-        self._read_user_input()
+        # 1 - Increase the clock
+        self.client_state.clock.tick()
 
-        # The screens may also use the event to update their internal state
-        self.client_state.get_current_screen().update(queued_event)
+        # 2 - Push a sever polling event if needed
+        ServerPolling.push_polling_event_if_needed(self.client_state)
+
+        # 3 - Fetch and handle the latest event
+        event = self.client_state.queue.pop()
+        """
+        # TODO: I don't like this if
+        if not isinstance(event, InGameEvent):
+            self.event_processor.handle(event, self.client_state)
+        """
+        self.event_processor.handle(event, self.client_state)
+
+        # 4 - Draw the screen
+        self.graphics.render(self.client_state.get_current_screen())
+
+        # 5 - Read user input
+        UserInput.process(self.input_manager, self.client_state)
+
+        # 6 - Update the current screen
+        """
+        # TODO: I don't like this if
+        in_game_event = None
+        if isinstance(event, InGameEvent):
+            in_game_event = event
+        """
+        in_game_event = event
+        self.client_state.get_current_screen().update(in_game_event)

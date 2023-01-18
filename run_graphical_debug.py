@@ -7,7 +7,7 @@ from client.engine.game_data import GameData
 
 from client.engine.events import GameCreatedInGameEvent
 from client.engine.events import PlayerJoinedInGameEvent
-from client.engine.events import PlayerPlacedSymbolInGameEvent
+from client.engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
 
 USES_PYGAME = True
 

@@ -1,3 +1,8 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 class TextInputManager:
     def read(self):
 
@@ -48,5 +53,5 @@ class TextInputManager:
         try:
             return [mapping[user_input]]
         except KeyError:
-            print("Input not recognized")
+            logger.error("Input not recognized")
             return []

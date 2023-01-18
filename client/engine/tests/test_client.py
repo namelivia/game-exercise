@@ -2,42 +2,51 @@ from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.general_state.profile.profile import Profile
 from client.engine.event_handler import EventHandler
-from client.engine.events import (
+from client.engine.features.user_input.events import (
     UserTypedEvent,
-    SetPlayerNameEvent,
-    QuitGameEvent,
+)
+from client.engine.features.synchronization.events import (
     UpdateGameEvent,
-    JoinExistingGameEvent,
-    NewGameRequestEvent,
-    InitiateGameEvent,
-    CreateAGameNetworkRequestEvent,
-    PingNetworkRequestEvent,
-    JoinAGameNetworkRequestEvent,
     RefreshGameStatusEvent,
     RefreshGameStatusNetworkRequestEvent,
-    TurnSoundOnEvent,
-    TurnSoundOffEvent,
-    ChatMessageInGameEvent,
+)
+from client.engine.features.game_list.events import (
     UpdateGameListEvent,
+)
+from client.engine.features.game_management.events import (
+    JoinExistingGameEvent,
+    NewGameRequestEvent,
+    CreateAGameNetworkRequestEvent,
+    JoinAGameNetworkRequestEvent,
+)
+from client.engine.events import (
+    SetPlayerNameEvent,
+    QuitGameEvent,
+    InitiateGameEvent,
+    PingNetworkRequestEvent,
+)
+from client.engine.features.user_input.commands import (
+    UserTyped,
+)
+from client.engine.features.synchronization.commands import (
+    UpdateGame,
+    RequestGameStatus,
+)
+from client.engine.features.game_list.commands import (
+    UpdateGameList,
 )
 from client.engine.commands import (
     QuitGame,
-    UserTyped,
-    UpdateGame,
     InitiateGame,
     PingTheServer,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
-    PlayerPlacedSymbolInGameCommand,
-    RequestGameStatus,
+    SetPlayerName,
+)
+from client.engine.features.game_management.commands import (
     RequestJoiningAGame,
     RequestGameCreation,
-    TurnSoundOn,
-    SetPlayerName,
-    TurnSoundOff,
-    ChatMessageInGameCommand,
-    UpdateGameList,
 )
 from common.messages import (
     GameInfoMessage,
@@ -46,6 +55,7 @@ from common.messages import (
     PingRequestMessage,
 )
 from client.engine.game_data import GameData
+from client.engine.features.sound.events import PlaySoundEvent
 import mock
 
 
@@ -68,38 +78,6 @@ class TestClient(TestCase):
         self.event_handler.handle(event, client_state)
         m_pygame_quit.assert_called_once_with()
         m_exit.assert_called_once_with()
-
-    @mock.patch("client.engine.persistence.persistence.Persistence.save")
-    def test_turning_sound_on(self, m_save):
-        profile = Profile(
-            key="key",
-            id="id",
-            game_id="game_id",
-            game_event_pointer=0,
-            sound_on=False,
-        )
-        TurnSoundOn(self.profile, self.queue).execute()
-        event = self.queue.pop()
-        assert isinstance(event, TurnSoundOnEvent)
-        client_state = mock.Mock()  # TODO: I don't like I have to define this
-        client_state.profile = profile
-        self.event_handler.handle(event, client_state)
-        assert client_state.profile.sound_on is True
-        m_save.assert_called_once_with(profile, "key")
-
-    @mock.patch("client.engine.persistence.persistence.Persistence.save")
-    def test_turning_sound_off(self, m_save):
-        profile = Profile(
-            key="key", id="id", game_id="game_id", game_event_pointer=0, sound_on=True
-        )
-        TurnSoundOff(self.profile, self.queue).execute()
-        event = self.queue.pop()
-        assert isinstance(event, TurnSoundOffEvent)
-        client_state = mock.Mock()  # TODO: I don't like I have to define this
-        client_state.profile = profile
-        self.event_handler.handle(event, client_state)
-        assert client_state.profile.sound_on is False
-        m_save.assert_called_once_with(profile, "key")
 
     def test_user_typing(self):
         UserTyped(self.profile, self.queue, "f").execute()
@@ -168,6 +146,11 @@ class TestClient(TestCase):
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PlaySoundEvent)
+
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
         assert isinstance(
             event, InitiateGameEvent
         )  # Event to be picked up by the game logic
@@ -189,12 +172,6 @@ class TestClient(TestCase):
 
     def test_player_wins(self):
         PlayerWinsInGameCommand(self.profile, self.queue, "some_player_id").execute()
-        # TODO: Finish this test
-
-    def test_player_placed_symbol(self):
-        PlayerPlacedSymbolInGameCommand(
-            self.profile, self.queue, "some_player_id", 2
-        ).execute()
         # TODO: Finish this test
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
@@ -274,6 +251,11 @@ class TestClient(TestCase):
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
 
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PlaySoundEvent)
+
         # An event to initalize the game locally is sourced
         event = self.queue.pop()
         assert isinstance(event, InitiateGameEvent)
@@ -325,6 +307,11 @@ class TestClient(TestCase):
 
         # Assert the command has been correctly sent. To test the data payload that piece of code should be refactored
         m_send_command.assert_called_once()
+
+        event = (
+            self.queue.pop()
+        )  # TODO: Manage the case of commands that queue several events
+        assert isinstance(event, PlaySoundEvent)
 
         # An event to initalize the game locally is sourced
         event = self.queue.pop()
@@ -387,25 +374,6 @@ class TestClient(TestCase):
         # Assert the ping message has been correctly sent.
         m_send_command.assert_called_once()
         assert isinstance(m_send_command.call_args.args[0], PingRequestMessage)
-
-    def test_sending_an_ingame_chat_message(self):
-        # When there are new events to process these will be pushed to the queue
-        profile = Profile(
-            key="key",
-            id="id",
-            game_id="game_id",
-            game_event_pointer=0,
-            sound_on=False,
-        )
-        assert profile.name is None
-        ChatMessageInGameCommand(
-            profile, self.queue, "player_id", "test message"
-        ).execute()
-        event = (
-            self.queue.pop()
-        )  # TODO: Manage the case of commands that queue several events
-        assert isinstance(event, ChatMessageInGameEvent)
-        # Event to be picked up by the game logic
 
     def test_updating_the_game_list(self):
         # When there are new events to process these will be pushed to the queue

@@ -1,36 +1,15 @@
 from client.engine.primitives.command import Command
 from .events import (
     QuitGameEvent,
-    UserTypedEvent,
-    UpdateGameEvent,
     InitiateGameEvent,
     SetInternalGameInformationEvent,
     SetPlayerNameEvent,
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
-    RefreshGameStatusEvent,
-    RefreshGameStatusNetworkRequestEvent,
-    PlayerPlacedSymbolInGameEvent,
-    ChatMessageInGameEvent,
-    UpdateProfilesInGameEvent,
-    NewGameRequestEvent,
-    JoinExistingGameEvent,
-    CreateAGameNetworkRequestEvent,
-    JoinAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
-    GetGameListNetworkRequestEvent,
-    UpdateGameListEvent,
-    TurnSoundOnEvent,
-    TurnSoundOffEvent,
-    ErrorGettingGameListEvent,
-    ErrorCreatingGameEvent,
-    ErrorJoiningGameEvent,
-    GetProfilesEvent,
-    SetProfileEvent,
-    NewProfileEvent,
-    ProfileSetInGameEvent,
 )
+from client.engine.features.sound.events import PlaySoundEvent
 
 """
 Commands are called externally, and are defined by 1 or many events.
@@ -48,60 +27,12 @@ class QuitGame(Command):
         self.queue.put(QuitGameEvent())
 
 
-class UserTyped(Command):
-    def __init__(self, profile, queue, key):
-        super().__init__(profile, queue, f"User typed key {key}")
-        self.key = key
-
-    def execute(self):
-        self.queue.put(UserTypedEvent(self.key))
-
-
-class TurnSoundOn(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Turning sound ON")
-        self.events = [
-            TurnSoundOnEvent(),
-        ]
-
-
-class SetProfile(Command):
-    def __init__(self, profile, queue, key):
-        super().__init__(profile, queue, f"Setting profile {key}")
-        self.events = [
-            SetProfileEvent(key),
-        ]
-
-
-class NewProfile(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Setting new profile")
-        self.events = [
-            NewProfileEvent(),
-        ]
-
-
-class ProfileIsSet(Command):
-    def __init__(self, profile, queue, key):
-        super().__init__(profile, queue, f"Profile set to {key}")
-        self.events = [
-            ProfileSetInGameEvent(key),
-        ]
-
-
-class TurnSoundOff(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Turning sound OFF")
-        self.events = [
-            TurnSoundOffEvent(),
-        ]
-
-
 # ======= GAME STATE SYNC =======
 class InitiateGame(Command):
     def __init__(self, profile, queue, game_data):
         super().__init__(profile, queue, f"Locally initializing game {game_data.id}")
         self.events = [
+            PlaySoundEvent("start_game"),
             InitiateGameEvent(
                 game_data
             ),  # Event to be picked up by the game event handler
@@ -115,27 +46,6 @@ class SetPlayerName(Command):
         self.events = [
             SetPlayerNameEvent(name),
         ]
-
-
-class UpdateGame(Command):
-    def __init__(self, profile, queue, events):
-        super().__init__(profile, queue, "Locally updating game")
-        self.events = [UpdateGameEvent(events)]
-
-
-class UpdateGameList(Command):
-    def __init__(self, profile, queue, games):
-        super().__init__(profile, queue, "Updating game list")
-        self.events = [UpdateGameListEvent(games)]
-
-
-# This says server events but these are GAME events (put on the game data by the server)
-class ProcessServerEvents(Command):
-    def __init__(self, profile, queue, events):
-        super().__init__(
-            profile, queue, f"Processing {len(events)} unprocessed server events"
-        )
-        self.events = events
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
@@ -178,122 +88,8 @@ class PlayerWinsInGameCommand(Command):
         ]
 
 
-# This one seems specific
-class PlayerPlacedSymbolInGameCommand(Command):
-    def __init__(self, profile, queue, player_id, position):
-        super().__init__(
-            profile, queue, f"Player {player_id} placed a symbol on position {position}"
-        )
-        self.events = [
-            PlayerPlacedSymbolInGameEvent(
-                player_id, position
-            )  # Event to be picked up by the screen event handler
-            # I should pick this event on the game but
-            # Still don't do anything with this event
-        ]
-
-
-# This one seems specific
-class ChatMessageInGameCommand(Command):
-    def __init__(self, profile, queue, player_id, message):
-        super().__init__(profile, queue, f"Player {player_id} says: {message}")
-        self.events = [
-            ChatMessageInGameEvent(
-                player_id, message
-            )  # Event to be picked up by the screen event handler
-            # I should pick this event on the game but
-            # Still don't do anything with this event
-        ]
-
-
-# ==== This one is to request the game status (polling)
-class RequestGameStatus(Command):
-    def __init__(self, profile, queue, game_id, pointer):
-        super().__init__(
-            profile,
-            queue,
-            f"Request refreshing the status of game {game_id} pointer {pointer}",
-        )
-        self.events = [RefreshGameStatusEvent(game_id, pointer)]
-
-
-class RequestGameCreation(Command):
-    def __init__(self, profile, queue, new_game_name):
-        super().__init__(
-            profile, queue, f"Request creating a game called {new_game_name}"
-        )
-        self.events = [NewGameRequestEvent(new_game_name)]
-
-
-class RequestJoiningAGame(Command):
-    def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, f"Request joining game {game_id}")
-        self.events = [JoinExistingGameEvent(game_id)]
-
-
 # ==== These are network requests
-class RefreshGameStatus(Command):
-    def __init__(self, profile, queue, game_id, pointer):
-        super().__init__(
-            profile, queue, f"Refresh game status {game_id} pointer {pointer}"
-        )
-        self.events = [RefreshGameStatusNetworkRequestEvent(game_id, pointer)]
-
-
-class CreateAGame(Command):
-    def __init__(self, profile, queue, new_game_name):
-        super().__init__(profile, queue, f"Create a new game called {new_game_name}")
-        self.events = [CreateAGameNetworkRequestEvent(new_game_name)]
-
-
-class JoinAGame(Command):
-    def __init__(self, profile, queue, game_id):
-        super().__init__(profile, queue, f"Join game {game_id}")
-        self.events = [JoinAGameNetworkRequestEvent(game_id)]
-
-
 class PingTheServer(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Ping the server")
         self.events = [PingNetworkRequestEvent()]
-
-
-class GetGameList(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Get Game List")
-        self.events = [GetGameListNetworkRequestEvent()]
-
-
-class GetProfiles(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Get Profiles List")
-        self.events = [GetProfilesEvent()]
-
-
-class UpdateProfiles(Command):
-    def __init__(self, profile, queue, profiles):
-        super().__init__(profile, queue, "Profile list retrieved")
-        self.events = [
-            UpdateProfilesInGameEvent(
-                profiles
-            )  # Event to be picked up by the screen event handler
-        ]
-
-
-# ==== Errors
-class ErrorGettingGameList(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Error Getting Game List")
-        self.events = [ErrorGettingGameListEvent()]
-
-
-class ErrorCreatingGame(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Error Creating game")
-        self.events = [ErrorCreatingGameEvent()]
-
-
-class ErrorJoiningGame(Command):
-    def __init__(self, profile, queue):
-        super().__init__(profile, queue, "Error Joining game")
-        self.events = [ErrorJoiningGameEvent()]

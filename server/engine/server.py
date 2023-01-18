@@ -34,9 +34,13 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
         decoded = pickle.loads(raw_command)
         # TODO: Deal with malformed commands
         if isinstance(decoded, PlaceASymbolMessage):
-            return PlaceSymbol(decoded.game_id, decoded.player_id, decoded.position)
+            return PlaceSymbol(
+                decoded.game_id, decoded.event_id, decoded.player_id, decoded.position
+            )
         if isinstance(decoded, SendChatMessage):
-            return SendChat(decoded.game_id, decoded.player_id, decoded.message)
+            return SendChat(
+                decoded.game_id, decoded.event_id, decoded.player_id, decoded.message
+            )
         if isinstance(decoded, CreateAGameMessage):
             return CreateGame(decoded.name, decoded.player_id)
         if isinstance(decoded, JoinAGameMessage):

@@ -13,15 +13,27 @@ from .ui import (
     StatusIndicator,
     WinnerIndicator,
 )
-from client.engine.events import UserTypedEvent
-from client.game.commands import PlaySound
+import logging
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.features.sound.commands import PlaySound
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
-    PlayerPlacedSymbolInGameEvent,
-    ChatMessageInGameEvent,
 )
+from client.engine.features.chat.events import (
+    ChatMessageInGameEvent,
+    ChatMessageErroredEvent,
+    ChatMessageConfirmedInGameEvent,
+)
+from client.engine.features.pieces.events import (
+    PlayerPlacedSymbolInGameEvent,
+    SymbolPlacedConfirmedInGameEvent,
+    SymbolPlacedErroredEvent,
+)
+from client.game.pieces.commands import RequestPlaceASymbol
+
+logger = logging.getLogger(__name__)
 
 
 class InGame(Screen):
@@ -74,6 +86,10 @@ class InGame(Screen):
             PlayerWinsInGameEvent: self.on_player_wins,
             PlayerPlacedSymbolInGameEvent: self.on_player_placed_symbol,
             ChatMessageInGameEvent: self.on_chat_message,
+            ChatMessageErroredEvent: self.on_chat_message_errored,
+            ChatMessageConfirmedInGameEvent: self.on_chat_message_confirmed,
+            SymbolPlacedConfirmedInGameEvent: self.on_symbol_placement_confirmed,
+            SymbolPlacedErroredEvent: self.on_symbol_placement_errored,
         }
 
     def _process_event(self, event):
@@ -89,7 +105,8 @@ class InGame(Screen):
         # Avoid circular import
         from client.game.commands import (
             BackToLobby,
-            RequestPlaceASymbol,
+        )
+        from client.game.chat.commands import (
             RequestSendChat,
         )
 
@@ -125,9 +142,10 @@ class InGame(Screen):
                 self.ui_elements[7].focus()
                 return
         if event.key in "012345678":
-            RequestPlaceASymbol(
-                self.client_state.profile, self.client_state.queue, event.key
-            ).execute()
+            if self._position_is_valid(int(event.key)):
+                RequestPlaceASymbol(
+                    self.client_state.profile, self.client_state.queue, event.key
+                ).execute()
             return
         if event.key == "backspace" and self.data["chat_focused"]:
             PlaySound(
@@ -141,10 +159,13 @@ class InGame(Screen):
             ).execute()
             self.data["chat_input"] += event.key
 
+    def _position_is_valid(self, position):
+        # TODO: Write these validation rules, this is to validate in the client
+        # to avoid always validating on the server side.
+        # But it will be validated on the server anyway.
+        return True
+
     def on_game_created(self, event):
-        print(
-            "New Game created event, do something play some music, update the internal state or something"
-        )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
@@ -152,9 +173,6 @@ class InGame(Screen):
         self.ui_elements[1].play()
 
     def on_player_joined(self, event):
-        print(
-            "New Player Joined event, do something play some music, update the internal state or something"
-        )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
@@ -162,9 +180,6 @@ class InGame(Screen):
         self.data["status"] = "It is player 1 turn"
 
     def on_player_wins(self, event):
-        print(
-            "A player won the game, do something play some music, update the internal state or something"
-        )
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
@@ -173,23 +188,72 @@ class InGame(Screen):
 
     def on_player_placed_symbol(self, event):
         if event.player_id == self.data["players"][0]:
-            self.data["board"][event.position] = "blue"
+            self.data["board"][event.position] = {
+                "event_id": event.id,
+                "color": "blue",
+                "confirmation": event.confirmation,
+            }
             self.data["status"] = "It is player 2 turn"
         else:
-            self.data["board"][event.position] = "red"
+            self.data["board"][event.position] = {
+                "event_id": event.id,
+                "color": "red",
+                "confirmation": event.confirmation,
+            }
             self.data["status"] = "It is player 1 turn"
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
         ).execute()
 
     def on_chat_message(self, event):
-        self.data["chat_messages"].append(
-            {
-                "player_id": event.player_id,
-                "message": event.message,
-            }
-        )
-        print(self.data["chat_messages"])
+        logger.info("[Screen] Incoming chat message")
+        # This is not working because the ingame event has another id
+        # Check  if the message is already there waiting for confirmation
+        already_there = self._get_chat_message_by_event_id(event.original_event_id)
+        if not already_there:
+            self.data["chat_messages"].append(
+                {
+                    "event_id": event.id,
+                    "player_id": event.player_id,
+                    "message": event.message,
+                    "confirmation": event.confirmation,
+                }
+            )
+            PlaySound(
+                self.client_state.profile, self.client_state.queue, "start_game"
+            ).execute()
+
+    def _get_chat_message_by_event_id(self, event_id):
+        for entry in enumerate(self.data["chat_messages"]):
+            if entry[1]["event_id"] == event_id:
+                return entry
+        return None  # This should not happen
+
+    def on_chat_message_errored(self, event):
+        logger.info("[Screen] Chat message errored")
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
+        index = self._get_chat_message_by_event_id(event.chat_message_event_id)[0]
+        del self.data["chat_messages"][index]
+
+    def on_chat_message_confirmed(self, event):
+        logger.info("[Screen] Chat message confirmed")
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)[1]
+        message["confirmation"] = "OK"
+
+    def _get_symbol_placement_by_event_id(self, event_id):
+        for board_entry in enumerate(self.data["board"]):
+            if board_entry[1] is not None and board_entry[1]["event_id"] == event_id:
+                return board_entry
+        return None  # This should not happen
+
+    def on_symbol_placement_confirmed(self, event):
+        logger.info("[Screen] Symbol placement confirmed")
+        place = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[1]
+        place["confirmation"] = "OK"
+
+    def on_symbol_placement_errored(self, event):
+        logger.info("[Screen] Symbol placement errored")
+        index = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[0]
+        self.data["board"][index] = None

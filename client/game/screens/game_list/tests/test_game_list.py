@@ -2,7 +2,8 @@ from types import SimpleNamespace
 from unittest import TestCase
 from client.game.screens.game_list.game_list import GameList
 from client.engine.visual_regression.visual_regression import VisualRegression
-from client.engine.events import UpdateGameListEvent, UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.features.game_list.events import UpdateGameListEvent
 import mock
 
 
@@ -12,7 +13,7 @@ class TestGameList(TestCase):
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.game_list = GameList(self.client_state)
 
-    @mock.patch("client.engine.commands.RequestJoiningAGame")
+    @mock.patch("client.game.screens.game_list.game_list.RequestJoiningAGame")
     def test_game_list(self, m_request_joining_game):
 
         # Empty screen

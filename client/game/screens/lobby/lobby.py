@@ -4,7 +4,7 @@ from .ui import (
     OptionList,
     Background,
 )
-from client.engine.events import UserTypedEvent
+from client.engine.features.user_input.events import UserTypedEvent
 
 
 class Lobby(Screen):
@@ -48,9 +48,7 @@ class Lobby(Screen):
         # These actions, some may update the data, others run commands, who knows
         key = event.key
         if key == "1":
-            command = NewGame(self.client_state.profile, self.client_state.queue)
-            print(command)
-            command.execute()
+            NewGame(self.client_state.profile, self.client_state.queue).execute()
         if key == "2":
             GoToJoinAGame(self.client_state.profile, self.client_state.queue).execute()
         if key == "3":

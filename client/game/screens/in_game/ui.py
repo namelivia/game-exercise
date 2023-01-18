@@ -61,7 +61,8 @@ class ChatMessages(UIElement):
     def _get_message_string(self, message, index):
         player_id = message["player_id"]
         contents = message["message"]
-        return f"{player_id}: {contents}"
+        confirmation = message["confirmation"]
+        return f"{player_id}: {contents} | {confirmation}"
 
     def __init__(self, messages):
         self.shapes = [
@@ -252,22 +253,38 @@ class Board(UIElement):
 
         for index, ball in enumerate(data["board"]):
             if ball is not None:
-                if ball == "blue":
+                if ball["color"] == "blue" and ball["confirmation"] == "OK":
                     self.shapes.append(
                         Image(
                             "client/game/images/blue_ball.png",
                             self.positions[index][0],
                             self.positions[index][1],
                         )
-                    ),
-                else:
+                    )
+                if ball["color"] == "blue" and ball["confirmation"] == "pending":
+                    self.shapes.append(
+                        Image(
+                            "client/game/images/blue_ball_pending.png",
+                            self.positions[index][0],
+                            self.positions[index][1],
+                        )
+                    )
+                if ball["color"] == "red" and ball["confirmation"] == "OK":
                     self.shapes.append(
                         Image(
                             "client/game/images/red_ball.png",
                             self.positions[index][0],
                             self.positions[index][1],
                         )
-                    ),
+                    )
+                if ball["color"] == "red" and ball["confirmation"] == "pending":
+                    self.shapes.append(
+                        Image(
+                            "client/game/images/red_ball_pending.png",
+                            self.positions[index][0],
+                            self.positions[index][1],
+                        )
+                    )
 
 
 class StatusIndicator(UIElement):

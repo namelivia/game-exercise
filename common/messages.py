@@ -28,17 +28,34 @@ class JoinAGameMessage:
 
 
 class PlaceASymbolMessage:
-    def __init__(self, game_id, player_id, position):
+    def __init__(self, game_id, event_id, player_id, position):
         self.game_id = game_id
+        self.event_id = event_id
         self.player_id = player_id
         self.position = position
 
 
 class SendChatMessage:
-    def __init__(self, game_id, player_id, message):
+    def __init__(self, game_id, event_id, player_id, message):
         self.game_id = game_id
+        self.event_id = event_id
         self.player_id = player_id
         self.message = message
+
+
+class ChatMessageConfirmation:
+    def __init__(self, event_id):
+        self.event_id = event_id
+
+
+class SymbolPlacedConfirmation:
+    def __init__(self, event_id):
+        self.event_id = event_id
+
+
+class ChatMessageError:
+    def __init__(self, event_id):
+        self.event_id = event_id
 
 
 class ErrorMessage:

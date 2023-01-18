@@ -13,43 +13,5 @@ class ScreenTransitionEvent(Event):
         self.dest_screen = dest_screen
 
 
-class PlaceASymbolRequestEvent(Event):
-    def __init__(self, position):
-        super().__init__()
-        self.position = position
-
-
-class SendChatRequestEvent(Event):
-    def __init__(self, message):
-        super().__init__()
-        self.message = message
-
-
-class SendChatNetworkRequestEvent(Event):
-    def __init__(self, game_id, message):
-        super().__init__()
-        self.game_id = game_id
-        self.message = message
-
-
 class ClearInternalGameInformationEvent:
     pass
-
-
-class PlaceASymbolNetworkRequestEvent(Event):
-    def __init__(self, game_id, position):
-        super().__init__()
-        self.game_id = game_id
-        self.position = position
-
-
-class PlaySoundEvent(Event):
-    def __init__(self, sound):
-        super().__init__()
-        self.sound = sound
-
-
-class PlayMusicEvent(Event):
-    def __init__(self, music):
-        super().__init__()
-        self.music = music

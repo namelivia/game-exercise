@@ -79,7 +79,7 @@ class Game:
         if player_id not in self.players:
             raise InvalidCommandError("Player has no access to the game")
 
-    def place(self, player, position):
+    def place(self, event_id, player, position):
         if player not in self.players:
             raise InvalidCommandError("Player has no access to the game")
         if self.winner is not None:
@@ -93,14 +93,14 @@ class Game:
             if self.board[position] is not None:
                 raise InvalidCommandError("Position already taken")
             self.board[position] = player
-            self.events.append(PlayerPlacedSymbol(player, position))
+            self.events.append(PlayerPlacedSymbol(event_id, player, position))
             self.turn = self._next_turn()
             self.winner = self._check_if_there_is_a_winner()
         except IndexError:
             raise InvalidCommandError("Position out of bounds")
 
-    def add_chat_message(self, player, message):
+    def add_chat_message(self, event_id, player, message):
         if player not in self.players:
             raise InvalidCommandError("Player has no access to the game")
         # Only players in the game can send chat messages
-        self.events.append(ChatMessageEvent(player, message))
+        self.events.append(ChatMessageEvent(event_id, player, message))
