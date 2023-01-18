@@ -1,4 +1,4 @@
-from client.engine.commands import RequestGameStatus
+from client.engine.features.synchronization.commands import RequestGameStatus
 
 
 class ServerPolling:

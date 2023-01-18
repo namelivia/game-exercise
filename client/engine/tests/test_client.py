@@ -5,32 +5,36 @@ from client.engine.event_handler import EventHandler
 from client.engine.features.user_input.events import (
     UserTypedEvent,
 )
+from client.engine.features.synchronization.events import (
+    UpdateGameEvent,
+    RefreshGameStatusEvent,
+    RefreshGameStatusNetworkRequestEvent,
+)
 from client.engine.events import (
     SetPlayerNameEvent,
     QuitGameEvent,
-    UpdateGameEvent,
     JoinExistingGameEvent,
     NewGameRequestEvent,
     InitiateGameEvent,
     CreateAGameNetworkRequestEvent,
     PingNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
-    RefreshGameStatusEvent,
-    RefreshGameStatusNetworkRequestEvent,
     UpdateGameListEvent,
 )
 from client.engine.features.user_input.commands import (
     UserTyped,
 )
+from client.engine.features.synchronization.commands import (
+    UpdateGame,
+    RequestGameStatus,
+)
 from client.engine.commands import (
     QuitGame,
-    UpdateGame,
     InitiateGame,
     PingTheServer,
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
-    RequestGameStatus,
     RequestJoiningAGame,
     RequestGameCreation,
     SetPlayerName,
