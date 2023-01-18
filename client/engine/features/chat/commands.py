@@ -35,6 +35,6 @@ class SendChat(Command):
 
 
 class ChatMessageErroredCommand(Command):
-    def __init__(self, profile, queue, player_id, event_id):
+    def __init__(self, profile, queue, event_id):
         super().__init__(profile, queue, f"Chat message event {event_id} errored")
         self.events = [ChatMessageErroredEvent(event_id)]

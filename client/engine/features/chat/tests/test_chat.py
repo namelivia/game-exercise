@@ -2,8 +2,16 @@ from unittest import TestCase
 from client.engine.general_state.queue import Queue
 from client.engine.general_state.profile.profile import Profile
 from client.engine.event_handler import EventHandler
-from client.engine.features.chat.commands import SendChat
-from client.engine.features.chat.events import SendChatNetworkRequestEvent
+from client.engine.features.chat.commands import (
+    SendChat,
+    ChatMessageConfirmedCommand,
+    ChatMessageErroredCommand,
+)
+from client.engine.features.chat.events import (
+    SendChatNetworkRequestEvent,
+    ChatMessageConfirmedInGameEvent,
+    ChatMessageErroredEvent,
+)
 from common.messages import (
     SendChatMessage,
     ChatMessageConfirmation,
@@ -20,31 +28,7 @@ class TestChat(TestCase):
         self.queue = Queue()
         self.event_handler = EventHandler()
 
-    def test_chat_message_confirmed_command(self):
-        # When there are new events to process these will be pushed to the queue
-        profile = Profile(
-            key="key",
-            id="id",
-            game_id="game_id",
-            game_event_pointer=0,
-            sound_on=False,
-        )
-        assert profile.name is None
-        # TODO: Finish writing this test
-
     def test_chat_message_in_game_command(self):
-        # When there are new events to process these will be pushed to the queue
-        profile = Profile(
-            key="key",
-            id="id",
-            game_id="game_id",
-            game_event_pointer=0,
-            sound_on=False,
-        )
-        assert profile.name is None
-        # TODO: Finish writing this test
-
-    def test_chat_message_errored_command(self):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(
             key="key",
@@ -156,3 +140,21 @@ class TestChat(TestCase):
         assert request_message.message == "This is a test message"
 
         m_error.assert_called_once_with(self.profile, self.queue, "event_id")
+
+    def test_confirm_a_chat_has_been_posted(self):
+        # The command is invoked confirming the chat post
+        ChatMessageConfirmedCommand(self.profile, self.queue, "event_id").execute()
+
+        # The command creates an ingame event
+        in_game_confirm_event = self.queue.pop()
+        assert isinstance(in_game_confirm_event, ChatMessageConfirmedInGameEvent)
+        in_game_confirm_event.event_id = "event_id"
+
+    def test_error_when_a_chat_was_incorrectly_posted(self):
+        # The command is invoked signaling something went wrong
+        ChatMessageErroredCommand(self.profile, self.queue, "event_id").execute()
+
+        # The command creates an ingame event
+        in_game_error_event = self.queue.pop()
+        assert isinstance(in_game_error_event, ChatMessageErroredEvent)
+        in_game_error_event.event_id = "event_id"
