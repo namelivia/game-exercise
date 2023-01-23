@@ -235,7 +235,8 @@ class InGame(Screen):
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
         index = self._get_chat_message_by_event_id(event.chat_message_event_id)[0]
-        del self.data["chat_messages"][index]
+        if self.data["on_chat_messages"]["confirmation"] == "pending":
+            del self.data["chat_messages"][index]
 
     def on_chat_message_confirmed(self, event):
         logger.info("[Screen] Chat message confirmed")
@@ -256,4 +257,5 @@ class InGame(Screen):
     def on_symbol_placement_errored(self, event):
         logger.info("[Screen] Symbol placement errored")
         index = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[0]
-        self.data["board"][index] = None
+        if self.data["board"]["confirmation"] == "pending":
+            self.data["board"][index] = None
