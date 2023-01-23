@@ -85,7 +85,7 @@ class TestInGameScreen(TestCase):
         # When a player has placed a symbol on the board music plays
         screen = InGame(
             mock.Mock(),
-            [PlayerPlacedSymbolInGameEvent("player_1_id", 5, "ok")],
+            [PlayerPlacedSymbolInGameEvent("player_1_id", 5, "OK")],
             "some_game_id",
             "some_game_name",
             [
@@ -96,8 +96,7 @@ class TestInGameScreen(TestCase):
         screen._advance_event_pointer()
         # Assert the command has been issued
 
-    @mock.patch("client.engine.commands.SetPlayerName")
-    def test_in_game(self, m_set_player_name):
+    def test_in_game(self):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
@@ -127,7 +126,7 @@ class TestInGameScreen(TestCase):
         # A chat message comes
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_2_id", message="good luck", confirmation="ok"
+                player_id="player_2_id", message="good luck", confirmation="OK"
             ),
         )
 
@@ -160,7 +159,7 @@ class TestInGameScreen(TestCase):
         # Player 2 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id", position=1, confirmation="ok"
+                player_id="player_2_id", position=1, confirmation="OK"
             ),
         )
 
@@ -172,7 +171,7 @@ class TestInGameScreen(TestCase):
         # Player 1 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id", position=3, confirmation="ok"
+                player_id="player_1_id", position=3, confirmation="OK"
             ),
         )
 
@@ -184,7 +183,7 @@ class TestInGameScreen(TestCase):
         # Player 2 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id", position=6, confirmation="ok"
+                player_id="player_2_id", position=6, confirmation="OK"
             ),
         )
 
@@ -196,7 +195,7 @@ class TestInGameScreen(TestCase):
         # Player 1 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id", position=4, confirmation="ok"
+                player_id="player_1_id", position=4, confirmation="OK"
             ),
         )
 
@@ -208,7 +207,7 @@ class TestInGameScreen(TestCase):
         # Player 2 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id", position=2, confirmation="ok"
+                player_id="player_2_id", position=2, confirmation="OK"
             ),
         )
 
@@ -220,7 +219,7 @@ class TestInGameScreen(TestCase):
         # Player 1 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id", position=7, confirmation="ok"
+                player_id="player_1_id", position=7, confirmation="OK"
             ),
         )
 
@@ -232,7 +231,7 @@ class TestInGameScreen(TestCase):
         # Player 2 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_2_id", position=5, confirmation="ok"
+                player_id="player_2_id", position=5, confirmation="OK"
             ),
         )
 
@@ -244,7 +243,7 @@ class TestInGameScreen(TestCase):
         # Player 1 places symbol
         self.in_game.update(
             PlayerPlacedSymbolInGameEvent(
-                player_id="player_1_id", position=8, confirmation="ok"
+                player_id="player_1_id", position=8, confirmation="OK"
             ),
         )
 
@@ -293,7 +292,7 @@ class TestInGameScreen(TestCase):
 
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="gg bro", confirmation="ok"
+                player_id="player_1_id", message="gg bro", confirmation="OK"
             ),
         )
 
@@ -311,8 +310,7 @@ class TestInGameScreen(TestCase):
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_unfocused.png",
         )
 
-    @mock.patch("client.engine.commands.SetPlayerName")
-    def test_many_chat_messages(self, m_set_player_name):
+    def test_many_chat_messages(self):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
@@ -329,52 +327,52 @@ class TestInGameScreen(TestCase):
         # Many chat messages come
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 1", confirmation="ok"
+                player_id="player_1_id", message="message 1", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 2", confirmation="ok"
+                player_id="player_1_id", message="message 2", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 3", confirmation="ok"
+                player_id="player_1_id", message="message 3", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 4", confirmation="ok"
+                player_id="player_1_id", message="message 4", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 5", confirmation="ok"
+                player_id="player_1_id", message="message 5", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 6", confirmation="ok"
+                player_id="player_1_id", message="message 6", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 7", confirmation="ok"
+                player_id="player_1_id", message="message 7", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 8", confirmation="ok"
+                player_id="player_1_id", message="message 8", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 9", confirmation="ok"
+                player_id="player_1_id", message="message 9", confirmation="OK"
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 10", confirmation="ok"
+                player_id="player_1_id", message="message 10", confirmation="OK"
             ),
         )
 
