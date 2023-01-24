@@ -12,6 +12,7 @@ pre-commit = "*"
 pytest-cov = "*"
 codecov = "*"
 numpy = "*"
+mypy = "*"
 
 [packages]
 
@@ -19,3 +20,6 @@ pygame = "*"
 
 [requires]
 python_version = "3.7"
+
+[scripts]
+mypy= "mypy"
