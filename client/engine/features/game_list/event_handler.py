@@ -1,4 +1,5 @@
 import logging
+from typing import TYPE_CHECKING
 from client.engine.primitives.event_handler import EventHandler
 from client.engine.network.channel import Channel
 from .commands import (
@@ -14,12 +15,17 @@ from common.messages import (
     GameListResponseMessage,
 )
 
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+
 
 logger = logging.getLogger(__name__)
 
 
 class GetGameListNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "GetGameListNetworkRequestEvent", client_state: "ClientState"
+    ):
         request_data = self._encode()
 
         response = Channel.send_command(request_data)
