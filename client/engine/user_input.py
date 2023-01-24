@@ -1,9 +1,14 @@
 from client.engine.features.user_input.commands import UserTyped
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+    from client.engine.input_manager import InputManager
 
 
 class UserInput:
     @staticmethod
-    def process(input_manager, client_state):
+    def process(input_manager: "InputManager", client_state: "ClientState") -> None:
         # Get events from user input
         user_events = input_manager.read()
 
