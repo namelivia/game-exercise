@@ -1,20 +1,28 @@
 from abc import ABC
+from typing import TYPE_CHECKING, List, Optional, Callable, Dict
+
+if TYPE_CHECKING:
+    from client.engine.primitives.event import InGameEvent
+    from client.engine.primitives.ui import UIElement
+    from client.engine.client_state import ClientState
 
 
 class Screen(ABC):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         self.client_state = client_state
-        self.ui_elements = []  # UI elements on the screen
-        self.timers = {}  # Time based actions
-        self.events = {}  # Event based actions
+        self.ui_elements: List[UIElement] = []  # UI elements on the screen
+        self.timers: Dict[int, Callable] = {}  # Time based actions
+        self.events: dict = (
+            {}
+        )  # Event based actions # TODO: Type this, should be InGameEvent > Callable
         self.initial_time = client_state.clock.get()
         self.time = 0
-        self.data = {}  # Internal state for the screen
+        self.data: dict = {}  # Internal state for the screen
 
-    def get_ui_elements(self):
+    def get_ui_elements(self) -> List["UIElement"]:
         return self.ui_elements
 
-    def update(self, event=None):
+    def update(self, event: Optional["InGameEvent"] = None) -> None:
         self.time = self.client_state.clock.get() - self.initial_time
 
         # TODO: These can be skipped sometimes, I have to fix this
@@ -29,4 +37,6 @@ class Screen(ABC):
                 self.events[event_type](event)
 
         # Update ui elements they need to access the data and time to do so
-        [element.update(self.time, self.data) for element in self.ui_elements]
+        for element in self.ui_elements:
+            element.update(self.time, self.data)
+        return None

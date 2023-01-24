@@ -2,26 +2,28 @@ from abc import ABC
 
 
 class Shape(ABC):
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
         self.hidden = False
 
-    def hide(self):
+    def hide(self) -> None:
         self.hidden = True
 
-    def show(self):
+    def show(self) -> None:
         self.hidden = False
 
-    def set_x(self, x):
+    def set_x(self, x: int) -> None:
         self.x = x
 
-    def set_y(self, y):
+    def set_y(self, y: int) -> None:
         self.y = y
 
-    def render(self, window):
+    # TODO: Can I type pygame types?
+    def render(self, window) -> None:
         pass
 
-    def draw(self, window):
+    # TODO: Can I type pygame types?
+    def draw(self, window) -> None:
         if not self.hidden:
             self.render(window)
