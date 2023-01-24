@@ -1,4 +1,10 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.command import Command
+
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
+
 from .events import (
     ChatMessageConfirmedInGameEvent,
     ChatMessageErroredEvent,
@@ -9,14 +15,21 @@ from .events import (
 
 class ChatMessageConfirmedCommand(Command):
     # Let the game know that the chat message has been correctly delivered
-    def __init__(self, profile, queue, event_id):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
         super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
         self.events = [ChatMessageConfirmedInGameEvent(event_id)]
 
 
 class ChatMessageInGameCommand(Command):
     # Let the game know that there is a new chat message on the screen
-    def __init__(self, profile, queue, event_id, player_id, message):
+    def __init__(
+        self,
+        profile: "Profile",
+        queue: "Queue",
+        event_id: str,
+        player_id: str,
+        message: str,
+    ):
         super().__init__(profile, queue, f"Player {player_id} says: {message}")
         self.events = [
             ChatMessageInGameEvent(
@@ -27,7 +40,14 @@ class ChatMessageInGameCommand(Command):
 
 class SendChat(Command):
     # Send a chat message request to the server
-    def __init__(self, profile, queue, game_id, event_id, message):
+    def __init__(
+        self,
+        profile: "Profile",
+        queue: "Queue",
+        game_id: str,
+        event_id: str,
+        message: str,
+    ):
         super().__init__(
             profile, queue, f"Send chat message on game {game_id}: {message}"
         )
@@ -35,6 +55,6 @@ class SendChat(Command):
 
 
 class ChatMessageErroredCommand(Command):
-    def __init__(self, profile, queue, event_id):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
         super().__init__(profile, queue, f"Chat message event {event_id} errored")
         self.events = [ChatMessageErroredEvent(event_id)]

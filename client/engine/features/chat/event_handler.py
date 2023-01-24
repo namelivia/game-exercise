@@ -1,4 +1,5 @@
 import logging
+from typing import TYPE_CHECKING
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
@@ -21,18 +22,25 @@ from common.events import (
 
 from client.engine.network.channel import Channel
 
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+
 logger = logging.getLogger(__name__)
 
 
 class ChatMessageConfirmationHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "ChatMessageConfirmation", client_state: "ClientState"
+    ) -> None:
         ChatMessageConfirmedCommand(
             client_state.profile, client_state.queue, event.event_id
         ).execute()
 
 
 class ChatMessageInGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "ChatMessageInGameEvent", client_state: "ClientState"
+    ) -> None:
         # This is a chat message coming from the server
         ChatMessageInGameCommand(
             client_state.profile,
@@ -44,7 +52,9 @@ class ChatMessageInGameEventHandler(EventHandler):
 
 
 class SendChatRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "SendChatRequestEvent", client_state: "ClientState"
+    ) -> None:
         SendChat(
             client_state.profile,
             client_state.queue,
@@ -55,7 +65,9 @@ class SendChatRequestEventHandler(EventHandler):
 
 
 class SendChatNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "SendChatNetworkRequestEvent", client_state: "ClientState"
+    ) -> None:
         request_data = self._encode(
             client_state.profile.game_id,
             event.event_id,
