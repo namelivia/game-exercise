@@ -1,10 +1,14 @@
 # TODO: Temporary location
 import numpy
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from client.engine.primitives.screen import Screen
 
 
 class VisualRegression:
     @staticmethod
-    def _render_surface(screen):
+    def _render_surface(screen: "Screen") -> Any:
         """
         Renders a new surface to be compared
         """
@@ -14,11 +18,12 @@ class VisualRegression:
         pygame.init()
         surface = pygame.Surface((640, 480))
         surface.fill((255, 255, 255))  # Clear the surface
-        [ui_element.render(surface) for ui_element in ui_elements]
+        for ui_element in ui_elements:
+            ui_element.render(surface)
         return surface
 
     @staticmethod
-    def assert_matches_snapshot(screen, snapshot_key):
+    def assert_matches_snapshot(screen: "Screen", snapshot_key: str) -> None:
         import pygame
 
         new_surface = VisualRegression._render_surface(screen)
@@ -30,7 +35,7 @@ class VisualRegression:
         numpy.testing.assert_array_equal(new_array, screenshot_array)
 
     @staticmethod
-    def generate_snapshot(screen, snapshot_key):
+    def generate_snapshot(screen: "Screen", snapshot_key: str) -> None:
         # Used to generate snapshots
         import pygame
 
