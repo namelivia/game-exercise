@@ -159,7 +159,9 @@ class GameStatus(Command):
         super().execute()
         game = self.load_game(self.game_id)
         game.player_can_get_status(self.player_id)
-        events = game.events[self.pointer :]
+        # TODO: There is a problem here, the list of events can be too big and therefore the message be too big
+        # events = game.events[self.pointer :]
+        events = game.events[self.pointer : self.pointer + 3]  # Will this work??
         return GameEventsMessage(events)
 
 

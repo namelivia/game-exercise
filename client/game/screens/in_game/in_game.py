@@ -52,15 +52,15 @@ class InGame(Screen):
             "chat_focused": False,
             "chat_messages": [],
             "board": [
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
-                None,
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
+                {"fallback": None, "current": None},
             ],
         }
 
@@ -142,7 +142,7 @@ class InGame(Screen):
                 self.ui_elements[7].focus()
                 return
         if event.key in "012345678":
-            if self._position_is_valid(int(event.key)):
+            if self._move_is_valid(int(event.key)):
                 RequestPlaceASymbol(
                     self.client_state.profile, self.client_state.queue, event.key
                 ).execute()
@@ -159,11 +159,18 @@ class InGame(Screen):
             ).execute()
             self.data["chat_input"] += event.key
 
+    def _its_players_turn(self, player_id):
+        if player_id == self.data["players"][0]:
+            return self.data["status"] == "It is player 1 turn"
+        return self.data["status"] == "It is player 2 turn"
+
     def _position_is_valid(self, position):
-        # TODO: Write these validation rules, this is to validate in the client
-        # to avoid always validating on the server side.
-        # But it will be validated on the server anyway.
-        return True
+        return self.data["board"][position]["current"] is None
+
+    def _move_is_valid(self, position):
+        return self._its_players_turn(
+            self.client_state.profile.id
+        ) and self._position_is_valid(position)
 
     def on_game_created(self, event):
         PlaySound(
@@ -186,21 +193,27 @@ class InGame(Screen):
         self.data["winner"] = event.player_id
         self.data["status"] = "The game is finished"
 
+    def _store_current_data_as_fallback(self, index):
+        self.data["board"][index]["fallback"] = self.data["board"][index]["current"]
+
+    def _get_color_for_player(self, player_id):
+        if player_id == self.data["players"][0]:
+            return "blue"
+        return "red"
+
+    def _get_new_status_after_placing(self, player_id):
+        if player_id == self.data["players"][0]:
+            return "It is player 2 turn"
+        return "It is player 1 turn"
+
     def on_player_placed_symbol(self, event):
-        if event.player_id == self.data["players"][0]:
-            self.data["board"][event.position] = {
-                "event_id": event.id,
-                "color": "blue",
-                "confirmation": event.confirmation,
-            }
-            self.data["status"] = "It is player 2 turn"
-        else:
-            self.data["board"][event.position] = {
-                "event_id": event.id,
-                "color": "red",
-                "confirmation": event.confirmation,
-            }
-            self.data["status"] = "It is player 1 turn"
+        self._store_current_data_as_fallback(event.position)
+        self.data["board"][event.position]["current"] = {
+            "event_id": event.id,
+            "color": self._get_color_for_player(event.player_id),
+            "confirmation": event.confirmation,
+        }
+        self.data["status"] = self._get_new_status_after_placing(event.player_id)
         PlaySound(
             self.client_state.profile, self.client_state.queue, "select"
         ).execute()
@@ -243,8 +256,11 @@ class InGame(Screen):
         message = self._get_chat_message_by_event_id(event.chat_message_event_id)[1]
         message["confirmation"] = "OK"
 
+    def _get_current_board_positions(self):
+        return [board_entry["current"] for board_entry in self.data["board"]]
+
     def _get_symbol_placement_by_event_id(self, event_id):
-        for board_entry in enumerate(self.data["board"]):
+        for board_entry in enumerate(self._get_current_board_positions()):
             if board_entry[1] is not None and board_entry[1]["event_id"] == event_id:
                 return board_entry
         return None  # This should not happen
@@ -254,11 +270,11 @@ class InGame(Screen):
         place = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[1]
         place["confirmation"] = "OK"
 
+    def _fallback_to_previous_state(self, index):
+        self.data["board"][index]["current"] = self.data["board"][index]["fallback"]
+
     def on_symbol_placement_errored(self, event):
-        # TODO: There is still unresolved problem here, a user can "override" a move
-        # by trying to place in an already occupied place, and if the server rejects
-        # the request it will be cleared from the board.
         logger.info("[Screen] Symbol placement errored")
         index = self._get_symbol_placement_by_event_id(event.place_symbol_event_id)[0]
-        if self.data["board"][index]["confirmation"] == "pending":
-            self.data["board"][index] = None
+        if self.data["board"][index]["current"]["confirmation"] == "pending":
+            self._fallback_to_previous_state(index)

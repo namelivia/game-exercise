@@ -201,6 +201,9 @@ class Board(UIElement):
             ),
         ]
 
+    def _get_current_board_positions(self, data):
+        return [board_entry["current"] for board_entry in data["board"]]
+
     def update(self, time, data):
         self.shapes = [
             Image("client/game/images/board.png", 300, 50),
@@ -251,7 +254,7 @@ class Board(UIElement):
             ),
         ]
 
-        for index, ball in enumerate(data["board"]):
+        for index, ball in enumerate(self._get_current_board_positions(data)):
             if ball is not None:
                 if ball["color"] == "blue" and ball["confirmation"] == "OK":
                     self.shapes.append(

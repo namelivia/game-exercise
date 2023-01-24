@@ -6,6 +6,7 @@ from client.engine.features.chat.events import (
 from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
+    SymbolPlacedErroredEvent,
 )
 from client.engine.events import (
     GameCreatedInGameEvent,
@@ -34,8 +35,10 @@ class TestInGameScreen(TestCase):
         screen._advance_event_pointer()
         m_back_to_lobby.assert_called_once()
 
+    @mock.patch("client.game.screens.in_game.in_game.InGame._move_is_valid")
     @mock.patch("client.game.screens.in_game.in_game.RequestPlaceASymbol")
-    def test_user_places_a_symbol_on_the_board(self, m_place_a_symbol):
+    def test_user_places_a_symbol_on_the_board(self, m_place_a_symbol, m_validation):
+        m_validation.return_value = True
         # User presses the number 5 to request placing a symbol
         screen = InGame(
             mock.Mock(),
@@ -48,6 +51,7 @@ class TestInGameScreen(TestCase):
             ],
         )
         screen._advance_event_pointer()
+        m_validation.assert_called_once_with(5)
         m_place_a_symbol.assert_called_once()
 
     def test_game_has_been_created(self):
@@ -190,6 +194,28 @@ class TestInGameScreen(TestCase):
         VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_4.png",
+        )
+
+        # Player attempts to place in a bad position
+        bad_move = PlayerPlacedSymbolInGameEvent(
+            player_id="player_1_id", position=6, confirmation="pending"
+        )
+        self.in_game.update(bad_move)
+
+        VisualRegression.assert_matches_snapshot(
+            self.in_game,
+            "./client/game/screens/in_game/tests/screenshots/in_game_bad_movement.png",
+        )
+
+        # The movement is rejected by the server and rolled back
+
+        self.in_game.update(
+            SymbolPlacedErroredEvent(place_symbol_event_id=bad_move.id),
+        )
+
+        VisualRegression.assert_matches_snapshot(
+            self.in_game,
+            "./client/game/screens/in_game/tests/screenshots/in_game_bad_movement_rollback.png",
         )
 
         # Player 1 places symbol
