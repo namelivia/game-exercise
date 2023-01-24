@@ -5,10 +5,21 @@ from client.engine.user_input import UserInput
 
 # from client.engine.primitives.event import InGameEvent
 from .events_processor import EventsProcessor
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+    from client.engine.input_manager import InputManager
+    from client.engine.graphics.graphics import Graphics
 
 
 class ScreenManager:
-    def __init__(self, client_state, input_manager, graphics):
+    def __init__(
+        self,
+        client_state: "ClientState",
+        input_manager: "InputManager",
+        graphics: "Graphics",
+    ):
         self.client_state = client_state
         self.graphics = graphics
         self.input_manager = input_manager
