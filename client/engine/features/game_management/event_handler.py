@@ -1,4 +1,5 @@
 import logging
+from typing import TYPE_CHECKING
 from client.engine.primitives.event_handler import EventHandler
 from client.engine.network.channel import Channel
 from .commands import (
@@ -22,24 +23,31 @@ from common.messages import (
 )
 from client.engine.game_data import GameData
 
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+
 
 logger = logging.getLogger(__name__)
 
 
 class NewGameRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: "NewGameRequestEvent", client_state: "ClientState") -> None:
         CreateAGame(
             client_state.profile, client_state.queue, event.new_game_name
         ).execute()
 
 
 class JoinExistingGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "JoinExistingGameEvent", client_state: "ClientState"
+    ) -> None:
         JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
 
 
 class CreateAGameNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "CreateAGameNetworkRequestEvent", client_state: "ClientState"
+    ) -> None:
         request_data = self._encode(client_state.profile.id, event.new_game_name)
 
         response = Channel.send_command(request_data)
@@ -73,7 +81,9 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
 
 
 class JoinAGameNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "JoinAGameNetworkRequestEvent", client_state: "ClientState"
+    ) -> None:
         request_data = self._encode(client_state.profile.id, event.game_id)
 
         response = Channel.send_command(request_data)
@@ -98,7 +108,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
             logger.error("Error Joining Game")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, profile_id, game_id):
+    def _encode(self, profile_id: str, game_id: str) -> JoinAGameMessage:
         return JoinAGameMessage(game_id, profile_id)
 
 

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class Channel:
     @staticmethod
-    def send_command(message: str) -> Optional[Any]:
+    def send_command(message: Any) -> Optional[Any]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.connect((IP, PORT))
