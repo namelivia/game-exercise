@@ -1,15 +1,14 @@
 from .input_manager import InputManager
 from .text_input_manager import TextInputManager
+from typing import List
 
 
 class Input:
-    def __init__(self, uses_pygame):
+    def __init__(self, uses_pygame: bool):
         if uses_pygame:
             self.manager = InputManager()
-        else:
-            self.manager = TextInputManager()
 
-    def read(self):
+    def read(self) -> List[str]:
         input_manager_events = self.manager.read()
 
         # This translates the normalized event names (needed for both text input and regular input)

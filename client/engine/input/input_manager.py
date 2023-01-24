@@ -1,10 +1,11 @@
 import pygame
+from typing import List
 
 
 class InputManager:
 
     # Map pygame events to custom events
-    def read(self):
+    def read(self) -> List[str]:
 
         mapping = {
             pygame.KEYDOWN: {
