@@ -1,3 +1,4 @@
+from typing import List
 from client.engine.primitives.event import Event, InGameEvent
 
 
@@ -22,12 +23,12 @@ class GetProfilesEvent(Event):
 
 
 class ProfilesUpdatedEvent(Event):
-    def __init__(self, profiles):
+    def __init__(self, profiles: List):
         super().__init__()
         self.profiles = profiles
 
 
 class UpdateProfilesInGameEvent(InGameEvent):
-    def __init__(self, profiles):
+    def __init__(self, profiles: List):
         super().__init__()
         self.profiles = profiles

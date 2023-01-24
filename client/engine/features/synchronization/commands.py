@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING, List
 from client.engine.primitives.command import Command
 from .events import (
     RefreshGameStatusNetworkRequestEvent,
@@ -5,9 +6,14 @@ from .events import (
     UpdateGameEvent,
 )
 
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
+    from client.engine.primitives.event import Event
+
 
 class RefreshGameStatus(Command):
-    def __init__(self, profile, queue, game_id, pointer):
+    def __init__(self, profile: "Profile", queue: "Queue", game_id: str, pointer: int):
         super().__init__(
             profile, queue, f"Refresh game status {game_id} pointer {pointer}"
         )
@@ -15,7 +21,7 @@ class RefreshGameStatus(Command):
 
 
 class RequestGameStatus(Command):
-    def __init__(self, profile, queue, game_id, pointer):
+    def __init__(self, profile: "Profile", queue: "Queue", game_id: str, pointer: int):
         super().__init__(
             profile,
             queue,
@@ -25,7 +31,7 @@ class RequestGameStatus(Command):
 
 
 class ProcessServerEvents(Command):
-    def __init__(self, profile, queue, events):
+    def __init__(self, profile: "Profile", queue: "Queue", events: List["Event"]):
         super().__init__(
             profile, queue, f"Processing {len(events)} unprocessed server events"
         )
@@ -33,6 +39,6 @@ class ProcessServerEvents(Command):
 
 
 class UpdateGame(Command):
-    def __init__(self, profile, queue, events):
+    def __init__(self, profile: "Profile", queue: "Queue", events: List["Event"]):
         super().__init__(profile, queue, "Locally updating game")
         self.events = [UpdateGameEvent(events)]

@@ -1,4 +1,4 @@
-from typing import Any
+from typing import TYPE_CHECKING, List
 from client.engine.primitives.command import Command
 from .events import (
     SetProfileEvent,
@@ -8,9 +8,13 @@ from .events import (
     UpdateProfilesInGameEvent,
 )
 
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
+
 
 class SetProfile(Command):
-    def __init__(self, profile: Any, queue: Any, key):
+    def __init__(self, profile: "Profile", queue: "Queue", key: str):
         super().__init__(profile, queue, f"Setting profile {key}")
         self.events = [
             SetProfileEvent(key),
@@ -18,7 +22,7 @@ class SetProfile(Command):
 
 
 class NewProfile(Command):
-    def __init__(self, profile: Any, queue: Any):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Setting new profile")
         self.events = [
             NewProfileEvent(),
@@ -26,7 +30,7 @@ class NewProfile(Command):
 
 
 class ProfileIsSet(Command):
-    def __init__(self, profile: Any, queue: Any, key):
+    def __init__(self, profile: "Profile", queue: "Queue", key: str):
         super().__init__(profile, queue, f"Profile set to {key}")
         self.events = [
             ProfileSetInGameEvent(key),
@@ -34,12 +38,12 @@ class ProfileIsSet(Command):
 
 
 class GetProfiles(Command):
-    def __init__(self, profile: Any, queue: Any):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Get Profiles List")
         self.events = [GetProfilesEvent()]
 
 
 class UpdateProfiles(Command):
-    def __init__(self, profile: Any, queue: Any, profiles):
+    def __init__(self, profile: "Profile", queue: "Queue", profiles: List):
         super().__init__(profile, queue, "Profile list retrieved")
         self.events = [UpdateProfilesInGameEvent(profiles)]

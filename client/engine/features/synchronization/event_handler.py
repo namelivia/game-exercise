@@ -17,12 +17,16 @@ from common.messages import (
     ErrorMessage,
 )
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
 
 logger = logging.getLogger(__name__)
 
 
 class UpdateGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: "UpdateGameEvent", client_state: "ClientState"):
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
         client_state.profile.set_game_event_pointer(game_event_pointer + len(events))
@@ -30,14 +34,16 @@ class UpdateGameEventHandler(EventHandler):
 
 
 class RefreshGameStatusEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: "RefreshGameStatusEvent", client_state: "ClientState"):
         RefreshGameStatus(
             client_state.profile, client_state.queue, event.game_id, event.pointer
         ).execute()
 
 
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "RefreshGameStatusNetworkRequestEvent", client_state: "ClientState"
+    ):
         request_data = self._encode(
             event.game_id, event.pointer, client_state.profile.id
         )
@@ -55,7 +61,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
             logger.error("Server error")
             # TODO: Currently I'm not doing anything with this
 
-    def _encode(self, game_id, pointer, profile_id):
+    def _encode(self, game_id: str, pointer: int, profile_id: str) -> "GetGameStatus":
         return GetGameStatus(game_id, pointer, profile_id)
 
 
