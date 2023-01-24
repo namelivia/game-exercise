@@ -1,6 +1,7 @@
 import socket
 import pickle
 import logging
+from typing import Optional, Any
 
 IP = "localhost"
 PORT = 1234
@@ -9,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class Channel:
     @staticmethod
-    def send_command(message):
+    def send_command(message: str) -> Optional[Any]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
                 sock.connect((IP, PORT))
