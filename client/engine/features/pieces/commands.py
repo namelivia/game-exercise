@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.command import Command
 from .events import (
     PlayerPlacedSymbolInGameEvent,
@@ -6,17 +7,28 @@ from .events import (
     SymbolPlacedErroredEvent,
 )
 
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
+
 
 class SymbolPlacedConfirmedCommand(Command):
     # Let the game know that the symbol has been correctly placed
-    def __init__(self, profile, queue, event_id):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
         super().__init__(profile, queue, f"Symbol placement event {event_id} confirmed")
         self.events = [SymbolPlacedConfirmedInGameEvent(event_id)]
 
 
 class PlayerPlacedSymbolInGameCommand(Command):
     # Let the game know that there is a new symbol placed on the screen
-    def __init__(self, profile, queue, event_id, player_id, position):
+    def __init__(
+        self,
+        profile: "Profile",
+        queue: "Queue",
+        event_id: str,
+        player_id: str,
+        position: int,
+    ):
         super().__init__(
             profile, queue, f"Player {player_id} placed a symbol on position {position}"
         )
@@ -29,7 +41,14 @@ class PlayerPlacedSymbolInGameCommand(Command):
 
 class PlaceASymbol(Command):
     # Send a symbol placement to the server
-    def __init__(self, profile, queue, game_id, event_id, position):
+    def __init__(
+        self,
+        profile: "Profile",
+        queue: "Queue",
+        game_id: str,
+        event_id: str,
+        position: int,
+    ):
         super().__init__(
             profile, queue, f"Place a symbol on game {game_id} on position {position}"
         )
@@ -38,6 +57,6 @@ class PlaceASymbol(Command):
 
 class SymbolPlacedErroredCommand(Command):
     # Let the game know that the symbol was not correctly placed and needs to be rolled back
-    def __init__(self, profile, queue, event_id):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
         super().__init__(profile, queue, f"Symbol place event {event_id} errored")
         self.events = [SymbolPlacedErroredEvent(event_id)]

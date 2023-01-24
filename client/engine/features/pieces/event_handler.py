@@ -1,4 +1,5 @@
 import logging
+from typing import TYPE_CHECKING
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
@@ -21,18 +22,28 @@ from common.events import (
 
 from client.engine.network.channel import Channel
 
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+
+
 logger = logging.getLogger(__name__)
 
 
 class PlayerPlacedSymbolConfirmationHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self,
+        event: "SymbolPlacedConfirmation",
+        client_state: "ClientState",
+    ):
         SymbolPlacedConfirmedCommand(
             client_state.profile, client_state.queue, event.event_id
         ).execute()
 
 
 class PlayerPlacedSymbolInGameEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "PlayerPlacedSymbolInGameEvent", client_state: "ClientState"
+    ):
         PlayerPlacedSymbolInGameCommand(
             client_state.profile,
             client_state.queue,
@@ -43,7 +54,7 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
 
 
 class PlaceASymbolRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: "PlaceASymbolRequestEvent", client_state: "ClientState"):
         PlaceASymbol(
             client_state.profile,
             client_state.queue,
@@ -54,7 +65,9 @@ class PlaceASymbolRequestEventHandler(EventHandler):
 
 
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "PlaceASymbolNetworkRequestEvent", client_state: "ClientState"
+    ):
         request_data = self._encode(
             client_state.profile.game_id,
             event.event_id,
@@ -79,7 +92,9 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
                 client_state.profile, client_state.queue, event.event_id
             ).execute()
 
-    def _encode(self, game_id, event_id, profile_id, position):
+    def _encode(
+        self, game_id: str, event_id: str, profile_id: str, position: int
+    ) -> PlaceASymbolMessage:
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 
 
