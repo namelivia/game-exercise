@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 import logging
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from .events import (
@@ -35,6 +36,10 @@ from client.engine.features.game_management.event_handler import (
     handlers_map as game_management_event_handlers,
 )
 
+if TYPE_CHECKING:
+    from client.engine.client_state import ClientState
+    from client.engine.primitives.event import Event
+
 logger = logging.getLogger(__name__)
 
 """
@@ -45,7 +50,7 @@ They do the actual procssing and can execute commands.
 
 # ======= GENERIC =======
 class QuitGameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: "QuitGameEvent", client_state: "ClientState") -> None:
         import pygame  # This is pygame dependent
         import sys
 
@@ -55,18 +60,20 @@ class QuitGameEventHandler(BaseEventHandler):
 
 # ======= GAME STATE SYNC =======
 class SetInternalGameInformationEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: "SetInternalGameInformationEvent", client_state: "ClientState"
+    ) -> None:
         client_state.profile.set_game(event.game_id)
         client_state.profile.set_game_event_pointer(0)
 
 
 class SetPlayerNameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: "SetPlayerNameEvent", client_state: "ClientState") -> None:
         client_state.profile.set_name(event.name)
 
 
 class PingNetworkRequestEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event, client_state: "ClientState") -> None:
         request_data = self._encode()
 
         response = Channel.send_command(request_data)
@@ -102,5 +109,5 @@ handlers_map = {
 
 
 class EventHandler:
-    def handle(self, event, client_state):
+    def handle(self, event: "Event", client_state: "ClientState") -> None:
         handlers_map[type(event)]().handle(event, client_state)

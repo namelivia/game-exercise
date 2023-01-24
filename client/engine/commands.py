@@ -22,9 +22,7 @@ processed.
 class QuitGame(Command):
     def __init__(self, profile, queue):
         super().__init__(profile, queue, "Exit from the game")
-
-    def execute(self):
-        self.queue.put(QuitGameEvent())
+        self.events = [QuitGameEvent()]
 
 
 # ======= GAME STATE SYNC =======
