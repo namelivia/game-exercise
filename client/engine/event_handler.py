@@ -37,7 +37,7 @@ from client.engine.features.game_management.event_handler import (
 )
 
 if TYPE_CHECKING:
-    from client.engine.client_state import ClientState
+    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)

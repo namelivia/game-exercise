@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, List, Optional, Callable, Dict
 if TYPE_CHECKING:
     from client.engine.primitives.event import InGameEvent
     from client.engine.primitives.ui import UIElement
-    from client.engine.client_state import ClientState
+    from client.engine.general_state.client_state import ClientState
 
 
 class Screen(ABC):

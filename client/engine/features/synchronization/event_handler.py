@@ -20,7 +20,7 @@ from common.messages import (
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from client.engine.client_state import ClientState
+    from client.engine.general_state.client_state import ClientState
 
 logger = logging.getLogger(__name__)
 

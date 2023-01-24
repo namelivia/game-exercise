@@ -2,7 +2,7 @@ from client.engine.features.synchronization.commands import RequestGameStatus
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from client.engine.client_state import ClientState
+    from client.engine.general_state.client_state import ClientState
 
 
 class ServerPolling:
