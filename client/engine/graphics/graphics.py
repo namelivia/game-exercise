@@ -1,5 +1,11 @@
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.primitives.screen import Screen
+
+
 class Graphics:
-    def __init__(self, uses_pygame):
+    def __init__(self, uses_pygame: bool) -> None:
         self.uses_pygame = uses_pygame
         if uses_pygame:
             import pygame
@@ -7,13 +13,16 @@ class Graphics:
             self.window = pygame.display.set_mode((640, 480))
         else:
             self.window = None
+        return None
 
-    def render(self, screen):
+    def render(self, screen: "Screen") -> None:
         ui_elements = screen.get_ui_elements()
         import pygame
 
         if self.uses_pygame:
             self.window.fill((255, 255, 255))  # Clear the window (only pygame)
-        [ui_element.render(self.window) for ui_element in ui_elements]  # Always
+        for ui_element in ui_elements:
+            ui_element.render(self.window)
         if self.uses_pygame:
             pygame.display.update()  # Only pygame
+        return None

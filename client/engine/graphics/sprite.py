@@ -1,10 +1,11 @@
 import os
 import pygame
 from re import sub
+from typing import List
 
 
 class Sprite(pygame.sprite.Sprite):
-    def _get_frames_path(self, folder):
+    def _get_frames_path(self, folder: str) -> List:
         path, _, files = next(os.walk(folder))
         files = [os.path.join(path, file) for file in files]
         files.sort(
@@ -12,10 +13,10 @@ class Sprite(pygame.sprite.Sprite):
         )  # Sort filenames by the number included in it
         return files
 
-    def _animation_length(self):
+    def _animation_length(self) -> int:
         return len(self.sprites)
 
-    def __init__(self, folder, x, y, initial_frame):
+    def __init__(self, folder: str, x: int, y: int, initial_frame: int):
         super().__init__()
         self.sprites = [
             pygame.image.load(frame) for frame in self._get_frames_path(folder)
@@ -27,12 +28,12 @@ class Sprite(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-    def update(self):
+    def update(self) -> None:
         self.current_sprite = (self.current_sprite + 1) % self._animation_length()
         self.image = self.sprites[self.current_sprite]
 
-    def set_x(self, x):
+    def set_x(self, x: int) -> None:
         self.rect.x = x
 
-    def set_y(self, y):
+    def set_y(self, y: int) -> None:
         self.rect.y = y
