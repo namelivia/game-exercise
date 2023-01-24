@@ -3,13 +3,13 @@ import pygame
 
 class Music:
     @staticmethod
-    def load(path):
+    def load(path: str) -> None:
         pygame.mixer.music.load(path)
 
     @staticmethod
-    def play():
+    def play() -> None:
         pygame.mixer.music.play(-1)
 
     @staticmethod
-    def stop():
+    def stop() -> None:
         pygame.mixer.music.stop()
