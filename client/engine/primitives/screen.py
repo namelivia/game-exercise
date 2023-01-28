@@ -13,7 +13,7 @@ class Screen(ABC):
         self.ui_elements: List[UIElement] = []  # UI elements on the screen
         self.timers: Dict[int, Callable[[], None]] = {}  # Time based actions
         self.events: Dict[
-            Any, Callable[["InGameEvent"], None]
+            Any, Callable[[Any], None]
         ] = (
             {}
         )  # Event based actions # TODO: Type this, should be InGameEvent > Callable

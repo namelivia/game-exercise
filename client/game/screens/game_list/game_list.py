@@ -12,10 +12,14 @@ from client.engine.features.game_management.commands import RequestJoiningAGame
 from client.engine.features.game_management.events import (
     ErrorJoiningGameEvent,
 )
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
 
 
 class GameList(Screen):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         super().__init__(client_state)
 
         self.data = {"games": []}
@@ -37,7 +41,7 @@ class GameList(Screen):
 
         GetGameList(self.client_state.profile, self.client_state.queue).execute()
 
-    def on_user_typed(self, event):
+    def on_user_typed(self, event: "UserTypedEvent") -> None:
         if event.key == "escape":
             # Avoid circular import
             from client.game.commands import BackToLobby
@@ -51,11 +55,11 @@ class GameList(Screen):
                 self.data["games"][int(event.key)].id,
             ).execute()
 
-    def on_game_list_updated(self, event):
+    def on_game_list_updated(self, event: "UpdateGameListEvent") -> None:
         self.data["games"] = event.games
 
-    def on_error_getting_game_list(self, event):
+    def on_error_getting_game_list(self, event: "ErrorGettingGameListEvent") -> None:
         self.ui_elements[3].show()
 
-    def on_error_joining_game(self, event):
+    def on_error_joining_game(self, event: "ErrorJoiningGameEvent") -> None:
         self.ui_elements[4].show()

@@ -18,3 +18,7 @@ class UIElement(ABC):
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
         pass
+
+    def show(self) -> None:
+        for shape in self.shapes:
+            shape.show()

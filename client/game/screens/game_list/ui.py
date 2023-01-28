@@ -1,55 +1,50 @@
 from client.engine.graphics.shapes import Text, Image, SmallText
 from client.engine.primitives.ui import UIElement
+from typing import List, Any, Dict
 
 
 class GameListTitle(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [
             Text("Game List", 20, 0),
         ]
 
 
 class Background(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [Image("client/game/images/background4.png", 0, 0)]
 
 
 class Games(UIElement):
-    def __init__(self, games):
+    def __init__(self, games: List[Any]):
         self.games = games
         self.shapes = [
-            SmallText(str(index) + " - " + str(event.name), 20, 50 + (20 * index))
-            for index, event in enumerate(games)
+            SmallText(str(index) + " - " + str(game.name), 20, 50 + (20 * index))
+            for index, game in enumerate(games)
         ]
 
-    def update(self, time, data):
+    def update(self, time: int, data: Dict[str, Any]) -> None:
         # What if data does not contain events? Throw an exception
         games = data["games"]
         self.shapes = [
-            SmallText(str(index) + " - " + str(event.name), 20, 50 + (20 * index))
-            for index, event in enumerate(games)
+            SmallText(str(index) + " - " + str(game.name), 20, 50 + (20 * index))
+            for index, game in enumerate(games)
         ]
 
 
 class ErrorPopup(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [
             Text("Error Getting Game List", 200, 250),
         ]
 
         self.shapes[0].hide()
 
-    def show(self):
-        self.shapes[0].show()
-
 
 class ErrorJoiningPopup(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [
             Text("Error Joining Game", 200, 250),
         ]
 
         self.shapes[0].hide()
-
-    def show(self):
-        self.shapes[0].show()
