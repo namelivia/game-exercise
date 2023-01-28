@@ -8,7 +8,7 @@ that operation.
 
 
 class ScreenTransitionEvent(Event):
-    def __init__(self, dest_screen):
+    def __init__(self, dest_screen: str):
         super().__init__()
         self.dest_screen = dest_screen
 

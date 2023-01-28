@@ -1,2 +1,2 @@
 #!/bin/bash
-pipenv run mypy client/game/screens --strict
+pipenv run mypy client --strict

@@ -30,7 +30,7 @@ class Rectangle(Shape):
         self.height = height
         self.color = color
 
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         if window is not None:  # TODO: only if pygame
             rectangle = pygame.Surface((self.width, self.height))
             rectangle.fill(self.color)

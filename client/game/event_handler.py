@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from client.engine.events import InitiateGameEvent
 from .events import (
@@ -25,6 +26,10 @@ from common.events import (
     PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
 )
 
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
+    from client.engine.primitives.event import Event
+
 """
 Currently event handlers are the one that do the processing.
 They do the actual procssing and can execute commands.
@@ -33,21 +38,25 @@ They do the actual procssing and can execute commands.
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class GameCreatedInGameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: GameCreatedInGameEvent, client_state: "ClientState"
+    ) -> None:
         GameCreatedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
 class PlayerJoinedInGameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: PlayerJoinedInGameEvent, client_state: "ClientState"
+    ) -> None:
         PlayerJoinedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
 class PlayerWinsInGameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: PlayerWinsInGameEvent, client_state: "ClientState") -> None:
         PlayerWinsInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
@@ -57,7 +66,7 @@ class PlayerWinsInGameEventHandler(BaseEventHandler):
 
 
 class InitiateGameEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: InitiateGameEvent, client_state: "ClientState") -> None:
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
         client_state.set_current_screen(
             InGame(
@@ -71,7 +80,7 @@ class InitiateGameEventHandler(BaseEventHandler):
 
 
 class ScreenTransitionEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event: ScreenTransitionEvent, client_state: "ClientState") -> None:
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
             client_state.set_current_screen(Intro(client_state))
@@ -94,7 +103,9 @@ class ScreenTransitionEventHandler(BaseEventHandler):
 
 
 class ClearInternalGameInformationEventHandler(BaseEventHandler):
-    def handle(self, event, client_state):
+    def handle(
+        self, event: ClearInternalGameInformationEvent, client_state: "ClientState"
+    ) -> None:
         client_state.profile.set_game(None)
         client_state.profile.set_game_event_pointer(None)
 
@@ -111,5 +122,5 @@ handlers_map = {
 
 
 class EventHandler:
-    def handle(self, event, client_state):
+    def handle(self, event: "Event", client_state: "ClientState") -> None:
         handlers_map[type(event)]().handle(event, client_state)

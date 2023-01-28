@@ -1,8 +1,13 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.command import Command
 from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
 )
 from .events import PlaceASymbolRequestEvent
+
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
 
 """
 Commands are called externally, and are defined by 1 or many events.
@@ -12,7 +17,7 @@ processed.
 
 
 class RequestPlaceASymbol(Command):
-    def __init__(self, profile, queue, position):
+    def __init__(self, profile: "Profile", queue: "Queue", position: int):
         super().__init__(
             profile, queue, f"Request placing a symbol on position {position}"
         )
