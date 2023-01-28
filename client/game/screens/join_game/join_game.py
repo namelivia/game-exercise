@@ -4,10 +4,14 @@ from client.engine.features.game_management.events import ErrorJoiningGameEvent
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.game_management.commands import RequestJoiningAGame
 from client.engine.features.sound.commands import PlaySound
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
 
 
 class JoinGame(Screen):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         super().__init__(client_state)
 
         self.data = {"game_id": ""}
@@ -23,7 +27,7 @@ class JoinGame(Screen):
             ErrorJoiningGameEvent: self.on_error_joining_game,
         }
 
-    def on_user_typed(self, event):
+    def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
             # Avoid circular import
             from client.game.commands import BackToLobby
@@ -50,5 +54,5 @@ class JoinGame(Screen):
             ).execute()
             self.data["game_id"] += event.key
 
-    def on_error_joining_game(self, event):
+    def on_error_joining_game(self, event: ErrorJoiningGameEvent) -> None:
         self.ui_elements[2].show()

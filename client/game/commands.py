@@ -1,9 +1,14 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.command import Command
 from client.engine.features.sound.events import PlaySoundEvent
 from .events import (
     ScreenTransitionEvent,
     ClearInternalGameInformationEvent,
 )
+
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
 
 """
 Commands are called externally, and are defined by 1 or many events.
@@ -14,7 +19,7 @@ processed.
 
 # ===== SCREEN CHANGE REQUESTS =====
 class BackToLobby(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move back to lobby")
         self.events = [
             ClearInternalGameInformationEvent(),
@@ -24,7 +29,7 @@ class BackToLobby(Command):
 
 
 class ToLobby(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move forward to lobby")
         self.events = [
             PlaySoundEvent("select"),
@@ -33,7 +38,7 @@ class ToLobby(Command):
 
 
 class NewGame(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to new game screen")
         self.events = [
             PlaySoundEvent("select"),
@@ -42,7 +47,7 @@ class NewGame(Command):
 
 
 class GoToJoinAGame(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to join game screen")
         self.events = [
             PlaySoundEvent("select"),
@@ -51,7 +56,7 @@ class GoToJoinAGame(Command):
 
 
 class GoToGameList(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to game list screen")
         self.events = [
             PlaySoundEvent("select"),
@@ -60,7 +65,7 @@ class GoToGameList(Command):
 
 
 class GoToOptions(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to options screen")
         self.events = [
             PlaySoundEvent("select"),
@@ -69,7 +74,7 @@ class GoToOptions(Command):
 
 
 class GoToCredits(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to options screen")
         self.events = [
             PlaySoundEvent("select"),
@@ -78,7 +83,7 @@ class GoToCredits(Command):
 
 
 class GoToSetName(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to set name screen")
         self.events = [
             PlaySoundEvent("select"),
@@ -87,7 +92,7 @@ class GoToSetName(Command):
 
 
 class GoToProfiles(Command):
-    def __init__(self, profile, queue):
+    def __init__(self, profile: "Profile", queue: "Queue"):
         super().__init__(profile, queue, "Move to the profiles screen")
         self.events = [
             PlaySoundEvent("select"),

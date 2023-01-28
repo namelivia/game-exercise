@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 class GameInfoMessage:
-    def __init__(self, game: GameData):
+    def __init__(self, game: "GameData"):
         self.id = game.id
         self.name = game.name
         self.players = game.players

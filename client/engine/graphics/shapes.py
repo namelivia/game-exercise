@@ -1,7 +1,7 @@
 import pygame
 from .sprite import Sprite
 from client.engine.primitives.shape import Shape
-from typing import Tuple
+from typing import Tuple, Any
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -13,7 +13,7 @@ class Text(Shape):
         self.message = message
         self.color = color
 
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         if window is not None:  # TODO: only if pygame
             font = pygame.font.Font(pygame.font.get_default_font(), 24)
             text_surface = font.render(self.message, True, self.color)
@@ -44,13 +44,13 @@ class SmallText(Shape):
         self.message = message
         self.color = color
 
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         if window is not None:  # TODO: only if pygame
             font = pygame.font.Font(pygame.font.get_default_font(), 12)
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 
-    def set_message(self, message):
+    def set_message(self, message: str) -> None:
         self.message = message
 
 
@@ -59,7 +59,7 @@ class Image(Shape):
         super().__init__(x, y)
         self.image = pygame.image.load(path)
 
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         if window is not None:  # TODO: only if pygame
             window.blit(self.image, dest=(self.x, self.y))
 
@@ -82,6 +82,6 @@ class Animation(Shape):
     def update(self) -> None:
         self.sprite_group.update()  # Calls update on every sprite on the group
 
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         if window is not None:  # TODO: only if pygame
             self.sprite_group.draw(window)

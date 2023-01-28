@@ -1,11 +1,16 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.screen import Screen
 from .ui import EnterNameMessage, Background
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.sound.commands import PlaySound
 
 
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
+
+
 class EnterName(Screen):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         super().__init__(client_state)
 
         self.data = {"name": ""}
@@ -17,7 +22,7 @@ class EnterName(Screen):
 
         self.events = {UserTypedEvent: self.on_user_typed}
 
-    def on_user_typed(self, event):
+    def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
             # Avoid circular import
             from client.game.commands import BackToLobby

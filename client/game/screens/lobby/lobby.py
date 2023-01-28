@@ -5,10 +5,14 @@ from .ui import (
     Background,
 )
 from client.engine.features.user_input.events import UserTypedEvent
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
 
 
 class Lobby(Screen):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         super().__init__(client_state)
 
         self.data = {"name": client_state.profile.name, "id": client_state.profile.id}
@@ -31,7 +35,7 @@ class Lobby(Screen):
 
         self.events = {UserTypedEvent: self.on_user_typed}
 
-    def on_user_typed(self, event):
+    def on_user_typed(self, event: UserTypedEvent) -> None:
         # Avoid circular import
         # Could these be not just game specific but screen specific?
         from client.game.commands import (

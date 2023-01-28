@@ -1,21 +1,22 @@
 from client.engine.graphics.shapes import Text, Image
 from client.engine.primitives.ui import UIElement
+from typing import Dict
 
 
 class WelcomeMessage(UIElement):
-    def __init__(self, name, id):
+    def __init__(self, name: str, id: str):
         self.name = name
         self.name = id
         self.shapes = [Text(f"Welcome to game, {name} {id}", 20, 0)]
 
 
 class Background(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [Image("client/game/images/background2.png", 0, 0)]
 
 
 class OptionList(UIElement):
-    def __init__(self, options):
+    def __init__(self, options: Dict[str, str]):
         self.options = options
         self.shapes = []
         for index, option in self.options.items():

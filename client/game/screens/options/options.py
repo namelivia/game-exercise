@@ -1,10 +1,15 @@
 from client.engine.primitives.screen import Screen
 from .ui import Background, OptionsTitle, OptionList
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.features.sound.commands import TurnSoundOn, TurnSoundOff
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
 
 
 class Options(Screen):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         super().__init__(client_state)
 
         self.ui_elements = [
@@ -15,7 +20,7 @@ class Options(Screen):
 
         self.events = {UserTypedEvent: self.on_user_typed}
 
-    def on_user_typed(self, event):
+    def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
             # Avoid circular import
             from client.game.commands import BackToLobby
@@ -23,10 +28,6 @@ class Options(Screen):
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
             return
         if event.key == "1":
-            from client.engine.commands import TurnSoundOn
-
             TurnSoundOn(self.client_state.profile, self.client_state.queue).execute()
         if event.key == "2":
-            from client.engine.commands import TurnSoundOff
-
             TurnSoundOff(self.client_state.profile, self.client_state.queue).execute()

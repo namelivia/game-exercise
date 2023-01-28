@@ -1,21 +1,22 @@
 from client.engine.graphics.shapes import Text, Image, SmallText
 from client.engine.primitives.ui import UIElement
+from typing import Dict, Any
 
 
 class ProfilesTitle(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [
             Text("Profiles", 20, 0),
         ]
 
 
 class Background(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [Image("client/game/images/background4.png", 0, 0)]
 
 
 class ProfileList(UIElement):
-    def __init__(self, profiles):
+    def __init__(self, profiles: Dict[str, str]):
         self.profiles = profiles
         self.shapes = [SmallText("0 - New profile", 20, 50)]
         self.shapes += [
@@ -25,7 +26,7 @@ class ProfileList(UIElement):
             for index, event in enumerate(profiles)
         ]
 
-    def update(self, time, data):
+    def update(self, time: int, data: Dict[str, Any]) -> None:
         # What if data does not contain events? Throw an exception
         profiles = data["profiles"]
         self.shapes = [SmallText("0 - New profile", 20, 50)]

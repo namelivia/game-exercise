@@ -8,10 +8,14 @@ from client.engine.features.profile.events import (
     UpdateProfilesInGameEvent,
 )
 from client.engine.features.profile.commands import NewProfile, SetProfile, GetProfiles
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
 
 
 class Profiles(Screen):
-    def __init__(self, client_state):
+    def __init__(self, client_state: "ClientState"):
         super().__init__(client_state)
 
         self.data = {"profiles": []}
@@ -29,7 +33,7 @@ class Profiles(Screen):
         }
         GetProfiles(self.client_state.profile, self.client_state.queue).execute()
 
-    def on_user_typed(self, event):
+    def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
             # Avoid circular import
             from client.game.commands import BackToLobby
@@ -46,10 +50,10 @@ class Profiles(Screen):
                 self.data["profiles"][int(event.key) - 1]["name"],
             ).execute()
 
-    def on_profiles_updated(self, event):
+    def on_profiles_updated(self, event: UpdateProfilesInGameEvent) -> None:
         self.data["profiles"] = event.profiles
 
-    def on_profile_set(self, event):
+    def on_profile_set(self, event: ProfileSetInGameEvent) -> None:
         # Avoid circular import
         from client.game.commands import BackToLobby
 

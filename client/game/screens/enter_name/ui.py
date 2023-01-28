@@ -3,7 +3,7 @@ from client.engine.primitives.ui import UIElement
 
 
 class EnterNameMessage(UIElement):
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
         self.shapes = [
             Text("Set name", 20, 0),
@@ -18,5 +18,5 @@ class EnterNameMessage(UIElement):
 
 
 class Background(UIElement):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes = [Image("client/game/images/background3.png", 0, 0)]
