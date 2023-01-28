@@ -1,2 +1,2 @@
 #!/bin/bash
-pipenv run mypy client --strict
+pipenv run mypy . --strict

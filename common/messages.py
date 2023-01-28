@@ -89,12 +89,12 @@ class GameListRequestMessage:
     pass
 
 
-class GameListResponseMessage:
-    def __init__(self, games: List[str]):
-        self.games = games  # TODO:  This could be too big for the channel
-
-
 class GameListResponseEntry:
     def __init__(self, game: "GameData"):
         self.id = game.id
         self.name = game.name
+
+
+class GameListResponseMessage:
+    def __init__(self, games: List[GameListResponseEntry]):
+        self.games = games  # TODO:  This could be too big for the channel

@@ -1,4 +1,5 @@
 import logging
+from typing import Any, TYPE_CHECKING
 import socketserver
 import pickle
 from .commands import (
@@ -24,13 +25,16 @@ from .errors import InvalidCommandError
 
 logger = logging.getLogger(__name__)
 
+if TYPE_CHECKING:
+    from .commands import Command
+
 """
 This just intializes the server
 """
 
 
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
-    def decode_command(self, raw_command):
+    def decode_command(self, raw_command: Any) -> "Command":
         decoded = pickle.loads(raw_command)
         # TODO: Deal with malformed commands
         if isinstance(decoded, PlaceASymbolMessage):
@@ -53,7 +57,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
             return GetGameList()
         raise InvalidCommandError("Unknown command")
 
-    def handle(self):
+    def handle(self) -> None:
         logger.info(f"Incoming message from {self.client_address}")
         # When getting a request
         request_data = self.request.recv(1024)  # TODO: Set a value for this

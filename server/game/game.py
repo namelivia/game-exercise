@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional, List, Tuple, Any
 from server.engine.errors import InvalidCommandError
 from common.events import (
     GameCreated,
@@ -23,21 +24,33 @@ PLAYERS_PER_GAME = 2
 
 
 class Game:
-    def __init__(self, name, player_id):
+    def __init__(self, name: str, player_id: "uuid.UUID"):
         self.id = uuid.uuid4()
         self.name = name
-        self.board = [None, None, None, None, None, None, None, None, None]
-        self.players = [player_id]
-        self.events = [GameCreated(player_id)]
-        self.turn = player_id
-        self.winner = None
+        self.board: List[Optional["uuid.UUID"]] = [
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+        ]
+        self.players: List["uuid.UUID"] = [player_id]
+        self.events: List[Any] = [GameCreated(player_id)]
+        self.turn: "uuid.UUID" = player_id
+        self.winner: Optional["uuid.UUID"] = None
 
-    def _next_turn(self):
+    def _next_turn(self) -> "uuid.UUID":
         if self.turn == self.players[1]:
             return self.players[0]
         return self.players[1]
 
-    def _evaluate_winning_line(self, line):
+    def _evaluate_winning_line(
+        self, line: Tuple[int, int, int]
+    ) -> Optional["uuid.UUID"]:
         player = None
 
         for position in line:
@@ -50,7 +63,7 @@ class Game:
                     return None
         return player  # Line is a win!
 
-    def _check_if_there_is_a_winner(self):
+    def _check_if_there_is_a_winner(self) -> Optional["uuid.UUID"]:
         winner_combinations = [  # All possible ways of winning
             (0, 1, 2),
             (3, 4, 5),
@@ -68,18 +81,18 @@ class Game:
                 return winner
         return None  # No winner yet
 
-    def join(self, player_id):
+    def join(self, player_id: "uuid.UUID") -> None:
         if player_id not in self.players:
             if len(self.players) >= PLAYERS_PER_GAME:
                 raise InvalidCommandError("The game is full")
             self.players.append(player_id)
             self.events.append(PlayerJoined(player_id))
 
-    def player_can_get_status(self, player_id):
+    def player_can_get_status(self, player_id: "uuid.UUID") -> None:
         if player_id not in self.players:
             raise InvalidCommandError("Player has no access to the game")
 
-    def place(self, event_id, player, position):
+    def place(self, event_id: str, player: "uuid.UUID", position: int) -> None:
         if player not in self.players:
             raise InvalidCommandError("Player has no access to the game")
         if self.winner is not None:
@@ -99,7 +112,9 @@ class Game:
         except IndexError:
             raise InvalidCommandError("Position out of bounds")
 
-    def add_chat_message(self, event_id, player, message):
+    def add_chat_message(
+        self, event_id: str, player: "uuid.UUID", message: str
+    ) -> None:
         if player not in self.players:
             raise InvalidCommandError("Player has no access to the game")
         # Only players in the game can send chat messages
