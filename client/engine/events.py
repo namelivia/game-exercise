@@ -20,26 +20,26 @@ class InitiateGameEvent(Event):
 
 
 class SetInternalGameInformationEvent(Event):
-    def __init__(self, game_id):
+    def __init__(self, game_id: str):
         super().__init__()
         self.game_id = game_id
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class GameCreatedInGameEvent(InGameEvent):
-    def __init__(self, player_id):
+    def __init__(self, player_id: str):
         super().__init__()
         self.player_id = player_id
 
 
 class PlayerJoinedInGameEvent(InGameEvent):
-    def __init__(self, player_id):
+    def __init__(self, player_id: str):
         super().__init__()
         self.player_id = player_id
 
 
 class PlayerWinsInGameEvent(InGameEvent):
-    def __init__(self, player_id):
+    def __init__(self, player_id: str):
         super().__init__()
         self.player_id = player_id
 
@@ -50,6 +50,6 @@ class PingNetworkRequestEvent(Event):
 
 
 class SetPlayerNameEvent(Event):
-    def __init__(self, name):
+    def __init__(self, name: str):
         super().__init__()
         self.name = name

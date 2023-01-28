@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class UpdateGameEventHandler(EventHandler):
-    def handle(self, event: "UpdateGameEvent", client_state: "ClientState"):
+    def handle(self, event: "UpdateGameEvent", client_state: "ClientState") -> None:
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
         client_state.profile.set_game_event_pointer(game_event_pointer + len(events))
@@ -34,7 +34,9 @@ class UpdateGameEventHandler(EventHandler):
 
 
 class RefreshGameStatusEventHandler(EventHandler):
-    def handle(self, event: "RefreshGameStatusEvent", client_state: "ClientState"):
+    def handle(
+        self, event: "RefreshGameStatusEvent", client_state: "ClientState"
+    ) -> None:
         RefreshGameStatus(
             client_state.profile, client_state.queue, event.game_id, event.pointer
         ).execute()
@@ -43,7 +45,7 @@ class RefreshGameStatusEventHandler(EventHandler):
 class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
     def handle(
         self, event: "RefreshGameStatusNetworkRequestEvent", client_state: "ClientState"
-    ):
+    ) -> None:
         request_data = self._encode(
             event.game_id, event.pointer, client_state.profile.id
         )

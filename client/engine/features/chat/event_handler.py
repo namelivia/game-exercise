@@ -92,7 +92,9 @@ class SendChatNetworkRequestEventHandler(EventHandler):
                 client_state.profile, client_state.queue, event.event_id
             ).execute()
 
-    def _encode(self, game_id, event_id, profile_id, message):
+    def _encode(
+        self, game_id: str, event_id: str, profile_id: str, message: str
+    ) -> "SendChatMessage":
         return SendChatMessage(game_id, event_id, profile_id, message)
 
 

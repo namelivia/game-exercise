@@ -16,19 +16,19 @@ class GameListMessage:
 
 
 class CreateAGameMessage:
-    def __init__(self, name, player_id):
+    def __init__(self, name: str, player_id: str):
         self.name = name
         self.player_id = player_id
 
 
 class JoinAGameMessage:
-    def __init__(self, game_id, player_id):
+    def __init__(self, game_id: str, player_id: str):
         self.game_id = game_id
         self.player_id = player_id
 
 
 class PlaceASymbolMessage:
-    def __init__(self, game_id, event_id, player_id, position):
+    def __init__(self, game_id: str, event_id: str, player_id: str, position: int):
         self.game_id = game_id
         self.event_id = event_id
         self.player_id = player_id
@@ -36,7 +36,7 @@ class PlaceASymbolMessage:
 
 
 class SendChatMessage:
-    def __init__(self, game_id, event_id, player_id, message):
+    def __init__(self, game_id: str, event_id: str, player_id: str, message: str):
         self.game_id = game_id
         self.event_id = event_id
         self.player_id = player_id
@@ -44,27 +44,27 @@ class SendChatMessage:
 
 
 class ChatMessageConfirmation:
-    def __init__(self, event_id):
+    def __init__(self, event_id: str):
         self.event_id = event_id
 
 
 class SymbolPlacedConfirmation:
-    def __init__(self, event_id):
+    def __init__(self, event_id: str):
         self.event_id = event_id
 
 
 class ChatMessageError:
-    def __init__(self, event_id):
+    def __init__(self, event_id: str):
         self.event_id = event_id
 
 
 class ErrorMessage:
-    def __init__(self, message):
+    def __init__(self, message: str):
         self.message = message
 
 
 class GetGameStatus:
-    def __init__(self, game_id, pointer, player_id):
+    def __init__(self, game_id: str, pointer: int, player_id: str):
         self.game_id = game_id
         self.pointer = pointer
         self.player_id = player_id

@@ -34,7 +34,7 @@ class PlayerPlacedSymbolConfirmationHandler(EventHandler):
         self,
         event: "SymbolPlacedConfirmation",
         client_state: "ClientState",
-    ):
+    ) -> None:
         SymbolPlacedConfirmedCommand(
             client_state.profile, client_state.queue, event.event_id
         ).execute()
@@ -43,7 +43,7 @@ class PlayerPlacedSymbolConfirmationHandler(EventHandler):
 class PlayerPlacedSymbolInGameEventHandler(EventHandler):
     def handle(
         self, event: "PlayerPlacedSymbolInGameEvent", client_state: "ClientState"
-    ):
+    ) -> None:
         PlayerPlacedSymbolInGameCommand(
             client_state.profile,
             client_state.queue,
@@ -54,7 +54,9 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
 
 
 class PlaceASymbolRequestEventHandler(EventHandler):
-    def handle(self, event: "PlaceASymbolRequestEvent", client_state: "ClientState"):
+    def handle(
+        self, event: "PlaceASymbolRequestEvent", client_state: "ClientState"
+    ) -> None:
         PlaceASymbol(
             client_state.profile,
             client_state.queue,
@@ -67,7 +69,7 @@ class PlaceASymbolRequestEventHandler(EventHandler):
 class PlaceASymbolNetworkRequestEventHandler(EventHandler):
     def handle(
         self, event: "PlaceASymbolNetworkRequestEvent", client_state: "ClientState"
-    ):
+    ) -> None:
         request_data = self._encode(
             client_state.profile.game_id,
             event.event_id,

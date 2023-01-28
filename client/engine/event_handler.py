@@ -73,7 +73,9 @@ class SetPlayerNameEventHandler(BaseEventHandler):
 
 
 class PingNetworkRequestEventHandler(BaseEventHandler):
-    def handle(self, event, client_state: "ClientState") -> None:
+    def handle(
+        self, event: "PingNetworkRequestEvent", client_state: "ClientState"
+    ) -> None:
         request_data = self._encode()
 
         response = Channel.send_command(request_data)
@@ -85,7 +87,7 @@ class PingNetworkRequestEventHandler(BaseEventHandler):
         else:
             logger.error("Error pinging the server")
 
-    def _encode(self):
+    def _encode(self) -> "PingRequestMessage":
         return PingRequestMessage()
 
 

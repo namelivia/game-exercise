@@ -7,5 +7,5 @@ class Event(ABC):
 
 
 class InGameEvent(Event):
-    def __init__(self):
+    def __init__(self) -> None:
         self.id = uuid.uuid4()

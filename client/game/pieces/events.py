@@ -8,7 +8,7 @@ that operation.
 
 
 class PlaceASymbolRequestEvent(Event):
-    def __init__(self, event_id, position):
+    def __init__(self, event_id: str, position: int):
         super().__init__()
         self.event_id = event_id
         self.position = position

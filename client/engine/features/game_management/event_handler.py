@@ -76,7 +76,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, profile_id, new_game_name):
+    def _encode(self, profile_id: str, new_game_name: str) -> "CreateAGameMessage":
         return CreateAGameMessage(new_game_name, profile_id)
 
 

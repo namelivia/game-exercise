@@ -1,6 +1,6 @@
 from abc import ABC
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     from client.engine.general_state.queue import Queue
@@ -15,7 +15,7 @@ class Command(ABC):
         self.description = description
         self.profile = profile
         self.queue = queue
-        self.events: list["Event"] = []
+        self.events: List["Event"] = []
 
     def execute(self) -> None:
         logger.info(f"[Command] {self.description}")

@@ -8,7 +8,7 @@ that operation.
 
 
 class SendChatRequestEvent(Event):
-    def __init__(self, event_id, message):
+    def __init__(self, event_id: str, message: str):
         super().__init__()
         self.event_id = event_id
         self.message = message

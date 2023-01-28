@@ -47,7 +47,7 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
             ).execute()
             logger.error("Error retrieving the game list from the server")
 
-    def _encode(self):
+    def _encode(self) -> "GameListRequestMessage":
         return GameListRequestMessage()
 
 
