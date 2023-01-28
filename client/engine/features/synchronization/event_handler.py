@@ -21,6 +21,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from uuid import UUID
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,8 @@ class UpdateGameEventHandler(EventHandler):
     def handle(self, event: "UpdateGameEvent", client_state: "ClientState") -> None:
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
+        if game_event_pointer is None:
+            raise Exception("No game event pointer, the player is not playing a game")
         client_state.profile.set_game_event_pointer(game_event_pointer + len(events))
         ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
@@ -63,7 +66,9 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
             logger.error("Server error")
             # TODO: Currently I'm not doing anything with this
 
-    def _encode(self, game_id: str, pointer: int, profile_id: str) -> "GetGameStatus":
+    def _encode(
+        self, game_id: str, pointer: int, profile_id: "UUID"
+    ) -> "GetGameStatus":
         return GetGameStatus(game_id, pointer, profile_id)
 
 

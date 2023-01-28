@@ -25,6 +25,7 @@ from client.engine.game_data import GameData
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from uuid import UUID
 
 
 logger = logging.getLogger(__name__)
@@ -76,7 +77,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
             # This should be done at game level
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, profile_id: str, new_game_name: str) -> "CreateAGameMessage":
+    def _encode(self, profile_id: "UUID", new_game_name: str) -> "CreateAGameMessage":
         return CreateAGameMessage(new_game_name, profile_id)
 
 
@@ -108,7 +109,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
             logger.error("Error Joining Game")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, profile_id: str, game_id: str) -> JoinAGameMessage:
+    def _encode(self, profile_id: "UUID", game_id: str) -> JoinAGameMessage:
         return JoinAGameMessage(game_id, profile_id)
 
 

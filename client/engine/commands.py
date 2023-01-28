@@ -4,6 +4,8 @@ from client.engine.primitives.command import Command
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
+    from client.engine.game_data import GameData
+
 from .events import (
     QuitGameEvent,
     InitiateGameEvent,
@@ -32,7 +34,7 @@ class QuitGame(Command):
 
 # ======= GAME STATE SYNC =======
 class InitiateGame(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", game_data):
+    def __init__(self, profile: "Profile", queue: "Queue", game_data: "GameData"):
         super().__init__(profile, queue, f"Locally initializing game {game_data.id}")
         self.events = [
             PlaySoundEvent("start_game"),

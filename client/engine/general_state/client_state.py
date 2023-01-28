@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 import uuid
 from .clock import Clock
 from .queue import Queue
@@ -16,7 +16,7 @@ class ClientState:
         self.queue = Queue()
         self.profile = self._initialize_status(profile_key)
         self.clock = Clock()
-        self.current_screen = None
+        self.current_screen: Optional["Screen"] = None
         self.queue = Queue()
         self.queue.put(initial_event)
 
@@ -31,7 +31,7 @@ class ClientState:
         except FileNotFoundError:
             return self._get_new_profile(profile_key)
 
-    def get_current_screen(self) -> "Screen":
+    def get_current_screen(self) -> Optional["Screen"]:
         return self.current_screen
 
     def set_current_screen(self, current_screen: "Screen") -> None:
@@ -40,5 +40,5 @@ class ClientState:
     def set_profile(self, profile_key: str) -> None:
         self.profile = self._initialize_status(profile_key)
 
-    def new_profile(self) -> "Profile":
-        return self._get_new_profile(uuid.uuid4())
+    def new_profile(self) -> "Profile":  # Generate a new profile with a random name
+        return self._get_new_profile(str(uuid.uuid4()))

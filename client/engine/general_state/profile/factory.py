@@ -4,7 +4,7 @@ from .profile import Profile
 
 class Factory:
     @staticmethod
-    def new_profile(key) -> Profile:
+    def new_profile(key: str) -> Profile:
         return Profile(
             key=key,
             id=uuid.uuid4(),

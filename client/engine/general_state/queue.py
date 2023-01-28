@@ -1,13 +1,16 @@
-from typing import Any, Optional
+from typing import Any, Optional, TYPE_CHECKING
 from queue import SimpleQueue, Empty
 import logging
+
+if TYPE_CHECKING:
+    from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
 
 
 class Queue:
     def __init__(self) -> None:
-        self.data: "SimpleQueue" = SimpleQueue()
+        self.data: SimpleQueue["Event"] = SimpleQueue()
 
     def put(self, new_data: Any) -> None:
         self.data.put(new_data)

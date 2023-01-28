@@ -24,6 +24,7 @@ from client.engine.network.channel import Channel
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from uuid import UUID
 
 
 logger = logging.getLogger(__name__)
@@ -57,10 +58,13 @@ class PlaceASymbolRequestEventHandler(EventHandler):
     def handle(
         self, event: "PlaceASymbolRequestEvent", client_state: "ClientState"
     ) -> None:
+        game_id = client_state.profile.game_id
+        if game_id is None:
+            raise Exception("Trying to place symbol with no game")
         PlaceASymbol(
             client_state.profile,
             client_state.queue,
-            client_state.profile.game_id,
+            game_id,
             event.event_id,
             event.position,
         ).execute()
@@ -70,8 +74,11 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
     def handle(
         self, event: "PlaceASymbolNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
+        game_id = client_state.profile.game_id
+        if game_id is None:
+            raise Exception("Trying to place symbol with no game")
         request_data = self._encode(
-            client_state.profile.game_id,
+            game_id,
             event.event_id,
             client_state.profile.id,
             event.position,
@@ -95,7 +102,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
             ).execute()
 
     def _encode(
-        self, game_id: str, event_id: str, profile_id: str, position: int
+        self, game_id: str, event_id: str, profile_id: "UUID", position: int
     ) -> PlaceASymbolMessage:
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 

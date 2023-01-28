@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class UpdateGameList(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", games: List):
+    def __init__(self, profile: "Profile", queue: "Queue", games: List[str]):
         super().__init__(profile, queue, "Updating game list")
         self.events = [UpdateGameListEvent(games)]
 

@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import TYPE_CHECKING, List, Optional, Callable, Dict
+from typing import TYPE_CHECKING, List, Optional, Callable, Dict, Any
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import InGameEvent
@@ -11,13 +11,15 @@ class Screen(ABC):
     def __init__(self, client_state: "ClientState"):
         self.client_state = client_state
         self.ui_elements: List[UIElement] = []  # UI elements on the screen
-        self.timers: Dict[int, Callable] = {}  # Time based actions
-        self.events: dict = (
+        self.timers: Dict[int, Callable[[], None]] = {}  # Time based actions
+        self.events: Dict[
+            Any, Callable[["InGameEvent"], None]
+        ] = (
             {}
         )  # Event based actions # TODO: Type this, should be InGameEvent > Callable
         self.initial_time = client_state.clock.get()
         self.time = 0
-        self.data: dict = {}  # Internal state for the screen
+        self.data: Dict[str, Any] = {}  # Internal state for the screen
 
     def get_ui_elements(self) -> List["UIElement"]:
         return self.ui_elements

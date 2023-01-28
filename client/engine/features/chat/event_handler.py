@@ -24,6 +24,7 @@ from client.engine.network.channel import Channel
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from uuid import UUID
 
 logger = logging.getLogger(__name__)
 
@@ -55,10 +56,13 @@ class SendChatRequestEventHandler(EventHandler):
     def handle(
         self, event: "SendChatRequestEvent", client_state: "ClientState"
     ) -> None:
+        game_id = client_state.profile.game_id
+        if game_id is None:
+            raise Exception("No game event pointer, the player is not in a game")
         SendChat(
             client_state.profile,
             client_state.queue,
-            client_state.profile.game_id,
+            game_id,
             event.event_id,
             event.message,
         ).execute()
@@ -68,8 +72,11 @@ class SendChatNetworkRequestEventHandler(EventHandler):
     def handle(
         self, event: "SendChatNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
+        game_id = client_state.profile.game_id
+        if game_id is None:
+            raise Exception("No game event pointer, the player is not playing a game")
         request_data = self._encode(
-            client_state.profile.game_id,
+            game_id,
             event.event_id,
             client_state.profile.id,
             event.message,
@@ -93,7 +100,7 @@ class SendChatNetworkRequestEventHandler(EventHandler):
             ).execute()
 
     def _encode(
-        self, game_id: str, event_id: str, profile_id: str, message: str
+        self, game_id: str, event_id: str, profile_id: "UUID", message: str
     ) -> "SendChatMessage":
         return SendChatMessage(game_id, event_id, profile_id, message)
 

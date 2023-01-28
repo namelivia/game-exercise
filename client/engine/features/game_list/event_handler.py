@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 class GetGameListNetworkRequestEventHandler(EventHandler):
     def handle(
         self, event: "GetGameListNetworkRequestEvent", client_state: "ClientState"
-    ):
+    ) -> None:
         request_data = self._encode()
 
         response = Channel.send_command(request_data)

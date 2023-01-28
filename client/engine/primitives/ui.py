@@ -1,20 +1,20 @@
 from abc import ABC
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Any, Dict
 
 if TYPE_CHECKING:
     from client.engine.primitives.shape import Shape
 
 
 class UIElement(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.shapes: List["Shape"] = []
 
     # TODO: Can I type pygame types?
     # UI elements can hold a small state too that can be updated
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         for shape in self.shapes:
             shape.draw(window)
         return None
 
-    def update(self, time: int, data: dict) -> None:
+    def update(self, time: int, data: Dict[str, Any]) -> None:
         pass

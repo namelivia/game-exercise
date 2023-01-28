@@ -1,4 +1,8 @@
 from client.engine.persistence.persistence import Persistence
+from typing import TYPE_CHECKING, Optional
+
+if TYPE_CHECKING:
+    from uuid import UUID
 
 
 class Profile:
@@ -6,9 +10,9 @@ class Profile:
         self,
         *,
         key: str,
-        id: str,
-        game_id: str,
-        game_event_pointer: int,
+        id: "UUID",
+        game_id: Optional[str],
+        game_event_pointer: Optional[int],
         sound_on: bool
     ):
         self.key = key
@@ -16,7 +20,7 @@ class Profile:
         self.game_id = game_id
         self.game_event_pointer = game_event_pointer
         self.sound_on = sound_on
-        self.name = None
+        self.name: Optional[str] = None
 
     def set_game(self, game_id: str) -> None:
         self.game_id = game_id

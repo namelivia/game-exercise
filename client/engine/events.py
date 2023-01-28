@@ -1,4 +1,8 @@
 from client.engine.primitives.event import Event, InGameEvent
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from client.engine.game_data import GameData
 
 """
 Events contain an operation and the data needed in order to perform
@@ -14,7 +18,7 @@ class QuitGameEvent(Event):
 
 # ======= GAME STATE SYNC =======
 class InitiateGameEvent(Event):
-    def __init__(self, game_data):
+    def __init__(self, game_data: "GameData"):
         super().__init__()
         self.game_data = game_data
 

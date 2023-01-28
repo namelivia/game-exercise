@@ -3,7 +3,7 @@ from client.engine.primitives.event import Event, InGameEvent
 
 
 class UpdateGameListEvent(InGameEvent):
-    def __init__(self, games: List):
+    def __init__(self, games: List[str]):
         super().__init__()
         self.games = games
 

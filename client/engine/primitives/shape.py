@@ -1,3 +1,4 @@
+from typing import Any
 from abc import ABC
 
 
@@ -20,10 +21,10 @@ class Shape(ABC):
         self.y = y
 
     # TODO: Can I type pygame types?
-    def render(self, window) -> None:
+    def render(self, window: Any) -> None:
         pass
 
     # TODO: Can I type pygame types?
-    def draw(self, window) -> None:
+    def draw(self, window: Any) -> None:
         if not self.hidden:
             self.render(window)
