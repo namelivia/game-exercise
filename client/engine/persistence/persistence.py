@@ -1,6 +1,10 @@
 import pickle
 from typing import Iterable
+from typing import TYPE_CHECKING
 from os import walk
+
+if TYPE_CHECKING:
+    from client.engine.general_state.profile.profile import Profile
 
 PATH = "client_data/"
 

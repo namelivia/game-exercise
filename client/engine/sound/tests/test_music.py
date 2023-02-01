@@ -1,6 +1,6 @@
 from unittest import TestCase
 from mock import patch
-from .music import Music
+from client.engine.sound.music import Music
 
 
 class TestMusic(TestCase):

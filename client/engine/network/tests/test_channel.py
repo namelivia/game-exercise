@@ -1,6 +1,6 @@
 from unittest import TestCase
 from mock import patch, Mock
-from .channel import Channel
+from client.engine.network.channel import Channel
 
 
 class TestChannel(TestCase):
