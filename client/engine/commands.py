@@ -4,7 +4,7 @@ from client.engine.primitives.command import Command
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
-    from client.engine.game_data import GameData
+    from common.game_data import GameData
 
 from .events import (
     QuitGameEvent,

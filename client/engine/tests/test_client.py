@@ -54,7 +54,7 @@ from common.messages import (
     PingResponseMessage,
     PingRequestMessage,
 )
-from client.engine.game_data import GameData
+from common.game_data import GameData
 from client.engine.features.sound.events import PlaySoundEvent
 import mock
 

@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, List, Any
 
 if TYPE_CHECKING:
     from uuid import UUID
-    from client.engine.game_data import GameData
+    from common.game_data import GameData
 
 
 class GameInfoMessage:

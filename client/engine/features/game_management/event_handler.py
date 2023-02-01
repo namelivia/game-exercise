@@ -21,7 +21,7 @@ from common.messages import (
     CreateAGameMessage,
     JoinAGameMessage,
 )
-from client.engine.game_data import GameData
+from common.game_data import GameData
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

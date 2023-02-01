@@ -2,7 +2,7 @@ from client.engine.primitives.event import Event, InGameEvent
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from client.engine.game_data import GameData
+    from common.game_data import GameData
 
 """
 Events contain an operation and the data needed in order to perform

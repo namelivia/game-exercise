@@ -13,6 +13,7 @@ from common.messages import (
     ChatMessageConfirmation,
     SymbolPlacedConfirmation,
 )
+from common.game_data import GameData
 
 if TYPE_CHECKING:
     from uuid import UUID
@@ -125,7 +126,14 @@ class CreateGame(Command):
         game = self.create_game(self.game_name, self.player_id)
         # Persist the new game on storage
         self.save_game(game)
-        return GameInfoMessage(game)
+        return GameInfoMessage(
+            GameData(
+                game_id=game.id,
+                name=game.name,
+                players=game.players,
+                events=game.players,
+            )
+        )
 
 
 class JoinGame(Command):
@@ -193,7 +201,14 @@ class GetGameList(Command):
 
     def _build_index_entry_from_game(self, game_id: str) -> GameListResponseEntry:
         game = Persistence.load_game(game_id)
-        return GameListResponseEntry(game)
+        return GameListResponseEntry(
+            GameData(
+                game_id=game.id,
+                name=game.name,
+                players=game.players,
+                events=game.players,
+            )
+        )
 
     def _build_index_from_games(
         self, game_ids: Iterable[str]
