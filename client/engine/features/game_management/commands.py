@@ -12,16 +12,17 @@ from .events import (
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
+    from uuid import UUID
 
 
 class CreateAGame(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: str):
+    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: "UUID"):
         super().__init__(profile, queue, f"Create a new game called {new_game_name}")
         self.events = [CreateAGameNetworkRequestEvent(new_game_name)]
 
 
 class JoinAGame(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", game_id: str):
+    def __init__(self, profile: "Profile", queue: "Queue", game_id: "UUID"):
         super().__init__(profile, queue, f"Join game {game_id}")
         self.events = [JoinAGameNetworkRequestEvent(game_id)]
 
@@ -39,7 +40,7 @@ class ErrorJoiningGame(Command):
 
 
 class RequestGameCreation(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: str):
+    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: "UUID"):
         super().__init__(
             profile, queue, f"Request creating a game called {new_game_name}"
         )
@@ -47,6 +48,6 @@ class RequestGameCreation(Command):
 
 
 class RequestJoiningAGame(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", game_id: str):
+    def __init__(self, profile: "Profile", queue: "Queue", game_id: "UUID"):
         super().__init__(profile, queue, f"Request joining game {game_id}")
         self.events = [JoinExistingGameEvent(game_id)]

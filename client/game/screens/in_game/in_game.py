@@ -36,6 +36,7 @@ from typing import TYPE_CHECKING, List, Any, Optional
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from uuid import UUID
 
 logger = logging.getLogger(__name__)
 
@@ -45,9 +46,9 @@ class InGame(Screen):
         self,
         client_state: "ClientState",
         events: List[Any],
-        game_id: str,
+        game_id: "UUID",
         name: str,
-        players: List[str],
+        players: List["UUID"],
     ):
         super().__init__(client_state)
 
@@ -170,7 +171,7 @@ class InGame(Screen):
             ).execute()
             self.data["chat_input"] += event.key
 
-    def _its_players_turn(self, player_id: str) -> bool:
+    def _its_players_turn(self, player_id: "UUID") -> bool:
         if player_id == self.data["players"][0]:
             return self.data["status"] == "It is player 1 turn"
         return self.data["status"] == "It is player 2 turn"
@@ -207,12 +208,12 @@ class InGame(Screen):
     def _store_current_data_as_fallback(self, index: int) -> None:
         self.data["board"][index]["fallback"] = self.data["board"][index]["current"]
 
-    def _get_color_for_player(self, player_id: str) -> str:
+    def _get_color_for_player(self, player_id: "UUID") -> str:
         if player_id == self.data["players"][0]:
             return "blue"
         return "red"
 
-    def _get_new_status_after_placing(self, player_id: str) -> str:
+    def _get_new_status_after_placing(self, player_id: "UUID") -> str:
         if player_id == self.data["players"][0]:
             return "It is player 2 turn"
         return "It is player 1 turn"
@@ -247,7 +248,7 @@ class InGame(Screen):
                 self.client_state.profile, self.client_state.queue, "start_game"
             ).execute()
 
-    def _get_chat_message_by_event_id(self, event_id: str) -> Optional[Any]:
+    def _get_chat_message_by_event_id(self, event_id: "UUID") -> Optional[Any]:
         for entry in enumerate(self.data["chat_messages"]):
             if entry[1]["event_id"] == event_id:
                 return entry
@@ -270,7 +271,7 @@ class InGame(Screen):
     def _get_current_board_positions(self) -> List[int]:
         return [board_entry["current"] for board_entry in self.data["board"]]
 
-    def _get_symbol_placement_by_event_id(self, event_id: str) -> Any:
+    def _get_symbol_placement_by_event_id(self, event_id: "UUID") -> Any:
         for board_entry in enumerate(self._get_current_board_positions()):
             if board_entry[1] is not None and board_entry[1]["event_id"] == event_id:
                 return board_entry

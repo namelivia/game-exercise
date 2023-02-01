@@ -4,13 +4,14 @@ from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     from server.game.game import Game
+    from uuid import UUID
 
 GAMES_PATH = "server_data/games/"
 
 
 class Persistence:
     @staticmethod
-    def load_game(game_id: str) -> "Game":
+    def load_game(game_id: "UUID") -> "Game":
         data = pickle.load(open(f"{GAMES_PATH}{game_id}", "rb"))
         if isinstance(data, Game):
             return data

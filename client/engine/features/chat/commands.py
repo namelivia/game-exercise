@@ -4,6 +4,7 @@ from client.engine.primitives.command import Command
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
+    from uuid import UUID
 
 from .events import (
     ChatMessageConfirmedInGameEvent,
@@ -15,7 +16,7 @@ from .events import (
 
 class ChatMessageConfirmedCommand(Command):
     # Let the game know that the chat message has been correctly delivered
-    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: "UUID"):
         super().__init__(profile, queue, f"Chat message event {event_id} confirmed")
         self.events = [ChatMessageConfirmedInGameEvent(event_id)]
 
@@ -26,8 +27,8 @@ class ChatMessageInGameCommand(Command):
         self,
         profile: "Profile",
         queue: "Queue",
-        event_id: str,
-        player_id: str,
+        event_id: "UUID",
+        player_id: "UUID",
         message: str,
     ):
         super().__init__(profile, queue, f"Player {player_id} says: {message}")
@@ -44,8 +45,8 @@ class SendChat(Command):
         self,
         profile: "Profile",
         queue: "Queue",
-        game_id: str,
-        event_id: str,
+        game_id: "UUID",
+        event_id: "UUID",
         message: str,
     ):
         super().__init__(
@@ -55,6 +56,6 @@ class SendChat(Command):
 
 
 class ChatMessageErroredCommand(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: "UUID"):
         super().__init__(profile, queue, f"Chat message event {event_id} errored")
         self.events = [ChatMessageErroredEvent(event_id)]

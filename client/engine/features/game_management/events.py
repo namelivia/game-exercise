@@ -1,4 +1,8 @@
+from typing import TYPE_CHECKING
 from client.engine.primitives.event import Event
+
+if TYPE_CHECKING:
+    from uuid import UUID
 
 
 class NewGameRequestEvent(Event):
@@ -8,7 +12,7 @@ class NewGameRequestEvent(Event):
 
 
 class JoinExistingGameEvent(Event):
-    def __init__(self, game_id: str):
+    def __init__(self, game_id: "UUID"):
         super().__init__()
         self.game_id = game_id
 
@@ -20,7 +24,7 @@ class CreateAGameNetworkRequestEvent(Event):
 
 
 class JoinAGameNetworkRequestEvent(Event):
-    def __init__(self, game_id: str):
+    def __init__(self, game_id: "UUID"):
         super().__init__()
         self.game_id = game_id
 

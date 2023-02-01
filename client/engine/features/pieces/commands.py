@@ -10,11 +10,12 @@ from .events import (
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
+    from uuid import UUID
 
 
 class SymbolPlacedConfirmedCommand(Command):
     # Let the game know that the symbol has been correctly placed
-    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: "UUID"):
         super().__init__(profile, queue, f"Symbol placement event {event_id} confirmed")
         self.events = [SymbolPlacedConfirmedInGameEvent(event_id)]
 
@@ -25,8 +26,8 @@ class PlayerPlacedSymbolInGameCommand(Command):
         self,
         profile: "Profile",
         queue: "Queue",
-        event_id: str,
-        player_id: str,
+        event_id: "UUID",
+        player_id: "UUID",
         position: int,
     ):
         super().__init__(
@@ -45,8 +46,8 @@ class PlaceASymbol(Command):
         self,
         profile: "Profile",
         queue: "Queue",
-        game_id: str,
-        event_id: str,
+        game_id: "UUID",
+        event_id: "UUID",
         position: int,
     ):
         super().__init__(
@@ -57,6 +58,6 @@ class PlaceASymbol(Command):
 
 class SymbolPlacedErroredCommand(Command):
     # Let the game know that the symbol was not correctly placed and needs to be rolled back
-    def __init__(self, profile: "Profile", queue: "Queue", event_id: str):
+    def __init__(self, profile: "Profile", queue: "Queue", event_id: "UUID"):
         super().__init__(profile, queue, f"Symbol place event {event_id} errored")
         self.events = [SymbolPlacedErroredEvent(event_id)]

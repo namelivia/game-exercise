@@ -102,7 +102,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
             ).execute()
 
     def _encode(
-        self, game_id: str, event_id: str, profile_id: "UUID", position: int
+        self, game_id: "UUID", event_id: "UUID", profile_id: "UUID", position: int
     ) -> PlaceASymbolMessage:
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 

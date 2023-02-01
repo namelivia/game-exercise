@@ -29,13 +29,15 @@ class CreateAGameMessage:
 
 
 class JoinAGameMessage:
-    def __init__(self, game_id: str, player_id: "UUID"):
+    def __init__(self, game_id: "UUID", player_id: "UUID"):
         self.game_id = game_id
         self.player_id = player_id
 
 
 class PlaceASymbolMessage:
-    def __init__(self, game_id: str, event_id: str, player_id: "UUID", position: int):
+    def __init__(
+        self, game_id: "UUID", event_id: "UUID", player_id: "UUID", position: int
+    ):
         self.game_id = game_id
         self.event_id = event_id
         self.player_id = player_id
@@ -43,7 +45,9 @@ class PlaceASymbolMessage:
 
 
 class SendChatMessage:
-    def __init__(self, game_id: str, event_id: str, player_id: "UUID", message: str):
+    def __init__(
+        self, game_id: "UUID", event_id: "UUID", player_id: "UUID", message: str
+    ):
         self.game_id = game_id
         self.event_id = event_id
         self.player_id = player_id
@@ -51,17 +55,17 @@ class SendChatMessage:
 
 
 class ChatMessageConfirmation:
-    def __init__(self, event_id: str):
+    def __init__(self, event_id: "UUID"):
         self.event_id = event_id
 
 
 class SymbolPlacedConfirmation:
-    def __init__(self, event_id: str):
+    def __init__(self, event_id: "UUID"):
         self.event_id = event_id
 
 
 class ChatMessageError:
-    def __init__(self, event_id: str):
+    def __init__(self, event_id: "UUID"):
         self.event_id = event_id
 
 
@@ -71,7 +75,7 @@ class ErrorMessage:
 
 
 class GetGameStatus:
-    def __init__(self, game_id: str, pointer: int, player_id: "UUID"):
+    def __init__(self, game_id: "UUID", pointer: int, player_id: "UUID"):
         self.game_id = game_id
         self.pointer = pointer
         self.player_id = player_id

@@ -1,9 +1,12 @@
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from client.engine.primitives.event import InGameEvent, Event
+
+if TYPE_CHECKING:
+    from uuid import UUID
 
 
 class SymbolPlacedConfirmedInGameEvent(InGameEvent):
-    def __init__(self, place_symbol_event_id: str):
+    def __init__(self, place_symbol_event_id: "UUID"):
         super().__init__()
         self.place_symbol_event_id = place_symbol_event_id
 
@@ -11,7 +14,7 @@ class SymbolPlacedConfirmedInGameEvent(InGameEvent):
 class PlayerPlacedSymbolInGameEvent(InGameEvent):
     def __init__(
         self,
-        player_id: str,
+        player_id: "UUID",
         position: int,
         confirmation: str,
         original_event_id: Optional[str] = None,
@@ -24,7 +27,7 @@ class PlayerPlacedSymbolInGameEvent(InGameEvent):
 
 
 class PlaceASymbolNetworkRequestEvent(Event):
-    def __init__(self, game_id: str, event_id: str, position: int):
+    def __init__(self, game_id: "UUID", event_id: "UUID", position: int):
         super().__init__()
         self.game_id = game_id
         self.event_id = event_id
@@ -34,6 +37,6 @@ class PlaceASymbolNetworkRequestEvent(Event):
 class SymbolPlacedErroredEvent(InGameEvent):
     # This indicates that a chat message wasn't sucessfully processed
     # by the server and therefore it needs to be rolled back.
-    def __init__(self, place_symbol_event_id: str):
+    def __init__(self, place_symbol_event_id: "UUID"):
         super().__init__()
         self.place_symbol_event_id = place_symbol_event_id

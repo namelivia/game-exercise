@@ -1,10 +1,13 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, TYPE_CHECKING
 from client.engine.graphics.shapes import SmallText, Image, Animation, Rectangle, WHITE
 from client.engine.primitives.ui import UIElement
 
+if TYPE_CHECKING:
+    from uuid import UUID
+
 
 class GameIdIndicator(UIElement):
-    def __init__(self, game_id: str):
+    def __init__(self, game_id: "UUID"):
         self.game_id = game_id
         self.shapes = [SmallText(f"Game Id: {game_id}", 20, 40)]
 

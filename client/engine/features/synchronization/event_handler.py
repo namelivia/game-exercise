@@ -67,7 +67,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
             # TODO: Currently I'm not doing anything with this
 
     def _encode(
-        self, game_id: str, pointer: int, profile_id: "UUID"
+        self, game_id: "UUID", pointer: int, profile_id: "UUID"
     ) -> "GetGameStatus":
         return GetGameStatus(game_id, pointer, profile_id)
 

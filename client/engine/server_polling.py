@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from uuid import UUID
 
 
 class ServerPolling:
@@ -16,7 +17,7 @@ class ServerPolling:
         return time % ServerPolling._get_polling_rate() == 0
 
     @staticmethod
-    def _is_playing_a_game(game_id: str) -> bool:
+    def _is_playing_a_game(game_id: "UUID") -> bool:
         return game_id is not None
 
     @staticmethod

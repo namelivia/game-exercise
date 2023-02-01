@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from common.game_data import GameData
+    from uuid import UUID
 
 """
 Events contain an operation and the data needed in order to perform
@@ -24,26 +25,26 @@ class InitiateGameEvent(Event):
 
 
 class SetInternalGameInformationEvent(Event):
-    def __init__(self, game_id: str):
+    def __init__(self, game_id: "UUID"):
         super().__init__()
         self.game_id = game_id
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class GameCreatedInGameEvent(InGameEvent):
-    def __init__(self, player_id: str):
+    def __init__(self, player_id: "UUID"):
         super().__init__()
         self.player_id = player_id
 
 
 class PlayerJoinedInGameEvent(InGameEvent):
-    def __init__(self, player_id: str):
+    def __init__(self, player_id: "UUID"):
         super().__init__()
         self.player_id = player_id
 
 
 class PlayerWinsInGameEvent(InGameEvent):
-    def __init__(self, player_id: str):
+    def __init__(self, player_id: "UUID"):
         super().__init__()
         self.player_id = player_id
 

@@ -109,7 +109,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
             logger.error("Error Joining Game")
             # BackToLobby(client_state.profile, client_state.queue).execute()
 
-    def _encode(self, profile_id: "UUID", game_id: str) -> JoinAGameMessage:
+    def _encode(self, profile_id: "UUID", game_id: "UUID") -> JoinAGameMessage:
         return JoinAGameMessage(game_id, profile_id)
 
 

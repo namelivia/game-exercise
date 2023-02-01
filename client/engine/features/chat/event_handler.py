@@ -100,7 +100,7 @@ class SendChatNetworkRequestEventHandler(EventHandler):
             ).execute()
 
     def _encode(
-        self, game_id: str, event_id: str, profile_id: "UUID", message: str
+        self, game_id: "UUID", event_id: "UUID", profile_id: "UUID", message: str
     ) -> "SendChatMessage":
         return SendChatMessage(game_id, event_id, profile_id, message)
 

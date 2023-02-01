@@ -1,10 +1,14 @@
+from typing import TYPE_CHECKING
 from client.engine.graphics.shapes import Text, Image
 from client.engine.primitives.ui import UIElement
 from typing import Dict, Any
 
+if TYPE_CHECKING:
+    from uuid import UUID
+
 
 class GameIdMessage(UIElement):
-    def __init__(self, game_id: str):
+    def __init__(self, game_id: "UUID"):
         self.game_id = game_id
         self.shapes = [
             Text("Join an existing game", 20, 0),

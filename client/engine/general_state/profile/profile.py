@@ -11,7 +11,7 @@ class Profile:
         *,
         key: str,
         id: "UUID",
-        game_id: Optional[str],
+        game_id: Optional["UUID"],
         game_event_pointer: Optional[int],
         sound_on: bool
     ):
@@ -22,7 +22,7 @@ class Profile:
         self.sound_on = sound_on
         self.name: Optional[str] = None
 
-    def set_game(self, game_id: str) -> None:
+    def set_game(self, game_id: "UUID") -> None:
         self.game_id = game_id
 
     def set_name(self, name: str) -> None:

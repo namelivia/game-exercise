@@ -44,7 +44,7 @@ class Command(ABC):
         self.debug()
 
     # Retrieve the current game from storage
-    def load_game(self, game_id: str) -> Any:
+    def load_game(self, game_id: "UUID") -> Any:
         try:
             return Persistence.load_game(str(game_id))
         except FileNotFoundError:
@@ -61,7 +61,7 @@ class Command(ABC):
 
 class PlaceSymbol(Command):
     def __init__(
-        self, game_id: str, event_id: str, player_id: "UUID", position: int
+        self, game_id: "UUID", event_id: "UUID", player_id: "UUID", position: int
     ) -> None:
         self.game_id = game_id
         self.event_id = event_id
@@ -86,7 +86,9 @@ class PlaceSymbol(Command):
 
 
 class SendChat(Command):
-    def __init__(self, game_id: str, event_id: str, player_id: "UUID", message: str):
+    def __init__(
+        self, game_id: "UUID", event_id: "UUID", player_id: "UUID", message: str
+    ):
         self.game_id = game_id
         self.event_id = event_id
         self.player_id = player_id
@@ -137,7 +139,7 @@ class CreateGame(Command):
 
 
 class JoinGame(Command):
-    def __init__(self, game_id: str, player_id: "UUID"):
+    def __init__(self, game_id: "UUID", player_id: "UUID"):
         self.game_id = game_id
         self.player_id = player_id
 
@@ -156,7 +158,7 @@ class JoinGame(Command):
 
 
 class GameStatus(Command):
-    def __init__(self, game_id: str, pointer: int, player_id: "UUID"):
+    def __init__(self, game_id: "UUID", pointer: int, player_id: "UUID"):
         self.game_id = game_id
         self.pointer = pointer
         self.player_id = player_id
@@ -199,7 +201,7 @@ class GetGameList(Command):
     def debug(self) -> None:
         logger.info("Game list request")
 
-    def _build_index_entry_from_game(self, game_id: str) -> GameListResponseEntry:
+    def _build_index_entry_from_game(self, game_id: "UUID") -> GameListResponseEntry:
         game = Persistence.load_game(game_id)
         return GameListResponseEntry(
             GameData(
@@ -211,7 +213,7 @@ class GetGameList(Command):
         )
 
     def _build_index_from_games(
-        self, game_ids: Iterable[str]
+        self, game_ids: Iterable["UUID"]
     ) -> List[GameListResponseEntry]:
         return [self._build_index_entry_from_game(game_id) for game_id in game_ids]
 
