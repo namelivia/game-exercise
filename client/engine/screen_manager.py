@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.input_manager import InputManager
+    from client.engine.input.input_manager import InputManager
     from client.engine.graphics.graphics import Graphics
 
 
