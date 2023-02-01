@@ -196,7 +196,7 @@ class GetGameList(Command):
         return GameListResponseEntry(game)
 
     def _build_index_from_games(
-        self, game_ids: List[str]
+        self, game_ids: Iterable[str]
     ) -> List[GameListResponseEntry]:
         return [self._build_index_entry_from_game(game_id) for game_id in game_ids]
 
