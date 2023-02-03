@@ -15,7 +15,7 @@ class TestServer(TestCase):
         pass
 
     @mock.patch("server.engine.persistence.Persistence.save_game")
-    @mock.patch("uuid.uuid4")
+    @mock.patch("server.game.game.uuid4")
     def test_creating_a_game(self, m_uuid, m_save_game):
         m_uuid.return_value = "game_id"
         response = CreateGame("test_name", "test_player_id").execute()
@@ -27,7 +27,7 @@ class TestServer(TestCase):
 
     @mock.patch("server.engine.persistence.Persistence.load_game")
     @mock.patch("server.engine.persistence.Persistence.save_game")
-    @mock.patch("uuid.uuid4")
+    @mock.patch("server.game.game.uuid4")
     def test_joining_a_game(self, m_uuid, m_save_game, m_load_game):
         m_uuid.return_value = "game_id"
         m_load_game.return_value = Game("test_name", "player_1_id")
@@ -40,7 +40,7 @@ class TestServer(TestCase):
         m_save_game.assert_called_once()  # TODO: Assert the parameters passed here
 
     @mock.patch("server.engine.persistence.Persistence.load_game")
-    @mock.patch("uuid.uuid4")
+    @mock.patch("server.game.game.uuid4")
     def test_getting_game_status(self, m_uuid, m_load_game):
         # A client is requesting the new events that happened in the game
         # the client has its event pointer set at 2 so only events 3 and 4 are sent.
@@ -66,7 +66,7 @@ class TestServer(TestCase):
 
     @mock.patch("server.engine.persistence.Persistence.get_all_games")
     @mock.patch("server.engine.persistence.Persistence.load_game")
-    @mock.patch("uuid.uuid4")
+    @mock.patch("server.game.game.uuid4")
     def test_getting_game_list(self, m_uuid, m_load_game, m_get_all_games):
         m_uuid.return_value = "game_id"
         m_get_all_games.return_value = ["game_1_id", "game_2_id"]
