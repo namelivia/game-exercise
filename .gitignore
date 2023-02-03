@@ -6,3 +6,4 @@ client_data/.gitkeep
 htmlcov
 .coverage
 tags
+.python-version
