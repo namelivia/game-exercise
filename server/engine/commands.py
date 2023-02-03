@@ -46,7 +46,7 @@ class Command(ABC):
     # Retrieve the current game from storage
     def load_game(self, game_id: "UUID") -> Any:
         try:
-            return Persistence.load_game(str(game_id))
+            return Persistence.load_game(game_id)
         except FileNotFoundError:
             logger.info("Invalid game id")
             raise InvalidCommandError("Invalid game id")
@@ -201,7 +201,10 @@ class GetGameList(Command):
     def debug(self) -> None:
         logger.info("Game list request")
 
-    def _build_index_entry_from_game(self, game_id: "UUID") -> GameListResponseEntry:
+    def _build_index_entry_from_game_filename(
+        self, game_filename: str
+    ) -> GameListResponseEntry:
+        game_id = UUID(game_filename)  # Currently the game filename is the game id
         game = Persistence.load_game(game_id)
         return GameListResponseEntry(
             GameData(
@@ -212,16 +215,19 @@ class GetGameList(Command):
             )
         )
 
-    def _build_index_from_games(
-        self, game_ids: Iterable["UUID"]
+    def _build_index_from_files(
+        self, game_filenames: Iterable[str]
     ) -> List[GameListResponseEntry]:
-        return [self._build_index_entry_from_game(game_id) for game_id in game_ids]
+        return [
+            self._build_index_entry_from_game_filename(filename)
+            for filename in game_filenames
+        ]
 
     # Retrieve the list of games current game from storage
-    def get_all_games(self) -> Iterable[str]:
+    def get_all_game_filenames(self) -> Iterable[str]:
         return Persistence.get_all_games()
 
     def execute(self) -> Any:
         super().execute()
-        game_ids = self.get_all_games()
-        return GameListResponseMessage(self._build_index_from_games(game_ids))
+        game_filenames = self.get_all_game_filenames()
+        return GameListResponseMessage(self._build_index_from_files(game_filenames))
