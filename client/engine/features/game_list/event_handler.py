@@ -8,7 +8,6 @@ from .commands import (
 )
 from .events import (
     GetGameListNetworkRequestEvent,
-    ErrorGettingGameListEvent,
 )
 from common.messages import (
     ErrorMessage,
@@ -58,6 +57,5 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
 
 
 handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
-    # GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler,
-    # ErrorGettingGameListEvent: ErrorGettingGameListEventHandler,
+    GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler
 }
