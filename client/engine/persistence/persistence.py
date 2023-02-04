@@ -16,6 +16,7 @@ class Persistence:
 
         # avoid circlar dependency
         from client.engine.general_state.profile.profile import Profile
+
         if isinstance(data, Profile):
             return data
         raise Exception("Loaded something that is not a profile")
