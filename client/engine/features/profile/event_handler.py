@@ -1,5 +1,5 @@
 import logging
-from typing import List, Dict, Iterable, Any
+from typing import List, Dict, Iterable, Any, Type
 from client.engine.primitives.event_handler import EventHandler
 from .events import (
     SetProfileEvent,
@@ -16,6 +16,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from client.engine.primitives.event import Event
 
 
 logger = logging.getLogger(__name__)
@@ -44,7 +45,7 @@ class GetProfilesEventHandler(EventHandler):
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     SetProfileEvent: SetProfileEventHandler,
     NewProfileEvent: NewProfileEventHandler,
     GetProfilesEvent: GetProfilesEventHandler,

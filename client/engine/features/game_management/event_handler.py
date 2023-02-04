@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Type
 from client.engine.primitives.event_handler import EventHandler
 from client.engine.network.channel import Channel
 from .commands import (
@@ -26,6 +26,7 @@ from common.game_data import GameData
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
     from uuid import UUID
+    from client.engine.primitives.event import Event
 
 
 logger = logging.getLogger(__name__)
@@ -113,7 +114,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
         return JoinAGameMessage(game_id, profile_id)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,

@@ -18,7 +18,8 @@ class Queue:
     def empty(self) -> bool:
         return self.data.empty()
 
-    def pop(self) -> Optional[Any]:
+    def pop(self) -> Optional["Event"]:
+
         try:
             # This is a sync queue because block is False
             event = self.data.get(block=False)

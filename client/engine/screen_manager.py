@@ -3,13 +3,13 @@ from client.game.event_handler import EventHandler as GameEventHandler
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
 
-# from client.engine.primitives.event import InGameEvent
+from client.engine.primitives.event import InGameEvent
 from .events_processor import EventsProcessor
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.input.input_manager import InputManager
+    from client.engine.input.input import Input
     from client.engine.graphics.graphics import Graphics
 
 
@@ -17,7 +17,7 @@ class ScreenManager:
     def __init__(
         self,
         client_state: "ClientState",
-        input_manager: "InputManager",
+        input_manager: "Input",
         graphics: "Graphics",
     ):
         self.client_state = client_state
@@ -38,25 +38,23 @@ class ScreenManager:
 
         # 3 - Fetch and handle the latest event
         event = self.client_state.queue.pop()
-        """
+
         # TODO: I don't like this if
-        if not isinstance(event, InGameEvent):
+        if event is not None and not isinstance(event, InGameEvent):
             self.event_processor.handle(event, self.client_state)
-        """
-        self.event_processor.handle(event, self.client_state)
 
-        # 4 - Draw the screen
-        self.graphics.render(self.client_state.get_current_screen())
-
-        # 5 - Read user input
+        # 4 - Read user input
         UserInput.process(self.input_manager, self.client_state)
 
-        # 6 - Update the current screen
-        """
-        # TODO: I don't like this if
-        in_game_event = None
-        if isinstance(event, InGameEvent):
-            in_game_event = event
-        """
-        in_game_event = event
-        self.client_state.get_current_screen().update(in_game_event)
+        current_screen = self.client_state.get_current_screen()
+
+        if current_screen is not None:
+            # 5 - Draw the screen
+            self.graphics.render(current_screen)
+
+            # 6 - Update the current screen
+
+            # TODO: I don't like this if
+            if event is not None and isinstance(event, InGameEvent):
+                # it is an ingame event
+                current_screen.update(event)

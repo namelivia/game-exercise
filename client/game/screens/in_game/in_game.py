@@ -32,7 +32,7 @@ from client.engine.features.pieces.events import (
     SymbolPlacedErroredEvent,
 )
 from client.game.pieces.commands import RequestPlaceASymbol
-from typing import TYPE_CHECKING, List, Any, Optional
+from typing import TYPE_CHECKING, List, Any, Optional, Dict
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
@@ -142,7 +142,9 @@ class InGame(Screen):
         if event.key == "escape":
             if self.data["chat_focused"]:
                 self.data["chat_focused"] = False
-                self.ui_elements[7].unfocus()
+                chat_ui = self.ui_elements[7]
+                if isinstance(chat_ui, ChatInput):
+                    chat_ui.unfocus()
             else:
                 BackToLobby(
                     self.client_state.profile, self.client_state.queue
@@ -151,12 +153,15 @@ class InGame(Screen):
         if event.key == "t":
             if not self.data["chat_focused"]:
                 self.data["chat_focused"] = True
-                self.ui_elements[7].focus()
+                chat_ui = self.ui_elements[7]
+                if isinstance(chat_ui, ChatInput):
+                    chat_ui.focus()
                 return
         if event.key in "012345678":
-            if self._move_is_valid(int(event.key)):
+            position = int(event.key)
+            if self._move_is_valid(position):
                 RequestPlaceASymbol(
-                    self.client_state.profile, self.client_state.queue, event.key
+                    self.client_state.profile, self.client_state.queue, position
                 ).execute()
             return
         if event.key == "backspace" and self.data["chat_focused"]:
@@ -173,8 +178,8 @@ class InGame(Screen):
 
     def _its_players_turn(self, player_id: "UUID") -> bool:
         if player_id == self.data["players"][0]:
-            return self.data["status"] == "It is player 1 turn"
-        return self.data["status"] == "It is player 2 turn"
+            return bool(self.data["status"] == "It is player 1 turn")
+        return bool(self.data["status"] == "It is player 2 turn")
 
     def _position_is_valid(self, position: int) -> bool:
         return self.data["board"][position]["current"] is None
@@ -189,7 +194,9 @@ class InGame(Screen):
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
         # TODO: Could we play a UI animation here???
-        self.ui_elements[1].play()
+        animation = self.ui_elements[1]
+        if isinstance(animation, IntroAnimation):
+            animation.play()
 
     def on_player_joined(self, event: PlayerJoinedInGameEvent) -> None:
         PlaySound(
@@ -232,21 +239,23 @@ class InGame(Screen):
 
     def on_chat_message(self, event: ChatMessageInGameEvent) -> None:
         logger.info("[Screen] Incoming chat message")
-        # This is not working because the ingame event has another id
-        # Check  if the message is already there waiting for confirmation
-        already_there = self._get_chat_message_by_event_id(event.original_event_id)
-        if not already_there:
-            self.data["chat_messages"].append(
-                {
-                    "event_id": event.id,
-                    "player_id": event.player_id,
-                    "message": event.message,
-                    "confirmation": event.confirmation,
-                }
-            )
-            PlaySound(
-                self.client_state.profile, self.client_state.queue, "start_game"
-            ).execute()
+        original_event_id = event.original_event_id
+        if original_event_id is not None:
+            # This is not working because the ingame event has another id
+            # Check  if the message is already there waiting for confirmation
+            already_there = self._get_chat_message_by_event_id(original_event_id)
+            if not already_there:
+                self.data["chat_messages"].append(
+                    {
+                        "event_id": event.id,
+                        "player_id": event.player_id,
+                        "message": event.message,
+                        "confirmation": event.confirmation,
+                    }
+                )
+                PlaySound(
+                    self.client_state.profile, self.client_state.queue, "start_game"
+                ).execute()
 
     def _get_chat_message_by_event_id(self, event_id: "UUID") -> Optional[Any]:
         for entry in enumerate(self.data["chat_messages"]):
@@ -259,16 +268,20 @@ class InGame(Screen):
         PlaySound(
             self.client_state.profile, self.client_state.queue, "start_game"
         ).execute()
-        index = self._get_chat_message_by_event_id(event.chat_message_event_id)[0]
-        if self.data["chat_messages"][index]["confirmation"] == "pending":
-            del self.data["chat_messages"][index]
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        if message is not None:
+            index = message[0]
+            if self.data["chat_messages"][index]["confirmation"] == "pending":
+                del self.data["chat_messages"][index]
 
     def on_chat_message_confirmed(self, event: ChatMessageConfirmedInGameEvent) -> None:
         logger.info("[Screen] Chat message confirmed")
-        message = self._get_chat_message_by_event_id(event.chat_message_event_id)[1]
-        message["confirmation"] = "OK"
+        message = self._get_chat_message_by_event_id(event.chat_message_event_id)
+        if message is not None:
+            message = message[1]
+            message["confirmation"] = "OK"
 
-    def _get_current_board_positions(self) -> List[int]:
+    def _get_current_board_positions(self) -> List[Dict[str, Any]]:
         return [board_entry["current"] for board_entry in self.data["board"]]
 
     def _get_symbol_placement_by_event_id(self, event_id: "UUID") -> Any:

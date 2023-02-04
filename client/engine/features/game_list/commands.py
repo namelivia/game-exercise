@@ -9,10 +9,13 @@ from .events import (
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
+    from common.messages import GameListResponseEntry
 
 
 class UpdateGameList(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", games: List[str]):
+    def __init__(
+        self, profile: "Profile", queue: "Queue", games: List["GameListResponseEntry"]
+    ):
         super().__init__(profile, queue, "Updating game list")
         self.events = [UpdateGameListEvent(games)]
 

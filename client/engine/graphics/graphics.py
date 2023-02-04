@@ -11,9 +11,6 @@ class Graphics:
             import pygame
 
             self.window = pygame.display.set_mode((640, 480))
-        else:
-            self.window = None
-        return None
 
     def render(self, screen: "Screen") -> None:
         ui_elements = screen.get_ui_elements()

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Type
 import logging
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from .events import (
@@ -91,14 +91,14 @@ class PingNetworkRequestEventHandler(BaseEventHandler):
         return PingRequestMessage()
 
 
-common_handlers = {
+common_handlers: Dict[Type["Event"], Type[BaseEventHandler]] = {
     QuitGameEvent: QuitGameEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Type[BaseEventHandler]] = {
     **common_handlers,
     **chat_event_handlers,
     **pieces_event_handlers,
@@ -110,6 +110,6 @@ handlers_map = {
 }
 
 
-class EventHandler:
+class EventHandler(BaseEventHandler):
     def handle(self, event: "Event", client_state: "ClientState") -> None:
         handlers_map[type(event)]().handle(event, client_state)

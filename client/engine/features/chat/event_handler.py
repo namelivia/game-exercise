@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Type
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
@@ -25,6 +25,7 @@ from client.engine.network.channel import Channel
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
     from uuid import UUID
+    from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
 
@@ -105,10 +106,10 @@ class SendChatNetworkRequestEventHandler(EventHandler):
         return SendChatMessage(game_id, event_id, profile_id, message)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
-    # TODO: Typing issue: These two are not of type Event
-    ChatMessageConfirmation: ChatMessageConfirmationHandler,
+    # TODO: Typing issue: These is not correctly defined, should be a common event
+    # ChatMessageConfirmation: ChatMessageConfirmationHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }

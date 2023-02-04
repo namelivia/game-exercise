@@ -17,10 +17,11 @@ from common.messages import (
     ErrorMessage,
 )
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Type
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from client.engine.primitives.event import Event
     from uuid import UUID
 
 logger = logging.getLogger(__name__)
@@ -72,7 +73,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         return GetGameStatus(game_id, pointer, profile_id)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     UpdateGameEvent: UpdateGameEventHandler,
     RefreshGameStatusEvent: RefreshGameStatusEventHandler,
     RefreshGameStatusNetworkRequestEvent: RefreshGameStatusNetworkRequestEventHandler,

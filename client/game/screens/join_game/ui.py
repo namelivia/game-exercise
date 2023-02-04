@@ -13,13 +13,15 @@ class GameIdMessage(UIElement):
         self.shapes = [
             Text("Join an existing game", 20, 0),
             Text("Please write the id for the game:", 20, 40),
-            Text(game_id, 20, 70),
+            Text(str(game_id), 20, 70),
         ]
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
         # What if data does not contain game_id? Throw an exception
         game_id = data["game_id"]
-        self.shapes[2].set_message(game_id)  # Not supersure about this
+        game_id_text = self.shapes[2]
+        if isinstance(game_id_text, Text):
+            game_id_text.set_message(game_id)  # Not supersure about this
 
 
 class Background(UIElement):

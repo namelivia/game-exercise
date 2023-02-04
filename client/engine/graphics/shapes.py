@@ -3,12 +3,12 @@ from .sprite import Sprite
 from client.engine.primitives.shape import Shape
 from typing import Tuple, Any
 
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+WHITE = pygame.Color(255, 255, 255)
+BLACK = pygame.Color(0, 0, 0)
 
 
 class Text(Shape):
-    def __init__(self, message: str, x: int, y: int, color: Tuple = BLACK):
+    def __init__(self, message: str, x: int, y: int, color: pygame.Color = BLACK):
         super().__init__(x, y)
         self.message = message
         self.color = color
@@ -24,7 +24,9 @@ class Text(Shape):
 
 
 class Rectangle(Shape):
-    def __init__(self, x: int, y: int, width: int, height: int, color: Tuple = BLACK):
+    def __init__(
+        self, x: int, y: int, width: int, height: int, color: pygame.Color = BLACK
+    ):
         super().__init__(x, y)
         self.width = width
         self.height = height
@@ -39,7 +41,7 @@ class Rectangle(Shape):
 
 
 class SmallText(Shape):
-    def __init__(self, message: str, x: int, y: int, color: Tuple = BLACK):
+    def __init__(self, message: str, x: int, y: int, color: pygame.Color = BLACK):
         super().__init__(x, y)
         self.message = message
         self.color = color

@@ -13,27 +13,19 @@ class ServerPolling:
         return 100
 
     @staticmethod
-    def _is_polling_time(time: int) -> bool:
+    def _should_do_polling(client_state: "ClientState") -> bool:
+        time = client_state.clock.get()
         return time % ServerPolling._get_polling_rate() == 0
 
     @staticmethod
-    def _is_playing_a_game(game_id: "UUID") -> bool:
-        return game_id is not None
-
-    @staticmethod
-    def _should_do_polling(client_state: "ClientState") -> bool:
-        game_id = client_state.profile.game_id
-        time = client_state.clock.get()
-        return ServerPolling._is_playing_a_game(
-            game_id
-        ) and ServerPolling._is_polling_time(time)
-
-    @staticmethod
     def push_polling_event_if_needed(client_state: "ClientState") -> None:
-        if ServerPolling._should_do_polling(client_state):
-            RequestGameStatus(
-                client_state.profile,
-                client_state.queue,
-                client_state.profile.game_id,
-                client_state.profile.game_event_pointer,
-            ).execute()
+        game_id = client_state.profile.game_id
+        pointer = client_state.profile.game_event_pointer
+        if game_id is not None and pointer is not None:
+            if ServerPolling._should_do_polling(client_state):
+                RequestGameStatus(
+                    client_state.profile,
+                    client_state.queue,
+                    game_id,
+                    pointer,
+                ).execute()

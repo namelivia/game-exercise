@@ -13,5 +13,5 @@ class ScreenTransitionEvent(Event):
         self.dest_screen = dest_screen
 
 
-class ClearInternalGameInformationEvent:
+class ClearInternalGameInformationEvent(Event):
     pass

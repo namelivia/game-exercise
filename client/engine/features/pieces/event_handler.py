@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Type
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
@@ -24,6 +24,7 @@ from client.engine.network.channel import Channel
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
+    from client.engine.primitives.event import Event
     from uuid import UUID
 
 
@@ -107,9 +108,10 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
-    SymbolPlacedConfirmation: PlayerPlacedSymbolConfirmationHandler,
+    # TODO: Typing issue: These is not correctly defined, should be a common event
+    # SymbolPlacedConfirmation: PlayerPlacedSymbolConfirmationHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
 }

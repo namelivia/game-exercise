@@ -33,8 +33,13 @@ class Coins(UIElement):
     def update(self, time: int, data: Dict[str, Any]) -> None:
         animation_speed = 128  # The higher the slower
         if (time % animation_speed) == 0:
-            self.shapes[0].update()  # Not supersure about this
-            self.shapes[1].update()  # Not supersure about this
+            animation_1 = self.shapes[0]
+            animation_2 = self.shapes[1]
+            if isinstance(animation_1, Animation) and isinstance(
+                animation_2, Animation
+            ):
+                animation_1.update()  # Not supersure about this
+                animation_2.update()  # Not supersure about this
         movement_speed = 5  # The higher the slower
         self.shapes[0].set_x(
             int((time / movement_speed) % 640)

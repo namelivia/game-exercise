@@ -3,12 +3,12 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.input.input_manager import InputManager
+    from client.engine.input.input import Input
 
 
 class UserInput:
     @staticmethod
-    def process(input_manager: "InputManager", client_state: "ClientState") -> None:
+    def process(input_manager: "Input", client_state: "ClientState") -> None:
         # Get events from user input
         user_events = input_manager.read()
 

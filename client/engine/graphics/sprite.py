@@ -5,7 +5,7 @@ from typing import List
 
 
 class Sprite(pygame.sprite.Sprite):
-    def _get_frames_path(self, folder: str) -> List:
+    def _get_frames_path(self, folder: str) -> List[str]:
         path, _, files = next(os.walk(folder))
         files = [os.path.join(path, file) for file in files]
         files.sort(
@@ -33,7 +33,9 @@ class Sprite(pygame.sprite.Sprite):
         self.image = self.sprites[self.current_sprite]
 
     def set_x(self, x: int) -> None:
-        self.rect.x = x
+        if self.rect is not None:
+            self.rect.x = x
 
     def set_y(self, y: int) -> None:
-        self.rect.y = y
+        if self.rect is not None:
+            self.rect.y = y

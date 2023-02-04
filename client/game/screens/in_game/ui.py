@@ -62,13 +62,13 @@ class Events(UIElement):
 
 
 class ChatMessages(UIElement):
-    def _get_message_string(self, message: str, index: int) -> str:
+    def _get_message_string(self, message: Dict[str, str], index: int) -> str:
         player_id = message["player_id"]
         contents = message["message"]
         confirmation = message["confirmation"]
         return f"{player_id}: {contents} | {confirmation}"
 
-    def __init__(self, messages: Dict[str, str]):
+    def __init__(self, messages: List[Dict[str, str]]):
         self.shapes = [
             SmallText(self._get_message_string(message, index), 20, 300 + (20 * index))
             for index, message in enumerate(messages)
@@ -110,8 +110,13 @@ class IntroAnimation(UIElement):
         self.timer += 1
         animation_speed = 128  # The higher the slower
         if (time % animation_speed) == 0:
-            self.shapes[0].update()  # Not supersure about this
-            self.shapes[1].update()  # Not supersure about this
+            animation_1 = self.shapes[0]
+            animation_2 = self.shapes[1]
+            if isinstance(animation_1, Animation) and isinstance(
+                animation_2, Animation
+            ):
+                animation_1.update()  # Not supersure about this
+                animation_2.update()  # Not supersure about this
         movement_speed = 5  # The higher the slower
         self.shapes[0].set_x(
             int((time / movement_speed) % 640)
@@ -209,7 +214,9 @@ class Board(UIElement):
             ),
         ]
 
-    def _get_current_board_positions(self, data: Dict[str, Any]) -> List[int]:
+    def _get_current_board_positions(
+        self, data: Dict[str, Any]
+    ) -> List[Dict[str, Any]]:
         return [board_entry["current"] for board_entry in data["board"]]
 
     def update(self, time: int, data: Dict[str, Any]) -> None:

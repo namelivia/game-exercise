@@ -9,7 +9,9 @@ class ClockUI(UIElement):
         self.shapes = [Text(f"Time is {value}", 20, 100)]
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
-        self.shapes[0].set_message(f"Time is {time}")  # Not supersure about this
+        time_text = self.shapes[0]
+        if isinstance(time_text, Text):
+            time_text.set_message(f"Time is {time}")  # Not supersure about this
 
 
 class AnimationDebug(UIElement):
@@ -19,4 +21,6 @@ class AnimationDebug(UIElement):
         ]
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
-        self.shapes[0].update()
+        animation = self.shapes[0]
+        if isinstance(animation, Animation):
+            animation.update()

@@ -121,6 +121,6 @@ handlers_map = {
 }
 
 
-class EventHandler:
+class EventHandler(BaseEventHandler):
     def handle(self, event: "Event", client_state: "ClientState") -> None:
         handlers_map[type(event)]().handle(event, client_state)

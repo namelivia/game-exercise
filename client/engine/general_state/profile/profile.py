@@ -22,14 +22,14 @@ class Profile:
         self.sound_on = sound_on
         self.name: Optional[str] = None
 
-    def set_game(self, game_id: "UUID") -> None:
+    def set_game(self, game_id: Optional["UUID"]) -> None:
         self.game_id = game_id
 
     def set_name(self, name: str) -> None:
         self.name = name
         self.save()
 
-    def set_game_event_pointer(self, game_event_pointer: int) -> None:
+    def set_game_event_pointer(self, game_event_pointer: Optional[int]) -> None:
         self.game_event_pointer = game_event_pointer
 
     def set_sound_on(self) -> None:

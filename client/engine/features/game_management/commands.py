@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 
 class CreateAGame(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: "UUID"):
+    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: str):
         super().__init__(profile, queue, f"Create a new game called {new_game_name}")
         self.events = [CreateAGameNetworkRequestEvent(new_game_name)]
 
@@ -40,7 +40,7 @@ class ErrorJoiningGame(Command):
 
 
 class RequestGameCreation(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: "UUID"):
+    def __init__(self, profile: "Profile", queue: "Queue", new_game_name: str):
         super().__init__(
             profile, queue, f"Request creating a game called {new_game_name}"
         )

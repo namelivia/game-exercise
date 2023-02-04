@@ -17,7 +17,7 @@ class ChatMessageInGameEvent(InGameEvent):
         player_id: "UUID",
         message: str,
         confirmation: str,
-        original_event_id: Optional[str] = None,
+        original_event_id: Optional["UUID"] = None,
     ):
         super().__init__()
         self.player_id = player_id
