@@ -55,6 +55,7 @@ class ScreenManager:
             # 6 - Update the current screen
 
             # TODO: I don't like this if
-            if event is not None and isinstance(event, InGameEvent):
-                # it is an ingame event
-                current_screen.update(event)
+            if not isinstance(event, InGameEvent):
+                event = None
+            # it is an ingame event
+            current_screen.update(event)
