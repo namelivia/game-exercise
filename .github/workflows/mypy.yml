@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - uses: jpetrucciani/mypy-check@master
+      - uses: jpetrucciani/mypy-check@0991
         with:
           mypy_flags: "--config-file .mypy.ini --strict"
