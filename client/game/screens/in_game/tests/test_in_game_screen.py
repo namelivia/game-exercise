@@ -3,6 +3,7 @@ from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.features.chat.events import (
     ChatMessageInGameEvent,
 )
+from uuid import uuid4
 from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
@@ -130,7 +131,10 @@ class TestInGameScreen(TestCase):
         # A chat message comes
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_2_id", message="good luck", confirmation="OK"
+                player_id="player_2_id",
+                message="good luck",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
 
@@ -318,7 +322,10 @@ class TestInGameScreen(TestCase):
 
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="gg bro", confirmation="OK"
+                player_id="player_1_id",
+                message="gg bro",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
 
@@ -353,52 +360,82 @@ class TestInGameScreen(TestCase):
         # Many chat messages come
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 1", confirmation="OK"
+                player_id="player_1_id",
+                message="message 1",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 2", confirmation="OK"
+                player_id="player_1_id",
+                message="message 2",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 3", confirmation="OK"
+                player_id="player_1_id",
+                message="message 3",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 4", confirmation="OK"
+                player_id="player_1_id",
+                message="message 4",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 5", confirmation="OK"
+                player_id="player_1_id",
+                message="message 5",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 6", confirmation="OK"
+                player_id="player_1_id",
+                message="message 6",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 7", confirmation="OK"
+                player_id="player_1_id",
+                message="message 7",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 8", confirmation="OK"
+                player_id="player_1_id",
+                message="message 8",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 9", confirmation="OK"
+                player_id="player_1_id",
+                message="message 9",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
         self.in_game.update(
             ChatMessageInGameEvent(
-                player_id="player_1_id", message="message 10", confirmation="OK"
+                player_id="player_1_id",
+                message="message 10",
+                confirmation="OK",
+                original_event_id=uuid4(),
             ),
         )
 
