@@ -10,4 +10,4 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: jpetrucciani/mypy-check@master
         with:
-          mypy_flags: "--config-file .mypy.ini"
+          mypy_flags: "--config-file .mypy.ini --strict"
