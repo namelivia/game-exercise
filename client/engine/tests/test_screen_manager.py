@@ -1,5 +1,6 @@
 from unittest import TestCase
 from client.engine.screen_manager import ScreenManager
+from client.engine.primitives.event import InGameEvent
 import mock
 
 
@@ -18,7 +19,8 @@ class TestScreenManager(TestCase):
     @mock.patch("client.engine.screen_manager.UserInput.process")
     def test_main_loop_iteration(self, m_process_input, m_push_polling_event):
         self.client_state.clock.get.return_value = 120
-        self.client_state.queue.pop.return_value = "some_event"  # Event from the queue
+        event = mock.Mock(InGameEvent)
+        self.client_state.queue.pop.return_value = event  # Event from the queue
         current_screen = mock.Mock()
         self.client_state.get_current_screen.return_value = current_screen
         self.input_manager.read.return_value = []  # no input
@@ -43,5 +45,5 @@ class TestScreenManager(TestCase):
 
         # The screen is updated
         current_screen.update.assert_called_once_with(
-            "some_event"  # The screen receives the latest event too
+            event  # The screen receives the ingame event
         )
