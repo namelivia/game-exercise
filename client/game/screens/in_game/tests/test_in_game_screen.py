@@ -112,7 +112,7 @@ class TestInGameScreen(TestCase):
         )
 
         # Empty screen
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_start.png",
         )
@@ -122,7 +122,7 @@ class TestInGameScreen(TestCase):
             PlayerJoinedInGameEvent(player_id="player_2_id"),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_player_2_joins.png",
         )
@@ -134,7 +134,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_message.png",
         )
@@ -145,7 +145,7 @@ class TestInGameScreen(TestCase):
         # Player 1 places symbol
         self.in_game.update(placement_event)
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_1_pending.png",
         )
@@ -155,7 +155,7 @@ class TestInGameScreen(TestCase):
             SymbolPlacedConfirmedInGameEvent(placement_event.id),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_1_confirmed.png",
         )
@@ -167,7 +167,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_2.png",
         )
@@ -179,7 +179,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_3.png",
         )
@@ -191,7 +191,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_4.png",
         )
@@ -202,7 +202,7 @@ class TestInGameScreen(TestCase):
         )
         self.in_game.update(bad_move)
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_bad_movement.png",
         )
@@ -213,7 +213,7 @@ class TestInGameScreen(TestCase):
             SymbolPlacedErroredEvent(place_symbol_event_id=bad_move.id),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_bad_movement_rollback.png",
         )
@@ -225,7 +225,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_5.png",
         )
@@ -237,7 +237,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_6.png",
         )
@@ -249,7 +249,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_7.png",
         )
@@ -261,7 +261,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_8.png",
         )
@@ -273,7 +273,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_movement_9.png",
         )
@@ -283,7 +283,7 @@ class TestInGameScreen(TestCase):
             PlayerWinsInGameEvent(player_id="player_1_id"),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/player_wins.png",
         )
@@ -291,7 +291,7 @@ class TestInGameScreen(TestCase):
         # Player focuses chat
         self.in_game.update(UserTypedEvent("t"))
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_focused.png",
         )
@@ -306,7 +306,7 @@ class TestInGameScreen(TestCase):
         self.in_game.update(UserTypedEvent("backspace"))
         self.in_game.update(UserTypedEvent("o"))
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_input.png",
         )
@@ -322,7 +322,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_response.png",
         )
@@ -331,7 +331,7 @@ class TestInGameScreen(TestCase):
 
         self.in_game.update(UserTypedEvent("escape"))
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/in_game_chat_unfocused.png",
         )
@@ -402,7 +402,7 @@ class TestInGameScreen(TestCase):
             ),
         )
 
-        VisualRegression.generate_snapshot(
+        VisualRegression.assert_matches_snapshot(
             self.in_game,
             "./client/game/screens/in_game/tests/screenshots/many_chat_messages.png",
         )
