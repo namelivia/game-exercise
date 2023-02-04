@@ -139,6 +139,7 @@ class JoinGame(Command):
         self.game_id = game_id
         self.player_id = player_id
 
+    @property
     def name(self) -> str:
         return "Join an existing game"
 
@@ -159,6 +160,7 @@ class GameStatus(Command):
         self.pointer = pointer
         self.player_id = player_id
 
+    @property
     def name(self) -> str:
         return "Get game status"
 
@@ -178,6 +180,7 @@ class GameStatus(Command):
 
 
 class Ping(Command):
+    @property
     def name(self) -> str:
         return "Ping"
 
