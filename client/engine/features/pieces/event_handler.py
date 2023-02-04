@@ -31,17 +31,6 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class PlayerPlacedSymbolConfirmationHandler(EventHandler):
-    def handle(
-        self,
-        event: "SymbolPlacedConfirmation",
-        client_state: "ClientState",
-    ) -> None:
-        SymbolPlacedConfirmedCommand(
-            client_state.profile, client_state.queue, event.event_id
-        ).execute()
-
-
 class PlayerPlacedSymbolInGameEventHandler(EventHandler):
     def handle(
         self, event: "PlayerPlacedSymbolInGameEvent", client_state: "ClientState"
@@ -111,7 +100,5 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
 handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
-    # TODO: Typing issue: These is not correctly defined, should be a common event
-    # SymbolPlacedConfirmation: PlayerPlacedSymbolConfirmationHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
 }

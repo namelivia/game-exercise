@@ -30,15 +30,6 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class ChatMessageConfirmationHandler(EventHandler):
-    def handle(
-        self, event: "ChatMessageConfirmation", client_state: "ClientState"
-    ) -> None:
-        ChatMessageConfirmedCommand(
-            client_state.profile, client_state.queue, event.event_id
-        ).execute()
-
-
 class ChatMessageInGameEventHandler(EventHandler):
     def handle(
         self, event: "ChatMessageInGameEvent", client_state: "ClientState"
@@ -109,7 +100,5 @@ class SendChatNetworkRequestEventHandler(EventHandler):
 handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
-    # TODO: Typing issue: These is not correctly defined, should be a common event
-    # ChatMessageConfirmation: ChatMessageConfirmationHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,
 }
