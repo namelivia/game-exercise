@@ -6,5 +6,4 @@ class Clock:
         pass
 
     def get(self) -> int:
-        # TODO: Waaaait,this is pygame dependent
-        return pygame.time.get_ticks()
+        return pygame.time.get_ticks()  # type: ignore

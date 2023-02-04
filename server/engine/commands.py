@@ -1,8 +1,9 @@
-from typing import List, Any, TYPE_CHECKING, Iterable
+from typing import List, Any, Iterable
 from abc import ABC, abstractmethod
 from server.game.game import Game
 from .errors import InvalidCommandError
 from .persistence import Persistence
+from uuid import UUID
 import logging
 from common.messages import (
     GameInfoMessage,
@@ -14,9 +15,6 @@ from common.messages import (
     SymbolPlacedConfirmation,
 )
 from common.game_data import GameData
-
-if TYPE_CHECKING:
-    from uuid import UUID
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +42,7 @@ class Command(ABC):
         self.debug()
 
     # Retrieve the current game from storage
-    def load_game(self, game_id: "UUID") -> Any:
+    def load_game(self, game_id: UUID) -> Any:
         try:
             return Persistence.load_game(game_id)
         except FileNotFoundError:
@@ -52,7 +50,7 @@ class Command(ABC):
             raise InvalidCommandError("Invalid game id")
 
     # Create a new game
-    def create_game(self, name: str, player_id: "UUID") -> Game:
+    def create_game(self, name: str, player_id: UUID) -> Game:
         return Game(name, player_id)
 
     def save_game(self, new_game: Game) -> None:
@@ -61,7 +59,7 @@ class Command(ABC):
 
 class PlaceSymbol(Command):
     def __init__(
-        self, game_id: "UUID", event_id: "UUID", player_id: "UUID", position: int
+        self, game_id: UUID, event_id: UUID, player_id: UUID, position: int
     ) -> None:
         self.game_id = game_id
         self.event_id = event_id
@@ -86,9 +84,7 @@ class PlaceSymbol(Command):
 
 
 class SendChat(Command):
-    def __init__(
-        self, game_id: "UUID", event_id: "UUID", player_id: "UUID", message: str
-    ):
+    def __init__(self, game_id: UUID, event_id: UUID, player_id: UUID, message: str):
         self.game_id = game_id
         self.event_id = event_id
         self.player_id = player_id
@@ -112,7 +108,7 @@ class SendChat(Command):
 
 
 class CreateGame(Command):
-    def __init__(self, game_name: str, player_id: "UUID"):
+    def __init__(self, game_name: str, player_id: UUID):
         self.game_name = game_name
         self.player_id = player_id
 
@@ -139,7 +135,7 @@ class CreateGame(Command):
 
 
 class JoinGame(Command):
-    def __init__(self, game_id: "UUID", player_id: "UUID"):
+    def __init__(self, game_id: UUID, player_id: UUID):
         self.game_id = game_id
         self.player_id = player_id
 
@@ -158,7 +154,7 @@ class JoinGame(Command):
 
 
 class GameStatus(Command):
-    def __init__(self, game_id: "UUID", pointer: int, player_id: "UUID"):
+    def __init__(self, game_id: UUID, pointer: int, player_id: UUID):
         self.game_id = game_id
         self.pointer = pointer
         self.player_id = player_id

@@ -6,7 +6,7 @@ if TYPE_CHECKING:
 
 
 class UpdateGameListEvent(InGameEvent):
-    def __init__(self, games: List[GameListResponseEntry]):
+    def __init__(self, games: List["GameListResponseEntry"]):
         super().__init__()
         self.games = games
 
