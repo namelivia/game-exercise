@@ -12,7 +12,7 @@ pre-commit = "*"
 pytest-cov = "*"
 codecov = "*"
 numpy = "*"
-mypy = "*"
+mypy = "==0.991"
 
 [packages]
 

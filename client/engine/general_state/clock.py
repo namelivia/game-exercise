@@ -6,4 +6,4 @@ class Clock:
         pass
 
     def get(self) -> int:
-        return pygame.time.get_ticks()
+        return int(pygame.time.get_ticks())
