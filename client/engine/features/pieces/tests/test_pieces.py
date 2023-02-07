@@ -1,24 +1,22 @@
 from unittest import TestCase
-from client.engine.general_state.queue import Queue
+
+import mock
+
 from client.engine.event_handler import EventHandler
 from client.engine.features.pieces.commands import (
     PlaceASymbol,
+    PlayerPlacedSymbolInGameCommand,
     SymbolPlacedConfirmedCommand,
     SymbolPlacedErroredCommand,
-    PlayerPlacedSymbolInGameCommand,
 )
 from client.engine.features.pieces.events import (
     PlaceASymbolNetworkRequestEvent,
-    SymbolPlacedConfirmedInGameEvent,
     PlayerPlacedSymbolInGameEvent,
+    SymbolPlacedConfirmedInGameEvent,
     SymbolPlacedErroredEvent,
 )
-from common.messages import (
-    PlaceASymbolMessage,
-    SymbolPlacedConfirmation,
-    ErrorMessage,
-)
-import mock
+from client.engine.general_state.queue import Queue
+from common.messages import ErrorMessage, PlaceASymbolMessage, SymbolPlacedConfirmation
 
 
 class TestPieces(TestCase):

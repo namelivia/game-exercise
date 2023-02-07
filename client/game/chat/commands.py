@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
-from client.engine.primitives.command import Command
+
 from client.engine.features.chat.events import ChatMessageInGameEvent
+from client.engine.primitives.command import Command
+
 from .events import SendChatRequestEvent
 
 if TYPE_CHECKING:

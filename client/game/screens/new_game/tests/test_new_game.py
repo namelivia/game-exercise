@@ -1,8 +1,10 @@
 from unittest import TestCase
-from client.game.screens.new_game.new_game import NewGame
+
+import mock
+
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.visual_regression.visual_regression import VisualRegression
-import mock
+from client.game.screens.new_game.new_game import NewGame
 
 
 class TestNewGame(TestCase):
@@ -13,7 +15,6 @@ class TestNewGame(TestCase):
 
     @mock.patch("client.game.screens.new_game.new_game.RequestGameCreation")
     def test_new_game_screen(self, m_request_game_creation):
-
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.new_game,

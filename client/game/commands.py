@@ -1,10 +1,9 @@
 from typing import TYPE_CHECKING
-from client.engine.primitives.command import Command
+
 from client.engine.features.sound.events import PlaySoundEvent
-from .events import (
-    ScreenTransitionEvent,
-    ClearInternalGameInformationEvent,
-)
+from client.engine.primitives.command import Command
+
+from .events import ClearInternalGameInformationEvent, ScreenTransitionEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile

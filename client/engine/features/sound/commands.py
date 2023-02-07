@@ -1,11 +1,8 @@
 from typing import TYPE_CHECKING
+
 from client.engine.primitives.command import Command
-from .events import (
-    TurnSoundOnEvent,
-    TurnSoundOffEvent,
-    PlaySoundEvent,
-    PlayMusicEvent,
-)
+
+from .events import PlayMusicEvent, PlaySoundEvent, TurnSoundOffEvent, TurnSoundOnEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile

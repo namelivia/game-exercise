@@ -1,15 +1,11 @@
 import logging
-from client.engine.primitives.event_handler import EventHandler
-from client.engine.sound.sound import Sound
-from client.engine.sound.music import Music
-from .events import (
-    TurnSoundOnEvent,
-    TurnSoundOffEvent,
-    PlaySoundEvent,
-    PlayMusicEvent,
-)
-
 from typing import TYPE_CHECKING, Dict, Type
+
+from client.engine.primitives.event_handler import EventHandler
+from client.engine.sound.music import Music
+from client.engine.sound.sound import Sound
+
+from .events import PlayMusicEvent, PlaySoundEvent, TurnSoundOffEvent, TurnSoundOnEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

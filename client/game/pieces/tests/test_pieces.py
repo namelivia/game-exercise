@@ -1,13 +1,11 @@
 from unittest import TestCase
-from client.game.pieces.commands import RequestPlaceASymbol
-from client.engine.features.pieces.events import (
-    PlayerPlacedSymbolInGameEvent,
-)
-from client.game.pieces.events import (
-    PlaceASymbolRequestEvent,
-)
+
 import mock
+
+from client.engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
 from client.engine.general_state.queue import Queue
+from client.game.pieces.commands import RequestPlaceASymbol
+from client.game.pieces.events import PlaceASymbolRequestEvent
 
 
 class TestPieces(TestCase):

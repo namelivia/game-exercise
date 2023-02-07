@@ -1,14 +1,14 @@
-from typing import Optional, List, Tuple, Any
-from server.engine.errors import InvalidCommandError
+from typing import TYPE_CHECKING, Any, List, Optional, Tuple
+from uuid import uuid4
+
 from common.events import (
+    ChatMessageEvent,
     GameCreated,
     PlayerJoined,
     PlayerPlacedSymbol,
-    ChatMessageEvent,
     PlayerWins,
 )
-from uuid import uuid4
-from typing import TYPE_CHECKING
+from server.engine.errors import InvalidCommandError
 
 if TYPE_CHECKING:
     from uuid import UUID

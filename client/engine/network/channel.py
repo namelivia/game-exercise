@@ -1,7 +1,7 @@
-import socket
-import pickle
 import logging
-from typing import Optional, Any
+import pickle
+import socket
+from typing import Any, Optional
 
 IP = "localhost"
 PORT = 1234

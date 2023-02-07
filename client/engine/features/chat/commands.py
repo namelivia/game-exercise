@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from client.engine.primitives.command import Command
 
 if TYPE_CHECKING:

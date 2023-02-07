@@ -1,7 +1,9 @@
 from unittest import TestCase
-from server.engine.commands import SendChat, PlaceSymbol
+
+from mock import Mock, patch
+
 from common.messages import ChatMessageConfirmation, SymbolPlacedConfirmation
-from mock import patch, Mock
+from server.engine.commands import PlaceSymbol, SendChat
 
 
 class TestCommands(TestCase):

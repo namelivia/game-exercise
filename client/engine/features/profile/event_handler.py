@@ -1,18 +1,11 @@
 import logging
-from typing import List, Dict, Iterable, Any, Type
-from client.engine.primitives.event_handler import EventHandler
-from .events import (
-    SetProfileEvent,
-    NewProfileEvent,
-    GetProfilesEvent,
-)
-from .commands import (
-    ProfileIsSet,
-    SetProfile,
-    UpdateProfiles,
-)
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Type
+
 from client.engine.persistence.persistence import Persistence
-from typing import TYPE_CHECKING
+from client.engine.primitives.event_handler import EventHandler
+
+from .commands import ProfileIsSet, SetProfile, UpdateProfiles
+from .events import GetProfilesEvent, NewProfileEvent, SetProfileEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

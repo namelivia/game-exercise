@@ -1,12 +1,11 @@
-import pygame
 from typing import List
+
+import pygame
 
 
 class InputManager:
-
     # Map pygame events to custom events
     def read(self) -> List[str]:
-
         mapping = {
             pygame.KEYDOWN: {
                 pygame.K_1: "event_1",

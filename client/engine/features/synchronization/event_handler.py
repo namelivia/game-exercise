@@ -1,28 +1,22 @@
 import logging
-from client.engine.primitives.event_handler import EventHandler
-from client.engine.network.channel import Channel
-from .events import (
-    UpdateGameEvent,
-    RefreshGameStatusEvent,
-    RefreshGameStatusNetworkRequestEvent,
-)
-from .commands import (
-    ProcessServerEvents,
-    RefreshGameStatus,
-    UpdateGame,
-)
-from common.messages import (
-    GetGameStatus,
-    GameEventsMessage,
-    ErrorMessage,
-)
-
 from typing import TYPE_CHECKING, Dict, Type
 
+from client.engine.network.channel import Channel
+from client.engine.primitives.event_handler import EventHandler
+from common.messages import ErrorMessage, GameEventsMessage, GetGameStatus
+
+from .commands import ProcessServerEvents, RefreshGameStatus, UpdateGame
+from .events import (
+    RefreshGameStatusEvent,
+    RefreshGameStatusNetworkRequestEvent,
+    UpdateGameEvent,
+)
+
 if TYPE_CHECKING:
+    from uuid import UUID
+
     from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
-    from uuid import UUID
 
 logger = logging.getLogger(__name__)
 

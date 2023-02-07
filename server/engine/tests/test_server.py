@@ -1,13 +1,11 @@
 from unittest import TestCase
-from server.engine.commands import CreateGame, JoinGame, GameStatus, GetGameList
-from server.game.game import Game
-from common.messages import (
-    GameInfoMessage,
-    GameEventsMessage,
-    GameListResponseMessage,
-)
-from common.events import ChatMessageEvent
+
 import mock
+
+from common.events import ChatMessageEvent
+from common.messages import GameEventsMessage, GameInfoMessage, GameListResponseMessage
+from server.engine.commands import CreateGame, GameStatus, GetGameList, JoinGame
+from server.game.game import Game
 
 UUID = "760be8c0-13bd-428e-86e3-10632d1bbd6e"
 

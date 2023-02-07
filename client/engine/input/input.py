@@ -1,5 +1,6 @@
-from .input_manager import InputManager
 from typing import List
+
+from .input_manager import InputManager
 
 
 class Input:

@@ -1,5 +1,6 @@
-from client.engine.features.user_input.commands import UserTyped
 from typing import TYPE_CHECKING
+
+from client.engine.features.user_input.commands import UserTyped
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

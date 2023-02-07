@@ -1,30 +1,27 @@
 from typing import TYPE_CHECKING
-from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
-from client.engine.events import InitiateGameEvent
-from .events import (
-    ScreenTransitionEvent,
-    ClearInternalGameInformationEvent,
-)
-from .screens.intro.intro import Intro
-from .screens.lobby.lobby import Lobby
-from .screens.new_game.new_game import NewGame
-from .screens.join_game.join_game import JoinGame
-from .screens.game_list.game_list import GameList
-from .screens.options.options import Options
-from .screens.in_game.in_game import InGame
-from .screens.credits.credits import Credits
-from .screens.enter_name.enter_name import EnterName
-from .screens.profiles.profiles import Profiles
+
 from client.engine.commands import (
     GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
 )
-from common.events import (
-    GameCreated as GameCreatedInGameEvent,  # TODO: akward
-    PlayerJoined as PlayerJoinedInGameEvent,  # TODO: akward
-    PlayerWins as PlayerWinsInGameEvent,  # TODO: akward
-)
+from client.engine.events import InitiateGameEvent
+from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
+from common.events import GameCreated as GameCreatedInGameEvent  # TODO: akward
+from common.events import PlayerJoined as PlayerJoinedInGameEvent  # TODO: akward
+from common.events import PlayerWins as PlayerWinsInGameEvent  # TODO: akward
+
+from .events import ClearInternalGameInformationEvent, ScreenTransitionEvent
+from .screens.credits.credits import Credits
+from .screens.enter_name.enter_name import EnterName
+from .screens.game_list.game_list import GameList
+from .screens.in_game.in_game import InGame
+from .screens.intro.intro import Intro
+from .screens.join_game.join_game import JoinGame
+from .screens.lobby.lobby import Lobby
+from .screens.new_game.new_game import NewGame
+from .screens.options.options import Options
+from .screens.profiles.profiles import Profiles
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

@@ -1,25 +1,23 @@
 from unittest import TestCase
-from client.engine.general_state.queue import Queue
-from client.engine.general_state.profile.profile import Profile
+
+import mock
+
 from client.engine.event_handler import EventHandler
 from client.engine.features.chat.commands import (
-    SendChat,
     ChatMessageConfirmedCommand,
     ChatMessageErroredCommand,
     ChatMessageInGameCommand,
+    SendChat,
 )
 from client.engine.features.chat.events import (
-    SendChatNetworkRequestEvent,
     ChatMessageConfirmedInGameEvent,
     ChatMessageErroredEvent,
     ChatMessageInGameEvent,
+    SendChatNetworkRequestEvent,
 )
-from common.messages import (
-    SendChatMessage,
-    ChatMessageConfirmation,
-    ErrorMessage,
-)
-import mock
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.queue import Queue
+from common.messages import ChatMessageConfirmation, ErrorMessage, SendChatMessage
 
 
 class TestChat(TestCase):

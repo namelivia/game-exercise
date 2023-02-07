@@ -1,31 +1,27 @@
 import logging
 from typing import TYPE_CHECKING, Dict, Type
+
+from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
-from common.messages import (
-    ErrorMessage,
-    PlaceASymbolMessage,
-    SymbolPlacedConfirmation,
-)
 from client.game.pieces.events import PlaceASymbolRequestEvent
-from .events import (
-    PlaceASymbolNetworkRequestEvent,
-)
-from .commands import (
-    PlayerPlacedSymbolInGameCommand,
-    PlaceASymbol,
-    SymbolPlacedConfirmedCommand,
-    SymbolPlacedErroredCommand,
-)
 from common.events import (
     PlayerPlacedSymbol as PlayerPlacedSymbolInGameEvent,  # TODO: akward
 )
+from common.messages import ErrorMessage, PlaceASymbolMessage, SymbolPlacedConfirmation
 
-from client.engine.network.channel import Channel
+from .commands import (
+    PlaceASymbol,
+    PlayerPlacedSymbolInGameCommand,
+    SymbolPlacedConfirmedCommand,
+    SymbolPlacedErroredCommand,
+)
+from .events import PlaceASymbolNetworkRequestEvent
 
 if TYPE_CHECKING:
+    from uuid import UUID
+
     from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
-    from uuid import UUID
 
 
 logger = logging.getLogger(__name__)

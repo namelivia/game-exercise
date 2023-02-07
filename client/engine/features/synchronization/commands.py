@@ -1,16 +1,19 @@
 from typing import TYPE_CHECKING, List
+
 from client.engine.primitives.command import Command
+
 from .events import (
-    RefreshGameStatusNetworkRequestEvent,
     RefreshGameStatusEvent,
+    RefreshGameStatusNetworkRequestEvent,
     UpdateGameEvent,
 )
 
 if TYPE_CHECKING:
+    from uuid import UUID
+
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
     from client.engine.primitives.event import Event
-    from uuid import UUID
 
 
 class RefreshGameStatus(Command):

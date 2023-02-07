@@ -1,7 +1,10 @@
+from typing import Any, Tuple
+
 import pygame
-from .sprite import Sprite
+
 from client.engine.primitives.shape import Shape
-from typing import Tuple, Any
+
+from .sprite import Sprite
 
 WHITE = pygame.Color(255, 255, 255)
 BLACK = pygame.Color(0, 0, 0)

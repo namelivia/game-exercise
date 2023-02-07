@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
+
+from client.engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
 from client.engine.primitives.command import Command
-from client.engine.features.pieces.events import (
-    PlayerPlacedSymbolInGameEvent,
-)
+
 from .events import PlaceASymbolRequestEvent
 
 if TYPE_CHECKING:

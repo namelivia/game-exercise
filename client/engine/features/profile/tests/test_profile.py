@@ -1,22 +1,24 @@
 from unittest import TestCase
-from client.engine.general_state.queue import Queue
+
+import mock
+
 from client.engine.event_handler import EventHandler
 from client.engine.features.profile.commands import (
-    SetProfile,
+    GetProfiles,
     NewProfile,
     ProfileIsSet,
-    GetProfiles,
+    SetProfile,
     UpdateProfiles,
 )
 from client.engine.features.profile.events import (
-    SetProfileEvent,
+    GetProfilesEvent,
     NewProfileEvent,
     ProfileSetInGameEvent,
-    GetProfilesEvent,
+    SetProfileEvent,
     UpdateProfilesInGameEvent,
 )
 from client.engine.general_state.profile.profile import Profile
-import mock
+from client.engine.general_state.queue import Queue
 
 
 class TestProfile(TestCase):

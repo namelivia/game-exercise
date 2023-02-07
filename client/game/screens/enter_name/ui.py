@@ -1,6 +1,7 @@
-from client.engine.graphics.shapes import Text, Image
+from typing import Any, Dict
+
+from client.engine.graphics.shapes import Image, Text
 from client.engine.primitives.ui import UIElement
-from typing import Dict, Any
 
 
 class EnterNameMessage(UIElement):

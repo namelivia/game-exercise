@@ -1,10 +1,11 @@
 from unittest import TestCase
-from client.engine.visual_regression.visual_regression import VisualRegression
-from client.game.screens.intro.intro import Intro
 
 # from client.engine.features.user_input.events import UserTypedEvent
 # from client.game.screens.intro.intro import Intro
 import mock
+
+from client.engine.visual_regression.visual_regression import VisualRegression
+from client.game.screens.intro.intro import Intro
 
 
 class TestIntroScreen(TestCase):

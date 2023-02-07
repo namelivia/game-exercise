@@ -1,9 +1,11 @@
 from unittest import TestCase
-from client.game.screens.profiles.profiles import Profiles
-from client.engine.visual_regression.visual_regression import VisualRegression
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.features.profile.events import UpdateProfilesInGameEvent
+
 import mock
+
+from client.engine.features.profile.events import UpdateProfilesInGameEvent
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.visual_regression.visual_regression import VisualRegression
+from client.game.screens.profiles.profiles import Profiles
 
 
 class TestProfiles(TestCase):
@@ -14,7 +16,6 @@ class TestProfiles(TestCase):
 
     @mock.patch("client.game.screens.profiles.profiles.SetProfile")
     def test_profiles(self, m_set_profile):
-
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.profiles,

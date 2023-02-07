@@ -1,20 +1,22 @@
-from typing import List, Any, Iterable
-from abc import ABC, abstractmethod
-from server.game.game import Game
-from .errors import InvalidCommandError
-from .persistence import Persistence
-from uuid import UUID
 import logging
+from abc import ABC, abstractmethod
+from typing import Any, Iterable, List
+from uuid import UUID
+
+from common.game_data import GameData
 from common.messages import (
-    GameInfoMessage,
-    GameEventsMessage,
-    PingResponseMessage,
-    GameListResponseMessage,
-    GameListResponseEntry,
     ChatMessageConfirmation,
+    GameEventsMessage,
+    GameInfoMessage,
+    GameListResponseEntry,
+    GameListResponseMessage,
+    PingResponseMessage,
     SymbolPlacedConfirmation,
 )
-from common.game_data import GameData
+from server.game.game import Game
+
+from .errors import InvalidCommandError
+from .persistence import Persistence
 
 logger = logging.getLogger(__name__)
 

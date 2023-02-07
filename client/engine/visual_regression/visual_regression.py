@@ -1,6 +1,7 @@
 # TODO: Temporary location
-import numpy
 from typing import TYPE_CHECKING, Any
+
+import numpy
 
 if TYPE_CHECKING:
     from client.engine.primitives.screen import Screen

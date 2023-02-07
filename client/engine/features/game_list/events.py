@@ -1,4 +1,5 @@
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, List
+
 from client.engine.primitives.event import Event, InGameEvent
 
 if TYPE_CHECKING:

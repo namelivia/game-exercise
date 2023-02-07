@@ -1,62 +1,56 @@
 from unittest import TestCase
-from client.engine.general_state.queue import Queue
-from client.engine.general_state.profile.profile import Profile
-from client.engine.event_handler import EventHandler
-from client.engine.features.user_input.events import (
-    UserTypedEvent,
-)
-from client.engine.features.synchronization.events import (
-    UpdateGameEvent,
-    RefreshGameStatusEvent,
-    RefreshGameStatusNetworkRequestEvent,
-)
-from client.engine.features.game_list.events import (
-    UpdateGameListEvent,
-)
-from client.engine.features.game_management.events import (
-    JoinExistingGameEvent,
-    NewGameRequestEvent,
-    CreateAGameNetworkRequestEvent,
-    JoinAGameNetworkRequestEvent,
-)
-from client.engine.events import (
-    SetPlayerNameEvent,
-    QuitGameEvent,
-    InitiateGameEvent,
-    PingNetworkRequestEvent,
-)
-from client.engine.features.user_input.commands import (
-    UserTyped,
-)
-from client.engine.features.synchronization.commands import (
-    UpdateGame,
-    RequestGameStatus,
-)
-from client.engine.features.game_list.commands import (
-    UpdateGameList,
-)
+
+import mock
+
 from client.engine.commands import (
-    QuitGame,
+    GameCreatedInGameCommand,
     InitiateGame,
     PingTheServer,
-    GameCreatedInGameCommand,
     PlayerJoinedInGameCommand,
     PlayerWinsInGameCommand,
+    QuitGame,
     SetPlayerName,
 )
+from client.engine.event_handler import EventHandler
+from client.engine.events import (
+    InitiateGameEvent,
+    PingNetworkRequestEvent,
+    QuitGameEvent,
+    SetPlayerNameEvent,
+)
+from client.engine.features.game_list.commands import UpdateGameList
+from client.engine.features.game_list.events import UpdateGameListEvent
 from client.engine.features.game_management.commands import (
-    RequestJoiningAGame,
     RequestGameCreation,
+    RequestJoiningAGame,
 )
-from common.messages import (
-    GameInfoMessage,
-    GameEventsMessage,
-    PingResponseMessage,
-    PingRequestMessage,
+from client.engine.features.game_management.events import (
+    CreateAGameNetworkRequestEvent,
+    JoinAGameNetworkRequestEvent,
+    JoinExistingGameEvent,
+    NewGameRequestEvent,
 )
-from common.game_data import GameData
 from client.engine.features.sound.events import PlaySoundEvent
-import mock
+from client.engine.features.synchronization.commands import (
+    RequestGameStatus,
+    UpdateGame,
+)
+from client.engine.features.synchronization.events import (
+    RefreshGameStatusEvent,
+    RefreshGameStatusNetworkRequestEvent,
+    UpdateGameEvent,
+)
+from client.engine.features.user_input.commands import UserTyped
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.queue import Queue
+from common.game_data import GameData
+from common.messages import (
+    GameEventsMessage,
+    GameInfoMessage,
+    PingRequestMessage,
+    PingResponseMessage,
+)
 
 
 class TestClient(TestCase):
@@ -176,7 +170,6 @@ class TestClient(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_request_game_status_success(self, m_send_command):
-
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsMessage(
             [
@@ -358,7 +351,6 @@ class TestClient(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     def test_ping_the_server_success(self, m_send_command):
-
         m_send_command.return_value = PingResponseMessage()
 
         PingTheServer(self.profile, self.queue).execute()

@@ -1,4 +1,5 @@
 from unittest import TestCase
+
 from client.engine.general_state.queue import Queue
 
 

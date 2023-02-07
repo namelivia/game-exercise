@@ -1,9 +1,11 @@
-from client.engine.primitives.event import Event, InGameEvent
 from typing import TYPE_CHECKING
 
+from client.engine.primitives.event import Event, InGameEvent
+
 if TYPE_CHECKING:
-    from common.game_data import GameData
     from uuid import UUID
+
+    from common.game_data import GameData
 
 """
 Events contain an operation and the data needed in order to perform

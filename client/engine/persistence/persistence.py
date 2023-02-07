@@ -1,7 +1,6 @@
 import pickle
-from typing import Iterable
-from typing import TYPE_CHECKING
 from os import walk
+from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile

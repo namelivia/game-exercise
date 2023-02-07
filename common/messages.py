@@ -1,7 +1,8 @@
-from typing import TYPE_CHECKING, List, Any
+from typing import TYPE_CHECKING, Any, List
 
 if TYPE_CHECKING:
     from uuid import UUID
+
     from common.game_data import GameData
 
 

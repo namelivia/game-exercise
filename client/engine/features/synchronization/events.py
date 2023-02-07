@@ -1,5 +1,6 @@
+from typing import TYPE_CHECKING, List
+
 from client.engine.primitives.event import Event
-from typing import List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from uuid import UUID

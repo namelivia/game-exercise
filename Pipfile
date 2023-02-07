@@ -13,9 +13,9 @@ pytest-cov = "*"
 codecov = "*"
 numpy = "*"
 mypy = "*"
+isort = "*"
 
 [packages]
-
 pygame = "*"
 
 [requires]

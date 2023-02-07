@@ -1,6 +1,6 @@
-from typing import Any, Optional, TYPE_CHECKING
-from queue import SimpleQueue, Empty
 import logging
+from queue import Empty, SimpleQueue
+from typing import TYPE_CHECKING, Any, Optional
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
@@ -19,7 +19,6 @@ class Queue:
         return self.data.empty()
 
     def pop(self) -> Optional["Event"]:
-
         try:
             # This is a sync queue because block is False
             event = self.data.get(block=False)

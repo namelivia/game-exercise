@@ -1,10 +1,11 @@
 import os
-import pygame
 from re import sub
 from typing import List
 
+import pygame
 
-class Sprite(pygame.sprite.Sprite):  # type: ignore
+
+class Sprite(pygame.sprite.Sprite):
     def _get_frames_path(self, folder: str) -> List[str]:
         path, _, files = next(os.walk(folder))
         files = [os.path.join(path, file) for file in files]

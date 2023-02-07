@@ -1,7 +1,7 @@
-from typing import TYPE_CHECKING
-from client.engine.graphics.shapes import Text, Image
+from typing import TYPE_CHECKING, Any, Dict
+
+from client.engine.graphics.shapes import Image, Text
 from client.engine.primitives.ui import UIElement
-from typing import Dict, Any
 
 if TYPE_CHECKING:
     from uuid import UUID

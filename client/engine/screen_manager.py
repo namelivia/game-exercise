@@ -1,16 +1,17 @@
+from typing import TYPE_CHECKING
+
 from client.engine.event_handler import EventHandler
-from client.game.event_handler import EventHandler as GameEventHandler
+from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
+from client.game.event_handler import EventHandler as GameEventHandler
 
-from client.engine.primitives.event import InGameEvent
 from .events_processor import EventsProcessor
-from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.input.input import Input
     from client.engine.graphics.graphics import Graphics
+    from client.engine.input.input import Input
 
 
 class ScreenManager:
@@ -29,7 +30,6 @@ class ScreenManager:
 
     # Main loop
     def run(self) -> None:
-
         # 1 - Increase the clock
         self.client_state.clock.tick()
 

@@ -1,10 +1,12 @@
 from typing import TYPE_CHECKING, Dict, List
+
 from client.engine.primitives.command import Command
+
 from .events import (
-    SetProfileEvent,
+    GetProfilesEvent,
     NewProfileEvent,
     ProfileSetInGameEvent,
-    GetProfilesEvent,
+    SetProfileEvent,
     UpdateProfilesInGameEvent,
 )
 

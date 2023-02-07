@@ -1,8 +1,10 @@
 from unittest import TestCase
-from client.game.screens.join_game.join_game import JoinGame
+
+import mock
+
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.visual_regression.visual_regression import VisualRegression
-import mock
+from client.game.screens.join_game.join_game import JoinGame
 
 
 class TestJoinGame(TestCase):
@@ -13,7 +15,6 @@ class TestJoinGame(TestCase):
 
     @mock.patch("client.game.screens.join_game.join_game.RequestJoiningAGame")
     def test_join_game_screen(self, m_request_join_game):
-
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.join_game,

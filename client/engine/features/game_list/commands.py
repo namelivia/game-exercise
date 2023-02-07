@@ -1,9 +1,11 @@
 from typing import TYPE_CHECKING, List
+
 from client.engine.primitives.command import Command
+
 from .events import (
-    UpdateGameListEvent,
-    GetGameListNetworkRequestEvent,
     ErrorGettingGameListEvent,
+    GetGameListNetworkRequestEvent,
+    UpdateGameListEvent,
 )
 
 if TYPE_CHECKING:

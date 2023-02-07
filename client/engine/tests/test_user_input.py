@@ -1,6 +1,8 @@
 from unittest import TestCase
-from client.engine.user_input import UserInput
+
 import mock
+
+from client.engine.user_input import UserInput
 
 
 class TestUserInput(TestCase):

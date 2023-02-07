@@ -1,12 +1,8 @@
 from unittest import TestCase
-from server.game.game import Game
-from common.events import (
-    PlayerJoined,
-    GameCreated,
-    ChatMessageEvent,
-    PlayerWins,
-)
+
+from common.events import ChatMessageEvent, GameCreated, PlayerJoined, PlayerWins
 from server.engine.errors import InvalidCommandError
+from server.game.game import Game
 
 
 class TestGame(TestCase):

@@ -1,6 +1,7 @@
-from client.engine.graphics.shapes import Text, Image, SmallText
+from typing import Any, Dict, List
+
+from client.engine.graphics.shapes import Image, SmallText, Text
 from client.engine.primitives.ui import UIElement
-from typing import List, Any, Dict
 
 
 class GameListTitle(UIElement):

@@ -1,10 +1,12 @@
-from client.engine.primitives.screen import Screen
-from .ui import GameIdMessage, Background, ErrorPopup
-from client.engine.features.game_management.events import ErrorJoiningGameEvent
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.features.game_management.commands import RequestJoiningAGame
-from client.engine.features.sound.commands import PlaySound
 from typing import TYPE_CHECKING
+
+from client.engine.features.game_management.commands import RequestJoiningAGame
+from client.engine.features.game_management.events import ErrorJoiningGameEvent
+from client.engine.features.sound.commands import PlaySound
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
+
+from .ui import Background, ErrorPopup, GameIdMessage
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
@@ -35,7 +37,6 @@ class JoinGame(Screen):
             BackToLobby(self.client_state.profile, self.client_state.queue).execute()
             return
         if event.key == "return":
-
             RequestJoiningAGame(
                 self.client_state.profile,
                 self.client_state.queue,

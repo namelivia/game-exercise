@@ -1,10 +1,12 @@
 from types import SimpleNamespace
 from unittest import TestCase
-from client.game.screens.game_list.game_list import GameList
-from client.engine.visual_regression.visual_regression import VisualRegression
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.features.game_list.events import UpdateGameListEvent
+
 import mock
+
+from client.engine.features.game_list.events import UpdateGameListEvent
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.visual_regression.visual_regression import VisualRegression
+from client.game.screens.game_list.game_list import GameList
 
 
 class TestGameList(TestCase):
@@ -15,7 +17,6 @@ class TestGameList(TestCase):
 
     @mock.patch("client.game.screens.game_list.game_list.RequestJoiningAGame")
     def test_game_list(self, m_request_joining_game):
-
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.game_list,

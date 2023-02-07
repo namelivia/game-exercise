@@ -1,12 +1,12 @@
-from typing import TYPE_CHECKING, List
 import logging
+from typing import TYPE_CHECKING, List
 
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from client.engine.primitives.event_handler import EventHandler
     from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
+    from client.engine.primitives.event_handler import EventHandler
 
 
 class EventsProcessor:

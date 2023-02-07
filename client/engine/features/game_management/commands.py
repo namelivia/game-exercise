@@ -1,18 +1,21 @@
 from typing import TYPE_CHECKING
+
 from client.engine.primitives.command import Command
+
 from .events import (
+    CreateAGameNetworkRequestEvent,
     ErrorCreatingGameEvent,
     ErrorJoiningGameEvent,
-    JoinExistingGameEvent,
-    CreateAGameNetworkRequestEvent,
     JoinAGameNetworkRequestEvent,
+    JoinExistingGameEvent,
     NewGameRequestEvent,
 )
 
 if TYPE_CHECKING:
+    from uuid import UUID
+
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
-    from uuid import UUID
 
 
 class CreateAGame(Command):

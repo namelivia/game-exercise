@@ -1,9 +1,11 @@
 from unittest import TestCase
-from client.engine.general_state.queue import Queue
+
+import mock
+
 from client.engine.event_handler import EventHandler
 from client.engine.features.user_input.commands import UserTyped
 from client.engine.features.user_input.events import UserTypedEvent
-import mock
+from client.engine.general_state.queue import Queue
 
 
 class TestUserInput(TestCase):

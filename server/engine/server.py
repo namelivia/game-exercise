@@ -1,25 +1,27 @@
 import logging
-from typing import Any, TYPE_CHECKING
-import socketserver
 import pickle
-from .commands import (
-    PlaceSymbol,
-    SendChat,
-    JoinGame,
-    CreateGame,
-    GameStatus,
-    Ping,
-    GetGameList,
-)
+import socketserver
+from typing import TYPE_CHECKING, Any
+
 from common.messages import (
+    CreateAGameMessage,
     ErrorMessage,
+    GameListRequestMessage,
+    GetGameStatus,
+    JoinAGameMessage,
+    PingRequestMessage,
     PlaceASymbolMessage,
     SendChatMessage,
-    CreateAGameMessage,
-    JoinAGameMessage,
-    GetGameStatus,
-    PingRequestMessage,
-    GameListRequestMessage,
+)
+
+from .commands import (
+    CreateGame,
+    GameStatus,
+    GetGameList,
+    JoinGame,
+    Ping,
+    PlaceSymbol,
+    SendChat,
 )
 from .errors import InvalidCommandError
 

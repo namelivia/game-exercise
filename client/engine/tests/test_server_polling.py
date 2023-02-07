@@ -1,6 +1,8 @@
 from unittest import TestCase
-from client.engine.server_polling import ServerPolling
+
 import mock
+
+from client.engine.server_polling import ServerPolling
 
 
 class TestServerPolling(TestCase):

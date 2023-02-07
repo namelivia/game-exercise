@@ -1,8 +1,10 @@
 from unittest import TestCase
-from client.game.screens.enter_name.enter_name import EnterName
+
+import mock
+
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.visual_regression.visual_regression import VisualRegression
-import mock
+from client.game.screens.enter_name.enter_name import EnterName
 
 
 class TestEnterName(TestCase):
@@ -13,7 +15,6 @@ class TestEnterName(TestCase):
 
     @mock.patch("client.engine.commands.SetPlayerName")
     def test_enter_name_screen(self, m_set_player_name):
-
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.enter_name,

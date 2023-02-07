@@ -1,5 +1,6 @@
 from typing import Any, Dict
-from client.engine.graphics.shapes import Text, Image, Animation
+
+from client.engine.graphics.shapes import Animation, Image, Text
 from client.engine.primitives.ui import UIElement
 
 

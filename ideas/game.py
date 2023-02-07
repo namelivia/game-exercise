@@ -1,14 +1,15 @@
+import random
+
 from constants import (
-    TYPE_A,
-    TYPE_B,
-    TYPE_C,
+    ENTITY_TYPES,
     MAX_HEALTH,
     MAX_LEVEL,
     MAX_XP,
-    ENTITY_TYPES,
     NUM_ENTITIES,
+    TYPE_A,
+    TYPE_B,
+    TYPE_C,
 )
-import random
 
 
 def get_precence_matrix():

@@ -1,18 +1,16 @@
-from client.engine.primitives.screen import Screen
-from .ui import GameListTitle, Games, Background, ErrorPopup, ErrorJoiningPopup
-from client.engine.features.user_input.events import (
-    UserTypedEvent,
-)
-from client.engine.features.game_list.events import (
-    UpdateGameListEvent,
-    ErrorGettingGameListEvent,
-)
-from client.engine.features.game_list.commands import GetGameList
-from client.engine.features.game_management.commands import RequestJoiningAGame
-from client.engine.features.game_management.events import (
-    ErrorJoiningGameEvent,
-)
 from typing import TYPE_CHECKING
+
+from client.engine.features.game_list.commands import GetGameList
+from client.engine.features.game_list.events import (
+    ErrorGettingGameListEvent,
+    UpdateGameListEvent,
+)
+from client.engine.features.game_management.commands import RequestJoiningAGame
+from client.engine.features.game_management.events import ErrorJoiningGameEvent
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
+
+from .ui import Background, ErrorJoiningPopup, ErrorPopup, GameListTitle, Games
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

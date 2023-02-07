@@ -1,31 +1,29 @@
 import logging
 from typing import TYPE_CHECKING, Dict, Type
-from client.engine.primitives.event_handler import EventHandler
-from client.engine.network.channel import Channel
-from .commands import (
-    CreateAGame,
-    JoinAGame,
-    ErrorCreatingGame,
-    ErrorJoiningGame,
-)
+
 from client.engine.commands import InitiateGame
-from .events import (
-    NewGameRequestEvent,
-    JoinExistingGameEvent,
-    CreateAGameNetworkRequestEvent,
-    JoinAGameNetworkRequestEvent,
-)
+from client.engine.network.channel import Channel
+from client.engine.primitives.event_handler import EventHandler
+from common.game_data import GameData
 from common.messages import (
-    GameInfoMessage,
-    ErrorMessage,
     CreateAGameMessage,
+    ErrorMessage,
+    GameInfoMessage,
     JoinAGameMessage,
 )
-from common.game_data import GameData
+
+from .commands import CreateAGame, ErrorCreatingGame, ErrorJoiningGame, JoinAGame
+from .events import (
+    CreateAGameNetworkRequestEvent,
+    JoinAGameNetworkRequestEvent,
+    JoinExistingGameEvent,
+    NewGameRequestEvent,
+)
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from uuid import UUID
+
+    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 

@@ -1,30 +1,24 @@
 import logging
 from typing import TYPE_CHECKING, Dict, Type
-from client.engine.primitives.event_handler import EventHandler
-from common.messages import (
-    ErrorMessage,
-    SendChatMessage,
-    ChatMessageConfirmation,
-)
-from client.game.chat.events import SendChatRequestEvent
-from .events import (
-    SendChatNetworkRequestEvent,
-)
+
 from client.engine.features.chat.commands import (
     ChatMessageConfirmedCommand,
-    SendChat,
-    ChatMessageInGameCommand,
     ChatMessageErroredCommand,
+    ChatMessageInGameCommand,
+    SendChat,
 )
-from common.events import (
-    ChatMessageEvent as ChatMessageInGameEvent,  # TODO: akward
-)
-
 from client.engine.network.channel import Channel
+from client.engine.primitives.event_handler import EventHandler
+from client.game.chat.events import SendChatRequestEvent
+from common.events import ChatMessageEvent as ChatMessageInGameEvent  # TODO: akward
+from common.messages import ChatMessageConfirmation, ErrorMessage, SendChatMessage
+
+from .events import SendChatNetworkRequestEvent
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from uuid import UUID
+
+    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)

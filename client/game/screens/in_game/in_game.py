@@ -1,42 +1,45 @@
-from client.engine.primitives.screen import Screen
-from .ui import (
-    GameIdIndicator,
-    GameNameIndicator,
-    Player1NameIndicator,
-    Player2NameIndicator,
-    Background,
-    IntroAnimation,
-    ChatInput,
-    Events,
-    ChatMessages,
-    Board,
-    StatusIndicator,
-    WinnerIndicator,
-)
 import logging
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.features.sound.commands import PlaySound
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
+
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
 )
 from client.engine.features.chat.events import (
-    ChatMessageInGameEvent,
-    ChatMessageErroredEvent,
     ChatMessageConfirmedInGameEvent,
+    ChatMessageErroredEvent,
+    ChatMessageInGameEvent,
 )
 from client.engine.features.pieces.events import (
     PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
     SymbolPlacedErroredEvent,
 )
+from client.engine.features.sound.commands import PlaySound
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
 from client.game.pieces.commands import RequestPlaceASymbol
-from typing import TYPE_CHECKING, List, Any, Optional, Dict
+
+from .ui import (
+    Background,
+    Board,
+    ChatInput,
+    ChatMessages,
+    Events,
+    GameIdIndicator,
+    GameNameIndicator,
+    IntroAnimation,
+    Player1NameIndicator,
+    Player2NameIndicator,
+    StatusIndicator,
+    WinnerIndicator,
+)
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from uuid import UUID
+
+    from client.engine.general_state.client_state import ClientState
 
 logger = logging.getLogger(__name__)
 
@@ -115,12 +118,8 @@ class InGame(Screen):
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         # Avoid circular import
-        from client.game.commands import (
-            BackToLobby,
-        )
-        from client.game.chat.commands import (
-            RequestSendChat,
-        )
+        from client.game.chat.commands import RequestSendChat
+        from client.game.commands import BackToLobby
 
         # TODO: This_ is just for debugging
         if event.key == "return":

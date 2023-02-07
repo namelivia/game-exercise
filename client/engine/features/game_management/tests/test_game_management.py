@@ -1,7 +1,9 @@
 from unittest import TestCase
-from client.engine.general_state.queue import Queue
-from client.engine.event_handler import EventHandler
+
 import mock
+
+from client.engine.event_handler import EventHandler
+from client.engine.general_state.queue import Queue
 
 
 class TestGameManagement(TestCase):

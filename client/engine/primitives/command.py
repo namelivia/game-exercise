@@ -1,10 +1,10 @@
-from abc import ABC
 import logging
+from abc import ABC
 from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
-    from client.engine.general_state.queue import Queue
     from client.engine.general_state.profile.profile import Profile
+    from client.engine.general_state.queue import Queue
     from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)

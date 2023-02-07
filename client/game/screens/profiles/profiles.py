@@ -1,14 +1,14 @@
-from client.engine.primitives.screen import Screen
-from .ui import ProfilesTitle, ProfileList, Background
-from client.engine.features.user_input.events import (
-    UserTypedEvent,
-)
+from typing import TYPE_CHECKING
+
+from client.engine.features.profile.commands import GetProfiles, NewProfile, SetProfile
 from client.engine.features.profile.events import (
     ProfileSetInGameEvent,
     UpdateProfilesInGameEvent,
 )
-from client.engine.features.profile.commands import NewProfile, SetProfile, GetProfiles
-from typing import TYPE_CHECKING
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
+
+from .ui import Background, ProfileList, ProfilesTitle
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

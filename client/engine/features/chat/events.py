@@ -1,5 +1,6 @@
-from typing import Optional, TYPE_CHECKING
-from client.engine.primitives.event import InGameEvent, Event
+from typing import TYPE_CHECKING, Optional
+
+from client.engine.primitives.event import Event, InGameEvent
 
 if TYPE_CHECKING:
     from uuid import UUID

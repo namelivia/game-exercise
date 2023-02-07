@@ -1,6 +1,7 @@
-from client.engine.graphics.shapes import Text, Image
-from client.engine.primitives.ui import UIElement
 from typing import Dict
+
+from client.engine.graphics.shapes import Image, Text
+from client.engine.primitives.ui import UIElement
 
 
 class WelcomeMessage(UIElement):

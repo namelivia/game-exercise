@@ -1,19 +1,16 @@
 import logging
 from typing import TYPE_CHECKING, Dict, Type
-from client.engine.primitives.event_handler import EventHandler
+
 from client.engine.network.channel import Channel
-from .commands import (
-    UpdateGameList,
-    ErrorGettingGameList,
-)
-from .events import (
-    GetGameListNetworkRequestEvent,
-)
+from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
     GameListRequestMessage,
     GameListResponseMessage,
 )
+
+from .commands import ErrorGettingGameList, UpdateGameList
+from .events import GetGameListNetworkRequestEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

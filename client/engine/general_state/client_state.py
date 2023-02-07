@@ -1,9 +1,11 @@
-from typing import TYPE_CHECKING, Optional
 import uuid
-from .clock import Clock
-from .queue import Queue
+from typing import TYPE_CHECKING, Optional
+
 from client.engine.persistence.persistence import Persistence
+
+from .clock import Clock
 from .profile.factory import Factory
+from .queue import Queue
 
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile

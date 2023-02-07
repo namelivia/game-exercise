@@ -1,10 +1,10 @@
 from abc import ABC
-from typing import TYPE_CHECKING, List, Optional, Callable, Dict, Any
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 if TYPE_CHECKING:
+    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import InGameEvent
     from client.engine.primitives.ui import UIElement
-    from client.engine.general_state.client_state import ClientState
 
 
 class Screen(ABC):

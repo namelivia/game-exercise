@@ -1,8 +1,10 @@
 from typing import TYPE_CHECKING
-from client.engine.primitives.screen import Screen
-from client.engine.features.sound.commands import PlaySound, PlayMusic
-from .ui import Title, Background, Coins
+
+from client.engine.features.sound.commands import PlayMusic, PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
+
+from .ui import Background, Coins, Title
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

@@ -1,7 +1,9 @@
 from unittest import TestCase
-from client.game.screens.credits.credits import Credits
-from client.engine.visual_regression.visual_regression import VisualRegression
+
 import mock
+
+from client.engine.visual_regression.visual_regression import VisualRegression
+from client.game.screens.credits.credits import Credits
 
 
 class TestCredits(TestCase):

@@ -1,16 +1,19 @@
 from typing import TYPE_CHECKING
+
 from client.engine.primitives.command import Command
+
 from .events import (
-    PlayerPlacedSymbolInGameEvent,
     PlaceASymbolNetworkRequestEvent,
+    PlayerPlacedSymbolInGameEvent,
     SymbolPlacedConfirmedInGameEvent,
     SymbolPlacedErroredEvent,
 )
 
 if TYPE_CHECKING:
+    from uuid import UUID
+
     from client.engine.general_state.profile.profile import Profile
     from client.engine.general_state.queue import Queue
-    from uuid import UUID
 
 
 class SymbolPlacedConfirmedCommand(Command):

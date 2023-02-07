@@ -1,11 +1,9 @@
-from client.engine.primitives.screen import Screen
-from .ui import (
-    WelcomeMessage,
-    OptionList,
-    Background,
-)
-from client.engine.features.user_input.events import UserTypedEvent
 from typing import TYPE_CHECKING
+
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
+
+from .ui import Background, OptionList, WelcomeMessage
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
@@ -38,16 +36,16 @@ class Lobby(Screen):
     def on_user_typed(self, event: UserTypedEvent) -> None:
         # Avoid circular import
         # Could these be not just game specific but screen specific?
+        from client.engine.commands import PingTheServer, QuitGame
         from client.game.commands import (
-            NewGame,
+            GoToCredits,
+            GoToGameList,
             GoToJoinAGame,
             GoToOptions,
-            GoToGameList,
-            GoToCredits,
-            GoToSetName,
             GoToProfiles,
+            GoToSetName,
+            NewGame,
         )
-        from client.engine.commands import QuitGame, PingTheServer
 
         # These actions, some may update the data, others run commands, who knows
         key = event.key

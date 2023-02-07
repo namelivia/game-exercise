@@ -1,9 +1,11 @@
-from client.engine.features.synchronization.commands import RequestGameStatus
 from typing import TYPE_CHECKING
 
+from client.engine.features.synchronization.commands import RequestGameStatus
+
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from uuid import UUID
+
+    from client.engine.general_state.client_state import ClientState
 
 
 class ServerPolling:

@@ -1,21 +1,14 @@
-from typing import TYPE_CHECKING, Dict, Type
 import logging
-from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
-from .events import (
-    QuitGameEvent,
-    SetInternalGameInformationEvent,
-    PingNetworkRequestEvent,
-    SetPlayerNameEvent,
-)
+from typing import TYPE_CHECKING, Dict, Type
 
-from common.messages import (
-    ErrorMessage,
-    PingRequestMessage,
-    PingResponseMessage,
-)
-from client.engine.network.channel import Channel
 from client.engine.features.chat.event_handler import (
     handlers_map as chat_event_handlers,
+)
+from client.engine.features.game_list.event_handler import (
+    handlers_map as game_list_event_handlers,
+)
+from client.engine.features.game_management.event_handler import (
+    handlers_map as game_management_event_handlers,
 )
 from client.engine.features.pieces.event_handler import (
     handlers_map as pieces_event_handlers,
@@ -29,11 +22,15 @@ from client.engine.features.sound.event_handler import (
 from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
 )
-from client.engine.features.game_list.event_handler import (
-    handlers_map as game_list_event_handlers,
-)
-from client.engine.features.game_management.event_handler import (
-    handlers_map as game_management_event_handlers,
+from client.engine.network.channel import Channel
+from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
+from common.messages import ErrorMessage, PingRequestMessage, PingResponseMessage
+
+from .events import (
+    PingNetworkRequestEvent,
+    QuitGameEvent,
+    SetInternalGameInformationEvent,
+    SetPlayerNameEvent,
 )
 
 if TYPE_CHECKING:
@@ -51,8 +48,9 @@ They do the actual procssing and can execute commands.
 # ======= GENERIC =======
 class QuitGameEventHandler(BaseEventHandler):
     def handle(self, event: "QuitGameEvent", client_state: "ClientState") -> None:
-        import pygame  # This is pygame dependent
         import sys
+
+        import pygame  # This is pygame dependent
 
         pygame.quit()
         sys.exit()

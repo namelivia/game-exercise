@@ -1,22 +1,22 @@
 from unittest import TestCase
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.features.chat.events import (
-    ChatMessageInGameEvent,
-)
 from uuid import uuid4
-from client.engine.features.pieces.events import (
-    PlayerPlacedSymbolInGameEvent,
-    SymbolPlacedConfirmedInGameEvent,
-    SymbolPlacedErroredEvent,
-)
+
+import mock
+
 from client.engine.events import (
     GameCreatedInGameEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
 )
-from client.game.screens.in_game.in_game import InGame
+from client.engine.features.chat.events import ChatMessageInGameEvent
+from client.engine.features.pieces.events import (
+    PlayerPlacedSymbolInGameEvent,
+    SymbolPlacedConfirmedInGameEvent,
+    SymbolPlacedErroredEvent,
+)
+from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.visual_regression.visual_regression import VisualRegression
-import mock
+from client.game.screens.in_game.in_game import InGame
 
 
 class TestInGameScreen(TestCase):

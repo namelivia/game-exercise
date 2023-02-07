@@ -1,6 +1,7 @@
 import pickle
 from os import walk
 from typing import TYPE_CHECKING, Iterable
+
 from server.game.game import Game
 
 if TYPE_CHECKING:

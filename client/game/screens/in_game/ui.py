@@ -1,5 +1,6 @@
-from typing import Any, Dict, List, TYPE_CHECKING
-from client.engine.graphics.shapes import SmallText, Image, Animation, Rectangle, WHITE
+from typing import TYPE_CHECKING, Any, Dict, List
+
+from client.engine.graphics.shapes import WHITE, Animation, Image, Rectangle, SmallText
 from client.engine.primitives.ui import UIElement
 
 if TYPE_CHECKING:

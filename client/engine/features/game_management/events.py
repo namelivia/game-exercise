@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from client.engine.primitives.event import Event
 
 if TYPE_CHECKING:

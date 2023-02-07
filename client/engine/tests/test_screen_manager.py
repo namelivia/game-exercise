@@ -1,7 +1,9 @@
 from unittest import TestCase
-from client.engine.screen_manager import ScreenManager
-from client.engine.primitives.event import InGameEvent
+
 import mock
+
+from client.engine.primitives.event import InGameEvent
+from client.engine.screen_manager import ScreenManager
 
 
 class TestScreenManager(TestCase):

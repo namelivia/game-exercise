@@ -1,7 +1,9 @@
-from client.engine.primitives.screen import Screen
-from .ui import CreditsUI, Background
-from client.engine.features.user_input.events import UserTypedEvent
 from typing import TYPE_CHECKING
+
+from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.primitives.screen import Screen
+
+from .ui import Background, CreditsUI
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState

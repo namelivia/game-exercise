@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING
+
 from client.engine.primitives.command import Command
 
 if TYPE_CHECKING:
@@ -7,17 +8,18 @@ if TYPE_CHECKING:
     from common.game_data import GameData
     from uuid import UUID
 
+from client.engine.features.sound.events import PlaySoundEvent
+
 from .events import (
-    QuitGameEvent,
-    InitiateGameEvent,
-    SetInternalGameInformationEvent,
-    SetPlayerNameEvent,
     GameCreatedInGameEvent,
+    InitiateGameEvent,
+    PingNetworkRequestEvent,
     PlayerJoinedInGameEvent,
     PlayerWinsInGameEvent,
-    PingNetworkRequestEvent,
+    QuitGameEvent,
+    SetInternalGameInformationEvent,
+    SetPlayerNameEvent,
 )
-from client.engine.features.sound.events import PlaySoundEvent
 
 """
 Commands are called externally, and are defined by 1 or many events.
