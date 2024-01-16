@@ -49654,3 +49654,37 @@
 [2024-01-16 13:10:27,988] [ERROR] Unhandled event ScreenTransitionEvent
 [2024-01-16 13:10:30,494] [Command] User typed key escape
 [2024-01-16 13:10:30,494] [Event] UserTypedEvent
+[2024-01-16 13:35:20,078] [Event] ScreenTransitionEvent
+[2024-01-16 13:35:20,078] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 13:35:20,770] [Command] User typed key escape
+[2024-01-16 13:35:20,770] [Event] UserTypedEvent
+[2024-01-16 15:56:23,292] [Event] ScreenTransitionEvent
+[2024-01-16 15:56:23,292] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 15:56:29,359] [Command] User typed key escape
+[2024-01-16 15:56:29,359] [Event] UserTypedEvent
+[2024-01-16 15:56:29,700] [Command] User typed key escape
+[2024-01-16 15:56:29,700] [Event] UserTypedEvent
+[2024-01-16 15:57:08,349] [Command] User typed key 3
+[2024-01-16 15:57:08,349] [Event] UserTypedEvent
+[2024-01-16 15:57:30,578] [Event] ScreenTransitionEvent
+[2024-01-16 15:57:30,579] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 18:55:38,321] [Event] ScreenTransitionEvent
+[2024-01-16 18:55:38,321] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 18:56:11,201] [Command] User typed key escape
+[2024-01-16 18:56:11,201] [Event] UserTypedEvent
+[2024-01-16 18:56:12,289] [Command] User typed key c
+[2024-01-16 18:56:12,289] [Event] UserTypedEvent
+[2024-01-16 18:56:16,453] [Event] ScreenTransitionEvent
+[2024-01-16 18:56:16,453] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 18:56:17,662] [Command] User typed key escape
+[2024-01-16 18:56:17,663] [Event] UserTypedEvent
+[2024-01-16 18:56:39,139] [Event] ScreenTransitionEvent
+[2024-01-16 18:56:39,140] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 18:56:43,276] [Command] User typed key c
+[2024-01-16 18:56:43,276] [Event] UserTypedEvent
+[2024-01-16 18:58:07,107] [Event] ScreenTransitionEvent
+[2024-01-16 18:58:07,107] [ERROR] Unhandled event ScreenTransitionEvent
+[2024-01-16 18:58:10,645] [Command] User typed key escape
+[2024-01-16 18:58:10,645] [Event] UserTypedEvent
+[2024-01-16 18:58:11,822] [Command] User typed key c
+[2024-01-16 18:58:11,822] [Event] UserTypedEvent
