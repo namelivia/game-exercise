@@ -11,8 +11,9 @@ class TestScreenManager(TestCase):
         self.client_state = mock.Mock()
         self.input_manager = mock.Mock()
         self.graphics = mock.Mock()
+        self.event_handler = mock.Mock()
         self.screen_manager = ScreenManager(
-            self.client_state, self.input_manager, self.graphics
+            self.client_state, self.input_manager, self.graphics, self.event_handler
         )
 
     @mock.patch(

@@ -1,10 +1,9 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
-from client.game.event_handler import EventHandler as GameEventHandler
 
 from .events_processor import EventsProcessor
 
@@ -20,12 +19,13 @@ class ScreenManager:
         client_state: "ClientState",
         input_manager: "Input",
         graphics: "Graphics",
+        event_handler: Any,
     ):
         self.client_state = client_state
         self.graphics = graphics
         self.input_manager = input_manager
         self.event_processor = EventsProcessor(
-            [EventHandler(), GameEventHandler()]  # Regular events and in game events
+            [event_handler, EventHandler()]  # Regular events and in game events
         )
 
     # Main loop
