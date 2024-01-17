@@ -28,7 +28,6 @@ if __name__ == "__main__":
         import pygame
 
         pygame.init()
-        pygame.mouse.set_visible(False)
 
     graphics = Graphics(USES_PYGAME)
     input_manager = Input(USES_PYGAME)
