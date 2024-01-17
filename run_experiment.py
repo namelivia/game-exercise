@@ -4,6 +4,7 @@ from client.engine.general_state.client_state import ClientState
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.input import Input
 from client.engine.screen_manager import ScreenManager
+from client.experiment.event_handler import EventHandler as GameEventHandler
 from client.experiment.events import ScreenTransitionEvent
 
 USES_PYGAME = True
@@ -20,7 +21,7 @@ if __name__ == "__main__":
     )
 
     # The initial event is game specific
-    initial_event = ScreenTransitionEvent("intro")
+    initial_event = ScreenTransitionEvent("main")
     client_state = ClientState(initial_event, "Default profile")
 
     if USES_PYGAME:
@@ -32,6 +33,8 @@ if __name__ == "__main__":
     graphics = Graphics(USES_PYGAME)
     input_manager = Input(USES_PYGAME)
 
-    screen_manager = ScreenManager(client_state, input_manager, graphics)
+    screen_manager = ScreenManager(
+        client_state, input_manager, graphics, GameEventHandler()
+    )
     while True:
         screen_manager.run()
