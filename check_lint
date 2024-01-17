@@ -1,4 +1,4 @@
 #!/bin/bash
-pipenv run mypy . --strict
-pipenv run isort . --check
-pipenv run black . --check
+poetry run mypy . --strict
+poetry run isort . --check
+poetry run black . --check
