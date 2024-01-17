@@ -1,2 +1,2 @@
 #!/bin/bash
-pipenv run python run_client.py
+poetry run python run_client.py

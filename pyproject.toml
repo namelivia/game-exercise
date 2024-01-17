@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "game"
+version = "0.1.0"
+description = ""
+authors = ["José Ignacio Amelivia Santiago <jignacio.amelivia@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pygame = "*"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+mock = "*"
+pudb = "*"
+black = "*"
+pre-commit = "*"
+pytest-cov = "*"
+codecov = "*"
+numpy = "*"
+mypy = "*"
+isort = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
