@@ -1,15 +1,18 @@
-from typing import List
+from typing import Dict, List
 
-from .input_manager import InputManager
+from .keyboard_manager import KeyboardManager
+from .mouse_manager import MouseManager
 
 
 class Input:
     def __init__(self, uses_pygame: bool):
         if uses_pygame:
-            self.manager = InputManager()
+            self.keyboard = KeyboardManager()
+            self.mouse = MouseManager()
 
-    def read(self) -> List[str]:
-        input_manager_events = self.manager.read()
+    def read(self) -> Dict[str, List[str]]:
+        keyboard_events = self.keyboard.read()
+        mouse_events = self.keyboard.read()
 
         # This translates the normalized event names (needed for both text input and regular input)
         # into the normally corresponding value for the key.
@@ -58,7 +61,9 @@ class Input:
             "event_space": " ",
             "event_minus": "-",
         }
-        return [
-            values_map[input_manager_event]
-            for input_manager_event in input_manager_events
-        ]
+        return {
+            "keyboard": [
+                values_map[keyboard_event] for keyboard_event in keyboard_events
+            ],
+            "mouse": [],
+        }

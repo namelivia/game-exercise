@@ -12,13 +12,13 @@ class TestUserInput(TestCase):
 
     @mock.patch("client.engine.user_input.UserTyped")
     def test_no_user_events(self, m_user_typed_command):
-        self.input_manager.read.return_value = []
+        self.input_manager.read.return_value = {"keyboard": []}
         UserInput.process(self.input_manager, self.client_state)
         m_user_typed_command.assert_not_called()
 
     @mock.patch("client.engine.user_input.UserTyped")
     def test_some_user_events(self, m_user_typed_command):
-        self.input_manager.read.return_value = ["a", "x", "c"]
+        self.input_manager.read.return_value = {"keyboard": ["a", "x", "c"]}
         self.client_state.profile = mock.Mock()
         self.client_state.queue = mock.Mock()
         UserInput.process(self.input_manager, self.client_state)

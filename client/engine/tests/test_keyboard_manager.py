@@ -3,12 +3,12 @@ from unittest import TestCase
 import mock
 import pygame
 
-from client.engine.input.input_manager import InputManager
+from client.engine.input.keyboard_manager import KeyboardManager
 
 
 class TestInputManager(TestCase):
     def setUp(self):
-        self.input_manager = InputManager()
+        self.keyboard_manager = KeyboardManager()
 
     @mock.patch("pygame.event.get")
     def test_main_loop_iteration(self, m_pygame_get):
@@ -17,6 +17,6 @@ class TestInputManager(TestCase):
             mock.Mock(type=pygame.KEYDOWN, key=pygame.K_e),
             mock.Mock(type="UNMAPED_EVENT", key="unknown"),
         ]
-        result = self.input_manager.read()
+        result = self.keyboard_manager.read()
         m_pygame_get.assert_called_once_with()
         assert result == ["event_a", "event_e"]

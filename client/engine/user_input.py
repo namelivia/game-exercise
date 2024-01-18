@@ -14,5 +14,5 @@ class UserInput:
         user_events = input_manager.read()
 
         # Run the user typed command for each user event
-        for user_event in user_events:
+        for user_event in user_events["keyboard"]:
             UserTyped(client_state.profile, client_state.queue, user_event).execute()

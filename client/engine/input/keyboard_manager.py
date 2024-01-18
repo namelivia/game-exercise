@@ -3,7 +3,7 @@ from typing import List
 import pygame
 
 
-class InputManager:
+class KeyboardManager:
     # Map pygame events to custom events
     def read(self) -> List[str]:
         mapping = {
