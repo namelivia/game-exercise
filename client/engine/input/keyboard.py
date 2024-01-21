@@ -19,7 +19,6 @@ class KeyboardInput:
         else:
             return event.unicode
 
-    def read(self) -> List[str]:
-        events = pygame.event.get()
+    def read(self, events: List[pygame.event]) -> List[str]:
         keydowns = [event for event in events if event.type == pygame.KEYDOWN]
         return [self._get_key_value(event) for event in keydowns]
