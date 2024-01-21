@@ -9,11 +9,16 @@ from client.engine.screen_manager import ScreenManager
 class TestScreenManager(TestCase):
     def setUp(self):
         self.client_state = mock.Mock()
-        self.input_manager = mock.Mock()
+        self.keyboard_input = mock.Mock()
+        self.mouse_input = mock.Mock()
         self.graphics = mock.Mock()
         self.event_handler = mock.Mock()
         self.screen_manager = ScreenManager(
-            self.client_state, self.input_manager, self.graphics, self.event_handler
+            self.client_state,
+            self.keyboard_input,
+            self.mouse_input,
+            self.graphics,
+            self.event_handler,
         )
 
     @mock.patch(
@@ -26,7 +31,8 @@ class TestScreenManager(TestCase):
         self.client_state.queue.pop.return_value = event  # Event from the queue
         current_screen = mock.Mock()
         self.client_state.get_current_screen.return_value = current_screen
-        self.input_manager.read.return_value = []  # no input
+        self.keyboard_input.read.return_value = []  # no input
+        self.mouse_input.read.return_value = None  # no input
 
         # Run one iteration
         self.screen_manager.run()
@@ -44,7 +50,9 @@ class TestScreenManager(TestCase):
         self.graphics.render.assert_called_once_with(current_screen)
 
         # The user input is read
-        m_process_input.assert_called_once_with(self.input_manager, self.client_state)
+        m_process_input.assert_called_once_with(
+            self.keyboard_input, self.mouse_input, self.client_state
+        )
 
         # The screen is updated
         current_screen.update.assert_called_once_with(
