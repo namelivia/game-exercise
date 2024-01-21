@@ -90,3 +90,15 @@ class Animation(Shape):
     def render(self, window: Any) -> None:
         if window is not None:  # TODO: only if pygame
             self.sprite_group.draw(window)
+
+    def get_x(self) -> int:
+        return self.animation.get_x()
+
+    def get_y(self) -> int:
+        return self.animation.get_y()
+
+    def get_width(self) -> int:
+        return self.animation.get_width()
+
+    def get_height(self) -> int:
+        return self.animation.get_width()

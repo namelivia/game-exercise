@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 from client.engine.features.user_input.events import UserClickedEvent
 from client.engine.primitives.screen import Screen
 
-from .ui import Background
+from .ui import Background, Coin
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
@@ -18,9 +18,10 @@ class MainScreen(Screen):
 
         self.ui_elements = [
             Background(),
+            Coin(),
         ]
 
         self.events = {UserClickedEvent: self.on_user_clicked}
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
-        logger.info(f"User clicked at {event.coordinates[0]}, {event.coordinates[1]}")
+        self.ui_elements[1].click(event.coordinates[0], event.coordinates[1])

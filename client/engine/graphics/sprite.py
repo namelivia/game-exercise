@@ -40,3 +40,15 @@ class Sprite(pygame.sprite.Sprite):
     def set_y(self, y: int) -> None:
         if self.rect is not None:
             self.rect.y = y
+
+    def get_x(self) -> int:
+        return self.rect.x
+
+    def get_y(self) -> int:
+        return self.rect.y
+
+    def get_width(self) -> int:
+        return self.rect.width
+
+    def get_height(self) -> int:
+        return self.rect.height
