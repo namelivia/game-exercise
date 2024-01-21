@@ -3,7 +3,7 @@ from typing import List
 import pygame
 
 
-class Input:
+class KeyboardInput:
     def __init__(self, uses_pygame: bool):
         if uses_pygame:
             pass

@@ -3,12 +3,12 @@ from unittest import TestCase
 import mock
 import pygame
 
-from client.engine.input.input import Input
+from client.engine.input.keyboard import KeyboardInput
 
 
 class TestInput(TestCase):
     def setUp(self):
-        self.input = Input(True)
+        self.keyboard_input = KeyboardInput(True)
 
     @mock.patch("pygame.event.get")
     def test_main_loop_iteration(self, m_pygame_get):
@@ -19,6 +19,6 @@ class TestInput(TestCase):
             mock.Mock(type=pygame.KEYDOWN, key=pygame.K_BACKSPACE, unicode=None),
             mock.Mock(type="UNMAPED_EVENT", key="unknown"),
         ]
-        result = self.input.read()
+        result = self.keyboard_input.read()
         m_pygame_get.assert_called_once_with()
         assert result == ["a", "e", "return", "backspace"]

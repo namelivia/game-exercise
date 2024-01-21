@@ -10,20 +10,20 @@ from .events_processor import EventsProcessor
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
     from client.engine.graphics.graphics import Graphics
-    from client.engine.input.input import Input
+    from client.engine.input.keboard import KeboardInput
 
 
 class ScreenManager:
     def __init__(
         self,
         client_state: "ClientState",
-        input_manager: "Input",
+        keyboard_input: "KeboardInput",
         graphics: "Graphics",
         event_handler: Any,
     ):
         self.client_state = client_state
         self.graphics = graphics
-        self.input_manager = input_manager
+        self.keyboard_input = keyboard_input
         self.event_processor = EventsProcessor(
             [event_handler, EventHandler()]  # Regular events and in game events
         )
@@ -44,7 +44,7 @@ class ScreenManager:
             self.event_processor.handle(event, self.client_state)
 
         # 4 - Read user input
-        UserInput.process(self.input_manager, self.client_state)
+        UserInput.process(self.keyboard_input, self.client_state)
 
         current_screen = self.client_state.get_current_screen()
 
