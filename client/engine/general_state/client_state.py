@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Optional
 from client.engine.persistence.persistence import Persistence
 
 from .clock import Clock
+from .mouse import Mouse
 from .profile.factory import Factory
 from .queue import Queue
 
@@ -18,6 +19,7 @@ class ClientState:
         self.queue = Queue()
         self.profile = self._initialize_status(profile_key)
         self.clock = Clock()
+        self.mouse = Mouse()
         self.current_screen: Optional["Screen"] = None
         self.queue = Queue()
         self.queue.put(initial_event)
