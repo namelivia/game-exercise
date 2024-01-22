@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from client.engine.graphics.shapes import Animation, Image
 from client.engine.primitives.ui import UIElement
@@ -14,8 +14,19 @@ class Coin(UIElement):
         self.shapes = [
             Animation("client/experiment/images/coin", 0, 150),
         ]
+        self.mouse_over = False
 
-    def update(self, time: int, data: Dict[str, Any]) -> None:
+    def _is_mouse_over(self, x: int, y: int) -> bool:
+        return (
+            x > self.shapes[0].get_x()
+            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
+            and y > self.shapes[0].get_y()
+            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
+        )
+
+    def update(
+        self, time: int, data: Dict[str, Any], mouse_position: List[int]
+    ) -> None:
         animation_speed = 12  # The higher the slower
         if (time % animation_speed) == 0:
             animation_1 = self.shapes[0]
@@ -25,15 +36,8 @@ class Coin(UIElement):
         self.shapes[0].set_x(
             int((time / movement_speed) % 640)
         )  # Not supersure about this
-
-    def _is_clicked(self, x: int, y: int) -> bool:
-        return (
-            x > self.shapes[0].get_x()
-            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
-            and y > self.shapes[0].get_y()
-            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
-        )
-
-    def click(self, x: int, y: int) -> bool:
-        if self._is_clicked(x, y):
+        self.mouse_over = self._is_mouse_over(mouse_position[0], mouse_position[1])
+        if self.mouse_over:
             self.shapes[0].hide()
+        else:
+            self.shapes[0].show()

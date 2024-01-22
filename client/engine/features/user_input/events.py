@@ -10,6 +10,4 @@ class UserTypedEvent(InGameEvent):
 
 
 class UserClickedEvent(InGameEvent):
-    def __init__(self, coordinates: List[int]):
-        super().__init__()
-        self.coordinates = coordinates
+    pass

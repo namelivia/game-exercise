@@ -16,6 +16,6 @@ class UserTyped(Command):
 
 
 class UserClicked(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", coordinates: List[int]):
-        super().__init__(profile, queue, f"User clicked at {coordinates}")
-        self.events = [UserClickedEvent(coordinates)]
+    def __init__(self, profile: "Profile", queue: "Queue"):
+        super().__init__(profile, queue, f"User clicked")
+        self.events = [UserClickedEvent()]

@@ -32,4 +32,4 @@ class UserInput:
 
         # If there is a mouse event, run the user clicked command
         if mouse_event is not None:
-            UserClicked(client_state.profile, client_state.queue, mouse_event).execute()
+            UserClicked(client_state.profile, client_state.queue).execute()

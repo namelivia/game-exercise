@@ -39,6 +39,7 @@ class Screen(ABC):
                 self.events[event_type](event)
 
         # Update ui elements they need to access the data and time to do so
+        # I'm also adding the mouse position for clickable elements
         for element in self.ui_elements:
-            element.update(self.time, self.data)
+            element.update(self.time, self.data, self.client_state.mouse.get())
         return None

@@ -24,4 +24,4 @@ class MainScreen(Screen):
         self.events = {UserClickedEvent: self.on_user_clicked}
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
-        self.ui_elements[1].click(event.coordinates[0], event.coordinates[1])
+        logger.info("User clicked")

@@ -16,7 +16,9 @@ class UIElement(ABC):
             shape.draw(window)
         return None
 
-    def update(self, time: int, data: Dict[str, Any]) -> None:
+    def update(
+        self, time: int, data: Dict[str, Any], mouse_position: List[int]
+    ) -> None:
         pass
 
     def show(self) -> None:

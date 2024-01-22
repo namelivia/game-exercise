@@ -30,7 +30,7 @@ class TestUserInput(TestCase):
         self, m_user_typed_command, m_user_clicked_command, m_pygame_event_get
     ):
         self.keyboard_input.read.return_value = ["a", "x", "c"]
-        self.mouse_input.read.return_value = [120, 130]
+        self.mouse_input.read.return_value = "click"
         self.client_state.profile = mock.Mock()
         self.client_state.queue = mock.Mock()
         UserInput.process(self.keyboard_input, self.mouse_input, self.client_state)
@@ -41,5 +41,5 @@ class TestUserInput(TestCase):
             mock.call(self.client_state.profile, self.client_state.queue, "c"),
         ]
         m_user_clicked_command.assert_called_once_with(
-            self.client_state.profile, self.client_state.queue, [120, 130]
+            self.client_state.profile, self.client_state.queue
         )

@@ -10,5 +10,5 @@ class MouseInput:
 
     def read(self, events: List[pygame.event]) -> Optional[List[int]]:
         if pygame.MOUSEBUTTONDOWN in [event.type for event in events]:
-            return pygame.mouse.get_pos()
+            return "click"
         return None
