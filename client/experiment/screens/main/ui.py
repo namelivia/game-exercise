@@ -1,7 +1,7 @@
 from typing import Any, Dict, List
 
 from client.engine.graphics.shapes import Animation, Image
-from client.engine.primitives.ui import UIElement
+from client.engine.primitives.ui import ClickableUIElement, UIElement
 
 
 class Background(UIElement):
@@ -9,20 +9,11 @@ class Background(UIElement):
         self.shapes = [Image("client/experiment/images/background.png", 0, 0)]
 
 
-class Coin(UIElement):
+class Coin(ClickableUIElement):
     def __init__(self) -> None:
         self.shapes = [
             Animation("client/experiment/images/coin", 0, 150),
         ]
-        self.mouse_over = False
-
-    def _is_mouse_over(self, x: int, y: int) -> bool:
-        return (
-            x > self.shapes[0].get_x()
-            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
-            and y > self.shapes[0].get_y()
-            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
-        )
 
     def update(
         self, time: int, data: Dict[str, Any], mouse_position: List[int]

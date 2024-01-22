@@ -16,11 +16,28 @@ class UIElement(ABC):
             shape.draw(window)
         return None
 
-    def update(
-        self, time: int, data: Dict[str, Any], mouse_position: List[int]
-    ) -> None:
+    def update(self, time: int, data: Dict[str, Any]) -> None:
         pass
 
     def show(self) -> None:
         for shape in self.shapes:
             shape.show()
+
+
+class ClickableUIElement(UIElement):
+    def __init__(self) -> None:
+        super().__init__()
+        self.mouse_over = False
+
+    def _is_mouse_over(self, x: int, y: int) -> bool:
+        return (
+            x > self.shapes[0].get_x()
+            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
+            and y > self.shapes[0].get_y()
+            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
+        )
+
+    def update(
+        self, time: int, data: Dict[str, Any], mouse_position: List[int]
+    ) -> None:
+        super().update(time, data)
