@@ -1,16 +1,17 @@
 from abc import ABC
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
+from client.engine.primitives.ui import ClickableUIElement, UIElement
+
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import InGameEvent
-    from client.engine.primitives.ui import UIElement
 
 
 class Screen(ABC):
     def __init__(self, client_state: "ClientState"):
         self.client_state = client_state
-        self.ui_elements: List[UIElement] = []  # UI elements on the screen
+        self.ui_elements: List[UIElement | ClickableUIElement] = []
         self.timers: Dict[int, Callable[[], None]] = {}  # Time based actions
         self.events: Dict[
             Any, Callable[[Any], None]
@@ -39,6 +40,10 @@ class Screen(ABC):
                 self.events[event_type](event)
 
         # Update ui elements they need to access the data and time to do so
+        # I'm also adding the mouse position for clickable elements
         for element in self.ui_elements:
-            element.update(self.time, self.data)
+            if isinstance(element, ClickableUIElement):
+                element.update(self.time, self.data, self.client_state.mouse.get())
+            else:
+                element.update(self.time, self.data)
         return None

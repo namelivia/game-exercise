@@ -1,39 +1,34 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 
-from client.engine.graphics.shapes import Animation, Image
-from client.engine.primitives.ui import UIElement
+from client.engine.graphics.shapes import Image
+from client.engine.primitives.ui import ClickableUIElement, UIElement
 
 
 class Background(UIElement):
     def __init__(self) -> None:
+        super().__init__()
         self.shapes = [Image("client/experiment/images/background.png", 0, 0)]
 
 
-class Coin(UIElement):
+class Lion(ClickableUIElement):
     def __init__(self) -> None:
+        super().__init__()
         self.shapes = [
-            Animation("client/experiment/images/coin", 0, 150),
+            Image("client/experiment/images/lion_black.png", 150, 150),
         ]
 
-    def update(self, time: int, data: Dict[str, Any]) -> None:
-        animation_speed = 12  # The higher the slower
-        if (time % animation_speed) == 0:
-            animation_1 = self.shapes[0]
-            if isinstance(animation_1, Animation):
-                animation_1.update()  # Not supersure about this
-        movement_speed = 5  # The higher the slower
-        self.shapes[0].set_x(
-            int((time / movement_speed) % 640)
-        )  # Not supersure about this
-
-    def _is_clicked(self, x: int, y: int) -> bool:
-        return (
-            x > self.shapes[0].get_x()
-            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
-            and y > self.shapes[0].get_y()
-            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
-        )
-
-    def click(self, x: int, y: int) -> bool:
-        if self._is_clicked(x, y):
+    def update(
+        self, time: int, data: Dict[str, Any], mouse_position: List[int]
+    ) -> None:
+        super().update(time, data, mouse_position)
+        if self.mouse_over:
             self.shapes[0].hide()
+        else:
+            self.shapes[0].show()
+
+
+class LionHighlight(UIElement):
+    def __init__(self) -> None:
+        self.shapes = [
+            Image("client/experiment/images/lion_color.png", 150, 150),
+        ]
