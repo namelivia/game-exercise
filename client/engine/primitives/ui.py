@@ -41,3 +41,4 @@ class ClickableUIElement(UIElement):
         self, time: int, data: Dict[str, Any], mouse_position: List[int]
     ) -> None:
         super().update(time, data)
+        self.mouse_over = self._is_mouse_over(mouse_position[0], mouse_position[1])

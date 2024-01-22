@@ -68,6 +68,18 @@ class Image(Shape):
         if window is not None:  # TODO: only if pygame
             window.blit(self.image, dest=(self.x, self.y))
 
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
+    def get_width(self):
+        return self.image.get_width()
+
+    def get_height(self):
+        return self.image.get_height()
+
 
 class Animation(Shape):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int = 0):
