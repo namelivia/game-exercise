@@ -21,7 +21,9 @@ class Intro(Screen):
         ]
 
         PlayMusic(
-            self.client_state.profile, self.client_state.queue, "main_theme"
+            self.client_state.profile,
+            self.client_state.queue,
+            "client/game/music/main_theme.mp3",
         ).execute()
 
         self.timers = {
@@ -39,7 +41,9 @@ class Intro(Screen):
 
     def show_coins(self) -> None:
         PlaySound(
-            self.client_state.profile, self.client_state.queue, "user_joined"
+            self.client_state.profile,
+            self.client_state.queue,
+            "client/game/sounds/user_joined.mp3",
         ).execute()
         self.ui_elements[1].show()
 

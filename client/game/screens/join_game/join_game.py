@@ -45,13 +45,17 @@ class JoinGame(Screen):
             return
         if event.key == "backspace":
             PlaySound(
-                self.client_state.profile, self.client_state.queue, "erase"
+                self.client_state.profile,
+                self.client_state.queue,
+                "client/game/sounds/erase.mp3",
             ).execute()
             self.data["game_id"] = self.data["game_id"][:-1]
             return
         else:
             PlaySound(
-                self.client_state.profile, self.client_state.queue, "type"
+                self.client_state.profile,
+                self.client_state.queue,
+                "client/game/sounds/type.mp3",
             ).execute()
             self.data["game_id"] += event.key
 

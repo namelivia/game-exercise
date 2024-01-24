@@ -10,25 +10,18 @@ class Background(UIElement):
         self.shapes = [Image("client/experiment/images/background.png", 0, 0)]
 
 
-class Lion(ClickableUIElement):
-    def __init__(self) -> None:
+class Portrait(ClickableUIElement):
+    def __init__(self, image: str, highlight: str, x: int, y: int) -> None:
         super().__init__()
-        self.shapes = [
-            Image("client/experiment/images/lion_black.png", 150, 150),
-        ]
+        self.image = Image(image, x, y)
+        self.highlight = Image(highlight, x, y)
+        self.shapes = [self.image]
 
     def update(
         self, time: int, data: Dict[str, Any], mouse_position: List[int]
     ) -> None:
         super().update(time, data, mouse_position)
         if self.mouse_over:
-            self.shapes[0].hide()
+            self.shapes = [self.highlight]
         else:
-            self.shapes[0].show()
-
-
-class LionHighlight(UIElement):
-    def __init__(self) -> None:
-        self.shapes = [
-            Image("client/experiment/images/lion_color.png", 150, 150),
-        ]
+            self.shapes = [self.image]

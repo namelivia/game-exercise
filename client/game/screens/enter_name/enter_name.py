@@ -42,12 +42,16 @@ class EnterName(Screen):
             pass
         if event.key == "backspace":
             PlaySound(
-                self.client_state.profile, self.client_state.queue, "erase"
+                self.client_state.profile,
+                self.client_state.queue,
+                "client/game/sounds/erase.mp3",
             ).execute()
             self.data["name"] = self.data["name"][:-1]
             return
         else:
             PlaySound(
-                self.client_state.profile, self.client_state.queue, "type"
+                self.client_state.profile,
+                self.client_state.queue,
+                "client/game/sounds/type.mp3",
             ).execute()
             self.data["name"] += event.key
