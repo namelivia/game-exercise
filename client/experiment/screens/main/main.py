@@ -6,6 +6,22 @@ logger = logging.getLogger(__name__)
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserClickedEvent
 from client.engine.primitives.screen import Screen
+from client.experiment.images import (
+    BACKGROUND,
+    CHEETAH_BLACK,
+    CHEETAH_COLOR,
+    ELEPHANT_BLACK,
+    ELEPHANT_COLOR,
+    GIRAFFE_BLACK,
+    GIRAFFE_COLOR,
+    HYENA_BLACK,
+    HYENA_COLOR,
+    LION_BLACK,
+    LION_COLOR,
+    RHINO_BLACK,
+    RHINO_COLOR,
+)
+from client.experiment.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
 
 from .ui import Background, Portrait
 
@@ -21,39 +37,39 @@ class MainScreen(Screen):
             "animals": [
                 {
                     "name": "Lion",
-                    "image": "client/experiment/images/lion_black.png",
-                    "highlight": "client/experiment/images/lion_color.png",
-                    "sound": "client/experiment/sounds/lion.mp3",
+                    "image": LION_BLACK,
+                    "highlight": LION_COLOR,
+                    "sound": LION,
                 },
                 {
                     "name": "Giraffe",
-                    "image": "client/experiment/images/giraffe_black.png",
-                    "highlight": "client/experiment/images/giraffe_color.png",
-                    "sound": "client/experiment/sounds/giraffe.mp3",
+                    "image": GIRAFFE_BLACK,
+                    "highlight": GIRAFFE_COLOR,
+                    "sound": GIRAFFE,
                 },
                 {
                     "name": "Elephant",
-                    "image": "client/experiment/images/elephant_black.png",
-                    "highlight": "client/experiment/images/elephant_color.png",
-                    "sound": "client/experiment/sounds/elephant.mp3",
+                    "image": ELEPHANT_BLACK,
+                    "highlight": ELEPHANT_COLOR,
+                    "sound": ELEPHANT,
                 },
                 {
                     "name": "Rhino",
-                    "image": "client/experiment/images/rhino_black.png",
-                    "highlight": "client/experiment/images/rhino_color.png",
-                    "sound": "client/experiment/sounds/rhino.mp3",
+                    "image": RHINO_BLACK,
+                    "highlight": RHINO_COLOR,
+                    "sound": RHINO,
                 },
                 {
                     "name": "Cheetah",
-                    "image": "client/experiment/images/cheetah_black.png",
-                    "highlight": "client/experiment/images/cheetah_color.png",
-                    "sound": "client/experiment/sounds/cheetah.mp3",
+                    "image": CHEETAH_BLACK,
+                    "highlight": CHEETAH_COLOR,
+                    "sound": CHEETAH,
                 },
                 {
                     "name": "Hyena",
-                    "image": "client/experiment/images/hyena_black.png",
-                    "highlight": "client/experiment/images/hyena_color.png",
-                    "sound": "client/experiment/sounds/hyena.mp3",
+                    "image": HYENA_BLACK,
+                    "highlight": HYENA_COLOR,
+                    "sound": HYENA,
                 },
             ]
         }
@@ -78,7 +94,6 @@ class MainScreen(Screen):
         for i, element in enumerate(self.ui_elements):
             if isinstance(element, Portrait) and element.mouse_over:
                 animal_name = self.data["animals"][i - 1]["name"]
-                print(f"Clicked on {animal_name}")
                 animal_sound = self.data["animals"][i - 1]["sound"]
                 PlaySound(
                     self.client_state.profile, self.client_state.queue, animal_sound
