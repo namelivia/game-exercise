@@ -16,7 +16,6 @@ if TYPE_CHECKING:
 
 class ClientState:
     def __init__(self, initial_event: "Event", profile_key: str):
-        self.queue = Queue()
         self.profile = self._initialize_status(profile_key)
         self.clock = Clock()
         self.mouse = Mouse()
