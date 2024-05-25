@@ -1,5 +1,7 @@
 import logging
 
+import pygame
+
 from client.engine.general_state.client_state import ClientState
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.keyboard import KeyboardInput
@@ -7,8 +9,6 @@ from client.engine.input.mouse import MouseInput
 from client.engine.screen_manager import ScreenManager
 from client.experiment.event_handler import EventHandler as GameEventHandler
 from client.experiment.events import ScreenTransitionEvent
-
-USES_PYGAME = True
 
 """
 This initializes the experiment
@@ -21,18 +21,13 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    # The initial event is game specific
-    initial_event = ScreenTransitionEvent("main")
-    client_state = ClientState(initial_event, "Default profile")
+    pygame.init()
+    graphics = Graphics()
+    keyboard_input = KeyboardInput()
+    mouse_input = MouseInput()
+    client_state = ClientState(ScreenTransitionEvent("main"), "Default profile")
 
-    if USES_PYGAME:
-        import pygame
-
-        pygame.init()
-
-    graphics = Graphics(USES_PYGAME)
-    keyboard_input = KeyboardInput(USES_PYGAME)
-    mouse_input = MouseInput(USES_PYGAME)
+    # TODO: Move this to a factory
 
     screen_manager = ScreenManager(
         client_state, keyboard_input, mouse_input, graphics, GameEventHandler()

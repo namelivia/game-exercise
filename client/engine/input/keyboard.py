@@ -4,10 +4,6 @@ import pygame
 
 
 class KeyboardInput:
-    def __init__(self, uses_pygame: bool):
-        if uses_pygame:
-            pass
-
     def _get_key_value(self, event: pygame.event) -> str:
         special_keys = {
             pygame.K_RETURN: "return",
