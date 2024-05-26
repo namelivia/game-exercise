@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
+from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
@@ -12,6 +13,23 @@ if TYPE_CHECKING:
     from client.engine.graphics.graphics import Graphics
     from client.engine.input.keboard import KeboardInput
     from client.engine.input.mouse import MouseInput
+    from client.engine.primitives.event import Event
+
+
+class ScreenManagerFactory:
+    @staticmethod
+    def create(
+        *,
+        initial_event: "Event",
+        event_handler: Any,
+    ) -> "ScreenManager":
+        return ScreenManager(
+            ClientState(initial_event, "Default profile"),
+            KeyboardInput(),
+            MouseInput(),
+            Graphics(),
+            event_handler,
+        )
 
 
 class ScreenManager:

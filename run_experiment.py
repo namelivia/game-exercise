@@ -3,10 +3,7 @@ import logging
 import pygame
 
 from client.engine.general_state.client_state import ClientState
-from client.engine.graphics.graphics import Graphics
-from client.engine.input.keyboard import KeyboardInput
-from client.engine.input.mouse import MouseInput
-from client.engine.screen_manager import ScreenManager
+from client.engine.screen_manager import ScreenManagerFactory
 from client.experiment.event_handler import EventHandler as GameEventHandler
 from client.experiment.events import ScreenTransitionEvent
 
@@ -22,15 +19,8 @@ if __name__ == "__main__":
     )
 
     pygame.init()
-    graphics = Graphics()
-    keyboard_input = KeyboardInput()
-    mouse_input = MouseInput()
-    client_state = ClientState(ScreenTransitionEvent("main"), "Default profile")
-
-    # TODO: Move this to a factory
-
-    screen_manager = ScreenManager(
-        client_state, keyboard_input, mouse_input, graphics, GameEventHandler()
+    screen_manager = ScreenManagerFactory.create(
+        initial_event=ScreenTransitionEvent("main"), event_handler=GameEventHandler()
     )
     while True:
         screen_manager.run()
