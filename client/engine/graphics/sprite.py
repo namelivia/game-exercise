@@ -2,7 +2,10 @@ import os
 from re import sub
 from typing import List
 
-from client.engine.foundational_wrapper import FoundationalSprite, FoundationalWrapper
+from client.engine.external.foundational_wrapper import (
+    FoundationalSprite,
+    FoundationalWrapper,
+)
 
 
 class Sprite(FoundationalSprite):

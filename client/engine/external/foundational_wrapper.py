@@ -6,9 +6,9 @@ class FoundationalSprite(pygame.sprite.Sprite):
 
 
 class FoundationalWrapper:
-    KEY_RETURN = pygame.K_RETURN
-    KEY_ESCAPE = pygame.K_ESCAPE
-    KEY_BACKSPACE = pygame.K_BACKSPACE
+    K_RETURN = pygame.K_RETURN
+    K_ESCAPE = pygame.K_ESCAPE
+    K_BACKSPACE = pygame.K_BACKSPACE
     KEYDOWN = pygame.KEYDOWN
     MOUSEBUTTONDOWN = pygame.MOUSEBUTTONDOWN
 

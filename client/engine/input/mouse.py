@@ -1,6 +1,6 @@
 from typing import Any, List, Optional
 
-from client.engine.foundational_wrapper import FoundationalWrapper
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 
 
 class MouseInput:

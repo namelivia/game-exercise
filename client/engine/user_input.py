@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.user_input.commands import UserClicked, UserTyped
-from client.engine.foundational_wrapper import FoundationalWrapper
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
