@@ -1,24 +1,29 @@
 from typing import Any, Tuple
 
-import pygame
-
+from client.engine.external.foundational_wrapper import (
+    FoundationalColor,
+    FoundationalSurface,
+    FoundationalWrapper,
+)
 from client.engine.primitives.shape import Shape
 
 from .sprite import Sprite
 
-WHITE = pygame.Color(255, 255, 255)
-BLACK = pygame.Color(0, 0, 0)
+WHITE = FoundationalColor(255, 255, 255)
+BLACK = FoundationalColor(0, 0, 0)
 
 
 class Text(Shape):
-    def __init__(self, message: str, x: int, y: int, color: pygame.Color = BLACK):
+    def __init__(self, message: str, x: int, y: int, color: FoundationalColor = BLACK):
         super().__init__(x, y)
         self.message = message
         self.color = color
 
     def render(self, window: Any) -> None:
-        if window is not None:  # TODO: only if pygame
-            font = pygame.font.Font(pygame.font.get_default_font(), 24)
+        if window is not None:
+            font = FoundationalWrapper.get_font(
+                FoundationalWrapper.get_default_font(), 24
+            )
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 
@@ -28,7 +33,7 @@ class Text(Shape):
 
 class Rectangle(Shape):
     def __init__(
-        self, x: int, y: int, width: int, height: int, color: pygame.Color = BLACK
+        self, x: int, y: int, width: int, height: int, color: FoundationalColor = BLACK
     ):
         super().__init__(x, y)
         self.width = width
@@ -36,22 +41,24 @@ class Rectangle(Shape):
         self.color = color
 
     def render(self, window: Any) -> None:
-        if window is not None:  # TODO: only if pygame
-            rectangle = pygame.Surface((self.width, self.height))
+        if window is not None:
+            rectangle = FoundationalSurface((self.width, self.height))
             rectangle.fill(self.color)
             rectangle.set_alpha(128)  # TODO: Alpha could be passed
             window.blit(rectangle, dest=(self.x, self.y))
 
 
 class SmallText(Shape):
-    def __init__(self, message: str, x: int, y: int, color: pygame.Color = BLACK):
+    def __init__(self, message: str, x: int, y: int, color: FoundationalColor = BLACK):
         super().__init__(x, y)
         self.message = message
         self.color = color
 
     def render(self, window: Any) -> None:
-        if window is not None:  # TODO: only if pygame
-            font = pygame.font.Font(pygame.font.get_default_font(), 12)
+        if window is not None:
+            font = FoundationalWrapper.get_font(
+                FoundationalWrapper.get_default_font(), 12
+            )
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 
@@ -62,10 +69,10 @@ class SmallText(Shape):
 class Image(Shape):
     def __init__(self, path: str, x: int, y: int):
         super().__init__(x, y)
-        self.image = pygame.image.load(path)
+        self.image = FoundationalWrapper.load_image(path)
 
     def render(self, window: Any) -> None:
-        if window is not None:  # TODO: only if pygame
+        if window is not None:
             window.blit(self.image, dest=(self.x, self.y))
 
     def get_x(self):
@@ -84,7 +91,7 @@ class Image(Shape):
 class Animation(Shape):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int = 0):
         super().__init__(x, y)
-        self.sprite_group = pygame.sprite.Group()
+        self.sprite_group = FoundationalWrapper.sprite_group()
         self.animation = Sprite(folder, x, y, initial_frame)
         self.sprite_group.add(self.animation)
 
@@ -100,7 +107,7 @@ class Animation(Shape):
         self.sprite_group.update()  # Calls update on every sprite on the group
 
     def render(self, window: Any) -> None:
-        if window is not None:  # TODO: only if pygame
+        if window is not None:
             self.sprite_group.draw(window)
 
     def get_x(self) -> int:

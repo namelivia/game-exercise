@@ -5,6 +5,14 @@ class FoundationalSprite(pygame.sprite.Sprite):
     pass
 
 
+class FoundationalColor(pygame.Color):
+    pass
+
+
+class FoundationalSurface(pygame.Color):
+    pass
+
+
 class FoundationalWrapper:
     K_RETURN = pygame.K_RETURN
     K_ESCAPE = pygame.K_ESCAPE
@@ -61,3 +69,15 @@ class FoundationalWrapper:
     @staticmethod
     def load_image(path: str):
         return pygame.image.load(path)
+
+    @staticmethod
+    def sprite_group():
+        return pygame.sprite.Group()
+
+    @staticmethod
+    def get_default_font():
+        return pygame.font.get_default_font()
+
+    @staticmethod
+    def get_font(font, size):
+        return pygame.font.Font(font, size)
