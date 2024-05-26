@@ -1,15 +1,15 @@
-import pygame
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 
 
 class Music:
     @staticmethod
     def load(path: str) -> None:
-        pygame.mixer.music.load(path)
+        FoundationalWrapper.load_music(path)
 
     @staticmethod
     def play() -> None:
-        pygame.mixer.music.play(-1)
+        FoundationalWrapper.play_music()
 
     @staticmethod
     def stop() -> None:
-        pygame.mixer.music.stop()
+        FoundationalWrapper.stop_music()

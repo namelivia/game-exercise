@@ -1,6 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Dict, Type
 
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.chat.event_handler import (
     handlers_map as chat_event_handlers,
 )
@@ -50,9 +51,7 @@ class QuitGameEventHandler(BaseEventHandler):
     def handle(self, event: "QuitGameEvent", client_state: "ClientState") -> None:
         import sys
 
-        import pygame  # This is pygame dependent
-
-        pygame.quit()
+        FoundationalWrapper.quit()
         sys.exit()
 
 

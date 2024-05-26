@@ -1,7 +1,7 @@
-import pygame
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 
 
 class Sound:
     @staticmethod
     def play(path: str) -> None:
-        pygame.mixer.Sound.play(pygame.mixer.Sound(path))
+        FoundationalWrapper.play_sound(path)

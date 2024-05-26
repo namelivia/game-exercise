@@ -2,6 +2,9 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.general_state.client_state import ClientState
+from client.engine.graphics.graphics import Graphics
+from client.engine.input.keyboard import KeyboardInput
+from client.engine.input.mouse import MouseInput
 from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput
@@ -10,9 +13,6 @@ from .events_processor import EventsProcessor
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.graphics.graphics import Graphics
-    from client.engine.input.keboard import KeboardInput
-    from client.engine.input.mouse import MouseInput
     from client.engine.primitives.event import Event
 
 
@@ -36,7 +36,7 @@ class ScreenManager:
     def __init__(
         self,
         client_state: "ClientState",
-        keyboard_input: "KeboardInput",
+        keyboard_input: "KeyboardInput",
         mouse_input: "MouseInput",
         graphics: "Graphics",
         event_handler: Any,

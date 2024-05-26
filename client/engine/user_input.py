@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
-import pygame
-
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.user_input.commands import UserClicked, UserTyped
 
 if TYPE_CHECKING:
@@ -17,7 +16,7 @@ class UserInput:
         mouse_input: "MouseInput",
         client_state: "ClientState",
     ) -> None:
-        events = pygame.event.get()
+        events = FoundationalWrapper.get_event()
         # Get events from keyboard
         keyboard_events = keyboard_input.read(events)
 
