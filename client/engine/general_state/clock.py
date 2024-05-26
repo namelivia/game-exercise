@@ -1,4 +1,4 @@
-import pygame
+from client.engine.foundational_wrapper import FoundationalWrapper
 
 
 class Clock:
@@ -6,4 +6,4 @@ class Clock:
         pass
 
     def get(self) -> int:
-        return int(pygame.time.get_ticks())
+        return FoundationalWrapper.get_clock_ticks()

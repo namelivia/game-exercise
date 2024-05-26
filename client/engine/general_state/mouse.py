@@ -1,6 +1,6 @@
-import pygame
+from client.engine.foundational_wrapper import FoundationalWrapper
 
 
 class Mouse:
     def get(self) -> int:
-        return pygame.mouse.get_pos()
+        return FoundationalWrapper.get_mouse_position()

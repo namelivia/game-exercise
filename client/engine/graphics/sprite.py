@@ -2,10 +2,10 @@ import os
 from re import sub
 from typing import List
 
-import pygame
+from client.engine.foundational_wrapper import FoundationalSprite, FoundationalWrapper
 
 
-class Sprite(pygame.sprite.Sprite):
+class Sprite(FoundationalSprite):
     def _get_frames_path(self, folder: str) -> List[str]:
         path, _, files = next(os.walk(folder))
         files = [os.path.join(path, file) for file in files]
@@ -20,7 +20,8 @@ class Sprite(pygame.sprite.Sprite):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int):
         super().__init__()
         self.sprites = [
-            pygame.image.load(frame) for frame in self._get_frames_path(folder)
+            FoundationalWrapper.load_image(frame)
+            for frame in self._get_frames_path(folder)
         ]
         self.current_sprite = initial_frame % self._animation_length()
         self.image = self.sprites[self.current_sprite]

@@ -1,10 +1,10 @@
 from typing import Any, List, Optional
 
-import pygame
+from client.engine.foundational_wrapper import FoundationalWrapper
 
 
 class MouseInput:
-    def read(self, events: List[pygame.event]) -> Optional[List[int]]:
-        if pygame.MOUSEBUTTONDOWN in [event.type for event in events]:
+    def read(self, events: List[any]) -> Optional[List[int]]:
+        if FoundationalWrapper.MOUSEBUTTONDOWN in [event.type for event in events]:
             return "click"
         return None

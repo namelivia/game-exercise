@@ -22,6 +22,7 @@ from client.engine.features.sound.event_handler import (
 from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
 )
+from client.engine.foundational_wrapper import FoundationalWrapper
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.messages import ErrorMessage, PingRequestMessage, PingResponseMessage
@@ -50,9 +51,7 @@ class QuitGameEventHandler(BaseEventHandler):
     def handle(self, event: "QuitGameEvent", client_state: "ClientState") -> None:
         import sys
 
-        import pygame  # This is pygame dependent
-
-        pygame.quit()
+        FoundationalWrapper.quit()
         sys.exit()
 
 

@@ -1,8 +1,8 @@
 from unittest import TestCase
 
 import mock
-import pygame
 
+from client.engine.foundational_wrapper import FoundationalWrapper
 from client.engine.input.keyboard import KeyboardInput
 
 
@@ -15,7 +15,7 @@ class TestInput(TestCase):
             mock.Mock(type=pygame.KEYDOWN, key=pygame.K_a, unicode="a"),
             mock.Mock(type=pygame.KEYDOWN, key=pygame.K_e, unicode="e"),
             mock.Mock(type=pygame.KEYDOWN, key=pygame.K_RETURN, unicode=None),
-            mock.Mock(type=pygame.KEYDOWN, key=pygame.K_BACKSPACE, unicode=None),
+            mock.Mock(type=pygame.KEYDOWN, key=pygame.K_BACKSPACE, unicode=None),pygamepygame
             mock.Mock(type="UNMAPED_EVENT", key="unknown"),
         ]
         result = self.keyboard_input.read(events)
