@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 if TYPE_CHECKING:
@@ -10,5 +10,6 @@ E = TypeVar("E", bound="Event")
 
 
 class EventHandler(Generic[E], ABC):
+    @abstractmethod
     def handle(self, event: E, client_state: "ClientState") -> None:
         pass

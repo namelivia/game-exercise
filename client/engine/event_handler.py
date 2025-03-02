@@ -90,14 +90,14 @@ class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):
         return PingRequestMessage()
 
 
-common_handlers: Dict[Type["Event"], Type[BaseEventHandler["Event"]]] = {
+common_handlers = {
     QuitGameEvent: QuitGameEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map: Dict[Type["Event"], Type[BaseEventHandler["Event"]]] = {
+handlers_map = {
     **common_handlers,
     **chat_event_handlers,
     **pieces_event_handlers,

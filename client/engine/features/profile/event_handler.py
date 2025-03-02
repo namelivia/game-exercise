@@ -38,7 +38,7 @@ class GetProfilesEventHandler(EventHandler[GetProfilesEvent]):
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
+handlers_map = {
     SetProfileEvent: SetProfileEventHandler,
     NewProfileEvent: NewProfileEventHandler,
     GetProfilesEvent: GetProfilesEventHandler,

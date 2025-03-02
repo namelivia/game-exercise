@@ -55,6 +55,4 @@ class GetGameListNetworkRequestEventHandler(
         return GameListRequestMessage()
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
-    GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler
-}
+handlers_map = {GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler}

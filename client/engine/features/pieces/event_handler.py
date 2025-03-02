@@ -95,7 +95,7 @@ class PlaceASymbolNetworkRequestEventHandler(
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
+handlers_map = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,

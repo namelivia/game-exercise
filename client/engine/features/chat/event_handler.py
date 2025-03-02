@@ -91,7 +91,7 @@ class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEven
         return SendChatMessage(game_id, event_id, profile_id, message)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
+handlers_map = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,

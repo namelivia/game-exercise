@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict
 
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 

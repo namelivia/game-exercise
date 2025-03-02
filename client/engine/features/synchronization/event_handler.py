@@ -69,7 +69,7 @@ class RefreshGameStatusNetworkRequestEventHandler(
         return GetGameStatus(game_id, pointer, profile_id)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
+handlers_map = {
     UpdateGameEvent: UpdateGameEventHandler,
     RefreshGameStatusEvent: RefreshGameStatusEventHandler,
     RefreshGameStatusNetworkRequestEvent: RefreshGameStatusNetworkRequestEventHandler,

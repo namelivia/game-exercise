@@ -37,7 +37,7 @@ class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
             Music.play()
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
+handlers_map = {
     TurnSoundOnEvent: TurnSoundOnEventHandler,
     TurnSoundOffEvent: TurnSoundOffEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,

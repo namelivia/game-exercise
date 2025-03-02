@@ -114,7 +114,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEv
         return JoinAGameMessage(game_id, profile_id)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
+handlers_map = {
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
