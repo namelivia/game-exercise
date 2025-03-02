@@ -9,25 +9,25 @@ from .events import GetProfilesEvent, NewProfileEvent, SetProfileEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import Event
+    from client.engine.primitives.event import E, Event
 
 
 logger = logging.getLogger(__name__)
 
 
-class SetProfileEventHandler(EventHandler):
+class SetProfileEventHandler(EventHandler[SetProfileEvent]):
     def handle(self, event: "SetProfileEvent", client_state: "ClientState") -> None:
         client_state.set_profile(event.key)
         ProfileIsSet(client_state.profile, client_state.queue, event.key).execute()
 
 
-class NewProfileEventHandler(EventHandler):
+class NewProfileEventHandler(EventHandler[NewProfileEvent]):
     def handle(self, event: "NewProfileEvent", client_state: "ClientState") -> None:
         new_profile_key = client_state.new_profile().key
         SetProfile(client_state.profile, client_state.queue, new_profile_key).execute()
 
 
-class GetProfilesEventHandler(EventHandler):
+class GetProfilesEventHandler(EventHandler[GetProfilesEvent]):
     def handle(self, event: "GetProfilesEvent", client_state: "ClientState") -> None:
         # TODO retrieve profiles from disk
         profiles = self._build_profiles_index(Persistence.list())
@@ -38,7 +38,7 @@ class GetProfilesEventHandler(EventHandler):
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
     SetProfileEvent: SetProfileEventHandler,
     NewProfileEvent: NewProfileEventHandler,
     GetProfilesEvent: GetProfilesEventHandler,

@@ -14,17 +14,19 @@ from .events import GetGameListNetworkRequestEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import Event
+    from client.engine.primitives.event import E, Event
 
 
 logger = logging.getLogger(__name__)
 
 
-class ErrorGettingGameListEventHandler(EventHandler):
+class ErrorGettingGameListEventHandler(EventHandler["Event"]):
     pass
 
 
-class GetGameListNetworkRequestEventHandler(EventHandler):
+class GetGameListNetworkRequestEventHandler(
+    EventHandler[GetGameListNetworkRequestEvent]
+):
     def handle(
         self, event: "GetGameListNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -53,6 +55,6 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
         return GameListRequestMessage()
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
     GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler
 }

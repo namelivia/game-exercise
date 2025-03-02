@@ -19,12 +19,12 @@ if TYPE_CHECKING:
     from uuid import UUID
 
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import Event
+    from client.engine.primitives.event import E, Event
 
 logger = logging.getLogger(__name__)
 
 
-class ChatMessageInGameEventHandler(EventHandler):
+class ChatMessageInGameEventHandler(EventHandler[ChatMessageInGameEvent]):
     def handle(
         self, event: "ChatMessageInGameEvent", client_state: "ClientState"
     ) -> None:
@@ -38,7 +38,7 @@ class ChatMessageInGameEventHandler(EventHandler):
         ).execute()
 
 
-class SendChatRequestEventHandler(EventHandler):
+class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
     def handle(
         self, event: "SendChatRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -54,7 +54,7 @@ class SendChatRequestEventHandler(EventHandler):
         ).execute()
 
 
-class SendChatNetworkRequestEventHandler(EventHandler):
+class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEvent]):
     def handle(
         self, event: "SendChatNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -91,7 +91,7 @@ class SendChatNetworkRequestEventHandler(EventHandler):
         return SendChatMessage(game_id, event_id, profile_id, message)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,

@@ -36,7 +36,7 @@ from .events import (
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import Event
+    from client.engine.primitives.event import E, Event
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ They do the actual procssing and can execute commands.
 
 
 # ======= GENERIC =======
-class QuitGameEventHandler(BaseEventHandler):
+class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
     def handle(self, event: "QuitGameEvent", client_state: "ClientState") -> None:
         import sys
 
@@ -56,7 +56,9 @@ class QuitGameEventHandler(BaseEventHandler):
 
 
 # ======= GAME STATE SYNC =======
-class SetInternalGameInformationEventHandler(BaseEventHandler):
+class SetInternalGameInformationEventHandler(
+    BaseEventHandler[SetInternalGameInformationEvent]
+):
     def handle(
         self, event: "SetInternalGameInformationEvent", client_state: "ClientState"
     ) -> None:
@@ -64,12 +66,12 @@ class SetInternalGameInformationEventHandler(BaseEventHandler):
         client_state.profile.set_game_event_pointer(0)
 
 
-class SetPlayerNameEventHandler(BaseEventHandler):
+class SetPlayerNameEventHandler(BaseEventHandler[SetPlayerNameEvent]):
     def handle(self, event: "SetPlayerNameEvent", client_state: "ClientState") -> None:
         client_state.profile.set_name(event.name)
 
 
-class PingNetworkRequestEventHandler(BaseEventHandler):
+class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):
     def handle(
         self, event: "PingNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -88,14 +90,14 @@ class PingNetworkRequestEventHandler(BaseEventHandler):
         return PingRequestMessage()
 
 
-common_handlers: Dict[Type["Event"], Type[BaseEventHandler]] = {
+common_handlers: Dict[Type["E"], Type[BaseEventHandler["E"]]] = {
     QuitGameEvent: QuitGameEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map: Dict[Type["Event"], Type[BaseEventHandler]] = {
+handlers_map: Dict[Type["E"], Type[BaseEventHandler["E"]]] = {
     **common_handlers,
     **chat_event_handlers,
     **pieces_event_handlers,
@@ -107,6 +109,6 @@ handlers_map: Dict[Type["Event"], Type[BaseEventHandler]] = {
 }
 
 
-class EventHandler(BaseEventHandler):
+class EventHandler(BaseEventHandler["Event"]):
     def handle(self, event: "Event", client_state: "ClientState") -> None:
         handlers_map[type(event)]().handle(event, client_state)

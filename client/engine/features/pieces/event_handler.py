@@ -21,13 +21,13 @@ if TYPE_CHECKING:
     from uuid import UUID
 
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import Event
+    from client.engine.primitives.event import E, Event
 
 
 logger = logging.getLogger(__name__)
 
 
-class PlayerPlacedSymbolInGameEventHandler(EventHandler):
+class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGameEvent]):
     def handle(
         self, event: "PlayerPlacedSymbolInGameEvent", client_state: "ClientState"
     ) -> None:
@@ -40,7 +40,7 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler):
         ).execute()
 
 
-class PlaceASymbolRequestEventHandler(EventHandler):
+class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
     def handle(
         self, event: "PlaceASymbolRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -56,7 +56,9 @@ class PlaceASymbolRequestEventHandler(EventHandler):
         ).execute()
 
 
-class PlaceASymbolNetworkRequestEventHandler(EventHandler):
+class PlaceASymbolNetworkRequestEventHandler(
+    EventHandler[PlaceASymbolNetworkRequestEvent]
+):
     def handle(
         self, event: "PlaceASymbolNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -93,7 +95,7 @@ class PlaceASymbolNetworkRequestEventHandler(EventHandler):
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,
