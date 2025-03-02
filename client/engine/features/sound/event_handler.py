@@ -14,30 +14,30 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class TurnSoundOnEventHandler(EventHandler):
+class TurnSoundOnEventHandler(EventHandler[TurnSoundOnEvent]):
     def handle(self, event: "TurnSoundOnEvent", client_state: "ClientState") -> None:
         client_state.profile.set_sound_on()
 
 
-class TurnSoundOffEventHandler(EventHandler):
+class TurnSoundOffEventHandler(EventHandler[TurnSoundOffEvent]):
     def handle(self, event: "TurnSoundOffEvent", client_state: "ClientState") -> None:
         client_state.profile.set_sound_off()
 
 
-class PlaySoundEventHandler(EventHandler):
+class PlaySoundEventHandler(EventHandler[PlaySoundEvent]):
     def handle(self, event: "PlaySoundEvent", client_state: "ClientState") -> None:
         if client_state.profile.sound_on:
             Sound.play(event.sound)
 
 
-class PlayMusicEventHandler(EventHandler):
+class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
     def handle(self, event: "PlayMusicEvent", client_state: "ClientState") -> None:
         if client_state.profile.sound_on:
             Music.load(event.music)
             Music.play()
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map = {
     TurnSoundOnEvent: TurnSoundOnEventHandler,
     TurnSoundOffEvent: TurnSoundOffEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,

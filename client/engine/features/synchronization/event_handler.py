@@ -2,7 +2,7 @@ import logging
 from typing import TYPE_CHECKING, Dict, Type
 
 from client.engine.network.channel import Channel
-from client.engine.primitives.event_handler import EventHandler
+from client.engine.primitives.event_handler import E, EventHandler
 from common.messages import ErrorMessage, GameEventsMessage, GetGameStatus
 
 from .commands import ProcessServerEvents, RefreshGameStatus, UpdateGame
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class UpdateGameEventHandler(EventHandler):
+class UpdateGameEventHandler(EventHandler[UpdateGameEvent]):
     def handle(self, event: "UpdateGameEvent", client_state: "ClientState") -> None:
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
@@ -31,7 +31,7 @@ class UpdateGameEventHandler(EventHandler):
         ProcessServerEvents(client_state.profile, client_state.queue, events).execute()
 
 
-class RefreshGameStatusEventHandler(EventHandler):
+class RefreshGameStatusEventHandler(EventHandler[RefreshGameStatusEvent]):
     def handle(
         self, event: "RefreshGameStatusEvent", client_state: "ClientState"
     ) -> None:
@@ -40,7 +40,9 @@ class RefreshGameStatusEventHandler(EventHandler):
         ).execute()
 
 
-class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
+class RefreshGameStatusNetworkRequestEventHandler(
+    EventHandler[RefreshGameStatusNetworkRequestEvent]
+):
     def handle(
         self, event: "RefreshGameStatusNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -67,7 +69,7 @@ class RefreshGameStatusNetworkRequestEventHandler(EventHandler):
         return GetGameStatus(game_id, pointer, profile_id)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map = {
     UpdateGameEvent: UpdateGameEventHandler,
     RefreshGameStatusEvent: RefreshGameStatusEventHandler,
     RefreshGameStatusNetworkRequestEvent: RefreshGameStatusNetworkRequestEventHandler,

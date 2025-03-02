@@ -34,7 +34,7 @@ They do the actual procssing and can execute commands.
 
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
-class GameCreatedInGameEventHandler(BaseEventHandler):
+class GameCreatedInGameEventHandler(BaseEventHandler[GameCreatedInGameEvent]):
     def handle(
         self, event: GameCreatedInGameEvent, client_state: "ClientState"
     ) -> None:
@@ -43,7 +43,7 @@ class GameCreatedInGameEventHandler(BaseEventHandler):
         ).execute()
 
 
-class PlayerJoinedInGameEventHandler(BaseEventHandler):
+class PlayerJoinedInGameEventHandler(BaseEventHandler[PlayerJoinedInGameEvent]):
     def handle(
         self, event: PlayerJoinedInGameEvent, client_state: "ClientState"
     ) -> None:
@@ -52,7 +52,7 @@ class PlayerJoinedInGameEventHandler(BaseEventHandler):
         ).execute()
 
 
-class PlayerWinsInGameEventHandler(BaseEventHandler):
+class PlayerWinsInGameEventHandler(BaseEventHandler[PlayerWinsInGameEvent]):
     def handle(self, event: PlayerWinsInGameEvent, client_state: "ClientState") -> None:
         PlayerWinsInGameCommand(
             client_state.profile, client_state.queue, event.player_id
@@ -62,7 +62,7 @@ class PlayerWinsInGameEventHandler(BaseEventHandler):
 #################################################################
 
 
-class InitiateGameEventHandler(BaseEventHandler):
+class InitiateGameEventHandler(BaseEventHandler[InitiateGameEvent]):
     def handle(self, event: InitiateGameEvent, client_state: "ClientState") -> None:
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
         client_state.set_current_screen(
@@ -76,7 +76,7 @@ class InitiateGameEventHandler(BaseEventHandler):
         )
 
 
-class ScreenTransitionEventHandler(BaseEventHandler):
+class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
     def handle(self, event: ScreenTransitionEvent, client_state: "ClientState") -> None:
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
@@ -99,7 +99,9 @@ class ScreenTransitionEventHandler(BaseEventHandler):
             client_state.set_current_screen(Profiles(client_state))
 
 
-class ClearInternalGameInformationEventHandler(BaseEventHandler):
+class ClearInternalGameInformationEventHandler(
+    BaseEventHandler[ClearInternalGameInformationEvent]
+):
     def handle(
         self, event: ClearInternalGameInformationEvent, client_state: "ClientState"
     ) -> None:
@@ -118,6 +120,6 @@ handlers_map = {
 }
 
 
-class EventHandler(BaseEventHandler):
+class EventHandler(BaseEventHandler["Event"]):
     def handle(self, event: "Event", client_state: "ClientState") -> None:
         handlers_map[type(event)]().handle(event, client_state)

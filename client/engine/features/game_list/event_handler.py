@@ -20,11 +20,13 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class ErrorGettingGameListEventHandler(EventHandler):
+class ErrorGettingGameListEventHandler(EventHandler["Event"]):
     pass
 
 
-class GetGameListNetworkRequestEventHandler(EventHandler):
+class GetGameListNetworkRequestEventHandler(
+    EventHandler[GetGameListNetworkRequestEvent]
+):
     def handle(
         self, event: "GetGameListNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -53,6 +55,4 @@ class GetGameListNetworkRequestEventHandler(EventHandler):
         return GameListRequestMessage()
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
-    GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler
-}
+handlers_map = {GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler}

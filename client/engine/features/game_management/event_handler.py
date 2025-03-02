@@ -30,21 +30,23 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-class NewGameRequestEventHandler(EventHandler):
+class NewGameRequestEventHandler(EventHandler[NewGameRequestEvent]):
     def handle(self, event: "NewGameRequestEvent", client_state: "ClientState") -> None:
         CreateAGame(
             client_state.profile, client_state.queue, event.new_game_name
         ).execute()
 
 
-class JoinExistingGameEventHandler(EventHandler):
+class JoinExistingGameEventHandler(EventHandler[JoinExistingGameEvent]):
     def handle(
         self, event: "JoinExistingGameEvent", client_state: "ClientState"
     ) -> None:
         JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
 
 
-class CreateAGameNetworkRequestEventHandler(EventHandler):
+class CreateAGameNetworkRequestEventHandler(
+    EventHandler[CreateAGameNetworkRequestEvent]
+):
     def handle(
         self, event: "CreateAGameNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -80,7 +82,7 @@ class CreateAGameNetworkRequestEventHandler(EventHandler):
         return CreateAGameMessage(new_game_name, profile_id)
 
 
-class JoinAGameNetworkRequestEventHandler(EventHandler):
+class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEvent]):
     def handle(
         self, event: "JoinAGameNetworkRequestEvent", client_state: "ClientState"
     ) -> None:
@@ -112,7 +114,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler):
         return JoinAGameMessage(game_id, profile_id)
 
 
-handlers_map: Dict[Type["Event"], Type[EventHandler]] = {
+handlers_map = {
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,
