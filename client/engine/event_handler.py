@@ -36,7 +36,7 @@ from .events import (
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import E, Event
+    from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
 
@@ -90,14 +90,14 @@ class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):
         return PingRequestMessage()
 
 
-common_handlers: Dict[Type["E"], Type[BaseEventHandler["E"]]] = {
+common_handlers: Dict[Type["Event"], Type[BaseEventHandler["Event"]]] = {
     QuitGameEvent: QuitGameEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map: Dict[Type["E"], Type[BaseEventHandler["E"]]] = {
+handlers_map: Dict[Type["Event"], Type[BaseEventHandler["Event"]]] = {
     **common_handlers,
     **chat_event_handlers,
     **pieces_event_handlers,

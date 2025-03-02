@@ -24,7 +24,7 @@ if TYPE_CHECKING:
     from uuid import UUID
 
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import E, Event
+    from client.engine.primitives.event import Event
 
 
 logger = logging.getLogger(__name__)
@@ -114,7 +114,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEv
         return JoinAGameMessage(game_id, profile_id)
 
 
-handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
+handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,

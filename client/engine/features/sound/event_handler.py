@@ -9,7 +9,7 @@ from .events import PlayMusicEvent, PlaySoundEvent, TurnSoundOffEvent, TurnSound
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import E, Event
+    from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +37,7 @@ class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
             Music.play()
 
 
-handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
+handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
     TurnSoundOnEvent: TurnSoundOnEventHandler,
     TurnSoundOffEvent: TurnSoundOffEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,

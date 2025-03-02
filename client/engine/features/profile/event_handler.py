@@ -9,7 +9,7 @@ from .events import GetProfilesEvent, NewProfileEvent, SetProfileEvent
 
 if TYPE_CHECKING:
     from client.engine.general_state.client_state import ClientState
-    from client.engine.primitives.event import E, Event
+    from client.engine.primitives.event import Event
 
 
 logger = logging.getLogger(__name__)
@@ -38,7 +38,7 @@ class GetProfilesEventHandler(EventHandler[GetProfilesEvent]):
         return [{"name": profile} for profile in profiles if profile != ".gitkeep"]
 
 
-handlers_map: Dict[Type["E"], Type[EventHandler["E"]]] = {
+handlers_map: Dict[Type["Event"], Type[EventHandler["Event"]]] = {
     SetProfileEvent: SetProfileEventHandler,
     NewProfileEvent: NewProfileEventHandler,
     GetProfilesEvent: GetProfilesEventHandler,
