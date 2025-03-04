@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.chat.event_handler import (
@@ -90,14 +90,14 @@ class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):
         return PingRequestMessage()
 
 
-common_handlers = {
+common_handlers: Dict[Type["Event"], Any] = {
     QuitGameEvent: QuitGameEventHandler,
     PingNetworkRequestEvent: PingNetworkRequestEventHandler,
     SetInternalGameInformationEvent: SetInternalGameInformationEventHandler,
     SetPlayerNameEvent: SetPlayerNameEventHandler,
 }
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     **common_handlers,
     **chat_event_handlers,
     **pieces_event_handlers,

@@ -33,7 +33,7 @@ class VisualRegression:
         new_array = pygame.surfarray.array2d(new_surface)
         screenshot_array = pygame.surfarray.array2d(screenshot)
 
-        numpy.testing.assert_array_equal(new_array, screenshot_array)  # type: ignore
+        numpy.testing.assert_array_equal(new_array, screenshot_array)
 
     @staticmethod
     def generate_snapshot(screen: "Screen", snapshot_key: str) -> None:

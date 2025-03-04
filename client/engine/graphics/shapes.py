@@ -75,16 +75,16 @@ class Image(Shape):
         if window is not None:
             window.blit(self.image, dest=(self.x, self.y))
 
-    def get_x(self):
+    def get_x(self) -> int:
         return self.x
 
-    def get_y(self):
+    def get_y(self) -> int:
         return self.y
 
-    def get_width(self):
+    def get_width(self) -> int:
         return self.image.get_width()
 
-    def get_height(self):
+    def get_height(self) -> int:
         return self.image.get_height()
 
 

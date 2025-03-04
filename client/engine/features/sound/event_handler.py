@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.primitives.event_handler import EventHandler
 from client.engine.sound.music import Music
@@ -37,7 +37,7 @@ class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
             Music.play()
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     TurnSoundOnEvent: TurnSoundOnEventHandler,
     TurnSoundOffEvent: TurnSoundOffEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,

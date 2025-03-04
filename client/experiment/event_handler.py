@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 
@@ -22,7 +22,9 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
             client_state.set_current_screen(MainScreen(client_state))
 
 
-handlers_map = {ScreenTransitionEvent: ScreenTransitionEventHandler}
+handlers_map: Dict[Type["Event"], Any] = {
+    ScreenTransitionEvent: ScreenTransitionEventHandler
+}
 
 
 class EventHandler(BaseEventHandler["Event"]):

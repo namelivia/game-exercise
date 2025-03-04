@@ -1,4 +1,4 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, Tuple
 
 from client.engine.graphics.shapes import Image
 from client.engine.primitives.ui import ClickableUIElement, UIElement
@@ -7,7 +7,7 @@ from client.engine.primitives.ui import ClickableUIElement, UIElement
 class Background(UIElement):
     def __init__(self) -> None:
         super().__init__()
-        self.shapes = [Image("client/experiment/images/background.png", 0, 0)]
+        self.set_shapes([Image("client/experiment/images/background.png", 0, 0)])
 
 
 class Portrait(ClickableUIElement):
@@ -15,13 +15,13 @@ class Portrait(ClickableUIElement):
         super().__init__()
         self.image = Image(image, x, y)
         self.highlight = Image(highlight, x, y)
-        self.shapes = [self.image]
+        self.set_shapes([self.image])
 
     def update(
-        self, time: int, data: Dict[str, Any], mouse_position: List[int]
+        self, time: int, data: Dict[str, Any], mouse_position: Tuple[int, int]
     ) -> None:
         super().update(time, data, mouse_position)
         if self.mouse_over:
-            self.shapes = [self.highlight]
+            self.set_shapes([self.highlight])
         else:
-            self.shapes = [self.image]
+            self.set_shapes([self.image])
