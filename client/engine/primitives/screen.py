@@ -22,7 +22,7 @@ class Screen(ABC):
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
-    def get_ui_elements(self) -> List["UIElement"]:
+    def get_ui_elements(self) -> List[UIElement | ClickableUIElement]:
         return self.ui_elements
 
     def update(self, event: Optional["InGameEvent"] = None) -> None:

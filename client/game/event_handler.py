@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.commands import (
     GameCreatedInGameCommand,
@@ -109,7 +109,7 @@ class ClearInternalGameInformationEventHandler(
         client_state.profile.set_game_event_pointer(None)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     ScreenTransitionEvent: ScreenTransitionEventHandler,
     ClearInternalGameInformationEvent: ClearInternalGameInformationEventHandler,
     InitiateGameEvent: InitiateGameEventHandler,

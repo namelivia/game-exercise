@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import TYPE_CHECKING, Any, Dict, List
+from typing import TYPE_CHECKING, Any, Dict, List, Tuple
 
 if TYPE_CHECKING:
     from client.engine.primitives.shape import Shape
@@ -50,7 +50,7 @@ class ClickableUIElement:
         self.element.shapes = shapes
 
     def update(
-        self, time: int, data: Dict[str, Any], mouse_position: List[int]
+        self, time: int, data: Dict[str, Any], mouse_position: Tuple[int, int]
     ) -> None:
         self.element.update(time, data)
         self.mouse_over = self._is_mouse_over(mouse_position[0], mouse_position[1])

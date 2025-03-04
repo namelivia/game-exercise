@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.commands import InitiateGame
 from client.engine.network.channel import Channel
@@ -114,7 +114,7 @@ class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEv
         return JoinAGameMessage(game_id, profile_id)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     CreateAGameNetworkRequestEvent: CreateAGameNetworkRequestEventHandler,
     JoinAGameNetworkRequestEvent: JoinAGameNetworkRequestEventHandler,
     NewGameRequestEvent: NewGameRequestEventHandler,

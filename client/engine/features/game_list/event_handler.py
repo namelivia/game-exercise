@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
@@ -55,4 +55,6 @@ class GetGameListNetworkRequestEventHandler(
         return GameListRequestMessage()
 
 
-handlers_map = {GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler}
+handlers_map: Dict[Type["Event"], Any] = {
+    GetGameListNetworkRequestEvent: GetGameListNetworkRequestEventHandler
+}

@@ -1,10 +1,10 @@
-from typing import List
+from typing import Any, List
 
 from client.engine.external.foundational_wrapper import FoundationalWrapper
 
 
 class KeyboardInput:
-    def _get_key_value(self, event: any) -> str:
+    def _get_key_value(self, event: Any) -> Any:
         special_keys = {
             FoundationalWrapper.K_RETURN: "return",
             FoundationalWrapper.K_ESCAPE: "escape",
@@ -15,7 +15,7 @@ class KeyboardInput:
         else:
             return event.unicode
 
-    def read(self, events: List[any]) -> List[str]:
+    def read(self, events: List[Any]) -> List[str]:
         keydowns = [
             event for event in events if event.type == FoundationalWrapper.KEYDOWN
         ]

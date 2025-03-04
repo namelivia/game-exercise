@@ -11,7 +11,7 @@ class FoundationalColor(pygame.Color):
     pass
 
 
-class FoundationalSurface(pygame.Color):
+class FoundationalSurface(pygame.Surface):
     pass
 
 

@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
@@ -95,7 +95,7 @@ class PlaceASymbolNetworkRequestEventHandler(
         return PlaceASymbolMessage(game_id, event_id, profile_id, position)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     PlaceASymbolRequestEvent: PlaceASymbolRequestEventHandler,
     PlaceASymbolNetworkRequestEvent: PlaceASymbolNetworkRequestEventHandler,
     PlayerPlacedSymbolInGameEvent: PlayerPlacedSymbolInGameEventHandler,

@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import E, EventHandler
@@ -69,7 +69,7 @@ class RefreshGameStatusNetworkRequestEventHandler(
         return GetGameStatus(game_id, pointer, profile_id)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     UpdateGameEvent: UpdateGameEventHandler,
     RefreshGameStatusEvent: RefreshGameStatusEventHandler,
     RefreshGameStatusNetworkRequestEvent: RefreshGameStatusNetworkRequestEventHandler,

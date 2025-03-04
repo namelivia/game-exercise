@@ -1,5 +1,5 @@
 import logging
-from typing import TYPE_CHECKING, Dict, Type
+from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.features.chat.commands import (
     ChatMessageConfirmedCommand,
@@ -91,7 +91,7 @@ class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEven
         return SendChatMessage(game_id, event_id, profile_id, message)
 
 
-handlers_map = {
+handlers_map: Dict[Type["Event"], Any] = {
     SendChatRequestEvent: SendChatRequestEventHandler,
     SendChatNetworkRequestEvent: SendChatNetworkRequestEventHandler,
     ChatMessageInGameEvent: ChatMessageInGameEventHandler,
