@@ -13,9 +13,7 @@ class Screen(ABC):
         self.client_state = client_state
         self.ui_elements: List[UIElement | ClickableUIElement] = []
         self.timers: Dict[int, Callable[[], None]] = {}  # Time based actions
-        self.events: Dict[
-            Any, Callable[[Any], None]
-        ] = (
+        self.events: Dict[Any, Callable[[Any], None]] = (
             {}
         )  # Event based actions # TODO: Type this, should be InGameEvent > Callable
         self.initial_time = client_state.clock.get()
@@ -40,7 +38,7 @@ class Screen(ABC):
                 self.events[event_type](event)
 
         # Update ui elements they need to access the data and time to do so
-        # I'm also adding the mouse position for clickable elements
+        # I'm also adding the mouse position for clickable elements.
         for element in self.ui_elements:
             if isinstance(element, ClickableUIElement):
                 element.update(self.time, self.data, self.client_state.mouse.get())
