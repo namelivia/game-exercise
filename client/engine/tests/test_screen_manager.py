@@ -37,9 +37,6 @@ class TestScreenManager(TestCase):
         # Run one iteration
         self.screen_manager.run()
 
-        # The clock value was incremented.
-        self.client_state.clock.tick.assert_called_once_with()
-
         # A polling request is made if needed
         m_push_polling_event.assert_called_once_with(self.client_state)
 

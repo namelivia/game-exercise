@@ -51,29 +51,26 @@ class ScreenManager:
 
     # Main loop
     def run(self) -> None:
-        # 1 - Increase the clock
-        self.client_state.clock.tick()
-
-        # 2 - Push a sever polling event if needed
+        # 1 - Push a sever polling event if needed
         ServerPolling.push_polling_event_if_needed(self.client_state)
 
-        # 3 - Fetch and handle the latest event
+        # 2 - Fetch and handle the latest event
         event = self.client_state.queue.pop()
 
         # TODO: I don't like this if
         if event is not None and not isinstance(event, InGameEvent):
             self.event_processor.handle(event, self.client_state)
 
-        # 4 - Read user input
+        # 3 - Read user input
         UserInput.process(self.keyboard_input, self.mouse_input, self.client_state)
 
         current_screen = self.client_state.get_current_screen()
 
         if current_screen is not None:
-            # 5 - Draw the screen
+            # 4 - Draw the screen
             self.graphics.render(current_screen)
 
-            # 6 - Update the current screen
+            # 5 - Update the current screen
 
             # TODO: I don't like this if
             if not isinstance(event, InGameEvent):
