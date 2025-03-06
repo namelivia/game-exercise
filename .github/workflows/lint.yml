@@ -33,4 +33,4 @@ jobs:
         with:
           image: game:latest
           shell: sh 
-          run: sh /app/check_lint
+          run: sh /app/check_lint && sh /app/run_tests
