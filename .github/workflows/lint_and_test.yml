@@ -1,4 +1,4 @@
-name: Lint
+name: Lint and test
 
 on: [push, pull_request]
 
@@ -28,7 +28,7 @@ jobs:
           load: true
           tags: game:latest
       - 
-        name: Run tests
+        name: Run linter and tests
         uses: addnab/docker-run-action@v1
         with:
           image: game:latest
