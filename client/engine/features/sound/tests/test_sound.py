@@ -69,7 +69,7 @@ class TestSound(TestCase):
         client_state.profile = self.profile
 
         self.event_handler.handle(event, client_state)
-        m_load.assert_called_once_with("client/game/music/main_theme.mp3")
+        m_load.assert_called_once_with("main_theme")
         m_play.assert_called_once_with()
 
     @mock.patch("client.engine.features.sound.event_handler.Sound.play")
@@ -84,4 +84,4 @@ class TestSound(TestCase):
         client_state.profile = self.profile
 
         self.event_handler.handle(event, client_state)
-        m_play.assert_called_once_with("client/game/sounds/back.mp3")
+        m_play.assert_called_once_with("back")

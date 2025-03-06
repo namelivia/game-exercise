@@ -26,12 +26,16 @@ class TurnSoundOffEventHandler(EventHandler[TurnSoundOffEvent]):
 
 class PlaySoundEventHandler(EventHandler[PlaySoundEvent]):
     def handle(self, event: "PlaySoundEvent", client_state: "ClientState") -> None:
+        # TODO: Event.sound is an id, not a path
+        # but the sound module expects a path.
         if client_state.profile.sound_on:
             Sound.play(event.sound)
 
 
 class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
     def handle(self, event: "PlayMusicEvent", client_state: "ClientState") -> None:
+        # TODO: Event.music is an id, not a path
+        # but the music module expects a path.
         if client_state.profile.sound_on:
             Music.load(event.music)
             Music.play()

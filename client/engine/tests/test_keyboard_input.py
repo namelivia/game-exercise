@@ -8,7 +8,7 @@ from client.engine.input.keyboard import KeyboardInput
 
 class TestInput(TestCase):
     def setUp(self):
-        self.keyboard_input = KeyboardInput(True)
+        self.keyboard_input = KeyboardInput()
 
     def test_main_loop_iteration(self):
         events = [
