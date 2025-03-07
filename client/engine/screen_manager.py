@@ -56,7 +56,7 @@ class ScreenManager:
     # Main loop
     def run(self) -> None:
         # 1 - Push a sever polling event if needed
-        ServerPolling.push_polling_event_if_needed(self.client_state)
+        ServerPolling.push_polling_event_if_needed()
 
         # 2 - Fetch and handle the latest event
         event = self.client_state.queue.pop()

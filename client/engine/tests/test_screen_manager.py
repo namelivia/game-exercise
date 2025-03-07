@@ -38,7 +38,7 @@ class TestScreenManager(TestCase):
         self.screen_manager.run()
 
         # A polling request is made if needed
-        m_push_polling_event.assert_called_once_with(self.client_state)
+        m_push_polling_event.assert_called_once()
 
         # The latest event from queue is retrieved and processed
         # TODO: This assertion is missing
