@@ -23,8 +23,11 @@ class ScreenManagerFactory:
         initial_event: "Event",
         event_handler: Any,
     ) -> "ScreenManager":
+        client_state = ClientState()
+        client_state.push_initial_event(initial_event)
+        client_state.set_profile("Default profile")
         return ScreenManager(
-            ClientState(initial_event, "Default profile"),
+            client_state,
             KeyboardInput(),
             MouseInput(),
             Graphics(),
