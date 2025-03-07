@@ -30,7 +30,8 @@ class TestProfile(TestCase):
         self.event_handler = EventHandler()
 
     @mock.patch("client.engine.features.profile.event_handler.ProfileIsSet")
-    def test_setting_a_profile(self, m_profile_is_set_command):
+    @mock.patch("client.engine.features.profile.event_handler.ClientState")
+    def test_setting_a_profile(self, m_client_state, m_profile_is_set_command):
         # The command is invoked whith an existing profile key
         SetProfile(self.profile, self.queue, "profile_1").execute()
 
@@ -38,15 +39,14 @@ class TestProfile(TestCase):
         assert isinstance(set_profile_event, SetProfileEvent)
         assert set_profile_event.key == "profile_1"
 
-        client_state = mock.Mock()
-        client_state.profile = self.profile
-        client_state.queue = self.queue
-        client_state.set_profile = mock.Mock()
+        m_client_state().profile = self.profile
+        m_client_state().queue = self.queue
+        m_client_state().set_profile = mock.Mock()
 
-        self.event_handler.handle(set_profile_event, client_state)
+        self.event_handler.handle(set_profile_event)
 
         # The profile key is set in the client state
-        client_state.set_profile.assert_called_once_with("profile_1")
+        m_client_state().set_profile.assert_called_once_with("profile_1")
 
         # The comand letting the game know that the profile is set is issued
         m_profile_is_set_command.assert_called_once_with(
@@ -54,28 +54,28 @@ class TestProfile(TestCase):
         )
 
     @mock.patch("client.engine.features.profile.event_handler.SetProfile")
-    def test_creating_a_profile(self, m_set_profile):
+    @mock.patch("client.engine.features.profile.event_handler.ClientState")
+    def test_creating_a_profile(self, m_client_state, m_set_profile):
         # The command is invoked
         NewProfile(self.profile, self.queue).execute()
 
         new_profile_event = self.queue.pop()
         assert isinstance(new_profile_event, NewProfileEvent)
 
-        client_state = mock.Mock()
-        client_state.profile = self.profile
-        client_state.queue = self.queue
-        client_state.new_profile = mock.Mock()
-        client_state.new_profile.return_value = Profile(
+        m_client_state().profile = self.profile
+        m_client_state().queue = self.queue
+        m_client_state().new_profile = mock.Mock()
+        m_client_state().new_profile.return_value = Profile(
             key="new_profile_key",
             id="some_id",
             game_id=None,
             game_event_pointer=None,
             sound_on=True,
         )
-        self.event_handler.handle(new_profile_event, client_state)
+        self.event_handler.handle(new_profile_event)
 
         # The profile creation is requested in the client state
-        client_state.new_profile.assert_called_once()
+        m_client_state().new_profile.assert_called_once()
 
         # The comand setting this new profile as the profile is invoked
         m_set_profile.assert_called_once_with(
@@ -94,16 +94,18 @@ class TestProfile(TestCase):
 
     @mock.patch("client.engine.features.profile.event_handler.Persistence")
     @mock.patch("client.engine.features.profile.event_handler.UpdateProfiles")
-    def test_getting_all_profiles(self, m_update_command, m_persistence):
+    @mock.patch("client.engine.features.profile.event_handler.ClientState")
+    def test_getting_all_profiles(
+        self, m_client_state, m_update_command, m_persistence
+    ):
         # Command is invoked
         GetProfiles(self.profile, self.queue).execute()
 
         event = self.queue.pop()
         assert isinstance(event, GetProfilesEvent)
 
-        client_state = mock.Mock()
-        client_state.profile = self.profile
-        client_state.queue = self.queue
+        m_client_state().profile = self.profile
+        m_client_state().queue = self.queue
 
         m_persistence.list = mock.Mock()
         # The persistence layer will retrieve the list of all profile namefiles
@@ -113,7 +115,7 @@ class TestProfile(TestCase):
             "profile_3",
             ".gitkeep",
         ]
-        self.event_handler.handle(event, client_state)
+        self.event_handler.handle(event)
 
         # The persistence layer has been queried
         m_persistence.list.assert_called_once_with()

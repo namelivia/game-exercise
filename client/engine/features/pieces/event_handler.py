@@ -1,6 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from client.engine.general_state.client_state import ClientState
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.pieces.events import PlaceASymbolRequestEvent
@@ -20,7 +21,6 @@ from .events import PlaceASymbolNetworkRequestEvent
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 
@@ -28,9 +28,8 @@ logger = logging.getLogger(__name__)
 
 
 class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGameEvent]):
-    def handle(
-        self, event: "PlayerPlacedSymbolInGameEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "PlayerPlacedSymbolInGameEvent") -> None:
+        client_state = ClientState()
         PlayerPlacedSymbolInGameCommand(
             client_state.profile,
             client_state.queue,
@@ -41,9 +40,8 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGame
 
 
 class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
-    def handle(
-        self, event: "PlaceASymbolRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "PlaceASymbolRequestEvent") -> None:
+        client_state = ClientState()
         game_id = client_state.profile.game_id
         if game_id is None:
             raise Exception("Trying to place symbol with no game")
@@ -59,9 +57,8 @@ class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
 class PlaceASymbolNetworkRequestEventHandler(
     EventHandler[PlaceASymbolNetworkRequestEvent]
 ):
-    def handle(
-        self, event: "PlaceASymbolNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "PlaceASymbolNetworkRequestEvent") -> None:
+        client_state = ClientState()
         game_id = client_state.profile.game_id
         if game_id is None:
             raise Exception("Trying to place symbol with no game")

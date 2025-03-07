@@ -2,6 +2,7 @@ import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.commands import InitiateGame
+from client.engine.general_state.client_state import ClientState
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from common.game_data import GameData
@@ -23,7 +24,6 @@ from .events import (
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 
@@ -31,25 +31,24 @@ logger = logging.getLogger(__name__)
 
 
 class NewGameRequestEventHandler(EventHandler[NewGameRequestEvent]):
-    def handle(self, event: "NewGameRequestEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "NewGameRequestEvent") -> None:
+        client_state = ClientState()
         CreateAGame(
             client_state.profile, client_state.queue, event.new_game_name
         ).execute()
 
 
 class JoinExistingGameEventHandler(EventHandler[JoinExistingGameEvent]):
-    def handle(
-        self, event: "JoinExistingGameEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "JoinExistingGameEvent") -> None:
+        client_state = ClientState()
         JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
 
 
 class CreateAGameNetworkRequestEventHandler(
     EventHandler[CreateAGameNetworkRequestEvent]
 ):
-    def handle(
-        self, event: "CreateAGameNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "CreateAGameNetworkRequestEvent") -> None:
+        client_state = ClientState()
         request_data = self._encode(client_state.profile.id, event.new_game_name)
 
         response = Channel.send_command(request_data)
@@ -83,9 +82,8 @@ class CreateAGameNetworkRequestEventHandler(
 
 
 class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEvent]):
-    def handle(
-        self, event: "JoinAGameNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "JoinAGameNetworkRequestEvent") -> None:
+        client_state = ClientState()
         request_data = self._encode(client_state.profile.id, event.game_id)
 
         response = Channel.send_command(request_data)

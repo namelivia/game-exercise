@@ -1,6 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from client.engine.general_state.client_state import ClientState
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
@@ -13,7 +14,6 @@ from .commands import ErrorGettingGameList, UpdateGameList
 from .events import GetGameListNetworkRequestEvent
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 
@@ -27,9 +27,8 @@ class ErrorGettingGameListEventHandler(EventHandler["Event"]):
 class GetGameListNetworkRequestEventHandler(
     EventHandler[GetGameListNetworkRequestEvent]
 ):
-    def handle(
-        self, event: "GetGameListNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "GetGameListNetworkRequestEvent") -> None:
+        client_state = ClientState()
         request_data = self._encode()
 
         response = Channel.send_command(request_data)

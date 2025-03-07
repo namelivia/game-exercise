@@ -23,6 +23,7 @@ from client.engine.features.sound.event_handler import (
 from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
 )
+from client.engine.general_state.client_state import ClientState
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.messages import ErrorMessage, PingRequestMessage, PingResponseMessage
@@ -35,7 +36,6 @@ from .events import (
 )
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
@@ -48,7 +48,7 @@ They do the actual procssing and can execute commands.
 
 # ======= GENERIC =======
 class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
-    def handle(self, event: "QuitGameEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "QuitGameEvent") -> None:
         import sys
 
         FoundationalWrapper.quit()
@@ -59,22 +59,20 @@ class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
 class SetInternalGameInformationEventHandler(
     BaseEventHandler[SetInternalGameInformationEvent]
 ):
-    def handle(
-        self, event: "SetInternalGameInformationEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "SetInternalGameInformationEvent") -> None:
+        client_state = ClientState()
         client_state.profile.set_game(event.game_id)
         client_state.profile.set_game_event_pointer(0)
 
 
 class SetPlayerNameEventHandler(BaseEventHandler[SetPlayerNameEvent]):
-    def handle(self, event: "SetPlayerNameEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "SetPlayerNameEvent") -> None:
+        client_state = ClientState()
         client_state.profile.set_name(event.name)
 
 
 class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):
-    def handle(
-        self, event: "PingNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "PingNetworkRequestEvent") -> None:
         request_data = self._encode()
 
         response = Channel.send_command(request_data)
@@ -110,5 +108,5 @@ handlers_map: Dict[Type["Event"], Any] = {
 
 
 class EventHandler(BaseEventHandler["Event"]):
-    def handle(self, event: "Event", client_state: "ClientState") -> None:
-        handlers_map[type(event)]().handle(event, client_state)
+    def handle(self, event: "Event") -> None:
+        handlers_map[type(event)]().handle(event)

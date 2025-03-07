@@ -12,7 +12,6 @@ from client.engine.user_input import UserInput
 from .events_processor import EventsProcessor
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 
@@ -23,8 +22,14 @@ class ScreenManagerFactory:
         initial_event: "Event",
         event_handler: Any,
     ) -> "ScreenManager":
+
+        # Initialize the client state
+        client_state = ClientState()
+        client_state.initialize()
+        client_state.push_initial_event(initial_event)
+        client_state.set_profile("Default profile")
+
         return ScreenManager(
-            ClientState(initial_event, "Default profile"),
             KeyboardInput(),
             MouseInput(),
             Graphics(),
@@ -35,36 +40,35 @@ class ScreenManagerFactory:
 class ScreenManager:
     def __init__(
         self,
-        client_state: "ClientState",
         keyboard_input: "KeyboardInput",
         mouse_input: "MouseInput",
         graphics: "Graphics",
         event_handler: Any,
     ):
-        self.client_state = client_state
         self.graphics = graphics
         self.keyboard_input = keyboard_input
         self.mouse_input = mouse_input
-        self.event_processor = EventsProcessor(
+        self.events_processor = EventsProcessor(
             [event_handler, EventHandler()]  # Regular events and in game events
         )
 
     # Main loop
     def run(self) -> None:
+        client_state = ClientState()
         # 1 - Push a sever polling event if needed
-        ServerPolling.push_polling_event_if_needed(self.client_state)
+        ServerPolling.push_polling_event_if_needed()
 
         # 2 - Fetch and handle the latest event
-        event = self.client_state.queue.pop()
+        event = client_state.queue.pop()
 
         # TODO: I don't like this if
         if event is not None and not isinstance(event, InGameEvent):
-            self.event_processor.handle(event, self.client_state)
+            self.events_processor.handle(event)
 
         # 3 - Read user input
-        UserInput.process(self.keyboard_input, self.mouse_input, self.client_state)
+        UserInput.process(self.keyboard_input, self.mouse_input)
 
-        current_screen = self.client_state.get_current_screen()
+        current_screen = client_state.get_current_screen()
 
         if current_screen is not None:
             # 4 - Draw the screen

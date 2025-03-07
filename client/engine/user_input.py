@@ -2,9 +2,9 @@ from typing import TYPE_CHECKING
 
 from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.user_input.commands import UserClicked, UserTyped
+from client.engine.general_state.client_state import ClientState
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.input.keyboard import KeyboardInput
     from client.engine.input.mouse import MouseInput
 
@@ -14,8 +14,8 @@ class UserInput:
     def process(
         keyboard_input: "KeyboardInput",
         mouse_input: "MouseInput",
-        client_state: "ClientState",
     ) -> None:
+        client_state = ClientState()
         events = FoundationalWrapper.get_event()
         # Get events from keyboard
         keyboard_events = keyboard_input.read(events)

@@ -7,6 +7,7 @@ from client.engine.features.chat.commands import (
     ChatMessageInGameCommand,
     SendChat,
 )
+from client.engine.general_state.client_state import ClientState
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.chat.events import SendChatRequestEvent
@@ -18,16 +19,14 @@ from .events import SendChatNetworkRequestEvent
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
 
 
 class ChatMessageInGameEventHandler(EventHandler[ChatMessageInGameEvent]):
-    def handle(
-        self, event: "ChatMessageInGameEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "ChatMessageInGameEvent") -> None:
+        client_state = ClientState()
         # This is a chat message coming from the server
         ChatMessageInGameCommand(
             client_state.profile,
@@ -39,9 +38,8 @@ class ChatMessageInGameEventHandler(EventHandler[ChatMessageInGameEvent]):
 
 
 class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
-    def handle(
-        self, event: "SendChatRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "SendChatRequestEvent") -> None:
+        client_state = ClientState()
         game_id = client_state.profile.game_id
         if game_id is None:
             raise Exception("No game event pointer, the player is not in a game")
@@ -55,9 +53,8 @@ class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
 
 
 class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEvent]):
-    def handle(
-        self, event: "SendChatNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "SendChatNetworkRequestEvent") -> None:
+        client_state = ClientState()
         game_id = client_state.profile.game_id
         if game_id is None:
             raise Exception("No game event pointer, the player is not playing a game")

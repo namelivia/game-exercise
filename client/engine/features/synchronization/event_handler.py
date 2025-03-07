@@ -1,6 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from client.engine.general_state.client_state import ClientState
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import E, EventHandler
 from common.messages import ErrorMessage, GameEventsMessage, GetGameStatus
@@ -15,14 +16,14 @@ from .events import (
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 logger = logging.getLogger(__name__)
 
 
 class UpdateGameEventHandler(EventHandler[UpdateGameEvent]):
-    def handle(self, event: "UpdateGameEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "UpdateGameEvent") -> None:
+        client_state = ClientState()
         events = event.events
         game_event_pointer = client_state.profile.game_event_pointer
         if game_event_pointer is None:
@@ -32,9 +33,8 @@ class UpdateGameEventHandler(EventHandler[UpdateGameEvent]):
 
 
 class RefreshGameStatusEventHandler(EventHandler[RefreshGameStatusEvent]):
-    def handle(
-        self, event: "RefreshGameStatusEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "RefreshGameStatusEvent") -> None:
+        client_state = ClientState()
         RefreshGameStatus(
             client_state.profile, client_state.queue, event.game_id, event.pointer
         ).execute()
@@ -43,9 +43,8 @@ class RefreshGameStatusEventHandler(EventHandler[RefreshGameStatusEvent]):
 class RefreshGameStatusNetworkRequestEventHandler(
     EventHandler[RefreshGameStatusNetworkRequestEvent]
 ):
-    def handle(
-        self, event: "RefreshGameStatusNetworkRequestEvent", client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: "RefreshGameStatusNetworkRequestEvent") -> None:
+        client_state = ClientState()
         request_data = self._encode(
             event.game_id, event.pointer, client_state.profile.id
         )

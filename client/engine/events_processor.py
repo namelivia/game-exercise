@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, List
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
     from client.engine.primitives.event_handler import EventHandler
 
@@ -16,13 +15,13 @@ class EventsProcessor:
     def add_event_handler(self, event_handler: "EventHandler[Event]") -> None:
         self.event_handlers.append(event_handler)
 
-    def handle(self, event: "Event", client_state: "ClientState") -> None:
+    def handle(self, event: "Event") -> None:
         if event is None:
             return
         handled = False
         for event_handler in self.event_handlers:
             try:
-                event_handler.handle(event, client_state)
+                event_handler.handle(event)
                 handled = True
             except KeyError:
                 pass

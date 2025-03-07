@@ -1,6 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Type
 
+from client.engine.general_state.client_state import ClientState
 from client.engine.persistence.persistence import Persistence
 from client.engine.primitives.event_handler import EventHandler
 
@@ -8,7 +9,6 @@ from .commands import ProfileIsSet, SetProfile, UpdateProfiles
 from .events import GetProfilesEvent, NewProfileEvent, SetProfileEvent
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 
@@ -16,19 +16,22 @@ logger = logging.getLogger(__name__)
 
 
 class SetProfileEventHandler(EventHandler[SetProfileEvent]):
-    def handle(self, event: "SetProfileEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "SetProfileEvent") -> None:
+        client_state = ClientState()
         client_state.set_profile(event.key)
         ProfileIsSet(client_state.profile, client_state.queue, event.key).execute()
 
 
 class NewProfileEventHandler(EventHandler[NewProfileEvent]):
-    def handle(self, event: "NewProfileEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "NewProfileEvent") -> None:
+        client_state = ClientState()
         new_profile_key = client_state.new_profile().key
         SetProfile(client_state.profile, client_state.queue, new_profile_key).execute()
 
 
 class GetProfilesEventHandler(EventHandler[GetProfilesEvent]):
-    def handle(self, event: "GetProfilesEvent", client_state: "ClientState") -> None:
+    def handle(self, event: "GetProfilesEvent") -> None:
+        client_state = ClientState()
         # TODO retrieve profiles from disk
         profiles = self._build_profiles_index(Persistence.list())
         UpdateProfiles(client_state.profile, client_state.queue, profiles).execute()
