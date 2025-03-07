@@ -88,7 +88,8 @@ Example:
 
 ```python
 class MyCustomEventHandler(EventHandler):
-    def handle(self, event, client_state):
+    def handle(self, event):
+        client_state = ClientState()
         client_state.something = my_data
         
 class AnotherCustomEventHandler(EventHandler):

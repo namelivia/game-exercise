@@ -6,6 +6,7 @@ from client.engine.commands import (
     PlayerWinsInGameCommand,
 )
 from client.engine.events import InitiateGameEvent
+from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.events import GameCreated as GameCreatedInGameEvent  # TODO: akward
 from common.events import PlayerJoined as PlayerJoinedInGameEvent  # TODO: akward
@@ -24,7 +25,6 @@ from .screens.options.options import Options
 from .screens.profiles.profiles import Profiles
 
 if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
     from client.engine.primitives.event import Event
 
 """
@@ -35,25 +35,24 @@ They do the actual procssing and can execute commands.
 
 # ===== SERVER INGAME EVENTS COMMUNICATIONS ===== THIS ARE THE IN-GAME EVENTS PLACED BY THE SERVER
 class GameCreatedInGameEventHandler(BaseEventHandler[GameCreatedInGameEvent]):
-    def handle(
-        self, event: GameCreatedInGameEvent, client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: GameCreatedInGameEvent) -> None:
+        client_state = ClientState()
         GameCreatedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
 class PlayerJoinedInGameEventHandler(BaseEventHandler[PlayerJoinedInGameEvent]):
-    def handle(
-        self, event: PlayerJoinedInGameEvent, client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: PlayerJoinedInGameEvent) -> None:
+        client_state = ClientState()
         PlayerJoinedInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
 
 
 class PlayerWinsInGameEventHandler(BaseEventHandler[PlayerWinsInGameEvent]):
-    def handle(self, event: PlayerWinsInGameEvent, client_state: "ClientState") -> None:
+    def handle(self, event: PlayerWinsInGameEvent) -> None:
+        client_state = ClientState()
         PlayerWinsInGameCommand(
             client_state.profile, client_state.queue, event.player_id
         ).execute()
@@ -63,8 +62,9 @@ class PlayerWinsInGameEventHandler(BaseEventHandler[PlayerWinsInGameEvent]):
 
 
 class InitiateGameEventHandler(BaseEventHandler[InitiateGameEvent]):
-    def handle(self, event: InitiateGameEvent, client_state: "ClientState") -> None:
+    def handle(self, event: InitiateGameEvent) -> None:
         # TODO: Why is it not an screen transition event??? Just because it contains more data?
+        client_state = ClientState()
         client_state.set_current_screen(
             InGame(
                 client_state,
@@ -77,7 +77,8 @@ class InitiateGameEventHandler(BaseEventHandler[InitiateGameEvent]):
 
 
 class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
-    def handle(self, event: ScreenTransitionEvent, client_state: "ClientState") -> None:
+    def handle(self, event: ScreenTransitionEvent) -> None:
+        client_state = ClientState()
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
             client_state.set_current_screen(Intro(client_state))
@@ -102,9 +103,8 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
 class ClearInternalGameInformationEventHandler(
     BaseEventHandler[ClearInternalGameInformationEvent]
 ):
-    def handle(
-        self, event: ClearInternalGameInformationEvent, client_state: "ClientState"
-    ) -> None:
+    def handle(self, event: ClearInternalGameInformationEvent) -> None:
+        client_state = ClientState()
         client_state.profile.set_game(None)
         client_state.profile.set_game_event_pointer(None)
 
@@ -121,5 +121,5 @@ handlers_map: Dict[Type["Event"], Any] = {
 
 
 class EventHandler(BaseEventHandler["Event"]):
-    def handle(self, event: "Event", client_state: "ClientState") -> None:
-        handlers_map[type(event)]().handle(event, client_state)
+    def handle(self, event: "Event") -> None:
+        handlers_map[type(event)]().handle(event)

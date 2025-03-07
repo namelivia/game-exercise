@@ -48,7 +48,7 @@ class ScreenManager:
         self.graphics = graphics
         self.keyboard_input = keyboard_input
         self.mouse_input = mouse_input
-        self.event_processor = EventsProcessor(
+        self.events_processor = EventsProcessor(
             [event_handler, EventHandler()]  # Regular events and in game events
         )
 
@@ -63,7 +63,7 @@ class ScreenManager:
 
         # TODO: I don't like this if
         if event is not None and not isinstance(event, InGameEvent):
-            self.event_processor.handle(event, client_state)
+            self.events_processor.handle(event)
 
         # 3 - Read user input
         UserInput.process(self.keyboard_input, self.mouse_input)
