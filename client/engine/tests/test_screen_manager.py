@@ -47,9 +47,7 @@ class TestScreenManager(TestCase):
         self.graphics.render.assert_called_once_with(current_screen)
 
         # The user input is read
-        m_process_input.assert_called_once_with(
-            self.keyboard_input, self.mouse_input, self.client_state
-        )
+        m_process_input.assert_called_once_with(self.keyboard_input, self.mouse_input)
 
         # The screen is updated
         current_screen.update.assert_called_once_with(

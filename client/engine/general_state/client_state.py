@@ -23,7 +23,7 @@ class ClientState:
             cls._instance = super(ClientState, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self):
+    def initialize(self) -> None:
         self.clock = Clock()
         self.mouse = Mouse()
         self.current_screen: Optional["Screen"] = None

@@ -24,6 +24,7 @@ class ScreenManagerFactory:
         event_handler: Any,
     ) -> "ScreenManager":
         client_state = ClientState()
+        client_state.initialize()
         client_state.push_initial_event(initial_event)
         client_state.set_profile("Default profile")
         return ScreenManager(
@@ -65,7 +66,7 @@ class ScreenManager:
             self.event_processor.handle(event, self.client_state)
 
         # 3 - Read user input
-        UserInput.process(self.keyboard_input, self.mouse_input, self.client_state)
+        UserInput.process(self.keyboard_input, self.mouse_input)
 
         current_screen = self.client_state.get_current_screen()
 
