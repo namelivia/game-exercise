@@ -34,18 +34,14 @@ class GetGameListNetworkRequestEventHandler(
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameListResponseMessage):
-                UpdateGameList(
-                    client_state.profile, client_state.queue, response.games
-                ).execute()
+                UpdateGameList(client_state.queue, response.games).execute()
             if isinstance(response, ErrorMessage):
                 ErrorGettingGameList(
-                    client_state.profile,
                     client_state.queue,
                 ).execute()
                 logger.info(response.__dict__)
         else:
             ErrorGettingGameList(
-                client_state.profile,
                 client_state.queue,
             ).execute()
             logger.error("Error retrieving the game list from the server")

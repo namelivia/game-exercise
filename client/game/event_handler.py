@@ -7,6 +7,7 @@ from client.engine.commands import (
 )
 from client.engine.events import InitiateGameEvent
 from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.events import GameCreated as GameCreatedInGameEvent  # TODO: akward
 from common.events import PlayerJoined as PlayerJoinedInGameEvent  # TODO: akward
@@ -37,25 +38,19 @@ They do the actual procssing and can execute commands.
 class GameCreatedInGameEventHandler(BaseEventHandler[GameCreatedInGameEvent]):
     def handle(self, event: GameCreatedInGameEvent) -> None:
         client_state = ClientState()
-        GameCreatedInGameCommand(
-            client_state.profile, client_state.queue, event.player_id
-        ).execute()
+        GameCreatedInGameCommand(client_state.queue, event.player_id).execute()
 
 
 class PlayerJoinedInGameEventHandler(BaseEventHandler[PlayerJoinedInGameEvent]):
     def handle(self, event: PlayerJoinedInGameEvent) -> None:
         client_state = ClientState()
-        PlayerJoinedInGameCommand(
-            client_state.profile, client_state.queue, event.player_id
-        ).execute()
+        PlayerJoinedInGameCommand(client_state.queue, event.player_id).execute()
 
 
 class PlayerWinsInGameEventHandler(BaseEventHandler[PlayerWinsInGameEvent]):
     def handle(self, event: PlayerWinsInGameEvent) -> None:
         client_state = ClientState()
-        PlayerWinsInGameCommand(
-            client_state.profile, client_state.queue, event.player_id
-        ).execute()
+        PlayerWinsInGameCommand(client_state.queue, event.player_id).execute()
 
 
 #################################################################
@@ -67,7 +62,6 @@ class InitiateGameEventHandler(BaseEventHandler[InitiateGameEvent]):
         client_state = ClientState()
         client_state.set_current_screen(
             InGame(
-                client_state,
                 event.game_data.events,
                 event.game_data.id,
                 event.game_data.name,
@@ -81,32 +75,32 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
         client_state = ClientState()
         # Could I just push the instances to the queue?
         if event.dest_screen == "intro":
-            client_state.set_current_screen(Intro(client_state))
+            client_state.set_current_screen(Intro())
         if event.dest_screen == "lobby":
-            client_state.set_current_screen(Lobby(client_state))
+            client_state.set_current_screen(Lobby())
         if event.dest_screen == "new_game_screen":
-            client_state.set_current_screen(NewGame(client_state))
+            client_state.set_current_screen(NewGame())
         if event.dest_screen == "join_a_game":
-            client_state.set_current_screen(JoinGame(client_state))
+            client_state.set_current_screen(JoinGame())
         if event.dest_screen == "game_list":
-            client_state.set_current_screen(GameList(client_state))
+            client_state.set_current_screen(GameList())
         if event.dest_screen == "options":
-            client_state.set_current_screen(Options(client_state))
+            client_state.set_current_screen(Options())
         if event.dest_screen == "credits":
-            client_state.set_current_screen(Credits(client_state))
+            client_state.set_current_screen(Credits())
         if event.dest_screen == "enter_name":
-            client_state.set_current_screen(EnterName(client_state))
+            client_state.set_current_screen(EnterName())
         if event.dest_screen == "profiles":
-            client_state.set_current_screen(Profiles(client_state))
+            client_state.set_current_screen(Profiles())
 
 
 class ClearInternalGameInformationEventHandler(
     BaseEventHandler[ClearInternalGameInformationEvent]
 ):
     def handle(self, event: ClearInternalGameInformationEvent) -> None:
-        client_state = ClientState()
-        client_state.profile.set_game(None)
-        client_state.profile.set_game_event_pointer(None)
+        profile_what = ProfileWhat()
+        profile_what.profile.set_game(None)
+        profile_what.profile.set_game_event_pointer(None)
 
 
 handlers_map: Dict[Type["Event"], Any] = {

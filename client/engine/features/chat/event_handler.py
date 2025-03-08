@@ -8,6 +8,7 @@ from client.engine.features.chat.commands import (
     SendChat,
 )
 from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.chat.events import SendChatRequestEvent
@@ -29,7 +30,6 @@ class ChatMessageInGameEventHandler(EventHandler[ChatMessageInGameEvent]):
         client_state = ClientState()
         # This is a chat message coming from the server
         ChatMessageInGameCommand(
-            client_state.profile,
             client_state.queue,
             event.event_id,
             event.player_id,
@@ -40,11 +40,11 @@ class ChatMessageInGameEventHandler(EventHandler[ChatMessageInGameEvent]):
 class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
     def handle(self, event: "SendChatRequestEvent") -> None:
         client_state = ClientState()
-        game_id = client_state.profile.game_id
+        profile_what = ProfileWhat()
+        game_id = profile_what.profile.game_id
         if game_id is None:
             raise Exception("No game event pointer, the player is not in a game")
         SendChat(
-            client_state.profile,
             client_state.queue,
             game_id,
             event.event_id,
@@ -55,13 +55,14 @@ class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
 class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEvent]):
     def handle(self, event: "SendChatNetworkRequestEvent") -> None:
         client_state = ClientState()
-        game_id = client_state.profile.game_id
+        profile_what = ProfileWhat()
+        game_id = profile_what.profile.game_id
         if game_id is None:
             raise Exception("No game event pointer, the player is not playing a game")
         request_data = self._encode(
             game_id,
             event.event_id,
-            client_state.profile.id,
+            profile_what.profile.id,
             event.message,
         )
 
@@ -69,18 +70,14 @@ class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEven
         if response is not None:
             if isinstance(response, ChatMessageConfirmation):
                 ChatMessageConfirmedCommand(
-                    client_state.profile, client_state.queue, response.event_id
+                    client_state.queue, response.event_id
                 ).execute()
             if isinstance(response, ErrorMessage):
                 logger.error(f"[ERROR][Server] {response.message}")
-                ChatMessageErroredCommand(
-                    client_state.profile, client_state.queue, event.event_id
-                ).execute()
+                ChatMessageErroredCommand(client_state.queue, event.event_id).execute()
         else:
             logger.error("[ERROR][Server] Server unreacheable")
-            ChatMessageErroredCommand(
-                client_state.profile, client_state.queue, event.event_id
-            ).execute()
+            ChatMessageErroredCommand(client_state.queue, event.event_id).execute()
 
     def _encode(
         self, game_id: "UUID", event_id: "UUID", profile_id: "UUID", message: str

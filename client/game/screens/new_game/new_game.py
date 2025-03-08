@@ -1,20 +1,16 @@
-from typing import TYPE_CHECKING
-
 from client.engine.features.game_management.commands import RequestGameCreation
 from client.engine.features.game_management.events import ErrorCreatingGameEvent
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, ErrorPopup, NewGameMessage
 
-if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
-
 
 class NewGame(Screen):
-    def __init__(self, client_state: "ClientState"):
-        super().__init__(client_state)
+    def __init__(self):
+        super().__init__()
 
         self.data = {"new_game_name": ""}
 
@@ -34,27 +30,28 @@ class NewGame(Screen):
             # Avoid circular import
             from client.game.commands import BackToLobby
 
-            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            client_state = ClientState()
+            BackToLobby(client_state.queue).execute()
             return
         if event.key == "return":
+            client_state = ClientState()
             RequestGameCreation(
-                self.client_state.profile,
-                self.client_state.queue,
+                client_state.queue,
                 self.data["new_game_name"],
             ).execute()
             return
         if event.key == "backspace":
+            client_state = ClientState()
             PlaySound(
-                self.client_state.profile,
-                self.client_state.queue,
+                client_state.queue,
                 "client/game/sounds/erase.mp3",
             ).execute()
             self.data["new_game_name"] = self.data["new_game_name"][:-1]
             return
         else:
+            client_state = ClientState()
             PlaySound(
-                self.client_state.profile,
-                self.client_state.queue,
+                client_state.queue,
                 "client/game/sounds/type.mp3",
             ).execute()
             self.data["new_game_name"] += event.key

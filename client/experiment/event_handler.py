@@ -20,7 +20,7 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
         # Could I just push the instances to the queue?
         if event.dest_screen == "main":
             client_state = ClientState()
-            client_state.set_current_screen(MainScreen(client_state))
+            client_state.set_current_screen(MainScreen())
 
 
 handlers_map: Dict[Type["Event"], Any] = {

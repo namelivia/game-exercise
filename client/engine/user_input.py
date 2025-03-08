@@ -22,13 +22,11 @@ class UserInput:
 
         # Run the user typed command for each user event
         for keyboard_event in keyboard_events:
-            UserTyped(
-                client_state.profile, client_state.queue, keyboard_event
-            ).execute()
+            UserTyped(client_state.queue, keyboard_event).execute()
 
         # Get events from mouse, currently only one event is returned
         mouse_event = mouse_input.read(events)
 
         # If there is a mouse event, run the user clicked command
         if mouse_event is not None:
-            UserClicked(client_state.profile, client_state.queue).execute()
+            UserClicked(client_state.queue).execute()

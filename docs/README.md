@@ -32,10 +32,10 @@ class MyScreen(Screen):
         
     def on_user_typed(self, event):
         if event.key == "escape":
-            MyCommand(self.client_state.profile, self.client_state.queue).execute()
+            MyCommand(self.client_state.queue).execute()
             
     def move_to_next_screen(self, event):
-        MyCommand(self.client_state.profile, self.client_state.queue).execute()
+        MyCommand(self.client_state.queue).execute()
 ```
 
 # To make a command

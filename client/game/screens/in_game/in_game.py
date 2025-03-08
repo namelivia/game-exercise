@@ -18,6 +18,8 @@ from client.engine.features.pieces.events import (
 )
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.primitives.screen import Screen
 from client.game.pieces.commands import RequestPlaceASymbol
 
@@ -39,7 +41,6 @@ from .ui import (
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.client_state import ClientState
 
 logger = logging.getLogger(__name__)
 
@@ -47,13 +48,12 @@ logger = logging.getLogger(__name__)
 class InGame(Screen):
     def __init__(
         self,
-        client_state: "ClientState",
         events: List[Any],
         game_id: "UUID",
         name: str,
         players: List["UUID"],
     ):
-        super().__init__(client_state)
+        super().__init__()
 
         self.data = {
             "events": events,
@@ -124,15 +124,14 @@ class InGame(Screen):
         # TODO: This_ is just for debugging
         if event.key == "return":
             if self.data["chat_focused"]:
+                client_state = ClientState()
                 RequestSendChat(
-                    self.client_state.profile,
-                    self.client_state.queue,
+                    client_state.queue,
                     self.data["chat_input"],
                 ).execute()
                 self.data["chat_input"] = ""
                 PlaySound(
-                    self.client_state.profile,
-                    self.client_state.queue,
+                    client_state.queue,
                     "client/game/sounds/select.mp3",
                 ).execute()
                 return
@@ -147,9 +146,8 @@ class InGame(Screen):
                 if isinstance(chat_ui, ChatInput):
                     chat_ui.unfocus()
             else:
-                BackToLobby(
-                    self.client_state.profile, self.client_state.queue
-                ).execute()
+                client_state = ClientState()
+                BackToLobby(client_state.queue).execute()
                 return
         if event.key == "t":
             if not self.data["chat_focused"]:
@@ -161,22 +159,21 @@ class InGame(Screen):
         if event.key in "012345678":
             position = int(event.key)
             if self._move_is_valid(position):
-                RequestPlaceASymbol(
-                    self.client_state.profile, self.client_state.queue, position
-                ).execute()
+                client_state = ClientState()
+                RequestPlaceASymbol(client_state.queue, position).execute()
             return
         if event.key == "backspace" and self.data["chat_focused"]:
+            client_state = ClientState()
             PlaySound(
-                self.client_state.profile,
-                self.client_state.queue,
+                client_state.queue,
                 "client/game/sounds/erase.mp3",
             ).execute()
             self.data["chat_input"] = self.data["chat_input"][:-1]
             return
         if self.data["chat_focused"]:
+            client_state = ClientState()
             PlaySound(
-                self.client_state.profile,
-                self.client_state.queue,
+                client_state.queue,
                 "client/game/sounds/type.mp3",
             ).execute()
             self.data["chat_input"] += event.key
@@ -190,14 +187,15 @@ class InGame(Screen):
         return self.data["board"][position]["current"] is None
 
     def _move_is_valid(self, position: int) -> bool:
+        profile_what = ProfileWhat()
         return self._its_players_turn(
-            self.client_state.profile.id
+            profile_what.profile.id
         ) and self._position_is_valid(position)
 
     def on_game_created(self, event: GameCreatedInGameEvent) -> None:
+        client_state = ClientState()
         PlaySound(
-            self.client_state.profile,
-            self.client_state.queue,
+            client_state.queue,
             "client/game/sounds/start_game.mp3",
         ).execute()
         # TODO: Could we play a UI animation here???
@@ -206,18 +204,18 @@ class InGame(Screen):
             animation.play()
 
     def on_player_joined(self, event: PlayerJoinedInGameEvent) -> None:
+        client_state = ClientState()
         PlaySound(
-            self.client_state.profile,
-            self.client_state.queue,
+            client_state.queue,
             "client/game/sounds/start_game.mp3",
         ).execute()
         self.data["players"].append(event.player_id)
         self.data["status"] = "It is player 1 turn"
 
     def on_player_wins(self, event: PlayerWinsInGameEvent) -> None:
+        client_state = ClientState()
         PlaySound(
-            self.client_state.profile,
-            self.client_state.queue,
+            client_state.queue,
             "client/game/sounds/start_game.mp3",
         ).execute()
         self.data["winner"] = event.player_id
@@ -244,9 +242,9 @@ class InGame(Screen):
             "confirmation": event.confirmation,
         }
         self.data["status"] = self._get_new_status_after_placing(event.player_id)
+        client_state = ClientState()
         PlaySound(
-            self.client_state.profile,
-            self.client_state.queue,
+            client_state.queue,
             "client/game/sounds/select.mp3",
         ).execute()
 
@@ -266,9 +264,9 @@ class InGame(Screen):
                         "confirmation": event.confirmation,
                     }
                 )
+                client_state = ClientState()
                 PlaySound(
-                    self.client_state.profile,
-                    self.client_state.queue,
+                    client_state.queue,
                     "client/game/sounds/start_game.mp3",
                 ).execute()
 
@@ -280,9 +278,9 @@ class InGame(Screen):
 
     def on_chat_message_errored(self, event: ChatMessageErroredEvent) -> None:
         logger.info("[Screen] Chat message errored")
+        client_state = ClientState()
         PlaySound(
-            self.client_state.profile,
-            self.client_state.queue,
+            client_state.queue,
             "client/game/sounds/start_game.mp3",
         ).execute()
         message = self._get_chat_message_by_event_id(event.chat_message_event_id)

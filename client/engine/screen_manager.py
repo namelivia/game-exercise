@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.keyboard import KeyboardInput
 from client.engine.input.mouse import MouseInput
@@ -27,7 +28,10 @@ class ScreenManagerFactory:
         client_state = ClientState()
         client_state.initialize()
         client_state.push_initial_event(initial_event)
-        client_state.set_profile("Default profile")
+
+        # Initialize the profile
+        profile_what = ProfileWhat()
+        profile_what.set_profile("Default profile")
 
         return ScreenManager(
             KeyboardInput(),

@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.commands import InitiateGame
 from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from common.game_data import GameData
@@ -33,15 +34,13 @@ logger = logging.getLogger(__name__)
 class NewGameRequestEventHandler(EventHandler[NewGameRequestEvent]):
     def handle(self, event: "NewGameRequestEvent") -> None:
         client_state = ClientState()
-        CreateAGame(
-            client_state.profile, client_state.queue, event.new_game_name
-        ).execute()
+        CreateAGame(client_state.queue, event.new_game_name).execute()
 
 
 class JoinExistingGameEventHandler(EventHandler[JoinExistingGameEvent]):
     def handle(self, event: "JoinExistingGameEvent") -> None:
         client_state = ClientState()
-        JoinAGame(client_state.profile, client_state.queue, event.game_id).execute()
+        JoinAGame(client_state.queue, event.game_id).execute()
 
 
 class CreateAGameNetworkRequestEventHandler(
@@ -49,33 +48,31 @@ class CreateAGameNetworkRequestEventHandler(
 ):
     def handle(self, event: "CreateAGameNetworkRequestEvent") -> None:
         client_state = ClientState()
-        request_data = self._encode(client_state.profile.id, event.new_game_name)
+        profile_what = ProfileWhat()
+        request_data = self._encode(profile_what.profile.id, event.new_game_name)
 
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameInfoMessage):
                 InitiateGame(
-                    client_state.profile,
                     client_state.queue,
                     GameData(response.id, response.name, response.players),
                 ).execute()
                 # This is too game specific, why not using hooks?
             if isinstance(response, ErrorMessage):
                 ErrorCreatingGame(
-                    client_state.profile,
                     client_state.queue,
                 ).execute()
                 logger.error("Error creating the game")
                 # This is too game specific, why not using hooks?
-                # BackToLobby(client_state.profile, client_state.queue).execute()
+                # BackToLobby(client_state.queue).execute()
         else:
             ErrorCreatingGame(
-                client_state.profile,
                 client_state.queue,
             ).execute()
             logger.error("Server error")
             # This should be done at game level
-            # BackToLobby(client_state.profile, client_state.queue).execute()
+            # BackToLobby(client_state.queue).execute()
 
     def _encode(self, profile_id: "UUID", new_game_name: str) -> "CreateAGameMessage":
         return CreateAGameMessage(new_game_name, profile_id)
@@ -84,29 +81,27 @@ class CreateAGameNetworkRequestEventHandler(
 class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEvent]):
     def handle(self, event: "JoinAGameNetworkRequestEvent") -> None:
         client_state = ClientState()
-        request_data = self._encode(client_state.profile.id, event.game_id)
+        profile_what = ProfileWhat()
+        request_data = self._encode(profile_what.profile.id, event.game_id)
 
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameInfoMessage):
                 InitiateGame(
-                    client_state.profile,
                     client_state.queue,
                     GameData(response.id, response.name, response.players),
                 ).execute()
             if isinstance(response, ErrorMessage):
                 ErrorJoiningGame(
-                    client_state.profile,
                     client_state.queue,
                 ).execute()
                 logger.error(response.__dict__)
         else:
             ErrorJoiningGame(
-                client_state.profile,
                 client_state.queue,
             ).execute()
             logger.error("Error Joining Game")
-            # BackToLobby(client_state.profile, client_state.queue).execute()
+            # BackToLobby(client_state.queue).execute()
 
     def _encode(self, profile_id: "UUID", game_id: "UUID") -> JoinAGameMessage:
         return JoinAGameMessage(game_id, profile_id)
