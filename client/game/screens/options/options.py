@@ -23,12 +23,9 @@ class Options(Screen):
             # Avoid circular import
             from client.game.commands import BackToLobby
 
-            client_state = ClientState()
-            BackToLobby(client_state.queue).execute()
+            BackToLobby().execute()
             return
         if event.key == "1":
-            client_state = ClientState()
-            TurnSoundOn(client_state.queue).execute()
+            TurnSoundOn().execute()
         if event.key == "2":
-            client_state = ClientState()
-            TurnSoundOff(client_state.queue).execute()
+            TurnSoundOff().execute()

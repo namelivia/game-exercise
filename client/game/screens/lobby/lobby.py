@@ -47,22 +47,21 @@ class Lobby(Screen):
 
         # These actions, some may update the data, others run commands, who knows
         key = event.key
-        client_state = ClientState()
         if key == "1":
-            NewGame(client_state.queue).execute()
+            NewGame().execute()
         if key == "2":
-            GoToJoinAGame(client_state.queue).execute()
+            GoToJoinAGame().execute()
         if key == "3":
-            GoToGameList(client_state.queue).execute()
+            GoToGameList().execute()
         if key == "4":
-            GoToOptions(client_state.queue).execute()
+            GoToOptions().execute()
         if key == "5":
-            GoToSetName(client_state.queue).execute()
+            GoToSetName().execute()
         if key == "6":
-            GoToCredits(client_state.queue).execute()
+            GoToCredits().execute()
         if key == "7":
-            GoToProfiles(client_state.queue).execute()
+            GoToProfiles().execute()
         if key == "p":
-            PingTheServer(client_state.queue).execute()
+            PingTheServer().execute()
         if event.key == "escape":
-            QuitGame(client_state.queue).execute()
+            QuitGame().execute()

@@ -30,28 +30,21 @@ class NewGame(Screen):
             # Avoid circular import
             from client.game.commands import BackToLobby
 
-            client_state = ClientState()
-            BackToLobby(client_state.queue).execute()
+            BackToLobby().execute()
             return
         if event.key == "return":
-            client_state = ClientState()
             RequestGameCreation(
-                client_state.queue,
                 self.data["new_game_name"],
             ).execute()
             return
         if event.key == "backspace":
-            client_state = ClientState()
             PlaySound(
-                client_state.queue,
                 "client/game/sounds/erase.mp3",
             ).execute()
             self.data["new_game_name"] = self.data["new_game_name"][:-1]
             return
         else:
-            client_state = ClientState()
             PlaySound(
-                client_state.queue,
                 "client/game/sounds/type.mp3",
             ).execute()
             self.data["new_game_name"] += event.key

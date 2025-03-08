@@ -5,7 +5,6 @@ logger = logging.getLogger(__name__)
 
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserClickedEvent
-from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.screen import Screen
 from client.experiment.images import (
     BACKGROUND,
@@ -93,5 +92,4 @@ class MainScreen(Screen):
             if isinstance(element, Portrait) and element.mouse_over:
                 animal_name = self.data["animals"][i - 1]["name"]
                 animal_sound = self.data["animals"][i - 1]["sound"]
-                client_state = ClientState()
-                PlaySound(client_state.queue, animal_sound).execute()
+                PlaySound(animal_sound).execute()

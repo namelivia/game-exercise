@@ -1,6 +1,5 @@
 from client.engine.features.sound.commands import PlayMusic, PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, Coins, Title
@@ -16,9 +15,7 @@ class Intro(Screen):
             Title(),
         ]
 
-        client_state = ClientState()
         PlayMusic(
-            client_state.queue,
             "client/game/music/main_theme.mp3",
         ).execute()
 
@@ -33,13 +30,10 @@ class Intro(Screen):
     def go_back_to_lobby(self) -> None:
         from client.game.commands import BackToLobby
 
-        client_state = ClientState()
-        BackToLobby(client_state.queue).execute()
+        BackToLobby().execute()
 
     def show_coins(self) -> None:
-        client_state = ClientState()
         PlaySound(
-            client_state.queue,
             "client/game/sounds/user_joined.mp3",
         ).execute()
         self.ui_elements[1].show()
@@ -49,5 +43,4 @@ class Intro(Screen):
             # Avoid circular import
             from client.game.commands import ToLobby
 
-            client_state = ClientState()
-            ToLobby(client_state.queue).execute()
+            ToLobby().execute()

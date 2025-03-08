@@ -16,8 +16,6 @@ class QueueWhat:
             cls._instance = super(QueueWhat, cls).__new__(cls)
         return cls._instance
 
-    def initialize(self) -> None:
+    def initialize(self, initial_event: "Event") -> None:
         self.queue = Queue()
-
-    def push_initial_event(self, initial_event: "Event") -> None:
         self.queue.put(initial_event)

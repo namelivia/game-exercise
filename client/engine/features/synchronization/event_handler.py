@@ -31,13 +31,13 @@ class UpdateGameEventHandler(EventHandler[UpdateGameEvent]):
         if game_event_pointer is None:
             raise Exception("No game event pointer, the player is not playing a game")
         profile_what.profile.set_game_event_pointer(game_event_pointer + len(events))
-        ProcessServerEvents(client_state.queue, events).execute()
+        ProcessServerEvents(events).execute()
 
 
 class RefreshGameStatusEventHandler(EventHandler[RefreshGameStatusEvent]):
     def handle(self, event: "RefreshGameStatusEvent") -> None:
         client_state = ClientState()
-        RefreshGameStatus(client_state.queue, event.game_id, event.pointer).execute()
+        RefreshGameStatus(event.game_id, event.pointer).execute()
 
 
 class RefreshGameStatusNetworkRequestEventHandler(
@@ -53,7 +53,7 @@ class RefreshGameStatusNetworkRequestEventHandler(
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, GameEventsMessage):
-                UpdateGame(client_state.queue, response.events).execute()
+                UpdateGame(response.events).execute()
             if isinstance(response, ErrorMessage):
                 logger.error(response.__dict__)
                 # TODO: Currently I'm not doing anything with this

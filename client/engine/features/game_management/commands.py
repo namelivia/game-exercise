@@ -14,40 +14,38 @@ from .events import (
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.queue import Queue
-
 
 class CreateAGame(Command):
-    def __init__(self, queue: "Queue", new_game_name: str):
-        super().__init__(queue, f"Create a new game called {new_game_name}")
+    def __init__(self, new_game_name: str) -> None:
+        super().__init__(f"Create a new game called {new_game_name}")
         self.events = [CreateAGameNetworkRequestEvent(new_game_name)]
 
 
 class JoinAGame(Command):
-    def __init__(self, queue: "Queue", game_id: "UUID"):
-        super().__init__(queue, f"Join game {game_id}")
+    def __init__(self, game_id: "UUID") -> None:
+        super().__init__(f"Join game {game_id}")
         self.events = [JoinAGameNetworkRequestEvent(game_id)]
 
 
 class ErrorCreatingGame(Command):
-    def __init__(self, queue: "Queue"):
-        super().__init__(queue, "Error Creating game")
+    def __init__(self) -> None:
+        super().__init__("Error Creating game")
         self.events = [ErrorCreatingGameEvent()]
 
 
 class ErrorJoiningGame(Command):
-    def __init__(self, queue: "Queue"):
-        super().__init__(queue, "Error Joining game")
+    def __init__(self) -> None:
+        super().__init__("Error Joining game")
         self.events = [ErrorJoiningGameEvent()]
 
 
 class RequestGameCreation(Command):
-    def __init__(self, queue: "Queue", new_game_name: str):
-        super().__init__(queue, f"Request creating a game called {new_game_name}")
+    def __init__(self, new_game_name: str) -> None:
+        super().__init__(f"Request creating a game called {new_game_name}")
         self.events = [NewGameRequestEvent(new_game_name)]
 
 
 class RequestJoiningAGame(Command):
-    def __init__(self, queue: "Queue", game_id: "UUID"):
-        super().__init__(queue, f"Request joining game {game_id}")
+    def __init__(self, game_id: "UUID") -> None:
+        super().__init__(f"Request joining game {game_id}")
         self.events = [JoinExistingGameEvent(game_id)]

@@ -38,19 +38,19 @@ They do the actual procssing and can execute commands.
 class GameCreatedInGameEventHandler(BaseEventHandler[GameCreatedInGameEvent]):
     def handle(self, event: GameCreatedInGameEvent) -> None:
         client_state = ClientState()
-        GameCreatedInGameCommand(client_state.queue, event.player_id).execute()
+        GameCreatedInGameCommand(event.player_id).execute()
 
 
 class PlayerJoinedInGameEventHandler(BaseEventHandler[PlayerJoinedInGameEvent]):
     def handle(self, event: PlayerJoinedInGameEvent) -> None:
         client_state = ClientState()
-        PlayerJoinedInGameCommand(client_state.queue, event.player_id).execute()
+        PlayerJoinedInGameCommand(event.player_id).execute()
 
 
 class PlayerWinsInGameEventHandler(BaseEventHandler[PlayerWinsInGameEvent]):
     def handle(self, event: PlayerWinsInGameEvent) -> None:
         client_state = ClientState()
-        PlayerWinsInGameCommand(client_state.queue, event.player_id).execute()
+        PlayerWinsInGameCommand(event.player_id).execute()
 
 
 #################################################################

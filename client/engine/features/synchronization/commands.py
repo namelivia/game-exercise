@@ -11,32 +11,30 @@ from .events import (
 if TYPE_CHECKING:
     from uuid import UUID
 
-    from client.engine.general_state.queue import Queue
     from client.engine.primitives.event import Event
 
 
 class RefreshGameStatus(Command):
-    def __init__(self, queue: "Queue", game_id: "UUID", pointer: int):
-        super().__init__(queue, f"Refresh game status {game_id} pointer {pointer}")
+    def __init__(self, game_id: "UUID", pointer: int) -> None:
+        super().__init__(f"Refresh game status {game_id} pointer {pointer}")
         self.events = [RefreshGameStatusNetworkRequestEvent(game_id, pointer)]
 
 
 class RequestGameStatus(Command):
-    def __init__(self, queue: "Queue", game_id: "UUID", pointer: int):
+    def __init__(self, game_id: "UUID", pointer: int) -> None:
         super().__init__(
-            queue,
             f"Request refreshing the status of game {game_id} pointer {pointer}",
         )
         self.events = [RefreshGameStatusEvent(game_id, pointer)]
 
 
 class ProcessServerEvents(Command):
-    def __init__(self, queue: "Queue", events: List["Event"]):
-        super().__init__(queue, f"Processing {len(events)} unprocessed server events")
+    def __init__(self, events: List["Event"]) -> None:
+        super().__init__(f"Processing {len(events)} unprocessed server events")
         self.events = events
 
 
 class UpdateGame(Command):
-    def __init__(self, queue: "Queue", events: List["Event"]):
-        super().__init__(queue, "Locally updating game")
+    def __init__(self, events: List["Event"]) -> None:
+        super().__init__("Locally updating game")
         self.events = [UpdateGameEvent(events)]

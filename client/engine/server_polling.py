@@ -28,7 +28,6 @@ class ServerPolling:
             time = client_state.clock.get()
             if ServerPolling._should_do_polling(time):
                 RequestGameStatus(
-                    client_state.queue,
                     game_id,
                     pointer,
                 ).execute()
