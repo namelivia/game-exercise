@@ -10,12 +10,12 @@ from client.game.screens.profiles.profiles import Profiles
 
 class TestProfiles(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.profiles = Profiles(self.client_state)
+        self.profiles = Profiles()
 
     @mock.patch("client.game.screens.profiles.profiles.SetProfile")
-    def test_profiles(self, m_set_profile):
+    @mock.patch("client.engine.primitives.screen.ClientState")
+    def test_profiles(self, m_client_state, m_set_profile):
+        m_client_state().clock.get.return_value = 0  # Initial time is 0
         # Empty screen
         VisualRegression.assert_matches_snapshot(
             self.profiles,

@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, Any, Optional, Type
 
 from .clock import Clock
 from .mouse import Mouse
-from .queue import Queue
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
@@ -23,10 +22,6 @@ class ClientState:
         self.clock = Clock()
         self.mouse = Mouse()
         self.current_screen: Optional["Screen"] = None
-        self.queue = Queue()
-
-    def push_initial_event(self, initial_event: "Event") -> None:
-        self.queue.put(initial_event)
 
     def get_current_screen(self) -> Optional["Screen"]:
         return self.current_screen

@@ -1,5 +1,5 @@
 import uuid
-from typing import TYPE_CHECKING, Any, Optional, Type
+from typing import TYPE_CHECKING, Any, Type
 
 from client.engine.persistence.persistence import Persistence
 
