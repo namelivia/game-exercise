@@ -9,7 +9,7 @@ from .ui import Background, ErrorPopup, GameIdMessage
 
 
 class JoinGame(Screen):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.data = {"game_id": ""}

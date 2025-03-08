@@ -9,7 +9,7 @@ from .ui import Background, ErrorPopup, NewGameMessage
 
 
 class NewGame(Screen):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.data = {"new_game_name": ""}

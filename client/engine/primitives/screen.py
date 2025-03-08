@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 
 class Screen(ABC):
-    def __init__(self):
+    def __init__(self) -> None:
         self.ui_elements: List[UIElement | ClickableUIElement] = []
         self.timers: Dict[int, Callable[[], None]] = {}  # Time based actions
         self.events: Dict[Any, Callable[[Any], None]] = (

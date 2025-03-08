@@ -7,7 +7,7 @@ from .ui import Background, OptionList, OptionsTitle
 
 
 class Options(Screen):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.ui_elements = [

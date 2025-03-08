@@ -7,7 +7,7 @@ from .ui import Background, OptionList, WelcomeMessage
 
 
 class Lobby(Screen):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         profile_what = ProfileWhat()

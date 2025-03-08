@@ -1,5 +1,5 @@
 import uuid
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional, Type
 
 from .clock import Clock
 from .mouse import Mouse
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 class ClientState:
     _instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls: Type["ClientState"], *args: Any, **kwargs: Any) -> "ClientState":
         if not cls._instance:
             cls._instance = super(ClientState, cls).__new__(cls)
         return cls._instance

@@ -6,7 +6,7 @@ from .ui import Background, CreditsUI
 
 
 class Credits(Screen):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
         self.ui_elements = [

@@ -1,5 +1,5 @@
 import uuid
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Any, Optional, Type
 
 from client.engine.persistence.persistence import Persistence
 
@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 class ProfileWhat:
     _instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls: Type["ProfileWhat"], *args: Any, **kwargs: Any) -> "ProfileWhat":
         if not cls._instance:
             cls._instance = super(ProfileWhat, cls).__new__(cls)
         return cls._instance
