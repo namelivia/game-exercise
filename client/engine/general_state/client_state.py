@@ -1,9 +1,6 @@
 import uuid
 from typing import TYPE_CHECKING, Any, Optional, Type
 
-from .clock import Clock
-from .mouse import Mouse
-
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
     from client.engine.primitives.screen import Screen
@@ -19,8 +16,6 @@ class ClientState:
         return cls._instance
 
     def initialize(self) -> None:
-        self.clock = Clock()
-        self.mouse = Mouse()
         self.current_screen: Optional["Screen"] = None
 
     def get_current_screen(self) -> Optional["Screen"]:
