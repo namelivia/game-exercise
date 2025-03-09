@@ -6,6 +6,7 @@ from client.engine.general_state.queue import Queue
 class TestQueue(TestCase):
     def setUp(self):
         self.queue = Queue()
+        self.queue.initialize(None)
 
     def test_empty_pop(self):
         assert self.queue.empty() is True

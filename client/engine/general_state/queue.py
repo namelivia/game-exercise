@@ -19,7 +19,8 @@ class Queue:
 
     def initialize(self, initial_event: "Event") -> None:
         self.simple_queue: SimpleQueue["Event"] = SimpleQueue()
-        self.simple_queue.put(initial_event)
+        if initial_event:
+            self.simple_queue.put(initial_event)
 
     def put(self, new_event: "Event") -> None:
         self.simple_queue.put(new_event)

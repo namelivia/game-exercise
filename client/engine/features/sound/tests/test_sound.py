@@ -15,44 +15,42 @@ from client.engine.features.sound.events import (
     TurnSoundOffEvent,
     TurnSoundOnEvent,
 )
+from client.engine.general_state.options import Options
 from client.engine.general_state.queue import Queue
 
 
 class TestSound(TestCase):
     def setUp(self):
-        self.profile = mock.Mock()
-        self.profile.game_id = "game_id"
-        self.profile.id = "player_id"
-        self.queue = Queue()
         self.event_handler = EventHandler()
+
+        # Initialize an empty queue
+        Queue().initialize(None)
+        # And default options
+        Options().initialize()
 
     def test_turning_the_sound_on(self):
         # The command is invoked
         TurnSoundOn().execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, TurnSoundOnEvent)
-
-        # profile = self.profile
 
         self.event_handler.handle(event)
 
-        # The client state option is updated
-        self.profile.set_sound_on.assert_called_once_with()
+        # The options valus valuee is updated
+        assert Options().sound_on is True
 
     def test_turning_the_sound_off(self):
         # The command is invoked
         TurnSoundOff().execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, TurnSoundOffEvent)
-
-        # profile = self.profile
 
         self.event_handler.handle(event)
 
-        # The client state optioff is updated
-        self.profile.set_sound_off.assert_called_once_with()
+        # The options value is updated
+        assert Options().sound_on is False
 
     @mock.patch("client.engine.features.sound.event_handler.Music.play")
     @mock.patch("client.engine.features.sound.event_handler.Music.load")
@@ -60,7 +58,7 @@ class TestSound(TestCase):
         # The command is invoked
         PlayMusic("main_theme").execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, PlayMusicEvent)
 
         # profile = self.profile
@@ -74,7 +72,7 @@ class TestSound(TestCase):
         # The command is invoked
         PlaySound("back").execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, PlaySoundEvent)
 
         # profile = self.profile
