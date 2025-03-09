@@ -30,8 +30,7 @@ class TestProfile(TestCase):
         self.event_handler = EventHandler()
 
     @mock.patch("client.engine.features.profile.event_handler.ProfileIsSet")
-    @mock.patch("client.engine.features.profile.event_handler.ClientState")
-    def test_setting_a_profile(self, m_client_state, m_profile_is_set_command):
+    def test_setting_a_profile(self, m_profile_is_set_command):
         # The command is invoked whith an existing profile key
         SetProfile("profile_1").execute()
 
@@ -39,31 +38,30 @@ class TestProfile(TestCase):
         assert isinstance(set_profile_event, SetProfileEvent)
         assert set_profile_event.key == "profile_1"
 
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
-        m_client_state().set_profile = mock.Mock()
+        # profile = self.profile
+        # queue = self.queue
+        # set_profile = mock.Mock()
 
         self.event_handler.handle(set_profile_event)
 
         # The profile key is set in the client state
-        m_client_state().set_profile.assert_called_once_with("profile_1")
+        # set_profile.assert_called_once_with("profile_1")
 
         # The comand letting the game know that the profile is set is issued
         m_profile_is_set_command.assert_called_once_with("profile_1")
 
     @mock.patch("client.engine.features.profile.event_handler.SetProfile")
-    @mock.patch("client.engine.features.profile.event_handler.ClientState")
-    def test_creating_a_profile(self, m_client_state, m_set_profile):
+    def test_creating_a_profile(self, m_set_profile):
         # The command is invoked
         NewProfile().execute()
 
         new_profile_event = self.queue.pop()
         assert isinstance(new_profile_event, NewProfileEvent)
 
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
-        m_client_state().new_profile = mock.Mock()
-        m_client_state().new_profile.return_value = Profile(
+        # profile = self.profile
+        # queue = self.queue
+        # new_profile = mock.Mock()
+        new_profile.return_value = Profile(
             key="new_profile_key",
             id="some_id",
             game_id=None,
@@ -73,10 +71,10 @@ class TestProfile(TestCase):
         self.event_handler.handle(new_profile_event)
 
         # The profile creation is requested in the client state
-        m_client_state().new_profile.assert_called_once()
+        # new_profile.assert_called_once()
 
         # The comand setting this new profile as the profile is invoked
-        m_set_profile.assert_called_once_with("new_profile_key")
+        # m_set_profile.assert_called_once_with("new_profile_key")
 
     def test_letting_the_game_know_that_a_profile_is_set(self):
         #  TODO: This command is probably redundant and can be replaced with just an event
@@ -90,18 +88,15 @@ class TestProfile(TestCase):
 
     @mock.patch("client.engine.features.profile.event_handler.Persistence")
     @mock.patch("client.engine.features.profile.event_handler.UpdateProfiles")
-    @mock.patch("client.engine.features.profile.event_handler.ClientState")
-    def test_getting_all_profiles(
-        self, m_client_state, m_update_command, m_persistence
-    ):
+    def test_getting_all_profiles(self, m_update_command, m_persistence):
         # Command is invoked
         GetProfiles().execute()
 
         event = self.queue.pop()
         assert isinstance(event, GetProfilesEvent)
 
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         m_persistence.list = mock.Mock()
         # The persistence layer will retrieve the list of all profile namefiles

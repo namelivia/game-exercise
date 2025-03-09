@@ -4,7 +4,6 @@ from client.engine.features.profile.events import (
     UpdateProfilesInGameEvent,
 )
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, ProfileList, ProfilesTitle

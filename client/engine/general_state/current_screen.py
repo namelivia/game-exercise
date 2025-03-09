@@ -2,17 +2,18 @@ import uuid
 from typing import TYPE_CHECKING, Any, Optional, Type
 
 if TYPE_CHECKING:
-    from client.engine.primitives.event import Event
     from client.engine.primitives.screen import Screen
 
 
 # This is a singleton
-class ClientState:
+class CurrentScreen:
     _instance = None
 
-    def __new__(cls: Type["ClientState"], *args: Any, **kwargs: Any) -> "ClientState":
+    def __new__(
+        cls: Type["CurrentScreen"], *args: Any, **kwargs: Any
+    ) -> "CurrentScreen":
         if not cls._instance:
-            cls._instance = super(ClientState, cls).__new__(cls)
+            cls._instance = super(CurrentScreen, cls).__new__(cls)
         return cls._instance
 
     def initialize(self) -> None:

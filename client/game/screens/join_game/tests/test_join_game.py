@@ -9,8 +9,7 @@ from client.game.screens.join_game.join_game import JoinGame
 
 class TestJoinGame(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.join_game = JoinGame()
 
     @mock.patch("client.game.screens.join_game.join_game.RequestJoiningAGame")

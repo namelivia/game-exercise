@@ -9,9 +9,8 @@ from client.game.screens.lobby.lobby import Lobby
 
 class TestLobby(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.client_state.profile.name = "TestPlayer"
+        # self.clock.get.return_value = 0  # Initial time is 0
+        # self.profile.name = "TestPlayer"
         self.lobby = Lobby()
 
     @mock.patch("client.game.commands.NewGame")

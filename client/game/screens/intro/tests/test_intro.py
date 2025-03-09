@@ -10,8 +10,7 @@ from client.game.screens.intro.intro import Intro
 
 class TestIntroScreen(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.intro = Intro()
 
     @mock.patch("client.game.commands.ToLobby")
@@ -37,7 +36,7 @@ class TestIntroScreen(TestCase):
             "./client/game/screens/intro/tests/screenshots/intro_timestamp_0.png",
         )
 
-        self.client_state.clock.get.return_value = 5500  # Advance to 5500
+        # self.clock.get.return_value = 5500  # Advance to 5500
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,
@@ -45,7 +44,7 @@ class TestIntroScreen(TestCase):
         )
 
         # Advance to 10000 (coins appear)
-        self.client_state.clock.get.return_value = 10000
+        # self.clock.get.return_value = 10000
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,
@@ -53,7 +52,7 @@ class TestIntroScreen(TestCase):
         )
 
         # Advance to 10200
-        self.client_state.clock.get.return_value = 10200
+        # self.clock.get.return_value = 10200
         self.intro.update()
         VisualRegression.assert_matches_snapshot(
             self.intro,

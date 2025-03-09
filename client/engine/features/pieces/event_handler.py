@@ -1,7 +1,6 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.general_state.client_state import ClientState
 from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
@@ -30,7 +29,6 @@ logger = logging.getLogger(__name__)
 
 class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGameEvent]):
     def handle(self, event: "PlayerPlacedSymbolInGameEvent") -> None:
-        client_state = ClientState()
         PlayerPlacedSymbolInGameCommand(
             event.event_id,
             event.player_id,
@@ -40,7 +38,6 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGame
 
 class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
     def handle(self, event: "PlaceASymbolRequestEvent") -> None:
-        client_state = ClientState()
         profile_what = ProfileWhat()
         game_id = profile_what.profile.game_id
         if game_id is None:
@@ -56,7 +53,6 @@ class PlaceASymbolNetworkRequestEventHandler(
     EventHandler[PlaceASymbolNetworkRequestEvent]
 ):
     def handle(self, event: "PlaceASymbolNetworkRequestEvent") -> None:
-        client_state = ClientState()
         profile_what = ProfileWhat()
         game_id = profile_what.profile.game_id
         if game_id is None:

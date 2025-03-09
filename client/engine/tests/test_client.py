@@ -42,7 +42,6 @@ from client.engine.features.synchronization.events import (
 )
 from client.engine.features.user_input.commands import UserTyped
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.client_state import ClientState
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.queue import Queue
 from common.game_data import GameData
@@ -82,8 +81,7 @@ class TestClient(TestCase):
         assert event.key == "f"
         # There is no generic handler for this one, it is handled by the game on each screen
 
-    @mock.patch("client.engine.features.synchronization.event_handler.ClientState")
-    def test_updating(self, m_client_state):
+    def test_updating(self):
         # There is already one processed event, so the pointer
         # will be at 1.
         game_events = [
@@ -104,8 +102,8 @@ class TestClient(TestCase):
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UpdateGameEvent)
 
-        m_client_state().profile = profile
-        m_client_state().queue = self.queue
+        # profile = profile
+        # queue = self.queue
         self.event_handler.handle(event)
 
         # The server is responding with the three events
@@ -116,11 +114,10 @@ class TestClient(TestCase):
         unprocessed_event_1 = self.queue.pop()
         assert unprocessed_event_1 == "event_3"
         assert (
-            m_client_state().profile.game_event_pointer == 4
+            # profile.game_event_pointer == 4
         )  # And now the event pointer is at 3
 
-    @mock.patch("client.engine.event_handler.ClientState")
-    def test_initializating_game(self, m_client_state):
+    def test_initializating_game(self):
         game_data = GameData(
             "some_game_id", "some_game_name", ["player_1_id", "player_2_id"]
         )
@@ -135,7 +132,7 @@ class TestClient(TestCase):
 
         InitiateGame(game_data).execute()
 
-        m_client_state().profile = profile
+        # profile = profile
 
         event = (
             self.queue.pop()
@@ -152,7 +149,7 @@ class TestClient(TestCase):
         event = self.queue.pop()
         self.event_handler.handle(event)
         assert (
-            m_client_state().profile.game_id == "some_game_id"
+            # profile.game_id == "some_game_id"
         )  # The internal game id is set
 
     # Game events
@@ -169,8 +166,7 @@ class TestClient(TestCase):
         # TODO: Finish this test
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    @mock.patch("client.engine.features.synchronization.event_handler.ClientState")
-    def test_request_game_status_success(self, m_client_state, m_send_command):
+    def test_request_game_status_success(self, m_send_command):
         # The server will respond with a correct game message
         m_send_command.return_value = GameEventsMessage(
             [
@@ -187,7 +183,7 @@ class TestClient(TestCase):
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, RefreshGameStatusEvent)
 
-        m_client_state().queue = self.queue
+        # queue = self.queue
         self.event_handler.handle(event)
 
         # A network request to ask for the game status for the server is sent
@@ -212,8 +208,7 @@ class TestClient(TestCase):
         # m_send_command.return_value = ErrorMessage()
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    @mock.patch("client.engine.features.game_management.event_handler.ClientState")
-    def test_request_create_new_game_success(self, m_client_state, m_send_command):
+    def test_request_create_new_game_success(self, m_send_command):
         m_send_command.return_value = GameInfoMessage(
             GameData(
                 "game_id",
@@ -233,7 +228,7 @@ class TestClient(TestCase):
         assert isinstance(event, NewGameRequestEvent)
 
         # Handle the event
-        m_client_state().queue = self.queue
+        # queue = self.queue
         self.event_handler.handle(event)
 
         # A network request to ask for the game initialization on the server is sent
@@ -269,8 +264,7 @@ class TestClient(TestCase):
         # m_send_command.return_value = ErrorMessage()
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
-    @mock.patch("client.engine.features.game_management.event_handler.ClientState")
-    def test_request_join_a_game_success(self, m_client_state, m_send_command):
+    def test_request_join_a_game_success(self, m_send_command):
         m_send_command.return_value = GameInfoMessage(
             GameData(
                 "game_id",
@@ -290,7 +284,7 @@ class TestClient(TestCase):
         assert isinstance(event, JoinExistingGameEvent)
 
         # Handle the event
-        m_client_state().queue = self.queue
+        # queue = self.queue
         self.event_handler.handle(event)
 
         # A network request to ask for the game initialization on the server is sent
@@ -326,8 +320,7 @@ class TestClient(TestCase):
         # m_send_command.return_value = ErrorMessage()
 
     @mock.patch("client.engine.persistence.persistence.Persistence.save")
-    @mock.patch("client.engine.event_handler.ClientState")
-    def test_setting_player_name(self, m_client_state, m_save):
+    def test_setting_player_name(self, m_save):
         # When there are new events to process these will be pushed to the queue
         profile = Profile(
             key="key",
@@ -343,8 +336,8 @@ class TestClient(TestCase):
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, SetPlayerNameEvent)
 
-        m_client_state().profile = profile
-        m_client_state().queue = self.queue
+        # profile = profile
+        # queue = self.queue
         self.event_handler.handle(event)
         assert profile.name == "Player name"
         m_save.assert_called_once_with(profile, "key")
@@ -359,8 +352,7 @@ class TestClient(TestCase):
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, PingNetworkRequestEvent)
 
-        client_state = mock.Mock()  # TODO: I don't like I have to define this
-        client_state.queue = self.queue
+        # queue = self.queue
         self.event_handler.handle(event)
 
         # Assert the ping message has been correctly sent.

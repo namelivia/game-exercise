@@ -11,8 +11,7 @@ from client.game.screens.game_list.game_list import GameList
 
 class TestGameList(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.game_list = GameList()
 
     @mock.patch("client.game.screens.game_list.game_list.RequestJoiningAGame")

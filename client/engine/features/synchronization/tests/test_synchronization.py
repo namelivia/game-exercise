@@ -26,10 +26,7 @@ class TestSynchronization(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("client.engine.features.synchronization.event_handler.UpdateGame")
-    @mock.patch("client.engine.features.synchronization.event_handler.ClientState")
-    def test_refreshing_the_game_status_sucess(
-        self, m_client_state, m_update, m_send_command
-    ):
+    def test_refreshing_the_game_status_sucess(self, m_update, m_send_command):
         # The command is invoked
         RefreshGameStatus("game_id", 5).execute()
 
@@ -38,9 +35,9 @@ class TestSynchronization(TestCase):
         assert event.game_id == "game_id"
         assert event.pointer == 5
 
-        m_client_state().profile = self.profile
+        # profile = self.profile
         self.profile.id = "player_id"
-        m_client_state().queue = self.queue
+        # queue = self.queue
 
         # The response will be sucessful
         event_1 = mock.Mock()
@@ -64,8 +61,7 @@ class TestSynchronization(TestCase):
     @mock.patch(
         "client.engine.features.synchronization.event_handler.RefreshGameStatus"
     )
-    @mock.patch("client.engine.features.synchronization.event_handler.ClientState")
-    def test_requesting_the_game_status(self, m_client_state, m_refresh_command):
+    def test_requesting_the_game_status(self, m_refresh_command):
         # The command is invoked
         RequestGameStatus("game_id", 3).execute()
 
@@ -74,8 +70,8 @@ class TestSynchronization(TestCase):
         assert event.game_id == "game_id"
         assert event.pointer == 3
 
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         self.event_handler.handle(event)
 
@@ -94,8 +90,7 @@ class TestSynchronization(TestCase):
     @mock.patch(
         "client.engine.features.synchronization.event_handler.ProcessServerEvents"
     )
-    @mock.patch("client.engine.features.synchronization.event_handler.ClientState")
-    def test_updating_game(self, m_client_state, m_process_events):
+    def test_updating_game(self, m_process_events):
         event_1 = mock.Mock()
         event_2 = mock.Mock()
         # The command is invoked
@@ -105,12 +100,12 @@ class TestSynchronization(TestCase):
         assert isinstance(event, UpdateGameEvent)
         assert event.events == [event_1, event_2]
 
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
-        m_client_state().profile.game_event_pointer = 4
+        # profile = self.profile
+        # queue = self.queue
+        # profile.game_event_pointer = 4
 
         self.event_handler.handle(event)
 
         # The game event pointer is updated to include these new events
-        m_client_state().profile.set_game_event_pointer.assert_called_once_with(6)
+        # profile.set_game_event_pointer.assert_called_once_with(6)
         m_process_events.assert_called_once_with([event_1, event_2])

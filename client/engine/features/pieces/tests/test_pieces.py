@@ -31,9 +31,8 @@ class TestPieces(TestCase):
     @mock.patch(
         "client.engine.features.pieces.event_handler.SymbolPlacedConfirmedCommand"
     )
-    @mock.patch("client.engine.features.pieces.event_handler.ClientState")
     def test_requesting_placing_a_symbol_success(
-        self, m_client_state, m_piece_placed_confirmed, m_send_command
+        self, m_piece_placed_confirmed, m_send_command
     ):
         # The command is invoked whith a new symbol placement
         PlaceASymbol("game_id", "event_id", 2).execute()
@@ -43,8 +42,8 @@ class TestPieces(TestCase):
         assert isinstance(network_event, PlaceASymbolNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().queue = self.queue
-        m_client_state().profile = self.profile
+        # queue = self.queue
+        # profile = self.profile
 
         # The response will be sucessful
         m_send_command.return_value = SymbolPlacedConfirmation("event_id")
@@ -66,10 +65,7 @@ class TestPieces(TestCase):
     @mock.patch(
         "client.engine.features.pieces.event_handler.SymbolPlacedErroredCommand"
     )
-    @mock.patch("client.engine.features.pieces.event_handler.ClientState")
-    def test_requesting_placing_a_symbol_error_response(
-        self, m_client_state, m_error, m_send_command
-    ):
+    def test_requesting_placing_a_symbol_error_response(self, m_error, m_send_command):
         # The command is invoked whith a new symbol placement
         PlaceASymbol("game_id", "event_id", 2).execute()
 
@@ -78,8 +74,8 @@ class TestPieces(TestCase):
         assert isinstance(network_event, PlaceASymbolNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().queue = self.queue
-        m_client_state().profile = self.profile
+        # queue = self.queue
+        # profile = self.profile
 
         # The response won't be sucessful
         m_send_command.return_value = ErrorMessage("Error message")
@@ -100,10 +96,7 @@ class TestPieces(TestCase):
     @mock.patch(
         "client.engine.features.pieces.event_handler.SymbolPlacedErroredCommand"
     )
-    @mock.patch("client.engine.features.pieces.event_handler.ClientState")
-    def test_requesting_placing_a_symbol_no_response(
-        self, m_client_state, m_error, m_send_command
-    ):
+    def test_requesting_placing_a_symbol_no_response(self, m_error, m_send_command):
         # The command is invoked whith a new symbol placement
         PlaceASymbol("game_id", "event_id", 2).execute()
 
@@ -112,8 +105,8 @@ class TestPieces(TestCase):
         assert isinstance(network_event, PlaceASymbolNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().queue = self.queue
-        m_client_state().profile = self.profile
+        # queue = self.queue
+        # profile = self.profile
 
         # The response won't be sucessful
         m_send_command.return_value = None

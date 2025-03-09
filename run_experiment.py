@@ -2,7 +2,6 @@ import logging
 
 import pygame
 
-from client.engine.general_state.client_state import ClientState
 from client.engine.screen_manager import ScreenManagerFactory
 from client.experiment.event_handler import EventHandler as GameEventHandler
 from client.experiment.events import ScreenTransitionEvent

@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
-from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.general_state.queue_what import QueueWhat
 from client.engine.graphics.graphics import Graphics
@@ -24,10 +24,6 @@ class ScreenManagerFactory:
         initial_event: "Event",
         event_handler: Any,
     ) -> "ScreenManager":
-
-        # Initialize the client state
-        client_state = ClientState()
-        client_state.initialize()
 
         # Initialize the profile
         profile_what = ProfileWhat()
@@ -62,7 +58,6 @@ class ScreenManager:
 
     # Main loop
     def run(self) -> None:
-        client_state = ClientState()
         queue_what = QueueWhat()
         # 1 - Push a sever polling event if needed
         ServerPolling.push_polling_event_if_needed()
@@ -77,7 +72,7 @@ class ScreenManager:
         # 3 - Read user input
         UserInput.process(self.keyboard_input, self.mouse_input)
 
-        current_screen = client_state.get_current_screen()
+        current_screen = CurrentScreen().get_current_screen()
 
         if current_screen is not None:
             # 4 - Draw the screen

@@ -19,8 +19,8 @@ Example:
 
 ```python
 class MyScreen(Screen):
-    def __init__(self, client_state):
-        super().__init__(client_state)
+    def __init__(self):
+        super().__init__()
         
         self.ui_elements = [
             MyUIElement(),
@@ -32,10 +32,10 @@ class MyScreen(Screen):
         
     def on_user_typed(self, event):
         if event.key == "escape":
-            MyCommand(self.client_state.queue).execute()
+            MyCommand().execute()
             
     def move_to_next_screen(self, event):
-        MyCommand(self.client_state.queue).execute()
+        MyCommand().execute()
 ```
 
 # To make a command
@@ -89,8 +89,7 @@ Example:
 ```python
 class MyCustomEventHandler(EventHandler):
     def handle(self, event):
-        client_state = ClientState()
-        client_state.something = my_data
+        # Do whatever
         
 class AnotherCustomEventHandler(EventHandler):
     def handle(self, event):

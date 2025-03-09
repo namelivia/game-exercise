@@ -97,8 +97,7 @@ class TestInGameScreen(TestCase):
         # Assert the command has been issued
 
     def test_in_game(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
             [],
             "some_game_id",
@@ -338,8 +337,7 @@ class TestInGameScreen(TestCase):
         )
 
     def test_many_chat_messages(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
             [],
             "some_game_id",

@@ -2,7 +2,6 @@ from client.engine.features.game_management.commands import RequestGameCreation
 from client.engine.features.game_management.events import ErrorCreatingGameEvent
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.client_state import ClientState
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, ErrorPopup, NewGameMessage

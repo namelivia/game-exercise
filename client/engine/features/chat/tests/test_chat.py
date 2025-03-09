@@ -44,7 +44,7 @@ class TestChat(TestCase):
     @mock.patch("client.engine.features.chat.event_handler.ChatMessageConfirmedCommand")
     @mock.patch("client.engine.features.chat.event_handler.ClientState")
     def test_sending_a_chat_message_success(
-        self, m_client_state, m_chat_message_confirmed, m_send_command
+        self, m_chat_message_confirmed, m_send_command
     ):
         # The command is invoked whith a new chat message
         SendChat("game_id", "event_id", "This is a test message").execute()
@@ -54,8 +54,8 @@ class TestChat(TestCase):
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         # The response will be sucessful
         m_send_command.return_value = ChatMessageConfirmation("event_id")
@@ -75,10 +75,7 @@ class TestChat(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("client.engine.features.chat.event_handler.ChatMessageErroredCommand")
-    @mock.patch("client.engine.features.chat.event_handler.ClientState")
-    def test_sending_a_chat_message_error_response(
-        self, m_client_state, m_error, m_send_command
-    ):
+    def test_sending_a_chat_message_error_response(self, m_error, m_send_command):
         # The command is invoked whith a new chat message
         SendChat("game_id", "event_id", "This is a test message").execute()
 
@@ -87,8 +84,8 @@ class TestChat(TestCase):
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         # The response won't be sucessful
         m_send_command.return_value = ErrorMessage("Error message")
@@ -107,10 +104,7 @@ class TestChat(TestCase):
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("client.engine.features.chat.event_handler.ChatMessageErroredCommand")
-    @mock.patch("client.engine.features.chat.event_handler.ClientState")
-    def test_sending_a_chat_message_no_response(
-        self, m_client_state, m_error, m_send_command
-    ):
+    def test_sending_a_chat_message_no_response(self, m_error, m_send_command):
         # The command is invoked whith a new chat message
         SendChat("game_id", "event_id", "This is a test message").execute()
 
@@ -119,8 +113,8 @@ class TestChat(TestCase):
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         # The response won't be sucessful
         m_send_command.return_value = None

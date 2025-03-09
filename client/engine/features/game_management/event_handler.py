@@ -2,7 +2,6 @@ import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.commands import InitiateGame
-from client.engine.general_state.client_state import ClientState
 from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
@@ -33,13 +32,11 @@ logger = logging.getLogger(__name__)
 
 class NewGameRequestEventHandler(EventHandler[NewGameRequestEvent]):
     def handle(self, event: "NewGameRequestEvent") -> None:
-        client_state = ClientState()
         CreateAGame(event.new_game_name).execute()
 
 
 class JoinExistingGameEventHandler(EventHandler[JoinExistingGameEvent]):
     def handle(self, event: "JoinExistingGameEvent") -> None:
-        client_state = ClientState()
         JoinAGame(event.game_id).execute()
 
 
@@ -47,7 +44,6 @@ class CreateAGameNetworkRequestEventHandler(
     EventHandler[CreateAGameNetworkRequestEvent]
 ):
     def handle(self, event: "CreateAGameNetworkRequestEvent") -> None:
-        client_state = ClientState()
         profile_what = ProfileWhat()
         request_data = self._encode(profile_what.profile.id, event.new_game_name)
 
@@ -75,7 +71,6 @@ class CreateAGameNetworkRequestEventHandler(
 
 class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEvent]):
     def handle(self, event: "JoinAGameNetworkRequestEvent") -> None:
-        client_state = ClientState()
         profile_what = ProfileWhat()
         request_data = self._encode(profile_what.profile.id, event.game_id)
 

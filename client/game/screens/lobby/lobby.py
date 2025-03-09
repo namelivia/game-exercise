@@ -1,5 +1,4 @@
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.client_state import ClientState
 from client.engine.general_state.profile_what import ProfileWhat
 from client.engine.primitives.screen import Screen
 
