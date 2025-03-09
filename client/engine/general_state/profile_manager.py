@@ -36,11 +36,7 @@ class ProfileManager:
 
     def _create_new_profile(self, profile_key: str) -> "Profile":
         profile = Profile(
-            key=profile_key,
-            id=uuid.uuid4(),
-            game_id=None,
-            game_event_pointer=None,
-            sound_on=True,
+            key=profile_key, id=uuid.uuid4(), game_id=None, game_event_pointer=None
         )
         profile.save()
         return profile

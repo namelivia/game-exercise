@@ -17,10 +17,8 @@ class Queue:
             cls._instance = super(Queue, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self) -> None:
-        self.simple_queue: SimpleQueue["Event"] = SimpleQueue()
-
     def initialize(self, initial_event: "Event") -> None:
+        self.simple_queue: SimpleQueue["Event"] = SimpleQueue()
         self.simple_queue.put(initial_event)
 
     def put(self, new_event: "Event") -> None:
