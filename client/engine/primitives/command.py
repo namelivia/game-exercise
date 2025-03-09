@@ -2,7 +2,7 @@ import logging
 from abc import ABC
 from typing import TYPE_CHECKING, List
 
-from client.engine.general_state.queue_what import QueueWhat
+from client.engine.general_state.queue import Queue
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
@@ -17,6 +17,6 @@ class Command(ABC):
 
     def execute(self) -> None:
         logger.info(f"[Command] {self.description}")
-        queue_what = QueueWhat()
+        queue = Queue()
         for event in self.events:
-            queue_what.queue.put(event)
+            queue.put(event)

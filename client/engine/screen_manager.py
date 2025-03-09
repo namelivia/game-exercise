@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any
 from client.engine.event_handler import EventHandler
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.profile_what import ProfileWhat
-from client.engine.general_state.queue_what import QueueWhat
+from client.engine.general_state.queue import Queue
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.keyboard import KeyboardInput
 from client.engine.input.mouse import MouseInput
@@ -30,8 +30,8 @@ class ScreenManagerFactory:
         profile_what.set_profile("Default profile")
 
         # Initialize the queue
-        queue_what = QueueWhat()
-        queue_what.initialize(initial_event)
+        queue = Queue()
+        queue.initialize(initial_event)
 
         return ScreenManager(
             KeyboardInput(),
@@ -58,12 +58,12 @@ class ScreenManager:
 
     # Main loop
     def run(self) -> None:
-        queue_what = QueueWhat()
+        queue = Queue()
         # 1 - Push a sever polling event if needed
         ServerPolling.push_polling_event_if_needed()
 
         # 2 - Fetch and handle the latest event
-        event = queue_what.queue.pop()
+        event = queue.pop()
 
         # TODO: I don't like this if
         if event is not None and not isinstance(event, InGameEvent):
