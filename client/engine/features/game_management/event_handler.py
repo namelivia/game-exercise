@@ -2,7 +2,7 @@ import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.commands import InitiateGame
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from common.game_data import GameData
@@ -44,8 +44,8 @@ class CreateAGameNetworkRequestEventHandler(
     EventHandler[CreateAGameNetworkRequestEvent]
 ):
     def handle(self, event: "CreateAGameNetworkRequestEvent") -> None:
-        profile_what = ProfileWhat()
-        request_data = self._encode(profile_what.profile.id, event.new_game_name)
+        profile_manager = ProfileManager()
+        request_data = self._encode(profile_manager.profile.id, event.new_game_name)
 
         response = Channel.send_command(request_data)
         if response is not None:
@@ -71,8 +71,8 @@ class CreateAGameNetworkRequestEventHandler(
 
 class JoinAGameNetworkRequestEventHandler(EventHandler[JoinAGameNetworkRequestEvent]):
     def handle(self, event: "JoinAGameNetworkRequestEvent") -> None:
-        profile_what = ProfileWhat()
-        request_data = self._encode(profile_what.profile.id, event.game_id)
+        profile_manager = ProfileManager()
+        request_data = self._encode(profile_manager.profile.id, event.game_id)
 
         response = Channel.send_command(request_data)
         if response is not None:

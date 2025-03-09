@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Type
 
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.persistence.persistence import Persistence
 from client.engine.primitives.event_handler import EventHandler
 
@@ -17,15 +17,15 @@ logger = logging.getLogger(__name__)
 
 class SetProfileEventHandler(EventHandler[SetProfileEvent]):
     def handle(self, event: "SetProfileEvent") -> None:
-        profile_what = ProfileWhat()
-        profile_what.set_profile(event.key)
+        profile_manager = ProfileManager()
+        profile_manager.set_profile(event.key)
         ProfileIsSet(event.key).execute()
 
 
 class NewProfileEventHandler(EventHandler[NewProfileEvent]):
     def handle(self, event: "NewProfileEvent") -> None:
-        profile_what = ProfileWhat()
-        new_profile_key = profile_what.new_profile().key
+        profile_manager = ProfileManager()
+        new_profile_key = profile_manager.new_random_profile().key
         SetProfile(new_profile_key).execute()
 
 

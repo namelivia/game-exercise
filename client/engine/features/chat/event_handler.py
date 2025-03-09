@@ -7,7 +7,7 @@ from client.engine.features.chat.commands import (
     ChatMessageInGameCommand,
     SendChat,
 )
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.chat.events import SendChatRequestEvent
@@ -36,8 +36,8 @@ class ChatMessageInGameEventHandler(EventHandler[ChatMessageInGameEvent]):
 
 class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
     def handle(self, event: "SendChatRequestEvent") -> None:
-        profile_what = ProfileWhat()
-        game_id = profile_what.profile.game_id
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
         if game_id is None:
             raise Exception("No game event pointer, the player is not in a game")
         SendChat(
@@ -49,14 +49,14 @@ class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
 
 class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEvent]):
     def handle(self, event: "SendChatNetworkRequestEvent") -> None:
-        profile_what = ProfileWhat()
-        game_id = profile_what.profile.game_id
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
         if game_id is None:
             raise Exception("No game event pointer, the player is not playing a game")
         request_data = self._encode(
             game_id,
             event.event_id,
-            profile_what.profile.id,
+            profile_manager.profile.id,
             event.message,
         )
 

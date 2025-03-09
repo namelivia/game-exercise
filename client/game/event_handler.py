@@ -7,7 +7,7 @@ from client.engine.commands import (
 )
 from client.engine.events import InitiateGameEvent
 from client.engine.general_state.current_screen import CurrentScreen
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.events import GameCreated as GameCreatedInGameEvent  # TODO: akward
 from common.events import PlayerJoined as PlayerJoinedInGameEvent  # TODO: akward
@@ -94,9 +94,9 @@ class ClearInternalGameInformationEventHandler(
     BaseEventHandler[ClearInternalGameInformationEvent]
 ):
     def handle(self, event: ClearInternalGameInformationEvent) -> None:
-        profile_what = ProfileWhat()
-        profile_what.profile.set_game(None)
-        profile_what.profile.set_game_event_pointer(None)
+        profile_manager = ProfileManager()
+        profile_manager.profile.set_game(None)
+        profile_manager.profile.set_game_event_pointer(None)
 
 
 handlers_map: Dict[Type["Event"], Any] = {

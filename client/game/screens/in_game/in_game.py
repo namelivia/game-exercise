@@ -18,7 +18,7 @@ from client.engine.features.pieces.events import (
 )
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.primitives.screen import Screen
 from client.game.pieces.commands import RequestPlaceASymbol
 
@@ -177,9 +177,9 @@ class InGame(Screen):
         return self.data["board"][position]["current"] is None
 
     def _move_is_valid(self, position: int) -> bool:
-        profile_what = ProfileWhat()
+        profile_manager = ProfileManager()
         return self._its_players_turn(
-            profile_what.profile.id
+            profile_manager.profile.id
         ) and self._position_is_valid(position)
 
     def on_game_created(self, event: GameCreatedInGameEvent) -> None:

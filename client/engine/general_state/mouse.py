@@ -3,10 +3,10 @@ from typing import Any, Tuple, Type
 from client.engine.external.foundational_wrapper import FoundationalWrapper
 
 
-# This is a singleton
 class Mouse:
     _instance = None
 
+    # This class is a singleton
     def __new__(cls: Type["Mouse"], *args: Any, **kwargs: Any) -> "Mouse":
         if not cls._instance:
             cls._instance = super(Mouse, cls).__new__(cls)

@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.pieces.events import PlaceASymbolRequestEvent
@@ -38,8 +38,8 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGame
 
 class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
     def handle(self, event: "PlaceASymbolRequestEvent") -> None:
-        profile_what = ProfileWhat()
-        game_id = profile_what.profile.game_id
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
         if game_id is None:
             raise Exception("Trying to place symbol with no game")
         PlaceASymbol(
@@ -53,14 +53,14 @@ class PlaceASymbolNetworkRequestEventHandler(
     EventHandler[PlaceASymbolNetworkRequestEvent]
 ):
     def handle(self, event: "PlaceASymbolNetworkRequestEvent") -> None:
-        profile_what = ProfileWhat()
-        game_id = profile_what.profile.game_id
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
         if game_id is None:
             raise Exception("Trying to place symbol with no game")
         request_data = self._encode(
             game_id,
             event.event_id,
-            profile_what.profile.id,
+            profile_manager.profile.id,
             event.position,
         )
 

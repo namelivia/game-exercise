@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.general_state.current_screen import CurrentScreen
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.general_state.queue import Queue
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.keyboard import KeyboardInput
@@ -26,8 +26,8 @@ class ScreenManagerFactory:
     ) -> "ScreenManager":
 
         # Initialize the profile
-        profile_what = ProfileWhat()
-        profile_what.set_profile("Default profile")
+        profile_manager = ProfileManager()
+        profile_manager.set_profile("Default profile")
 
         # Initialize the queue
         queue = Queue()

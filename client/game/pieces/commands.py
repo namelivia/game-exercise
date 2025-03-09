@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from client.engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.primitives.command import Command
 
 from .events import PlaceASymbolRequestEvent
@@ -17,9 +17,9 @@ class RequestPlaceASymbol(Command):
     def __init__(self, position: int):
         super().__init__(f"Request placing a symbol on position {position}")
         # We need to attach the in_game event id to the network request
-        profile_what = ProfileWhat()
+        profile_manager = ProfileManager()
         in_game_event = PlayerPlacedSymbolInGameEvent(
-            profile_what.profile.id, int(position), "pending"
+            profile_manager.profile.id, int(position), "pending"
         )
         self.events = [
             in_game_event,

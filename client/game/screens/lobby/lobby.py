@@ -1,5 +1,5 @@
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.profile_what import ProfileWhat
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, OptionList, WelcomeMessage
@@ -9,8 +9,11 @@ class Lobby(Screen):
     def __init__(self) -> None:
         super().__init__()
 
-        profile_what = ProfileWhat()
-        self.data = {"name": profile_what.profile.name, "id": profile_what.profile.id}
+        profile_manager = ProfileManager()
+        self.data = {
+            "name": profile_manager.profile.name,
+            "id": profile_manager.profile.id,
+        }
 
         self.ui_elements = [
             Background(),

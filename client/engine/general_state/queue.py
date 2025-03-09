@@ -8,10 +8,10 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
-# This is a singleton
 class Queue:
     _instance = None
 
+    # This class is a singleton
     def __new__(cls: Type["Queue"], *args: Any, **kwargs: Any) -> "Queue":
         if not cls._instance:
             cls._instance = super(Queue, cls).__new__(cls)
