@@ -9,9 +9,8 @@ from client.game.screens.enter_name.enter_name import EnterName
 
 class TestEnterName(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.enter_name = EnterName(self.client_state)
+        # self.clock.get.return_value = 0  # Initial time is 0
+        self.enter_name = EnterName()
 
     @mock.patch("client.engine.commands.SetPlayerName")
     def test_enter_name_screen(self, m_set_player_name):

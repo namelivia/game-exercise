@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 
 from .events import ScreenTransitionEvent
@@ -19,8 +19,7 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
     def handle(self, event: ScreenTransitionEvent) -> None:
         # Could I just push the instances to the queue?
         if event.dest_screen == "main":
-            client_state = ClientState()
-            client_state.set_current_screen(MainScreen(client_state))
+            CurrentScreen().set_current_screen(MainScreen())
 
 
 handlers_map: Dict[Type["Event"], Any] = {

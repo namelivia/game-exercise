@@ -1,19 +1,19 @@
-from typing import TYPE_CHECKING
-
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, OptionList, WelcomeMessage
 
-if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
-
 
 class Lobby(Screen):
-    def __init__(self, client_state: "ClientState"):
-        super().__init__(client_state)
+    def __init__(self) -> None:
+        super().__init__()
 
-        self.data = {"name": client_state.profile.name, "id": client_state.profile.id}
+        profile_manager = ProfileManager()
+        self.data = {
+            "name": profile_manager.profile.name,
+            "id": profile_manager.profile.id,
+        }
 
         self.ui_elements = [
             Background(),
@@ -50,20 +50,20 @@ class Lobby(Screen):
         # These actions, some may update the data, others run commands, who knows
         key = event.key
         if key == "1":
-            NewGame(self.client_state.profile, self.client_state.queue).execute()
+            NewGame().execute()
         if key == "2":
-            GoToJoinAGame(self.client_state.profile, self.client_state.queue).execute()
+            GoToJoinAGame().execute()
         if key == "3":
-            GoToGameList(self.client_state.profile, self.client_state.queue).execute()
+            GoToGameList().execute()
         if key == "4":
-            GoToOptions(self.client_state.profile, self.client_state.queue).execute()
+            GoToOptions().execute()
         if key == "5":
-            GoToSetName(self.client_state.profile, self.client_state.queue).execute()
+            GoToSetName().execute()
         if key == "6":
-            GoToCredits(self.client_state.profile, self.client_state.queue).execute()
+            GoToCredits().execute()
         if key == "7":
-            GoToProfiles(self.client_state.profile, self.client_state.queue).execute()
+            GoToProfiles().execute()
         if key == "p":
-            PingTheServer(self.client_state.profile, self.client_state.queue).execute()
+            PingTheServer().execute()
         if event.key == "escape":
-            QuitGame(self.client_state.profile, self.client_state.queue).execute()
+            QuitGame().execute()

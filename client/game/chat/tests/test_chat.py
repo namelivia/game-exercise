@@ -19,7 +19,7 @@ class TestChat(TestCase):
     def test_sending_a_chat_message(self, m_uuid):
         # The command is invoked whith a new chat message
         m_uuid.return_value = "event_id"
-        RequestSendChat(self.profile, self.queue, "This is a test message").execute()
+        RequestSendChat("This is a test message").execute()
 
         # Two events will be created, a request to display the chat
         ingame_event = self.queue.pop()

@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING
-
 from client.engine.features.profile.commands import GetProfiles, NewProfile, SetProfile
 from client.engine.features.profile.events import (
     ProfileSetInGameEvent,
@@ -10,13 +8,10 @@ from client.engine.primitives.screen import Screen
 
 from .ui import Background, ProfileList, ProfilesTitle
 
-if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
-
 
 class Profiles(Screen):
-    def __init__(self, client_state: "ClientState"):
-        super().__init__(client_state)
+    def __init__(self) -> None:
+        super().__init__()
 
         self.data = {"profiles": []}
 
@@ -31,22 +26,20 @@ class Profiles(Screen):
             UpdateProfilesInGameEvent: self.on_profiles_updated,
             ProfileSetInGameEvent: self.on_profile_set,
         }
-        GetProfiles(self.client_state.profile, self.client_state.queue).execute()
+        GetProfiles().execute()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
             # Avoid circular import
             from client.game.commands import BackToLobby
 
-            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            BackToLobby().execute()
             return
         if event.key == "0":
-            NewProfile(self.client_state.profile, self.client_state.queue).execute()
+            NewProfile().execute()
             return
         if event.key in "123456789":
             SetProfile(
-                self.client_state.profile,
-                self.client_state.queue,
                 self.data["profiles"][int(event.key) - 1]["name"],
             ).execute()
 
@@ -57,4 +50,4 @@ class Profiles(Screen):
         # Avoid circular import
         from client.game.commands import BackToLobby
 
-        BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+        BackToLobby().execute()

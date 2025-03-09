@@ -1,7 +1,10 @@
 from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
-from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.current_screen import CurrentScreen
+from client.engine.general_state.options import Options
+from client.engine.general_state.profile_manager import ProfileManager
+from client.engine.general_state.queue import Queue
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.keyboard import KeyboardInput
 from client.engine.input.mouse import MouseInput
@@ -22,12 +25,10 @@ class ScreenManagerFactory:
         initial_event: "Event",
         event_handler: Any,
     ) -> "ScreenManager":
-
-        # Initialize the client state
-        client_state = ClientState()
-        client_state.initialize()
-        client_state.push_initial_event(initial_event)
-        client_state.set_profile("Default profile")
+        ProfileManager().set_profile("Default profile")
+        Queue().initialize(initial_event)
+        CurrentScreen().initialize()
+        Options().initialize()
 
         return ScreenManager(
             KeyboardInput(),
@@ -54,12 +55,11 @@ class ScreenManager:
 
     # Main loop
     def run(self) -> None:
-        client_state = ClientState()
         # 1 - Push a sever polling event if needed
         ServerPolling.push_polling_event_if_needed()
 
         # 2 - Fetch and handle the latest event
-        event = client_state.queue.pop()
+        event = Queue().pop()
 
         # TODO: I don't like this if
         if event is not None and not isinstance(event, InGameEvent):
@@ -68,7 +68,7 @@ class ScreenManager:
         # 3 - Read user input
         UserInput.process(self.keyboard_input, self.mouse_input)
 
-        current_screen = client_state.get_current_screen()
+        current_screen = CurrentScreen().get_current_screen()
 
         if current_screen is not None:
             # 4 - Draw the screen

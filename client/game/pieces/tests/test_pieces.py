@@ -19,7 +19,7 @@ class TestPieces(TestCase):
     def test_requesting_placing_a_symbol(self, m_uuid):
         # The command is invoked whith the symbol position
         m_uuid.return_value = "event_id"
-        RequestPlaceASymbol(self.profile, self.queue, 2).execute()
+        RequestPlaceASymbol(2).execute()
 
         # Two events will be created, a request to display the chat
         ingame_event = self.queue.pop()

@@ -1,18 +1,13 @@
-from typing import TYPE_CHECKING
-
 from client.engine.features.sound.commands import TurnSoundOff, TurnSoundOn
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, OptionList, OptionsTitle
 
-if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
-
 
 class Options(Screen):
-    def __init__(self, client_state: "ClientState"):
-        super().__init__(client_state)
+    def __init__(self) -> None:
+        super().__init__()
 
         self.ui_elements = [
             Background(),
@@ -27,9 +22,9 @@ class Options(Screen):
             # Avoid circular import
             from client.game.commands import BackToLobby
 
-            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            BackToLobby().execute()
             return
         if event.key == "1":
-            TurnSoundOn(self.client_state.profile, self.client_state.queue).execute()
+            TurnSoundOn().execute()
         if event.key == "2":
-            TurnSoundOff(self.client_state.profile, self.client_state.queue).execute()
+            TurnSoundOff().execute()

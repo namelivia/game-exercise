@@ -9,9 +9,8 @@ from client.game.screens.new_game.new_game import NewGame
 
 class TestNewGame(TestCase):
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.new_game = NewGame(self.client_state)
+        # self.clock.get.return_value = 0  # Initial time is 0
+        self.new_game = NewGame()
 
     @mock.patch("client.game.screens.new_game.new_game.RequestGameCreation")
     def test_new_game_screen(self, m_request_game_creation):

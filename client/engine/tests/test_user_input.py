@@ -13,10 +13,8 @@ class TestUserInput(TestCase):
     @mock.patch("pygame.event.get")
     @mock.patch("client.engine.user_input.UserClicked")
     @mock.patch("client.engine.user_input.UserTyped")
-    @mock.patch("client.engine.user_input.ClientState")
     def test_no_user_events(
         self,
-        m_client_state,
         m_user_typed_command,
         m_user_clicked_command,
         m_pygame_event_get,
@@ -30,25 +28,21 @@ class TestUserInput(TestCase):
     @mock.patch("pygame.event.get")
     @mock.patch("client.engine.user_input.UserClicked")
     @mock.patch("client.engine.user_input.UserTyped")
-    @mock.patch("client.engine.user_input.ClientState")
     def test_some_user_events(
         self,
-        m_client_state,
         m_user_typed_command,
         m_user_clicked_command,
         m_pygame_event_get,
     ):
         self.keyboard_input.read.return_value = ["a", "x", "c"]
         self.mouse_input.read.return_value = "click"
-        m_client_state.profile = mock.Mock()
-        m_client_state.queue = mock.Mock()
+        # profile = mock.Mock()
+        # queue = mock.Mock()
         UserInput.process(self.keyboard_input, self.mouse_input)
         assert m_user_typed_command.call_count == 3
         assert m_user_typed_command.call_args_list == [
-            mock.call(m_client_state().profile, m_client_state().queue, "a"),
-            mock.call(m_client_state().profile, m_client_state().queue, "x"),
-            mock.call(m_client_state().profile, m_client_state().queue, "c"),
+            mock.call("a"),
+            mock.call("x"),
+            mock.call("c"),
         ]
-        m_user_clicked_command.assert_called_once_with(
-            m_client_state().profile, m_client_state().queue
-        )
+        m_user_clicked_command.assert_called_once()

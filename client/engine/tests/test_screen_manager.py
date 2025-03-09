@@ -23,15 +23,12 @@ class TestScreenManager(TestCase):
         "client.engine.screen_manager.ServerPolling.push_polling_event_if_needed"
     )
     @mock.patch("client.engine.screen_manager.UserInput.process")
-    @mock.patch("client.engine.screen_manager.ClientState")
-    def test_main_loop_iteration(
-        self, m_client_state, m_process_input, m_push_polling_event
-    ):
-        m_client_state().clock.get.return_value = 120
+    def test_main_loop_iteration(self, m_process_input, m_push_polling_event):
+        # clock.get.return_value = 120
         event = mock.Mock(InGameEvent)
-        m_client_state().queue.pop.return_value = event  # Event from the queue
+        # queue.pop.return_value = event  # Event from the queue
         current_screen = mock.Mock()
-        m_client_state().get_current_screen.return_value = current_screen
+        # get_current_screen.return_value = current_screen
         self.keyboard_input.read.return_value = []  # no input
         self.mouse_input.read.return_value = None  # no input
 

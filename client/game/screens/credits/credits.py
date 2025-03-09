@@ -1,17 +1,12 @@
-from typing import TYPE_CHECKING
-
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.primitives.screen import Screen
 
 from .ui import Background, CreditsUI
 
-if TYPE_CHECKING:
-    from client.engine.general_state.client_state import ClientState
-
 
 class Credits(Screen):
-    def __init__(self, client_state: "ClientState"):
-        super().__init__(client_state)
+    def __init__(self) -> None:
+        super().__init__()
 
         self.ui_elements = [
             Background(),
@@ -25,4 +20,4 @@ class Credits(Screen):
             # Avoid circular import
             from client.game.commands import BackToLobby
 
-            BackToLobby(self.client_state.profile, self.client_state.queue).execute()
+            BackToLobby().execute()

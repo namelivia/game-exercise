@@ -44,20 +44,18 @@ class TestChat(TestCase):
     @mock.patch("client.engine.features.chat.event_handler.ChatMessageConfirmedCommand")
     @mock.patch("client.engine.features.chat.event_handler.ClientState")
     def test_sending_a_chat_message_success(
-        self, m_client_state, m_chat_message_confirmed, m_send_command
+        self, m_chat_message_confirmed, m_send_command
     ):
         # The command is invoked whith a new chat message
-        SendChat(
-            self.profile, self.queue, "game_id", "event_id", "This is a test message"
-        ).execute()
+        SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
         network_event = self.queue.pop()
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         # The response will be sucessful
         m_send_command.return_value = ChatMessageConfirmation("event_id")
@@ -73,28 +71,21 @@ class TestChat(TestCase):
         assert request_message.message == "This is a test message"
 
         # Assert that the confirmation command gets called
-        m_chat_message_confirmed.assert_called_once_with(
-            self.profile, self.queue, "event_id"
-        )
+        m_chat_message_confirmed.assert_called_once_with(self.queue, "event_id")
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("client.engine.features.chat.event_handler.ChatMessageErroredCommand")
-    @mock.patch("client.engine.features.chat.event_handler.ClientState")
-    def test_sending_a_chat_message_error_response(
-        self, m_client_state, m_error, m_send_command
-    ):
+    def test_sending_a_chat_message_error_response(self, m_error, m_send_command):
         # The command is invoked whith a new chat message
-        SendChat(
-            self.profile, self.queue, "game_id", "event_id", "This is a test message"
-        ).execute()
+        SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
         network_event = self.queue.pop()
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         # The response won't be sucessful
         m_send_command.return_value = ErrorMessage("Error message")
@@ -109,26 +100,21 @@ class TestChat(TestCase):
         assert request_message.player_id == "player_id"
         assert request_message.message == "This is a test message"
 
-        m_error.assert_called_once_with(self.profile, self.queue, "event_id")
+        m_error.assert_called_once_with(self.queue, "event_id")
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("client.engine.features.chat.event_handler.ChatMessageErroredCommand")
-    @mock.patch("client.engine.features.chat.event_handler.ClientState")
-    def test_sending_a_chat_message_no_response(
-        self, m_client_state, m_error, m_send_command
-    ):
+    def test_sending_a_chat_message_no_response(self, m_error, m_send_command):
         # The command is invoked whith a new chat message
-        SendChat(
-            self.profile, self.queue, "game_id", "event_id", "This is a test message"
-        ).execute()
+        SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
         network_event = self.queue.pop()
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # And network request to ask for setting the message on the server is sent
-        m_client_state().profile = self.profile
-        m_client_state().queue = self.queue
+        # profile = self.profile
+        # queue = self.queue
 
         # The response won't be sucessful
         m_send_command.return_value = None
@@ -143,11 +129,11 @@ class TestChat(TestCase):
         assert request_message.player_id == "player_id"
         assert request_message.message == "This is a test message"
 
-        m_error.assert_called_once_with(self.profile, self.queue, "event_id")
+        m_error.assert_called_once_with(self.queue, "event_id")
 
     def test_confirm_a_chat_has_been_posted(self):
         # The command is invoked confirming the chat post
-        ChatMessageConfirmedCommand(self.profile, self.queue, "event_id").execute()
+        ChatMessageConfirmedCommand("event_id").execute()
 
         # The command creates an ingame event
         in_game_confirm_event = self.queue.pop()
@@ -156,7 +142,7 @@ class TestChat(TestCase):
 
     def test_error_when_a_chat_was_incorrectly_posted(self):
         # The command is invoked signaling something went wrong
-        ChatMessageErroredCommand(self.profile, self.queue, "event_id").execute()
+        ChatMessageErroredCommand("event_id").execute()
 
         # The command creates an ingame event
         in_game_error_event = self.queue.pop()
@@ -165,9 +151,7 @@ class TestChat(TestCase):
 
     def test_adding_an_incoming_chat_message(self):
         # Let the game know there is a new chat message
-        ChatMessageInGameCommand(
-            self.profile, self.queue, "event_id", "player_1", "Hello"
-        ).execute()
+        ChatMessageInGameCommand("event_id", "player_1", "Hello").execute()
 
         # The command creates an ingame event
         in_game_event = self.queue.pop()
