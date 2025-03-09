@@ -47,7 +47,7 @@ class TestChat(TestCase):
         self, m_client_state, m_chat_message_confirmed, m_send_command
     ):
         # The command is invoked whith a new chat message
-        SendChat(self.queue, "game_id", "event_id", "This is a test message").execute()
+        SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
         network_event = self.queue.pop()
@@ -80,7 +80,7 @@ class TestChat(TestCase):
         self, m_client_state, m_error, m_send_command
     ):
         # The command is invoked whith a new chat message
-        SendChat(self.queue, "game_id", "event_id", "This is a test message").execute()
+        SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
         network_event = self.queue.pop()
@@ -112,9 +112,7 @@ class TestChat(TestCase):
         self, m_client_state, m_error, m_send_command
     ):
         # The command is invoked whith a new chat message
-        SendChat(
-            profile, self.queue, "game_id", "event_id", "This is a test message"
-        ).execute()
+        SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
         network_event = self.queue.pop()
@@ -141,7 +139,7 @@ class TestChat(TestCase):
 
     def test_confirm_a_chat_has_been_posted(self):
         # The command is invoked confirming the chat post
-        ChatMessageConfirmedCommand(self.queue, "event_id").execute()
+        ChatMessageConfirmedCommand("event_id").execute()
 
         # The command creates an ingame event
         in_game_confirm_event = self.queue.pop()
@@ -150,7 +148,7 @@ class TestChat(TestCase):
 
     def test_error_when_a_chat_was_incorrectly_posted(self):
         # The command is invoked signaling something went wrong
-        ChatMessageErroredCommand(self.queue, "event_id").execute()
+        ChatMessageErroredCommand("event_id").execute()
 
         # The command creates an ingame event
         in_game_error_event = self.queue.pop()
@@ -159,7 +157,7 @@ class TestChat(TestCase):
 
     def test_adding_an_incoming_chat_message(self):
         # Let the game know there is a new chat message
-        ChatMessageInGameCommand(self.queue, "event_id", "player_1", "Hello").execute()
+        ChatMessageInGameCommand("event_id", "player_1", "Hello").execute()
 
         # The command creates an ingame event
         in_game_event = self.queue.pop()

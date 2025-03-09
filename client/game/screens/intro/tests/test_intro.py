@@ -12,7 +12,7 @@ class TestIntroScreen(TestCase):
     def setUp(self):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.intro = Intro(self.client_state)
+        self.intro = Intro()
 
     @mock.patch("client.game.commands.ToLobby")
     def test_escape_to_lobby(self, m_to_lobby):

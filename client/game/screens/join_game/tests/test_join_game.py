@@ -11,7 +11,7 @@ class TestJoinGame(TestCase):
     def setUp(self):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.join_game = JoinGame(self.client_state)
+        self.join_game = JoinGame()
 
     @mock.patch("client.game.screens.join_game.join_game.RequestJoiningAGame")
     def test_join_game_screen(self, m_request_join_game):

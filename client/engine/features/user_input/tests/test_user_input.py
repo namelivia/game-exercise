@@ -18,7 +18,7 @@ class TestUserInput(TestCase):
 
     def test_user_input(self):
         # The command is invoked whith the key the user typed
-        UserTyped(self.profile, self.queue, "a").execute()
+        UserTyped("a").execute()
 
         # The UserTyped command creates a UserTypedEvent for the screen
         event = self.queue.pop()

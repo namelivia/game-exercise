@@ -24,7 +24,6 @@ class TestInGameScreen(TestCase):
     def test_user_exits(self, m_back_to_lobby):
         # User types escape and returns to the lobby
         screen = InGame(
-            mock.Mock(),
             [UserTypedEvent("escape")],
             "some_game_id",
             "some_game_name",
@@ -42,7 +41,6 @@ class TestInGameScreen(TestCase):
         m_validation.return_value = True
         # User presses the number 5 to request placing a symbol
         screen = InGame(
-            mock.Mock(),
             [UserTypedEvent("5")],
             "some_game_id",
             "some_game_name",
@@ -58,7 +56,6 @@ class TestInGameScreen(TestCase):
     def test_game_has_been_created(self):
         # When the game is created some music is played
         screen = InGame(
-            mock.Mock(),
             [GameCreatedInGameEvent("player_1_id")],
             "some_game_id",
             "some_game_name",
@@ -73,7 +70,6 @@ class TestInGameScreen(TestCase):
     def test_player_has_joined(self):
         # When a player joins some music is played
         screen = InGame(
-            mock.Mock(),
             [PlayerJoinedInGameEvent("player_2_id")],
             "some_game_id",
             "some_game_name",
@@ -89,7 +85,6 @@ class TestInGameScreen(TestCase):
     def test_player_has_placed_a_symbol(self):
         # When a player has placed a symbol on the board music plays
         screen = InGame(
-            mock.Mock(),
             [PlayerPlacedSymbolInGameEvent("player_1_id", 5, "OK")],
             "some_game_id",
             "some_game_name",
@@ -105,7 +100,6 @@ class TestInGameScreen(TestCase):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
-            self.client_state,
             [],
             "some_game_id",
             "some_game_name",
@@ -347,7 +341,6 @@ class TestInGameScreen(TestCase):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
-            self.client_state,
             [],
             "some_game_id",
             "some_game_name",

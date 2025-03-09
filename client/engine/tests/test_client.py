@@ -64,7 +64,7 @@ class TestClient(TestCase):
     @mock.patch("pygame.quit")
     @mock.patch("sys.exit")
     def test_quitting_the_game(self, m_exit, m_pygame_quit):
-        QuitGame(self.profile, self.queue).execute()
+        QuitGame().execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -74,7 +74,7 @@ class TestClient(TestCase):
         m_exit.assert_called_once_with()
 
     def test_user_typing(self):
-        UserTyped(self.profile, self.queue, "f").execute()
+        UserTyped("f").execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -98,7 +98,7 @@ class TestClient(TestCase):
             game_event_pointer=1,
             sound_on=False,
         )
-        UpdateGame(profile, self.queue, game_events).execute()
+        UpdateGame(game_events).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -133,7 +133,7 @@ class TestClient(TestCase):
             sound_on=False,
         )
 
-        InitiateGame(self.profile, self.queue, game_data).execute()
+        InitiateGame(game_data).execute()
 
         m_client_state().profile = profile
 
@@ -157,15 +157,15 @@ class TestClient(TestCase):
 
     # Game events
     def test_game_created(self):
-        GameCreatedInGameCommand(self.profile, self.queue, "some_player_id").execute()
+        GameCreatedInGameCommand("some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_joined(self):
-        PlayerJoinedInGameCommand(self.profile, self.queue, "some_player_id").execute()
+        PlayerJoinedInGameCommand("some_player_id").execute()
         # TODO: Finish this test
 
     def test_player_wins(self):
-        PlayerWinsInGameCommand(self.profile, self.queue, "some_player_id").execute()
+        PlayerWinsInGameCommand("some_player_id").execute()
         # TODO: Finish this test
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
@@ -181,7 +181,7 @@ class TestClient(TestCase):
         )
 
         # A request to get the game status is sourced
-        RequestGameStatus(self.profile, self.queue, "some_game_id", 2).execute()
+        RequestGameStatus("some_game_id", 2).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -226,7 +226,7 @@ class TestClient(TestCase):
                 ],
             )
         )
-        RequestGameCreation(self.profile, self.queue, "some_game_id").execute()
+        RequestGameCreation("some_game_id").execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -283,7 +283,7 @@ class TestClient(TestCase):
                 ],
             )
         )
-        RequestJoiningAGame(self.profile, self.queue, "some_game_id").execute()
+        RequestJoiningAGame("some_game_id").execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -337,7 +337,7 @@ class TestClient(TestCase):
             sound_on=False,
         )
         assert profile.name is None
-        SetPlayerName(profile, self.queue, "Player name").execute()
+        SetPlayerName("Player name").execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -353,7 +353,7 @@ class TestClient(TestCase):
     def test_ping_the_server_success(self, m_send_command):
         m_send_command.return_value = PingResponseMessage()
 
-        PingTheServer(self.profile, self.queue).execute()
+        PingTheServer().execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events
@@ -377,7 +377,7 @@ class TestClient(TestCase):
             sound_on=False,
         )
         assert profile.name is None
-        UpdateGameList(profile, self.queue, ["game1", "game2", "game3"]).execute()
+        UpdateGameList(["game1", "game2", "game3"]).execute()
         event = (
             self.queue.pop()
         )  # TODO: Manage the case of commands that queue several events

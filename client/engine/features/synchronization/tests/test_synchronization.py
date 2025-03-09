@@ -31,7 +31,7 @@ class TestSynchronization(TestCase):
         self, m_client_state, m_update, m_send_command
     ):
         # The command is invoked
-        RefreshGameStatus(self.profile, self.queue, "game_id", 5).execute()
+        RefreshGameStatus("game_id", 5).execute()
 
         event = self.queue.pop()
         assert isinstance(event, RefreshGameStatusNetworkRequestEvent)
@@ -57,7 +57,7 @@ class TestSynchronization(TestCase):
         assert request_message.player_id == "player_id"
 
         # Assert that the confirmation command gets called
-        m_update.assert_called_once_with(self.profile, self.queue, [event_1, event_2])
+        m_update.assert_called_once_with([event_1, event_2])
 
     # TODO: Currently I'm not doing anything if this request fails, and I'm not testing it either
 
@@ -67,7 +67,7 @@ class TestSynchronization(TestCase):
     @mock.patch("client.engine.features.synchronization.event_handler.ClientState")
     def test_requesting_the_game_status(self, m_client_state, m_refresh_command):
         # The command is invoked
-        RequestGameStatus(self.profile, self.queue, "game_id", 3).execute()
+        RequestGameStatus("game_id", 3).execute()
 
         event = self.queue.pop()
         assert isinstance(event, RefreshGameStatusEvent)
@@ -79,16 +79,14 @@ class TestSynchronization(TestCase):
 
         self.event_handler.handle(event)
 
-        m_refresh_command.assert_called_once_with(
-            self.profile, self.queue, "game_id", 3
-        )
+        m_refresh_command.assert_called_once_with("game_id", 3)
 
     def test_processing_server_events(self):
         # This one is very special! It just passing all its events to the queue
         event_1 = mock.Mock()
         event_2 = mock.Mock()
         # The command is invoked
-        ProcessServerEvents(self.profile, self.queue, [event_1, event_2]).execute()
+        ProcessServerEvents([event_1, event_2]).execute()
 
         assert self.queue.pop() == event_1
         assert self.queue.pop() == event_2
@@ -101,7 +99,7 @@ class TestSynchronization(TestCase):
         event_1 = mock.Mock()
         event_2 = mock.Mock()
         # The command is invoked
-        UpdateGame(self.profile, self.queue, [event_1, event_2]).execute()
+        UpdateGame([event_1, event_2]).execute()
 
         event = self.queue.pop()
         assert isinstance(event, UpdateGameEvent)
@@ -115,6 +113,4 @@ class TestSynchronization(TestCase):
 
         # The game event pointer is updated to include these new events
         m_client_state().profile.set_game_event_pointer.assert_called_once_with(6)
-        m_process_events.assert_called_once_with(
-            self.profile, self.queue, [event_1, event_2]
-        )
+        m_process_events.assert_called_once_with([event_1, event_2])

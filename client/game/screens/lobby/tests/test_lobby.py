@@ -12,7 +12,7 @@ class TestLobby(TestCase):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.client_state.profile.name = "TestPlayer"
-        self.lobby = Lobby(self.client_state)
+        self.lobby = Lobby()
 
     @mock.patch("client.game.commands.NewGame")
     def test_navigating_to_new_game(self, m_new_game_command):

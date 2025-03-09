@@ -13,7 +13,7 @@ class TestMainScreen(TestCase):
         self.client_state = mock.Mock()
         self.client_state.clock.get.return_value = 0  # Initial time is 0
         self.client_state.mouse.get.return_value = [0, 0]  # Mouse is at 0, 0
-        self.main = MainScreen(self.client_state)
+        self.main = MainScreen()
 
     def test_visual_regression(self):
         self.main.update()

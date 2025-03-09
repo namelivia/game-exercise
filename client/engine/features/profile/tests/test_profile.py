@@ -33,7 +33,7 @@ class TestProfile(TestCase):
     @mock.patch("client.engine.features.profile.event_handler.ClientState")
     def test_setting_a_profile(self, m_client_state, m_profile_is_set_command):
         # The command is invoked whith an existing profile key
-        SetProfile(self.profile, self.queue, "profile_1").execute()
+        SetProfile("profile_1").execute()
 
         set_profile_event = self.queue.pop()
         assert isinstance(set_profile_event, SetProfileEvent)
@@ -49,15 +49,13 @@ class TestProfile(TestCase):
         m_client_state().set_profile.assert_called_once_with("profile_1")
 
         # The comand letting the game know that the profile is set is issued
-        m_profile_is_set_command.assert_called_once_with(
-            self.profile, self.queue, "profile_1"
-        )
+        m_profile_is_set_command.assert_called_once_with("profile_1")
 
     @mock.patch("client.engine.features.profile.event_handler.SetProfile")
     @mock.patch("client.engine.features.profile.event_handler.ClientState")
     def test_creating_a_profile(self, m_client_state, m_set_profile):
         # The command is invoked
-        NewProfile(self.profile, self.queue).execute()
+        NewProfile().execute()
 
         new_profile_event = self.queue.pop()
         assert isinstance(new_profile_event, NewProfileEvent)
@@ -78,15 +76,13 @@ class TestProfile(TestCase):
         m_client_state().new_profile.assert_called_once()
 
         # The comand setting this new profile as the profile is invoked
-        m_set_profile.assert_called_once_with(
-            self.profile, self.queue, "new_profile_key"
-        )
+        m_set_profile.assert_called_once_with("new_profile_key")
 
     def test_letting_the_game_know_that_a_profile_is_set(self):
         #  TODO: This command is probably redundant and can be replaced with just an event
 
         # The command is invoked
-        ProfileIsSet(self.profile, self.queue, "profile_1").execute()
+        ProfileIsSet("profile_1").execute()
 
         event = self.queue.pop()
         assert isinstance(event, ProfileSetInGameEvent)
@@ -99,7 +95,7 @@ class TestProfile(TestCase):
         self, m_client_state, m_update_command, m_persistence
     ):
         # Command is invoked
-        GetProfiles(self.profile, self.queue).execute()
+        GetProfiles().execute()
 
         event = self.queue.pop()
         assert isinstance(event, GetProfilesEvent)
@@ -122,8 +118,6 @@ class TestProfile(TestCase):
 
         # The comand updating the profiles as the profile is invoked
         m_update_command.assert_called_once_with(
-            self.profile,
-            self.queue,
             [
                 {"name": "profile_1"},
                 {"name": "profile_2"},
@@ -134,8 +128,6 @@ class TestProfile(TestCase):
     def test_updating_profiles(self):
         # Command is invoked
         UpdateProfiles(
-            self.profile,
-            self.queue,
             [
                 {"name": "profile_1"},
                 {"name": "profile_2"},
