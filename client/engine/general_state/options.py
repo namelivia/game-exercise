@@ -13,7 +13,7 @@ class Options:
         return cls._instance
 
     def initialize(self) -> None:
-        self.sound_on = False  # Default value
+        self.sound_on = True  # Default value
 
     def set_sound_on(self) -> None:
         self.sound_on = True
