@@ -4,12 +4,17 @@ import mock
 
 from client.engine.features.profile.events import UpdateProfilesInGameEvent
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.profiles.profiles import Profiles
 
 
 class TestProfiles(TestCase):
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
+        self._initialize_test_queue()
         self.profiles = Profiles()
 
     @mock.patch("client.game.screens.profiles.profiles.SetProfile")
@@ -41,4 +46,4 @@ class TestProfiles(TestCase):
         self.profiles.update(
             UserTypedEvent("2"),
         )
-        m_set_profile.assert_called_once_with(mock.ANY, mock.ANY, "another profile")
+        m_set_profile.assert_called_once_with("another profile")

@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING, Any, Type
 
 from client.engine.persistence.persistence import Persistence
 
+from .profile.profile import Profile
+
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
 

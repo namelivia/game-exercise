@@ -3,14 +3,26 @@ from unittest import TestCase
 import mock
 
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.lobby.lobby import Lobby
 
 
 class TestLobby(TestCase):
+    def _initialize_test_profile(self):
+        # Initialize a test profile in the ProfileManager
+        test_profile = Profile(
+            key="test_profile",
+            id="test_id",
+            game_id=None,
+            game_event_pointer=None,
+        )
+        test_profile.name = "TestPlayer"
+        ProfileManager().set_profile("test_profile")
+
     def setUp(self):
-        # self.clock.get.return_value = 0  # Initial time is 0
-        # self.profile.name = "TestPlayer"
+        self._initialize_test_profile()
         self.lobby = Lobby()
 
     @mock.patch("client.game.commands.NewGame")

@@ -3,13 +3,17 @@ from unittest import TestCase
 import mock
 
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.new_game.new_game import NewGame
 
 
 class TestNewGame(TestCase):
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
-        # self.clock.get.return_value = 0  # Initial time is 0
+        self._initialize_test_queue()
         self.new_game = NewGame()
 
     @mock.patch("client.game.screens.new_game.new_game.RequestGameCreation")
@@ -52,4 +56,4 @@ class TestNewGame(TestCase):
         self.new_game.update(
             UserTypedEvent("return"),
         )
-        m_request_game_creation.assert_called_once_with(mock.ANY, mock.ANY, "test")
+        m_request_game_creation.assert_called_once_with("test")

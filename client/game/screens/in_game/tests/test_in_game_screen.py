@@ -15,11 +15,33 @@ from client.engine.features.pieces.events import (
     SymbolPlacedErroredEvent,
 )
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.profile_manager import ProfileManager
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.in_game.in_game import InGame
 
 
 class TestInGameScreen(TestCase):
+
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
+    def _initialize_test_profile(self):
+        # Initialize a test profile in the ProfileManager
+        test_profile = Profile(
+            key="test_profile",
+            id="test_id",
+            game_id=None,
+            game_event_pointer=None,
+        )
+        test_profile.name = "TestPlayer"
+        ProfileManager().set_profile("test_profile")
+
+    def setUp(self):
+        self._initialize_test_queue()
+        self._initialize_test_profile()
+
     @mock.patch("client.game.commands.BackToLobby")
     def test_user_exits(self, m_back_to_lobby):
         # User types escape and returns to the lobby
