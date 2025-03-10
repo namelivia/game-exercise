@@ -14,30 +14,40 @@ from client.engine.features.synchronization.events import (
     RefreshGameStatusNetworkRequestEvent,
     UpdateGameEvent,
 )
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.general_state.queue import Queue
 from common.messages import GameEventsMessage, GetGameStatus
 
 
 class TestSynchronization(TestCase):
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
-        self.profile = mock.Mock()
-        self.queue = Queue()
+        self._initialize_test_queue()
         self.event_handler = EventHandler()
 
     @mock.patch("client.engine.event_handler.Channel.send_command")
     @mock.patch("client.engine.features.synchronization.event_handler.UpdateGame")
-    def test_refreshing_the_game_status_sucess(self, m_update, m_send_command):
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def test_refreshing_the_game_status_sucess(
+        self, m_persistence, m_update, m_send_command
+    ):
+        m_persistence.load.return_value = Profile(
+            key="test_profile",
+            id="player_id",
+            game_id="game_id",
+            game_event_pointer=5,
+        )
+        ProfileManager().set_profile("test_profile")
         # The command is invoked
         RefreshGameStatus("game_id", 5).execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, RefreshGameStatusNetworkRequestEvent)
         assert event.game_id == "game_id"
         assert event.pointer == 5
-
-        # profile = self.profile
-        self.profile.id = "player_id"
-        # queue = self.queue
 
         # The response will be sucessful
         event_1 = mock.Mock()
@@ -61,17 +71,22 @@ class TestSynchronization(TestCase):
     @mock.patch(
         "client.engine.features.synchronization.event_handler.RefreshGameStatus"
     )
-    def test_requesting_the_game_status(self, m_refresh_command):
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def test_requesting_the_game_status(self, m_persistence, m_refresh_command):
+        m_persistence.load.return_value = Profile(
+            key="test_profile",
+            id="player_id",
+            game_id="game_id",
+            game_event_pointer=3,
+        )
+        ProfileManager().set_profile("test_profile")
         # The command is invoked
         RequestGameStatus("game_id", 3).execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, RefreshGameStatusEvent)
         assert event.game_id == "game_id"
         assert event.pointer == 3
-
-        # profile = self.profile
-        # queue = self.queue
 
         self.event_handler.handle(event)
 
@@ -84,25 +99,29 @@ class TestSynchronization(TestCase):
         # The command is invoked
         ProcessServerEvents([event_1, event_2]).execute()
 
-        assert self.queue.pop() == event_1
-        assert self.queue.pop() == event_2
+        assert Queue().pop() == event_1
+        assert Queue().pop() == event_2
 
     @mock.patch(
         "client.engine.features.synchronization.event_handler.ProcessServerEvents"
     )
-    def test_updating_game(self, m_process_events):
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def test_updating_game(self, m_persistence, m_process_events):
+        m_persistence.load.return_value = Profile(
+            key="test_profile",
+            id="player_id",
+            game_id="game_id",
+            game_event_pointer=4,
+        )
+        ProfileManager().set_profile("test_profile")
         event_1 = mock.Mock()
         event_2 = mock.Mock()
         # The command is invoked
         UpdateGame([event_1, event_2]).execute()
 
-        event = self.queue.pop()
+        event = Queue().pop()
         assert isinstance(event, UpdateGameEvent)
         assert event.events == [event_1, event_2]
-
-        # profile = self.profile
-        # queue = self.queue
-        # profile.game_event_pointer = 4
 
         self.event_handler.handle(event)
 

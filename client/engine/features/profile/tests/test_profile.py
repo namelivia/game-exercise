@@ -58,16 +58,6 @@ class TestProfile(TestCase):
         new_profile_event = self.queue.pop()
         assert isinstance(new_profile_event, NewProfileEvent)
 
-        # profile = self.profile
-        # queue = self.queue
-        # new_profile = mock.Mock()
-        new_profile.return_value = Profile(
-            key="new_profile_key",
-            id="some_id",
-            game_id=None,
-            game_event_pointer=None,
-            sound_on=True,
-        )
         self.event_handler.handle(new_profile_event)
 
         # The profile creation is requested in the client state

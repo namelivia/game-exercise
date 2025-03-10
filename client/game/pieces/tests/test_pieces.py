@@ -11,16 +11,15 @@ from client.game.pieces.events import PlaceASymbolRequestEvent
 
 
 class TestPieces(TestCase):
-    def _initialize_test_profile(self):
-        # Initialize a test profile in the ProfileManager
-        test_profile = Profile(
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def _initialize_test_profile(self, m_persistence):
+        m_persistence.load.return_value = Profile(
             key="test_profile",
             id="player_id",
-            game_id=None,
+            game_id="game_id",
             game_event_pointer=None,
         )
         ProfileManager().set_profile("test_profile")
-        return test_profile
 
     def _initialize_test_queue(self):
         Queue().initialize(None)

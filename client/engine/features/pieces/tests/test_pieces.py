@@ -23,9 +23,9 @@ from common.messages import ErrorMessage, PlaceASymbolMessage, SymbolPlacedConfi
 
 class TestPieces(TestCase):
 
-    def _initialize_test_profile(self):
-        # Initialize a test profile in the ProfileManager
-        test_profile = Profile(
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def _initialize_test_profile(self, m_persistence):
+        m_persistence.load.return_value = Profile(
             key="test_profile",
             id="player_id",
             game_id="game_id",
@@ -93,7 +93,7 @@ class TestPieces(TestCase):
         assert isinstance(request_message, PlaceASymbolMessage)
         assert request_message.game_id == "game_id"
         assert request_message.event_id == "event_id"
-        assert request_Qessage.player_id == "player_id"
+        assert request_message.player_id == "player_id"
         assert request_message.position == 2
 
         m_error.assert_called_once_with("event_id")

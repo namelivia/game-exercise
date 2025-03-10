@@ -2,17 +2,24 @@ from unittest import TestCase
 
 import mock
 
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.experiment.screens.main.main import MainScreen
 
 
 class TestMainScreen(TestCase):
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
-        # self.clock.get.return_value = 0  # Initial time is 0
-        # self.mouse.get.return_value = [0, 0]  # Mouse is at 0, 0
+        self._initialize_test_queue()
         self.main = MainScreen()
 
-    def test_visual_regression(self):
+    @mock.patch(
+        "client.engine.external.foundational_wrapper.FoundationalWrapper.get_mouse_position"
+    )
+    def test_visual_regression(self, m_get_mouse_position):
+        m_get_mouse_position.return_value = [0, 0]
         self.main.update()
         VisualRegression.assert_matches_snapshot(
             self.main,

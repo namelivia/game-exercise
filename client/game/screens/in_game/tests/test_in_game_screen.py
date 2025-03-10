@@ -27,15 +27,14 @@ class TestInGameScreen(TestCase):
     def _initialize_test_queue(self):
         Queue().initialize(None)
 
-    def _initialize_test_profile(self):
-        # Initialize a test profile in the ProfileManager
-        test_profile = Profile(
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def _initialize_test_profile(self, m_persistence):
+        m_persistence.load.return_value = Profile(
             key="test_profile",
-            id="test_id",
-            game_id=None,
+            id="player_id",
+            game_id="game_id",
             game_event_pointer=None,
         )
-        test_profile.name = "TestPlayer"
         ProfileManager().set_profile("test_profile")
 
     def setUp(self):
