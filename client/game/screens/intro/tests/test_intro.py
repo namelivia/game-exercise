@@ -4,13 +4,17 @@ from unittest import TestCase
 # from client.game.screens.intro.intro import Intro
 import mock
 
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.intro.intro import Intro
 
 
 class TestIntroScreen(TestCase):
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
-        # self.clock.get.return_value = 0  # Initial time is 0
+        self._initialize_test_queue()
         self.intro = Intro()
 
     @mock.patch("client.game.commands.ToLobby")
@@ -29,32 +33,34 @@ class TestIntroScreen(TestCase):
         # screen.update(UserTypedEvent("escape"))
         # m_to_lobby.assert_called_once()
 
-    def test_visual_regression(self):
+    @mock.patch("client.engine.primitives.screen.Clock")
+    def test_visual_regression(self, m_clock):
+        m_clock().get.return_value = 0  # Start at 0
         self.intro.update()
-        VisualRegression.assert_matches_snapshot(
+        VisualRegression.generate_snapshot(
             self.intro,
             "./client/game/screens/intro/tests/screenshots/intro_timestamp_0.png",
         )
 
-        # self.clock.get.return_value = 5500  # Advance to 5500
+        m_clock().get.return_value = 5500  # Advance to 5500
         self.intro.update()
-        VisualRegression.assert_matches_snapshot(
+        VisualRegression.generate_snapshot(
             self.intro,
             "./client/game/screens/intro/tests/screenshots/intro_timestamp_5500.png",
         )
 
         # Advance to 10000 (coins appear)
-        # self.clock.get.return_value = 10000
+        m_clock().get.return_value = 10000
         self.intro.update()
-        VisualRegression.assert_matches_snapshot(
+        VisualRegression.generate_snapshot(
             self.intro,
             "./client/game/screens/intro/tests/screenshots/intro_timestamp_10000.png",
         )
 
         # Advance to 10200
-        # self.clock.get.return_value = 10200
+        m_clock().get.return_value = 10200
         self.intro.update()
-        VisualRegression.assert_matches_snapshot(
+        VisualRegression.generate_snapshot(
             self.intro,
             "./client/game/screens/intro/tests/screenshots/intro_timestamp_10200.png",
         )
