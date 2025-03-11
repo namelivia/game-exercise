@@ -18,6 +18,7 @@ if __name__ == "__main__":
     )
 
     pygame.init()
+    pygame.mixer.init()
     screen_manager = ScreenManagerFactory.create(
         initial_event=ScreenTransitionEvent("main"), event_handler=GameEventHandler()
     )
