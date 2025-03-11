@@ -3,15 +3,18 @@ from unittest import TestCase
 import mock
 
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.enter_name.enter_name import EnterName
 
 
 class TestEnterName(TestCase):
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.enter_name = EnterName(self.client_state)
+        self._initialize_test_queue()
+        self.enter_name = EnterName()
 
     @mock.patch("client.engine.commands.SetPlayerName")
     def test_enter_name_screen(self, m_set_player_name):
@@ -53,4 +56,4 @@ class TestEnterName(TestCase):
         self.enter_name.update(
             UserTypedEvent("return"),
         )
-        m_set_player_name.assert_called_once_with(mock.ANY, mock.ANY, "test")
+        m_set_player_name.assert_called_once_with("test")

@@ -5,15 +5,19 @@ import mock
 
 from client.engine.features.game_list.events import UpdateGameListEvent
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.game_list.game_list import GameList
 
 
 class TestGameList(TestCase):
+
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.game_list = GameList(self.client_state)
+        self._initialize_test_queue()
+        self.game_list = GameList()
 
     @mock.patch("client.game.screens.game_list.game_list.RequestJoiningAGame")
     def test_game_list(self, m_request_joining_game):
@@ -43,4 +47,4 @@ class TestGameList(TestCase):
         self.game_list.update(
             UserTypedEvent("2"),
         )
-        m_request_joining_game.assert_called_once_with(mock.ANY, mock.ANY, "game_id_3")
+        m_request_joining_game.assert_called_once_with("game_id_3")

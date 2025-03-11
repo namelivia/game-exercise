@@ -2,6 +2,8 @@ from unittest import TestCase
 
 import mock
 
+from client.engine.general_state.current_screen import CurrentScreen
+from client.engine.general_state.queue import Queue
 from client.engine.primitives.event import InGameEvent
 from client.engine.screen_manager import ScreenManager
 
@@ -23,15 +25,14 @@ class TestScreenManager(TestCase):
         "client.engine.screen_manager.ServerPolling.push_polling_event_if_needed"
     )
     @mock.patch("client.engine.screen_manager.UserInput.process")
-    @mock.patch("client.engine.screen_manager.ClientState")
-    def test_main_loop_iteration(
-        self, m_client_state, m_process_input, m_push_polling_event
-    ):
-        m_client_state().clock.get.return_value = 120
+    def test_main_loop_iteration(self, m_process_input, m_push_polling_event):
+        # clock.get.return_value = 120
         event = mock.Mock(InGameEvent)
-        m_client_state().queue.pop.return_value = event  # Event from the queue
+        Queue().initialize(event)
         current_screen = mock.Mock()
-        m_client_state().get_current_screen.return_value = current_screen
+        CurrentScreen().initialize()
+        CurrentScreen().set_current_screen(current_screen)
+        # get_current_screen.return_value = current_screen
         self.keyboard_input.read.return_value = []  # no input
         self.mouse_input.read.return_value = None  # no input
 

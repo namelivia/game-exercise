@@ -23,7 +23,7 @@ from client.engine.features.sound.event_handler import (
 from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
 )
-from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.messages import ErrorMessage, PingRequestMessage, PingResponseMessage
@@ -60,15 +60,15 @@ class SetInternalGameInformationEventHandler(
     BaseEventHandler[SetInternalGameInformationEvent]
 ):
     def handle(self, event: "SetInternalGameInformationEvent") -> None:
-        client_state = ClientState()
-        client_state.profile.set_game(event.game_id)
-        client_state.profile.set_game_event_pointer(0)
+        profile_manager = ProfileManager()
+        profile_manager.profile.set_game(event.game_id)
+        profile_manager.profile.set_game_event_pointer(0)
 
 
 class SetPlayerNameEventHandler(BaseEventHandler[SetPlayerNameEvent]):
     def handle(self, event: "SetPlayerNameEvent") -> None:
-        client_state = ClientState()
-        client_state.profile.set_name(event.name)
+        profile_manager = ProfileManager()
+        profile_manager.profile.set_name(event.name)
 
 
 class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):

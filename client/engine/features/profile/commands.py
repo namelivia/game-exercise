@@ -12,42 +12,39 @@ from .events import (
 
 if TYPE_CHECKING:
     from client.engine.general_state.profile.profile import Profile
-    from client.engine.general_state.queue import Queue
 
 
 class SetProfile(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", key: str):
-        super().__init__(profile, queue, f"Setting profile {key}")
+    def __init__(self, key: str) -> None:
+        super().__init__(f"Setting profile {key}")
         self.events = [
             SetProfileEvent(key),
         ]
 
 
 class NewProfile(Command):
-    def __init__(self, profile: "Profile", queue: "Queue"):
-        super().__init__(profile, queue, "Setting new profile")
+    def __init__(self) -> None:
+        super().__init__("Setting new profile")
         self.events = [
             NewProfileEvent(),
         ]
 
 
 class ProfileIsSet(Command):
-    def __init__(self, profile: "Profile", queue: "Queue", key: str):
-        super().__init__(profile, queue, f"Profile set to {key}")
+    def __init__(self, key: str) -> None:
+        super().__init__(f"Profile set to {key}")
         self.events = [
             ProfileSetInGameEvent(key),
         ]
 
 
 class GetProfiles(Command):
-    def __init__(self, profile: "Profile", queue: "Queue"):
-        super().__init__(profile, queue, "Get Profiles List")
+    def __init__(self) -> None:
+        super().__init__("Get Profiles List")
         self.events = [GetProfilesEvent()]
 
 
 class UpdateProfiles(Command):
-    def __init__(
-        self, profile: "Profile", queue: "Queue", profiles: List[Dict[str, str]]
-    ):
-        super().__init__(profile, queue, "Profile list retrieved")
+    def __init__(self, profiles: List[Dict[str, str]]) -> None:
+        super().__init__("Profile list retrieved")
         self.events = [UpdateProfilesInGameEvent(profiles)]

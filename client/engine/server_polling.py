@@ -1,7 +1,8 @@
 from typing import TYPE_CHECKING
 
 from client.engine.features.synchronization.commands import RequestGameStatus
-from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.clock import Clock
+from client.engine.general_state.profile_manager import ProfileManager
 
 if TYPE_CHECKING:
     from uuid import UUID
@@ -19,15 +20,13 @@ class ServerPolling:
 
     @staticmethod
     def push_polling_event_if_needed() -> None:
-        client_state = ClientState()
-        game_id = client_state.profile.game_id
-        pointer = client_state.profile.game_event_pointer
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
+        pointer = profile_manager.profile.game_event_pointer
         if game_id is not None and pointer is not None:
-            time = client_state.clock.get()
+            time = Clock().get()
             if ServerPolling._should_do_polling(time):
                 RequestGameStatus(
-                    client_state.profile,
-                    client_state.queue,
                     game_id,
                     pointer,
                 ).execute()

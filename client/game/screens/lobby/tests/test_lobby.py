@@ -3,16 +3,28 @@ from unittest import TestCase
 import mock
 
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.lobby.lobby import Lobby
 
 
 class TestLobby(TestCase):
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def _initialize_test_profile(self, m_persistence):
+        profile = Profile(
+            key="test_profile",
+            id="player_id",
+            game_id="game_id",
+            game_event_pointer=None,
+        )
+        profile.set_name("Test Name")
+        m_persistence.load.return_value = profile
+        ProfileManager().set_profile("test_profile")
+
     def setUp(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
-        self.client_state.profile.name = "TestPlayer"
-        self.lobby = Lobby(self.client_state)
+        self._initialize_test_profile()
+        self.lobby = Lobby()
 
     @mock.patch("client.game.commands.NewGame")
     def test_navigating_to_new_game(self, m_new_game_command):

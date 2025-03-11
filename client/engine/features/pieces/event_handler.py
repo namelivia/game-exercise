@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.general_state.client_state import ClientState
+from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.pieces.events import PlaceASymbolRequestEvent
@@ -29,10 +29,7 @@ logger = logging.getLogger(__name__)
 
 class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGameEvent]):
     def handle(self, event: "PlayerPlacedSymbolInGameEvent") -> None:
-        client_state = ClientState()
         PlayerPlacedSymbolInGameCommand(
-            client_state.profile,
-            client_state.queue,
             event.event_id,
             event.player_id,
             event.position,
@@ -41,13 +38,11 @@ class PlayerPlacedSymbolInGameEventHandler(EventHandler[PlayerPlacedSymbolInGame
 
 class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
     def handle(self, event: "PlaceASymbolRequestEvent") -> None:
-        client_state = ClientState()
-        game_id = client_state.profile.game_id
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
         if game_id is None:
             raise Exception("Trying to place symbol with no game")
         PlaceASymbol(
-            client_state.profile,
-            client_state.queue,
             game_id,
             event.event_id,
             event.position,
@@ -58,33 +53,27 @@ class PlaceASymbolNetworkRequestEventHandler(
     EventHandler[PlaceASymbolNetworkRequestEvent]
 ):
     def handle(self, event: "PlaceASymbolNetworkRequestEvent") -> None:
-        client_state = ClientState()
-        game_id = client_state.profile.game_id
+        profile_manager = ProfileManager()
+        game_id = profile_manager.profile.game_id
         if game_id is None:
             raise Exception("Trying to place symbol with no game")
         request_data = self._encode(
             game_id,
             event.event_id,
-            client_state.profile.id,
+            profile_manager.profile.id,
             event.position,
         )
 
         response = Channel.send_command(request_data)
         if response is not None:
             if isinstance(response, SymbolPlacedConfirmation):
-                SymbolPlacedConfirmedCommand(
-                    client_state.profile, client_state.queue, response.event_id
-                ).execute()
+                SymbolPlacedConfirmedCommand(response.event_id).execute()
             if isinstance(response, ErrorMessage):
                 logger.error(f"[ERROR][Server] {response.message}")
-                SymbolPlacedErroredCommand(
-                    client_state.profile, client_state.queue, event.event_id
-                ).execute()
+                SymbolPlacedErroredCommand(event.event_id).execute()
         else:
             logger.error("[ERROR][Server] Server unreacheable")
-            SymbolPlacedErroredCommand(
-                client_state.profile, client_state.queue, event.event_id
-            ).execute()
+            SymbolPlacedErroredCommand(event.event_id).execute()
 
     def _encode(
         self, game_id: "UUID", event_id: "UUID", profile_id: "UUID", position: int

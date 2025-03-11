@@ -15,16 +15,36 @@ from client.engine.features.pieces.events import (
     SymbolPlacedErroredEvent,
 )
 from client.engine.features.user_input.events import UserTypedEvent
+from client.engine.general_state.profile.profile import Profile
+from client.engine.general_state.profile_manager import ProfileManager
+from client.engine.general_state.queue import Queue
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.in_game.in_game import InGame
 
 
 class TestInGameScreen(TestCase):
+
+    def _initialize_test_queue(self):
+        Queue().initialize(None)
+
+    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    def _initialize_test_profile(self, m_persistence):
+        m_persistence.load.return_value = Profile(
+            key="test_profile",
+            id="player_id",
+            game_id="game_id",
+            game_event_pointer=None,
+        )
+        ProfileManager().set_profile("test_profile")
+
+    def setUp(self):
+        self._initialize_test_queue()
+        self._initialize_test_profile()
+
     @mock.patch("client.game.commands.BackToLobby")
     def test_user_exits(self, m_back_to_lobby):
         # User types escape and returns to the lobby
         screen = InGame(
-            mock.Mock(),
             [UserTypedEvent("escape")],
             "some_game_id",
             "some_game_name",
@@ -42,7 +62,6 @@ class TestInGameScreen(TestCase):
         m_validation.return_value = True
         # User presses the number 5 to request placing a symbol
         screen = InGame(
-            mock.Mock(),
             [UserTypedEvent("5")],
             "some_game_id",
             "some_game_name",
@@ -58,7 +77,6 @@ class TestInGameScreen(TestCase):
     def test_game_has_been_created(self):
         # When the game is created some music is played
         screen = InGame(
-            mock.Mock(),
             [GameCreatedInGameEvent("player_1_id")],
             "some_game_id",
             "some_game_name",
@@ -73,7 +91,6 @@ class TestInGameScreen(TestCase):
     def test_player_has_joined(self):
         # When a player joins some music is played
         screen = InGame(
-            mock.Mock(),
             [PlayerJoinedInGameEvent("player_2_id")],
             "some_game_id",
             "some_game_name",
@@ -89,7 +106,6 @@ class TestInGameScreen(TestCase):
     def test_player_has_placed_a_symbol(self):
         # When a player has placed a symbol on the board music plays
         screen = InGame(
-            mock.Mock(),
             [PlayerPlacedSymbolInGameEvent("player_1_id", 5, "OK")],
             "some_game_id",
             "some_game_name",
@@ -102,10 +118,8 @@ class TestInGameScreen(TestCase):
         # Assert the command has been issued
 
     def test_in_game(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
-            self.client_state,
             [],
             "some_game_id",
             "some_game_name",
@@ -344,10 +358,8 @@ class TestInGameScreen(TestCase):
         )
 
     def test_many_chat_messages(self):
-        self.client_state = mock.Mock()
-        self.client_state.clock.get.return_value = 0  # Initial time is 0
+        # self.clock.get.return_value = 0  # Initial time is 0
         self.in_game = InGame(
-            self.client_state,
             [],
             "some_game_id",
             "some_game_name",
