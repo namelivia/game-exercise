@@ -7,7 +7,6 @@ from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserClickedEvent
 from client.engine.primitives.screen import Screen
 from client.experiment.images import (
-    BACKGROUND,
     CHEETAH_BLACK,
     CHEETAH_COLOR,
     ELEPHANT_BLACK,
