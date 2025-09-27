@@ -31,6 +31,7 @@ class ClickableUIElement:
     def __init__(self) -> None:
         self.element = UIElement()
         self.mouse_over = False
+        self._was_mouse_over = False
 
     def _is_mouse_over(self, x: int, y: int) -> bool:
         return (
@@ -49,8 +50,19 @@ class ClickableUIElement:
     def set_shapes(self, shapes: List["Shape"]) -> None:
         self.element.shapes = shapes
 
+    def on_mouse_enter(self) -> None:
+        pass
+
+    def on_mouse_leave(self) -> None:
+        pass
+
     def update(
         self, time: int, data: Dict[str, Any], mouse_position: Tuple[int, int]
     ) -> None:
         self.element.update(time, data)
+        self._was_mouse_over = self.mouse_over
         self.mouse_over = self._is_mouse_over(mouse_position[0], mouse_position[1])
+        if not self._was_mouse_over and self.mouse_over:
+            self.on_mouse_enter()
+        elif self._was_mouse_over and not self.mouse_over:
+            self.on_mouse_leave()
