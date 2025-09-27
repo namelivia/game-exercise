@@ -1,5 +1,3 @@
-from typing import Any, Dict, Tuple
-
 from client.engine.graphics.shapes import Image
 from client.engine.primitives.ui import ClickableUIElement, UIElement
 from client.experiment.images import BACKGROUND
@@ -18,11 +16,8 @@ class Portrait(ClickableUIElement):
         self.highlight = Image(highlight, x, y)
         self.set_shapes([self.image])
 
-    def update(
-        self, time: int, data: Dict[str, Any], mouse_position: Tuple[int, int]
-    ) -> None:
-        super().update(time, data, mouse_position)
-        if self.mouse_over:
-            self.set_shapes([self.highlight])
-        else:
-            self.set_shapes([self.image])
+    def on_mouse_enter(self):
+        self.set_shapes([self.highlight])
+
+    def on_mouse_leave(self):
+        self.set_shapes([self.image])
