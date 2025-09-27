@@ -69,6 +69,28 @@ class FoundationalWrapper:
         return pygame.mouse.get_pos()
 
     @staticmethod
+    def set_mouse_cursor(new_cursor: str) -> None:
+        cursors = {
+            "ARROW": pygame.SYSTEM_CURSOR_ARROW,
+            "IBEAM": pygame.SYSTEM_CURSOR_IBEAM,
+            "WAIT": pygame.SYSTEM_CURSOR_WAIT,
+            "CROSSHAIR": pygame.SYSTEM_CURSOR_CROSSHAIR,
+            "WAITARROW": pygame.SYSTEM_CURSOR_WAITARROW,
+            "SIZENWSE": pygame.SYSTEM_CURSOR_SIZENWSE,
+            "SIZENESW": pygame.SYSTEM_CURSOR_SIZENESW,
+            "SIZEWE": pygame.SYSTEM_CURSOR_SIZEWE,
+            "SIZENS": pygame.SYSTEM_CURSOR_SIZENS,
+            "SIZEALL": pygame.SYSTEM_CURSOR_SIZEALL,
+            "NO": pygame.SYSTEM_CURSOR_NO,
+            "HAND": pygame.SYSTEM_CURSOR_HAND,
+        }
+        try:
+            pygame.mouse.set_cursor(cursors[new_cursor])
+        except KeyError:
+            pass
+        return None
+
+    @staticmethod
     def load_image(path: str) -> pygame.Surface:
         return pygame.image.load(path)
 
