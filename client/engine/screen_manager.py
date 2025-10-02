@@ -2,13 +2,13 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.features.sound.worker import SoundWorker
+from client.engine.features.user_input.keyboard import KeyboardInput
+from client.engine.features.user_input.mouse import MouseInput
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.options import Options
 from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.general_state.queue import QueueManager
 from client.engine.graphics.graphics import Graphics
-from client.engine.input.keyboard import KeyboardInput
-from client.engine.input.mouse import MouseInput
 from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
 from client.engine.user_input import UserInput

@@ -4,8 +4,8 @@ from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.user_input.commands import UserClicked, UserTyped
 
 if TYPE_CHECKING:
-    from client.engine.input.keyboard import KeyboardInput
-    from client.engine.input.mouse import MouseInput
+    from client.engine.features.user_input.keyboard import KeyboardInput
+    from client.engine.features.user_input.mouse import MouseInput
 
 
 class UserInput:
