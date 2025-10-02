@@ -6,7 +6,6 @@ from client.engine.general_state.options import Options
 from client.engine.general_state.queue import QueueManager
 
 if __name__ == "__main__":
-    pygame.init()
     pygame.mixer.init()
     QueueManager().initialize()
     Options().initialize()
