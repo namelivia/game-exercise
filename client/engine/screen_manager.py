@@ -10,7 +10,6 @@ from client.engine.general_state.queue import QueueManager
 from client.engine.graphics.graphics import Graphics
 from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
-from client.engine.user_input import UserInput
 
 from .events_processor import EventsProcessor
 
