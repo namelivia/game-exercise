@@ -5,7 +5,7 @@ import mock
 from client.engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from client.game.pieces.commands import RequestPlaceASymbol
 from client.game.pieces.events import PlaceASymbolRequestEvent
 
@@ -22,7 +22,7 @@ class TestPieces(TestCase):
         ProfileManager().set_profile("test_profile")
 
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     def setUp(self):
         self._initialize_test_queue()
@@ -36,13 +36,13 @@ class TestPieces(TestCase):
         RequestPlaceASymbol(2).execute()
 
         # Two events will be created, a request to display the chat
-        ingame_event = Queue().pop()
+        ingame_event = QueueManager().main_queue().pop()
         assert isinstance(ingame_event, PlayerPlacedSymbolInGameEvent)
         # assert ingame_event.player_id == self.test_profile.id
         assert ingame_event.position == 2
 
         # And another event to request the position placement delivery
-        request_event = Queue().pop()
+        request_event = QueueManager().main_queue().pop()
         assert isinstance(request_event, PlaceASymbolRequestEvent)
         assert request_event.event_id == "event_id"
         assert request_event.position == 2

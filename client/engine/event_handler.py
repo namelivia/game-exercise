@@ -17,9 +17,6 @@ from client.engine.features.pieces.event_handler import (
 from client.engine.features.profile.event_handler import (
     handlers_map as profile_event_handlers,
 )
-from client.engine.features.sound.event_handler import (
-    handlers_map as sound_event_handlers,
-)
 from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
 )
@@ -52,6 +49,16 @@ class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
         import sys
 
         FoundationalWrapper.quit()
+        """
+        Here is where I should probably be safely stopping,
+        like:
+            while thread_a.is_alive() or thread_b.is_alive():
+                time.sleep(0.2)
+    
+            # The main thread joins the workers to ensure they terminate
+            thread_a.join()
+            thread_b.join()
+        """
         sys.exit()
 
 
@@ -100,7 +107,6 @@ handlers_map: Dict[Type["Event"], Any] = {
     **chat_event_handlers,
     **pieces_event_handlers,
     **profile_event_handlers,
-    **sound_event_handlers,
     **synchronization_event_handlers,
     **game_list_event_handlers,
     **game_management_event_handlers,

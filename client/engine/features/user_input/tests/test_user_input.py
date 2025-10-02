@@ -5,7 +5,7 @@ import mock
 from client.engine.event_handler import EventHandler
 from client.engine.features.user_input.commands import UserTyped
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 
 
 class TestUserInput(TestCase):
@@ -13,7 +13,7 @@ class TestUserInput(TestCase):
         self.profile = mock.Mock()
         self.profile.game_id = "game_id"
         self.profile.id = "player_id"
-        self.queue = Queue()
+        self.queue = QueueManager()
         self.event_handler = EventHandler()
 
     def test_user_input(self):
@@ -21,6 +21,6 @@ class TestUserInput(TestCase):
         UserTyped("a").execute()
 
         # The UserTyped command creates a UserTypedEvent for the screen
-        event = self.queue.pop()
+        event = self.queue.main_queue().pop()
         assert isinstance(event, UserTypedEvent)
         assert event.key == "a"

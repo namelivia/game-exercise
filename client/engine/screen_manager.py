@@ -1,10 +1,11 @@
 from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
+from client.engine.features.sound.worker import SoundWorker
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.options import Options
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from client.engine.graphics.graphics import Graphics
 from client.engine.input.keyboard import KeyboardInput
 from client.engine.input.mouse import MouseInput
@@ -26,9 +27,17 @@ class ScreenManagerFactory:
         event_handler: Any,
     ) -> "ScreenManager":
         ProfileManager().set_profile("Default profile")
-        Queue().initialize(initial_event)
+        QueueManager().initialize(initial_event)
         CurrentScreen().initialize()
         Options().initialize()
+
+        # Initialize sound thread
+        sound_thread = SoundWorker(
+            name="Sound",
+            queue=QueueManager().get("sound"),
+        )
+
+        sound_thread.start()
 
         return ScreenManager(
             KeyboardInput(),
@@ -59,7 +68,7 @@ class ScreenManager:
         ServerPolling.push_polling_event_if_needed()
 
         # 2 - Fetch and handle the latest event
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
 
         # TODO: I don't like this if
         if event is not None and not isinstance(event, InGameEvent):

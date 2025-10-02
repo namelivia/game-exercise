@@ -3,7 +3,7 @@ from unittest import TestCase
 import mock
 
 from client.engine.general_state.current_screen import CurrentScreen
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from client.engine.primitives.event import InGameEvent
 from client.engine.screen_manager import ScreenManager
 
@@ -28,7 +28,7 @@ class TestScreenManager(TestCase):
     def test_main_loop_iteration(self, m_process_input, m_push_polling_event):
         # clock.get.return_value = 120
         event = mock.Mock(InGameEvent)
-        Queue().initialize(event)
+        QueueManager().initialize(event)
         current_screen = mock.Mock()
         CurrentScreen().initialize()
         CurrentScreen().set_current_screen(current_screen)

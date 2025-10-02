@@ -17,7 +17,7 @@ from client.engine.features.pieces.events import (
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.in_game.in_game import InGame
 
@@ -25,7 +25,7 @@ from client.game.screens.in_game.in_game import InGame
 class TestInGameScreen(TestCase):
 
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     @mock.patch("client.engine.general_state.profile_manager.Persistence")
     def _initialize_test_profile(self, m_persistence):

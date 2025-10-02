@@ -3,14 +3,14 @@ from unittest import TestCase
 import mock
 
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.new_game.new_game import NewGame
 
 
 class TestNewGame(TestCase):
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     def setUp(self):
         self._initialize_test_queue()

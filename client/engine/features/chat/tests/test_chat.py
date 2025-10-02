@@ -17,13 +17,13 @@ from client.engine.features.chat.events import (
 )
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from common.messages import ChatMessageConfirmation, ErrorMessage, SendChatMessage
 
 
 class TestChat(TestCase):
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     @mock.patch("client.engine.general_state.profile_manager.Persistence")
     def _initialize_test_profile(self, m_persistence):
@@ -49,7 +49,7 @@ class TestChat(TestCase):
         SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
-        network_event = Queue().pop()
+        network_event = QueueManager().main_queue().pop()
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # The response will be sucessful
@@ -75,7 +75,7 @@ class TestChat(TestCase):
         SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
-        network_event = Queue().pop()
+        network_event = QueueManager().main_queue().pop()
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # The response won't be sucessful
@@ -100,7 +100,7 @@ class TestChat(TestCase):
         SendChat("game_id", "event_id", "This is a test message").execute()
 
         # The SendChat command creates a SendChatNetworkRequestEvent
-        network_event = Queue().pop()
+        network_event = QueueManager().main_queue().pop()
         assert isinstance(network_event, SendChatNetworkRequestEvent)
 
         # The response won't be sucessful
@@ -123,7 +123,7 @@ class TestChat(TestCase):
         ChatMessageConfirmedCommand("event_id").execute()
 
         # The command creates an ingame event
-        in_game_confirm_event = Queue().pop()
+        in_game_confirm_event = QueueManager().main_queue().pop()
         assert isinstance(in_game_confirm_event, ChatMessageConfirmedInGameEvent)
         in_game_confirm_event.event_id = "event_id"
 
@@ -132,7 +132,7 @@ class TestChat(TestCase):
         ChatMessageErroredCommand("event_id").execute()
 
         # The command creates an ingame event
-        in_game_error_event = Queue().pop()
+        in_game_error_event = QueueManager().main_queue().pop()
         assert isinstance(in_game_error_event, ChatMessageErroredEvent)
         in_game_error_event.event_id = "event_id"
 
@@ -141,7 +141,7 @@ class TestChat(TestCase):
         ChatMessageInGameCommand("event_id", "player_1", "Hello").execute()
 
         # The command creates an ingame event
-        in_game_event = Queue().pop()
+        in_game_event = QueueManager().main_queue().pop()
         assert isinstance(in_game_event, ChatMessageInGameEvent)
         in_game_event.event_id = "event_id"
         in_game_event.player_id = "player_1"
