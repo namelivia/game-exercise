@@ -18,7 +18,7 @@ from client.engine.features.profile.events import (
     UpdateProfilesInGameEvent,
 )
 from client.engine.general_state.profile.profile import Profile
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 
 
 class TestProfile(TestCase):
@@ -26,7 +26,7 @@ class TestProfile(TestCase):
         self.profile = mock.Mock()
         self.profile.game_id = "game_id"
         self.profile.id = "player_id"
-        self.queue = Queue()
+        self.queue = QueueManager()
         self.event_handler = EventHandler()
 
     @mock.patch("client.engine.features.profile.event_handler.ProfileIsSet")
@@ -34,7 +34,7 @@ class TestProfile(TestCase):
         # The command is invoked whith an existing profile key
         SetProfile("profile_1").execute()
 
-        set_profile_event = self.queue.pop()
+        set_profile_event = self.queue.main_queue().pop()
         assert isinstance(set_profile_event, SetProfileEvent)
         assert set_profile_event.key == "profile_1"
 
@@ -55,7 +55,7 @@ class TestProfile(TestCase):
         # The command is invoked
         NewProfile().execute()
 
-        new_profile_event = self.queue.pop()
+        new_profile_event = self.queue.main_queue().pop()
         assert isinstance(new_profile_event, NewProfileEvent)
 
         self.event_handler.handle(new_profile_event)
@@ -72,7 +72,7 @@ class TestProfile(TestCase):
         # The command is invoked
         ProfileIsSet("profile_1").execute()
 
-        event = self.queue.pop()
+        event = self.queue.main_queue().pop()
         assert isinstance(event, ProfileSetInGameEvent)
         assert event.key == "profile_1"
 
@@ -82,7 +82,7 @@ class TestProfile(TestCase):
         # Command is invoked
         GetProfiles().execute()
 
-        event = self.queue.pop()
+        event = self.queue.main_queue().pop()
         assert isinstance(event, GetProfilesEvent)
 
         # profile = self.profile
@@ -120,7 +120,7 @@ class TestProfile(TestCase):
             ],
         ).execute()
 
-        event = self.queue.pop()
+        event = self.queue.main_queue().pop()
 
         # An event is raised for the screen to pickup
         assert isinstance(event, UpdateProfilesInGameEvent)

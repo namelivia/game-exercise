@@ -16,13 +16,13 @@ from client.engine.features.synchronization.events import (
 )
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from common.messages import GameEventsMessage, GetGameStatus
 
 
 class TestSynchronization(TestCase):
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     def setUp(self):
         self._initialize_test_queue()
@@ -44,7 +44,7 @@ class TestSynchronization(TestCase):
         # The command is invoked
         RefreshGameStatus("game_id", 5).execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, RefreshGameStatusNetworkRequestEvent)
         assert event.game_id == "game_id"
         assert event.pointer == 5
@@ -83,7 +83,7 @@ class TestSynchronization(TestCase):
         # The command is invoked
         RequestGameStatus("game_id", 3).execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, RefreshGameStatusEvent)
         assert event.game_id == "game_id"
         assert event.pointer == 3
@@ -99,8 +99,8 @@ class TestSynchronization(TestCase):
         # The command is invoked
         ProcessServerEvents([event_1, event_2]).execute()
 
-        assert Queue().pop() == event_1
-        assert Queue().pop() == event_2
+        assert QueueManager().main_queue().pop() == event_1
+        assert QueueManager().main_queue().pop() == event_2
 
     @mock.patch(
         "client.engine.features.synchronization.event_handler.ProcessServerEvents"
@@ -119,7 +119,7 @@ class TestSynchronization(TestCase):
         # The command is invoked
         UpdateGame([event_1, event_2]).execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, UpdateGameEvent)
         assert event.events == [event_1, event_2]
 

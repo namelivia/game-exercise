@@ -18,7 +18,7 @@ from client.engine.features.sound.events import (
     TurnSoundOnEvent,
 )
 from client.engine.general_state.options import Options
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 
 
 class TestSound(TestCase):
@@ -26,7 +26,7 @@ class TestSound(TestCase):
         self.event_handler = EventHandler()
 
         # Initialize an empty queue
-        Queue().initialize(None)
+        QueueManager().initialize(None)
         # And default options
         Options().initialize()
 
@@ -34,7 +34,7 @@ class TestSound(TestCase):
         # The command is invoked
         TurnSoundOn().execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, TurnSoundOnEvent)
 
         self.event_handler.handle(event)
@@ -46,7 +46,7 @@ class TestSound(TestCase):
         # The command is invoked
         TurnSoundOff().execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, TurnSoundOffEvent)
 
         self.event_handler.handle(event)
@@ -64,7 +64,7 @@ class TestSound(TestCase):
         # The command is invoked
         PlayMusic("main_theme").execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, PlayMusicEvent)
 
         # profile = self.profile
@@ -80,7 +80,7 @@ class TestSound(TestCase):
         # The command is invoked
         StopMusic().execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, StopMusicEvent)
 
         # profile = self.profile
@@ -95,7 +95,7 @@ class TestSound(TestCase):
         # The command is invoked
         PlaySound("back").execute()
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, PlaySoundEvent)
 
         # profile = self.profile

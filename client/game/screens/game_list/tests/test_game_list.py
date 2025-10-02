@@ -5,7 +5,7 @@ import mock
 
 from client.engine.features.game_list.events import UpdateGameListEvent
 from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from client.engine.visual_regression.visual_regression import VisualRegression
 from client.game.screens.game_list.game_list import GameList
 
@@ -13,7 +13,7 @@ from client.game.screens.game_list.game_list import GameList
 class TestGameList(TestCase):
 
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     def setUp(self):
         self._initialize_test_queue()

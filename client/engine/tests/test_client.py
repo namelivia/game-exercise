@@ -44,7 +44,7 @@ from client.engine.features.user_input.commands import UserTyped
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from common.game_data import GameData
 from common.messages import (
     GameEventsMessage,
@@ -66,7 +66,7 @@ class TestClient(TestCase):
         ProfileManager().set_profile("test_profile")
 
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     def setUp(self):
         self._initialize_test_queue()
@@ -79,7 +79,7 @@ class TestClient(TestCase):
     def test_quitting_the_game(self, m_exit, m_pygame_quit):
         QuitGame().execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, QuitGameEvent)
         self.event_handler.handle(event)
@@ -89,7 +89,7 @@ class TestClient(TestCase):
     def test_user_typing(self):
         UserTyped("f").execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UserTypedEvent)
         assert event.key == "f"
@@ -113,18 +113,18 @@ class TestClient(TestCase):
         ProfileManager().set_profile("key")
         UpdateGame(game_events).execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UpdateGameEvent)
 
         self.event_handler.handle(event)
 
         # The server is responding with the three events
-        unprocessed_event_1 = Queue().pop()
+        unprocessed_event_1 = QueueManager().main_queue().pop()
         assert unprocessed_event_1 == "event_1"
-        unprocessed_event_1 = Queue().pop()
+        unprocessed_event_1 = QueueManager().main_queue().pop()
         assert unprocessed_event_1 == "event_2"
-        unprocessed_event_1 = Queue().pop()
+        unprocessed_event_1 = QueueManager().main_queue().pop()
         assert unprocessed_event_1 == "event_3"
         assert (
             ProfileManager().profile.game_event_pointer == 4
@@ -147,18 +147,18 @@ class TestClient(TestCase):
         InitiateGame(game_data).execute()
 
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, PlaySoundEvent)
 
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(
             event, InitiateGameEvent
         )  # Event to be picked up by the game logic
 
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         self.event_handler.handle(event)
         assert (
             ProfileManager().profile.game_id == "some_game_id"
@@ -191,14 +191,14 @@ class TestClient(TestCase):
         # A request to get the game status is sourced
         RequestGameStatus("some_game_id", 2).execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, RefreshGameStatusEvent)
 
         self.event_handler.handle(event)
 
         # A network request to ask for the game status for the server is sent
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, RefreshGameStatusNetworkRequestEvent)
         self.event_handler.handle(event)
 
@@ -206,7 +206,7 @@ class TestClient(TestCase):
         m_send_command.assert_called_once()
 
         # An event to update the game locally is sourced
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, UpdateGameEvent)
         # And it contains the new set of events from the server
         assert event.events == ["event_1", "event_2", "event_3"]
@@ -234,7 +234,7 @@ class TestClient(TestCase):
         )
         RequestGameCreation("some_game_id").execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, NewGameRequestEvent)
 
@@ -242,7 +242,7 @@ class TestClient(TestCase):
         self.event_handler.handle(event)
 
         # A network request to ask for the game initialization on the server is sent
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, CreateAGameNetworkRequestEvent)
         self.event_handler.handle(event)
 
@@ -250,12 +250,12 @@ class TestClient(TestCase):
         m_send_command.assert_called_once()
 
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, PlaySoundEvent)
 
         # An event to initalize the game locally is sourced
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, InitiateGameEvent)
 
         # And it contains the data to initialize the game from the server
@@ -289,7 +289,7 @@ class TestClient(TestCase):
         )
         RequestJoiningAGame("some_game_id").execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, JoinExistingGameEvent)
 
@@ -297,7 +297,7 @@ class TestClient(TestCase):
         self.event_handler.handle(event)
 
         # A network request to ask for the game initialization on the server is sent
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, JoinAGameNetworkRequestEvent)
         self.event_handler.handle(event)
 
@@ -305,12 +305,12 @@ class TestClient(TestCase):
         m_send_command.assert_called_once()
 
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, PlaySoundEvent)
 
         # An event to initalize the game locally is sourced
-        event = Queue().pop()
+        event = QueueManager().main_queue().pop()
         assert isinstance(event, InitiateGameEvent)
 
         # And it contains the data to initialize the game from the server
@@ -341,7 +341,7 @@ class TestClient(TestCase):
         assert profile.name is None
         SetPlayerName("Player name").execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, SetPlayerNameEvent)
 
@@ -356,7 +356,7 @@ class TestClient(TestCase):
 
         PingTheServer().execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, PingNetworkRequestEvent)
 
@@ -377,7 +377,7 @@ class TestClient(TestCase):
         assert profile.name is None
         UpdateGameList(["game1", "game2", "game3"]).execute()
         event = (
-            Queue().pop()
+            QueueManager().main_queue().pop()
         )  # TODO: Manage the case of commands that queue several events
         assert isinstance(event, UpdateGameListEvent)
         # Event to be picked up by the game logic

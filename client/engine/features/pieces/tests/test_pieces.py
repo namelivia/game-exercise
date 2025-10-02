@@ -17,7 +17,7 @@ from client.engine.features.pieces.events import (
 )
 from client.engine.general_state.profile.profile import Profile
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import Queue
+from client.engine.general_state.queue import QueueManager
 from common.messages import ErrorMessage, PlaceASymbolMessage, SymbolPlacedConfirmation
 
 
@@ -34,7 +34,7 @@ class TestPieces(TestCase):
         ProfileManager().set_profile("test_profile")
 
     def _initialize_test_queue(self):
-        Queue().initialize(None)
+        QueueManager().initialize(None)
 
     def setUp(self):
         self._initialize_test_queue()
@@ -52,7 +52,7 @@ class TestPieces(TestCase):
         PlaceASymbol("game_id", "event_id", 2).execute()
 
         # The PlaceASymbol command creates a PlaceASymbolNetworkRequestEvent
-        network_event = Queue().pop()
+        network_event = QueueManager().main_queue().pop()
         assert isinstance(network_event, PlaceASymbolNetworkRequestEvent)
 
         # The response will be sucessful
@@ -80,7 +80,7 @@ class TestPieces(TestCase):
         PlaceASymbol("game_id", "event_id", 2).execute()
 
         # The PlaceASymbol command creates a PlaceASymbolNetworkRequestEvent
-        network_event = Queue().pop()
+        network_event = QueueManager().main_queue().pop()
         assert isinstance(network_event, PlaceASymbolNetworkRequestEvent)
 
         # The response won't be sucessful
@@ -107,7 +107,7 @@ class TestPieces(TestCase):
         PlaceASymbol("game_id", "event_id", 2).execute()
 
         # The PlaceASymbol command creates a PlaceASymbolNetworkRequestEvent
-        network_event = Queue().pop()
+        network_event = QueueManager().main_queue().pop()
         assert isinstance(network_event, PlaceASymbolNetworkRequestEvent)
 
         # The response won't be sucessful
@@ -130,7 +130,7 @@ class TestPieces(TestCase):
         SymbolPlacedConfirmedCommand("event_id").execute()
 
         # The command creates an ingame event
-        in_game_confirm_event = Queue().pop()
+        in_game_confirm_event = QueueManager().main_queue().pop()
         assert isinstance(in_game_confirm_event, SymbolPlacedConfirmedInGameEvent)
         in_game_confirm_event.event_id = "event_id"
 
@@ -139,7 +139,7 @@ class TestPieces(TestCase):
         SymbolPlacedErroredCommand("event_id").execute()
 
         # The command creates an ingame event
-        in_game_error_event = Queue().pop()
+        in_game_error_event = QueueManager().main_queue().pop()
         assert isinstance(in_game_error_event, SymbolPlacedErroredEvent)
         in_game_error_event.event_id = "event_id"
 
@@ -148,7 +148,7 @@ class TestPieces(TestCase):
         PlayerPlacedSymbolInGameCommand("event_id", "player_1", "Hello").execute()
 
         # The command creates an ingame event
-        in_game_event = Queue().pop()
+        in_game_event = QueueManager().main_queue().pop()
         assert isinstance(in_game_event, PlayerPlacedSymbolInGameEvent)
         in_game_event.event_id = "event_id"
         in_game_event.player_id = "player_1"
