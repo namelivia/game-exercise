@@ -34,7 +34,7 @@ class TestSound(TestCase):
         # The command is invoked
         TurnSoundOn().execute()
 
-        event = QueueManager().main_queue().pop()
+        event = QueueManager().get("sound").pop()
         assert isinstance(event, TurnSoundOnEvent)
 
         self.event_handler.handle(event)
@@ -46,7 +46,7 @@ class TestSound(TestCase):
         # The command is invoked
         TurnSoundOff().execute()
 
-        event = QueueManager().main_queue().pop()
+        event = QueueManager().get("sound").pop()
         assert isinstance(event, TurnSoundOffEvent)
 
         self.event_handler.handle(event)
@@ -64,7 +64,7 @@ class TestSound(TestCase):
         # The command is invoked
         PlayMusic("main_theme").execute()
 
-        event = QueueManager().main_queue().pop()
+        event = QueueManager().get("sound").pop()
         assert isinstance(event, PlayMusicEvent)
 
         # profile = self.profile
@@ -80,7 +80,7 @@ class TestSound(TestCase):
         # The command is invoked
         StopMusic().execute()
 
-        event = QueueManager().main_queue().pop()
+        event = QueueManager().get("sound").pop()
         assert isinstance(event, StopMusicEvent)
 
         # profile = self.profile
@@ -95,7 +95,7 @@ class TestSound(TestCase):
         # The command is invoked
         PlaySound("back").execute()
 
-        event = QueueManager().main_queue().pop()
+        event = QueueManager().get("sound").pop()
         assert isinstance(event, PlaySoundEvent)
 
         # profile = self.profile
