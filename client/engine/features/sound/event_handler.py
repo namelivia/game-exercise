@@ -1,12 +1,17 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.general_state.options import Options
 from client.engine.primitives.event_handler import EventHandler
-from client.engine.sound.music import Music
-from client.engine.sound.sound import Sound
 
-from .events import PlayMusicEvent, PlaySoundEvent, TurnSoundOffEvent, TurnSoundOnEvent
+from .events import (
+    PlayMusicEvent,
+    PlaySoundEvent,
+    StopMusicEvent,
+    TurnSoundOffEvent,
+    TurnSoundOnEvent,
+)
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
@@ -29,7 +34,7 @@ class PlaySoundEventHandler(EventHandler[PlaySoundEvent]):
         # TODO: Event.sound is an id, not a path
         # but the sound module expects a path.
         if Options().sound_on:
-            Sound.play(event.sound)
+            FoundationalWrapper.play_sound(event.sound)
 
 
 class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
@@ -37,8 +42,13 @@ class PlayMusicEventHandler(EventHandler[PlayMusicEvent]):
         # TODO: Event.music is an id, not a path
         # but the music module expects a path.
         if Options().sound_on:
-            Music.load(event.music)
-            Music.play()
+            FoundationalWrapper.load_music(event.music)
+            FoundationalWrapper.play_music()
+
+
+class StopMusicEventHandler(EventHandler[StopMusicEvent]):
+    def handle(self, event: "StopMusicEvent") -> None:
+        FoundationalWrapper.stop_music()
 
 
 handlers_map: Dict[Type["Event"], Any] = {
@@ -46,4 +56,5 @@ handlers_map: Dict[Type["Event"], Any] = {
     TurnSoundOffEvent: TurnSoundOffEventHandler,
     PlaySoundEvent: PlaySoundEventHandler,
     PlayMusicEvent: PlayMusicEventHandler,
+    StopMusicEvent: StopMusicEventHandler,
 }

@@ -19,3 +19,8 @@ class PlayMusicEvent(Event):
     def __init__(self, music: str):
         super().__init__()
         self.music = music
+
+
+class StopMusicEvent(Event):
+    def __init__(self):
+        super().__init__()
