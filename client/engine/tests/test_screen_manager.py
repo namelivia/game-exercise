@@ -10,11 +10,9 @@ from client.engine.screen_manager import ScreenManager
 
 class TestScreenManager(TestCase):
     def setUp(self):
-        self.user_input = mock.Mock()
         self.graphics = mock.Mock()
         self.event_handler = mock.Mock()
         self.screen_manager = ScreenManager(
-            self.user_input,
             self.graphics,
             self.event_handler,
         )
@@ -42,9 +40,6 @@ class TestScreenManager(TestCase):
 
         # The screen is redrawn
         self.graphics.render.assert_called_once_with(current_screen)
-
-        # The user input is read
-        self.user_input.process.assert_called_once_with()
 
         # The screen is updated
         current_screen.update.assert_called_once_with(

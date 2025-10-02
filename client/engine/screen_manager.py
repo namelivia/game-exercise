@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.features.sound.worker import SoundWorker
+from client.engine.features.user_input.worker import UserInputWorker
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.options import Options
 from client.engine.general_state.profile_manager import ProfileManager
@@ -37,8 +38,12 @@ class ScreenManagerFactory:
 
         sound_thread.start()
 
+        # Initialize user_input thread
+        user_input_thread = UserInputWorker(name="UserInput")
+
+        user_input_thread.start()
+
         return ScreenManager(
-            UserInput(),
             Graphics(),
             event_handler,
         )
@@ -47,12 +52,10 @@ class ScreenManagerFactory:
 class ScreenManager:
     def __init__(
         self,
-        user_input: "UserInput",
         graphics: "Graphics",
         event_handler: Any,
     ):
         self.graphics = graphics
-        self.user_input = user_input
         self.events_processor = EventsProcessor(
             [event_handler, EventHandler()]  # Regular events and in game events
         )
@@ -69,16 +72,13 @@ class ScreenManager:
         if event is not None and not isinstance(event, InGameEvent):
             self.events_processor.handle(event)
 
-        # 3 - Read user input
-        self.user_input.process()
-
         current_screen = CurrentScreen().get_current_screen()
 
         if current_screen is not None:
-            # 4 - Draw the screen
+            # 3 - Draw the screen
             self.graphics.render(current_screen)
 
-            # 5 - Update the current screen
+            # 4 - Update the current screen
 
             # TODO: I don't like this if
             if not isinstance(event, InGameEvent):
