@@ -2,7 +2,13 @@ from typing import TYPE_CHECKING
 
 from client.engine.primitives.command import Command
 
-from .events import PlayMusicEvent, PlaySoundEvent, TurnSoundOffEvent, TurnSoundOnEvent
+from .events import (
+    PlayMusicEvent,
+    PlaySoundEvent,
+    StopMusicEvent,
+    TurnSoundOffEvent,
+    TurnSoundOnEvent,
+)
 
 
 class TurnSoundOn(Command):
@@ -34,4 +40,12 @@ class PlayMusic(Command):
         super().__init__(f"Playing music {music_id}")
         self.events = [
             PlayMusicEvent(music_id),
+        ]
+
+
+class StopMusic(Command):
+    def __init__(self) -> None:
+        super().__init__(f"Stopping music")
+        self.events = [
+            StopMusicEvent(),
         ]
