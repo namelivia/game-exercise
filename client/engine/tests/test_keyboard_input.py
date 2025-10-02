@@ -3,7 +3,7 @@ from unittest import TestCase
 import mock
 import pygame
 
-from client.engine.input.keyboard import KeyboardInput
+from client.engine.features.user_input.keyboard import KeyboardInput
 
 
 class TestInput(TestCase):

@@ -2,8 +2,6 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.features.sound.worker import SoundWorker
-from client.engine.features.user_input.keyboard import KeyboardInput
-from client.engine.features.user_input.mouse import MouseInput
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.options import Options
 from client.engine.general_state.profile_manager import ProfileManager
@@ -40,8 +38,7 @@ class ScreenManagerFactory:
         sound_thread.start()
 
         return ScreenManager(
-            KeyboardInput(),
-            MouseInput(),
+            UserInput(),
             Graphics(),
             event_handler,
         )
@@ -50,14 +47,12 @@ class ScreenManagerFactory:
 class ScreenManager:
     def __init__(
         self,
-        keyboard_input: "KeyboardInput",
-        mouse_input: "MouseInput",
+        user_input: "UserInput",
         graphics: "Graphics",
         event_handler: Any,
     ):
         self.graphics = graphics
-        self.keyboard_input = keyboard_input
-        self.mouse_input = mouse_input
+        self.user_input = user_input
         self.events_processor = EventsProcessor(
             [event_handler, EventHandler()]  # Regular events and in game events
         )
@@ -75,7 +70,7 @@ class ScreenManager:
             self.events_processor.handle(event)
 
         # 3 - Read user input
-        UserInput.process(self.keyboard_input, self.mouse_input)
+        self.user_input.process()
 
         current_screen = CurrentScreen().get_current_screen()
 
