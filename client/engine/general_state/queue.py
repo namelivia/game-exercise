@@ -19,11 +19,16 @@ class QueueManager:
 
     def initialize(self, initial_event: Optional["Event"] = None) -> None:
         main_queue = _Queue()
+        sound_queue = _Queue()
         main_queue.initialize(initial_event)
-        self.queues = {"main": main_queue}
+        sound_queue.initialize()
+        self.queues = {"main": main_queue, "sound": sound_queue}
+
+    def get(self, key) -> "_Queue":
+        return self.queues[key]
 
     def main_queue(self) -> "_Queue":
-        return self.queues["main"]
+        return self.get("main")
 
 
 class _Queue:

@@ -14,9 +14,10 @@ class Command(ABC):
     def __init__(self, description: str):
         self.description = description
         self.events: List["Event"] = []
+        self.queue = "main"
 
     def execute(self) -> None:
         logger.info(f"[Command] {self.description}")
-        queue = QueueManager().main_queue()
+        queue = QueueManager().get(self.queue)
         for event in self.events:
             queue.put(event)
