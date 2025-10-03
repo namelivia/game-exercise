@@ -1,7 +1,7 @@
 import threading
 from queue import Empty
 
-from client.engine.features.sound.event_handler import handlers_map
+from client.engine.features.network.event_handler import handlers_map
 
 
 class StopThread(Exception):
@@ -10,7 +10,7 @@ class StopThread(Exception):
     pass
 
 
-class SoundWorker(threading.Thread):
+class NetworkWorker(threading.Thread):
 
     def __init__(self, name, queue):
         super().__init__()

@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
+from client.engine.features.network.worker import NetworkWorker
 from client.engine.features.sound.worker import SoundWorker
 from client.engine.features.user_input.worker import UserInputWorker
 from client.engine.general_state.current_screen import CurrentScreen
@@ -41,6 +42,14 @@ class ScreenManagerFactory:
         user_input_thread = UserInputWorker(name="UserInput")
 
         user_input_thread.start()
+
+        # Initialize network thread
+        network_thread = NetworkWorker(
+            name="Network",
+            queue=QueueManager().get("network"),
+        )
+
+        network_thread.start()
 
         return ScreenManager(
             Graphics(),
