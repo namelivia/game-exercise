@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.network.channel import Channel
+from client.engine.features.network.commands import SendNetworkRequest
 from client.engine.primitives.event_handler import EventHandler
 from common.messages import (
     ErrorMessage,
@@ -26,19 +26,20 @@ class ErrorGettingGameListEventHandler(EventHandler["Event"]):
 class GetGameListNetworkRequestEventHandler(
     EventHandler[GetGameListNetworkRequestEvent]
 ):
+    def on_success(self, event, response):
+        if isinstance(response, GameListResponseMessage):
+            UpdateGameList(response.games).execute()
+        if isinstance(response, ErrorMessage):
+            ErrorGettingGameList().execute()
+            logger.info(response.__dict__)
+
+    def on_error(self, event):
+        ErrorGettingGameList().execute()
+        logger.error("Error retrieving the game list from the server")
+
     def handle(self, event: "GetGameListNetworkRequestEvent") -> None:
         request_data = self._encode()
-
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameListResponseMessage):
-                UpdateGameList(response.games).execute()
-            if isinstance(response, ErrorMessage):
-                ErrorGettingGameList().execute()
-                logger.info(response.__dict__)
-        else:
-            ErrorGettingGameList().execute()
-            logger.error("Error retrieving the game list from the server")
+        SendNetworkRequest(request_data, self.on_success, self.on_error)
 
     def _encode(self) -> "GameListRequestMessage":
         return GameListRequestMessage()

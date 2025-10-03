@@ -7,8 +7,8 @@ from client.engine.features.chat.commands import (
     ChatMessageInGameCommand,
     SendChat,
 )
+from client.engine.features.network.commands import SendNetworkRequest
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.chat.events import SendChatRequestEvent
 from common.events import ChatMessageEvent as ChatMessageInGameEvent  # TODO: akward
@@ -48,6 +48,18 @@ class SendChatRequestEventHandler(EventHandler[SendChatRequestEvent]):
 
 
 class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEvent]):
+
+    def on_success(self, event, response):
+        if isinstance(response, ChatMessageConfirmation):
+            ChatMessageConfirmedCommand(response.event_id).execute()
+        if isinstance(response, ErrorMessage):
+            logger.error(f"[ERROR][Server] {response.message}")
+            ChatMessageErroredCommand(event.event_id).execute()
+
+    def on_error(self, event):
+        logger.error("[ERROR][Server] Server unreacheable")
+        ChatMessageErroredCommand(event.event_id).execute()
+
     def handle(self, event: "SendChatNetworkRequestEvent") -> None:
         profile_manager = ProfileManager()
         game_id = profile_manager.profile.game_id
@@ -60,16 +72,7 @@ class SendChatNetworkRequestEventHandler(EventHandler[SendChatNetworkRequestEven
             event.message,
         )
 
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, ChatMessageConfirmation):
-                ChatMessageConfirmedCommand(response.event_id).execute()
-            if isinstance(response, ErrorMessage):
-                logger.error(f"[ERROR][Server] {response.message}")
-                ChatMessageErroredCommand(event.event_id).execute()
-        else:
-            logger.error("[ERROR][Server] Server unreacheable")
-            ChatMessageErroredCommand(event.event_id).execute()
+        SendNetworkRequest(request_data, self.on_success, self.on_error)
 
     def _encode(
         self, game_id: "UUID", event_id: "UUID", profile_id: "UUID", message: str

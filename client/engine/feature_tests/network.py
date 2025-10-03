@@ -4,14 +4,15 @@ from client.engine.general_state.options import Options
 from client.engine.general_state.queue import QueueManager
 
 
-def on_sucess(response):
+def on_sucess(event, response):
     print("Success")
-    print(response)
+    print(event.__dict__)
+    print(response.__dict__)
 
 
-def on_error(response):
+def on_error(event):
     print("Error")
-    print(response)
+    print(event.__dict__)
 
 
 if __name__ == "__main__":

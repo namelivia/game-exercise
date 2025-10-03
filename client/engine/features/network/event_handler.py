@@ -16,9 +16,9 @@ class NetworkRequestEventHandler(EventHandler[NetworkRequestEvent]):
     def handle(self, event: "NetworkRequestEvent") -> None:
         response = Channel.send_command(event.data)
         if response is not None:
-            event.on_success_callback(response)
+            event.on_success_callback(event, response)
         else:
-            event.on_error_callback(response)
+            event.on_error_callback(event)
 
 
 handlers_map: Dict[Type["Event"], Any] = {

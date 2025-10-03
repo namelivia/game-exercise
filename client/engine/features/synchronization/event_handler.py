@@ -1,8 +1,8 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from client.engine.features.network.commands import SendNetworkRequest
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import E, EventHandler
 from common.messages import ErrorMessage, GameEventsMessage, GetGameStatus
 
@@ -40,22 +40,24 @@ class RefreshGameStatusEventHandler(EventHandler[RefreshGameStatusEvent]):
 class RefreshGameStatusNetworkRequestEventHandler(
     EventHandler[RefreshGameStatusNetworkRequestEvent]
 ):
+    def on_success(self, event, response):
+        if isinstance(response, GameEventsMessage):
+            UpdateGame(response.events).execute()
+        if isinstance(response, ErrorMessage):
+            logger.error(response.__dict__)
+            # TODO: Currently I'm not doing anything with this
+
+    def on_error(self, event):
+        logger.error("Server error")
+        # TODO: Currently I'm not doing anything with this
+
     def handle(self, event: "RefreshGameStatusNetworkRequestEvent") -> None:
         profile_manager = ProfileManager()
         request_data = self._encode(
             event.game_id, event.pointer, profile_manager.profile.id
         )
 
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, GameEventsMessage):
-                UpdateGame(response.events).execute()
-            if isinstance(response, ErrorMessage):
-                logger.error(response.__dict__)
-                # TODO: Currently I'm not doing anything with this
-        else:
-            logger.error("Server error")
-            # TODO: Currently I'm not doing anything with this
+        SendNetworkRequest(request_data, self.on_success, self.on_error)
 
     def _encode(
         self, game_id: "UUID", pointer: int, profile_id: "UUID"

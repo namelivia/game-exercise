@@ -1,8 +1,8 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from client.engine.features.network.commands import SendNetworkRequest
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 from client.game.pieces.events import PlaceASymbolRequestEvent
 from common.events import (
@@ -52,6 +52,17 @@ class PlaceASymbolRequestEventHandler(EventHandler[PlaceASymbolRequestEvent]):
 class PlaceASymbolNetworkRequestEventHandler(
     EventHandler[PlaceASymbolNetworkRequestEvent]
 ):
+    def on_success(self, event, response):
+        if isinstance(response, SymbolPlacedConfirmation):
+            SymbolPlacedConfirmedCommand(response.event_id).execute()
+        if isinstance(response, ErrorMessage):
+            logger.error(f"[ERROR][Server] {response.message}")
+            SymbolPlacedErroredCommand(event.event_id).execute()
+
+    def on_error(self, event):
+        logger.error("[ERROR][Server] Server unreacheable")
+        SymbolPlacedErroredCommand(event.event_id).execute()
+
     def handle(self, event: "PlaceASymbolNetworkRequestEvent") -> None:
         profile_manager = ProfileManager()
         game_id = profile_manager.profile.game_id
@@ -64,16 +75,7 @@ class PlaceASymbolNetworkRequestEventHandler(
             event.position,
         )
 
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, SymbolPlacedConfirmation):
-                SymbolPlacedConfirmedCommand(response.event_id).execute()
-            if isinstance(response, ErrorMessage):
-                logger.error(f"[ERROR][Server] {response.message}")
-                SymbolPlacedErroredCommand(event.event_id).execute()
-        else:
-            logger.error("[ERROR][Server] Server unreacheable")
-            SymbolPlacedErroredCommand(event.event_id).execute()
+        SendNetworkRequest(request_data, self.on_success, self.on_error)
 
     def _encode(
         self, game_id: "UUID", event_id: "UUID", profile_id: "UUID", position: int

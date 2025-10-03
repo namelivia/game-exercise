@@ -11,6 +11,7 @@ from client.engine.features.game_list.event_handler import (
 from client.engine.features.game_management.event_handler import (
     handlers_map as game_management_event_handlers,
 )
+from client.engine.features.network.commands import SendNetworkRequest
 from client.engine.features.pieces.event_handler import (
     handlers_map as pieces_event_handlers,
 )
@@ -21,7 +22,6 @@ from client.engine.features.synchronization.event_handler import (
     handlers_map as synchronization_event_handlers,
 )
 from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 from common.messages import ErrorMessage, PingRequestMessage, PingResponseMessage
 
@@ -79,17 +79,19 @@ class SetPlayerNameEventHandler(BaseEventHandler[SetPlayerNameEvent]):
 
 
 class PingNetworkRequestEventHandler(BaseEventHandler[PingNetworkRequestEvent]):
+    def on_success(self, event, response):
+        if isinstance(response, PingResponseMessage):
+            logger.info("Ping request OK")
+        if isinstance(response, ErrorMessage):
+            logger.error(response.__dict__)
+
+    def on_error(self, event):
+        logger.error("Error pinging the server")
+
     def handle(self, event: "PingNetworkRequestEvent") -> None:
         request_data = self._encode()
 
-        response = Channel.send_command(request_data)
-        if response is not None:
-            if isinstance(response, PingResponseMessage):
-                logger.info("Ping request OK")
-            if isinstance(response, ErrorMessage):
-                logger.error(response.__dict__)
-        else:
-            logger.error("Error pinging the server")
+        SendNetworkRequest(request_data, self.on_success, self.on_error)
 
     def _encode(self) -> "PingRequestMessage":
         return PingRequestMessage()
