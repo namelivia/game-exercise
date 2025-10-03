@@ -51,9 +51,13 @@ class _Queue:
 
     def pop(self) -> Optional["Event"]:
         try:
-            # This is a sync queue because block is False
             event = self.simple_queue.get(block=False)
             logger.info(f"[Event] {event.__class__.__name__}")
             return event
         except Empty:
             return None
+
+    def get_for_workers(self) -> Optional["Event"]:
+        event = self.simple_queue.get(block=True)
+        logger.info(f"[Event] {event.__class__.__name__}")
+        return event

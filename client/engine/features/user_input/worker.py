@@ -1,4 +1,5 @@
 import threading
+import time
 
 from client.engine.external.foundational_wrapper import FoundationalWrapper
 from client.engine.features.user_input.commands import UserClicked, UserTyped
@@ -45,6 +46,7 @@ class UserInputWorker(threading.Thread):
         while not self.stop_event.is_set():
             try:
                 self.process()
+                time.sleep(0.01)
             except StopThread:
                 # Internal exception to cleanly exit the loop
                 break

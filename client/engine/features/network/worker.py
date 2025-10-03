@@ -1,4 +1,5 @@
 import threading
+from queue import Empty
 
 from client.engine.features.network.event_handler import handlers_map
 
@@ -24,9 +25,10 @@ class NetworkWorker(threading.Thread):
         print(f"[{self.name}] Thread started, waiting for events...")
         while not self.stop_event.is_set():
             try:
-                if not self.queue.empty():
-                    event = self.queue.pop()
-                    handlers_map[type(event)]().handle(event)
+                event = self.queue.get_for_workers()
+                handlers_map[type(event)]().handle(event)
+            except Empty:
+                continue
             except StopThread:
                 # Internal exception to cleanly exit the loop
                 break
