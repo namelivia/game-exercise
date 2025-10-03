@@ -14,7 +14,11 @@ logger = logging.getLogger(__name__)
 
 class NetworkRequestEventHandler(EventHandler[NetworkRequestEvent]):
     def handle(self, event: "NetworkRequestEvent") -> None:
-        Channel.send_command(event.data)
+        response = Channel.send_command(event.data)
+        if response is not None:
+            event.on_success_callback(response)
+        else:
+            event.on_error_callback(response)
 
 
 handlers_map: Dict[Type["Event"], Any] = {
