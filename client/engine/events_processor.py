@@ -12,9 +12,6 @@ class EventsProcessor:
     def __init__(self, event_handlers: List["EventHandler[Event]"]):
         self.event_handlers = event_handlers  # Initial list of event handlers
 
-    def add_event_handler(self, event_handler: "EventHandler[Event]") -> None:
-        self.event_handlers.append(event_handler)
-
     def handle(self, event: "Event") -> None:
         if event is None:
             return
