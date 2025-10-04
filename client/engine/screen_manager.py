@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
+from client.engine.features.game_logic.worker import GameLogicWorker
 from client.engine.features.network.worker import NetworkWorker
 from client.engine.features.render.worker import RenderWorker
 from client.engine.features.sound.worker import SoundWorker
@@ -37,6 +38,14 @@ class ScreenManagerFactory:
         )
 
         sound_thread.start()
+
+        # Initialize game logic thread
+        game_logic_thread = GameLogicWorker(
+            name="Game Logic",
+            queue=QueueManager().get("game_logic"),
+        )
+
+        game_logic_thread.start()
 
         # Initialize user_input thread
         user_input_thread = UserInputWorker(name="UserInput")

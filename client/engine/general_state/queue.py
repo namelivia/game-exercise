@@ -22,11 +22,14 @@ class QueueManager:
         main_queue.initialize(initial_event)
         sound_queue = _Queue()
         sound_queue.initialize()
+        game_logic_queue = _Queue()
+        game_logic_queue.initialize()
         network_queue = _Queue()
         network_queue.initialize()
         self.queues = {
             "main": main_queue,
             "sound": sound_queue,
+            "game_logic": game_logic_queue,
             "network": network_queue,
         }
 
