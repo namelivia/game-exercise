@@ -1,6 +1,6 @@
 from typing import Any, Tuple, Type
 
-from client.engine.backend.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.input import InputBackend
 
 
 class Mouse:
@@ -13,4 +13,4 @@ class Mouse:
         return cls._instance
 
     def get(self) -> Tuple[int, int]:
-        return FoundationalWrapper.get_mouse_position()
+        return InputBackend.get_mouse_position()
