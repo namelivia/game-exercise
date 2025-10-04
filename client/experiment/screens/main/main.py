@@ -81,14 +81,13 @@ class MainScreen(Screen):
                     animal["highlight"],
                     50 + (i % 3) * 160,
                     50 + (i // 3) * 160,
+                    lambda animal=animal: PlaySound(animal["sound"]).execute(),
                 )
             )
 
         self.events = {UserClickedEvent: self.on_user_clicked}
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
-        for i, element in enumerate(self.ui_elements):
+        for element in self.ui_elements:
             if isinstance(element, Portrait) and element.mouse_over:
-                animal_name = self.data["animals"][i - 1]["name"]
-                animal_sound = self.data["animals"][i - 1]["sound"]
-                PlaySound(animal_sound).execute()
+                element.on_click()

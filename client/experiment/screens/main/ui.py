@@ -10,8 +10,8 @@ class Background(UIElement):
 
 
 class Portrait(ClickableUIElement):
-    def __init__(self, image: str, highlight: str, x: int, y: int) -> None:
-        super().__init__()
+    def __init__(self, image: str, highlight: str, x: int, y: int, on_click) -> None:
+        super().__init__(on_click)
         self.image = Image(image, x, y)
         self.highlight = Image(highlight, x, y)
         self.set_shapes([self.image])
