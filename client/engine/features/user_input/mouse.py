@@ -1,10 +1,10 @@
 from typing import Any, List, Optional
 
-from client.engine.backend.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.input import InputBackend
 
 
 class MouseInput:
     def read(self, events: List[Any]) -> Optional[str]:
-        if FoundationalWrapper.MOUSEBUTTONDOWN in [event.type for event in events]:
+        if InputBackend.MOUSEBUTTONDOWN in [event.type for event in events]:
             return "click"
         return None

@@ -1,7 +1,7 @@
 import threading
 import time
 
-from client.engine.backend.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.input import InputBackend
 from client.engine.features.user_input.commands import UserClicked, UserTyped
 from client.engine.features.user_input.keyboard import KeyboardInput
 from client.engine.features.user_input.mouse import MouseInput
@@ -25,7 +25,7 @@ class UserInputWorker(threading.Thread):
         self.mouse_input = MouseInput()
 
     def process(self) -> None:
-        events = FoundationalWrapper.get_event()
+        events = InputBackend.get_event()
         # Get events from keyboard
         keyboard_events = self.keyboard_input.read(events)
 
