@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.backend.foundational_wrapper import FoundationalWrapper
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
+from client.engine.threads import ThreadManager
 
 from .events import QuitGameEvent
 
@@ -16,6 +17,7 @@ class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
     def handle(self, event: "QuitGameEvent") -> None:
         import sys
 
+        ThreadManager().shutdown()
         FoundationalWrapper.quit()
         """
         Here is where I should probably be safely stopping,
