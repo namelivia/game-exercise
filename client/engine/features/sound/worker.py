@@ -1,6 +1,7 @@
 import threading
 from queue import Empty
 
+from client.engine.backend.sound import SoundBackend
 from client.engine.features.sound.event_handler import handlers_map
 
 
@@ -21,6 +22,7 @@ class SoundWorker(threading.Thread):
         # Log that the worked has started?
 
     def run(self):
+        SoundBackend.init()
         """The main execution loop for the thread."""
         print(f"[{self.name}] Thread started, waiting for events...")
         while not self.stop_event.is_set():

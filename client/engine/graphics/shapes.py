@@ -1,6 +1,6 @@
 from typing import Any, Tuple
 
-from client.engine.external.foundational_wrapper import (
+from client.engine.backend.foundational_wrapper import (
     FoundationalColor,
     FoundationalSurface,
     FoundationalWrapper,

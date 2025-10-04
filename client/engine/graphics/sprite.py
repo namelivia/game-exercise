@@ -2,7 +2,7 @@ import os
 from re import sub
 from typing import List
 
-from client.engine.external.foundational_wrapper import (
+from client.engine.backend.foundational_wrapper import (
     FoundationalSprite,
     FoundationalWrapper,
 )

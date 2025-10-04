@@ -1,5 +1,3 @@
-import time
-
 import pygame
 
 from client.engine.features.user_input.worker import UserInputWorker

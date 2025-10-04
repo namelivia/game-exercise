@@ -1,7 +1,7 @@
 import threading
 import time
 
-from client.engine.external.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.foundational_wrapper import FoundationalWrapper
 from client.engine.features.user_input.commands import UserClicked, UserTyped
 from client.engine.features.user_input.keyboard import KeyboardInput
 from client.engine.features.user_input.mouse import MouseInput

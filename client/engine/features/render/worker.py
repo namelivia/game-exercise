@@ -3,7 +3,7 @@ from queue import Empty
 
 import pygame
 
-from client.engine.external.foundational_wrapper import FoundationalClock
+from client.engine.backend.foundational_wrapper import FoundationalClock
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.graphics.graphics import Graphics
 

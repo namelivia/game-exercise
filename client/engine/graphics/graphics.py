@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from client.engine.external.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.foundational_wrapper import FoundationalWrapper
 
 if TYPE_CHECKING:
     from client.engine.primitives.screen import Screen

@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.external.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.foundational_wrapper import FoundationalWrapper
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
 
 from .events import QuitGameEvent
