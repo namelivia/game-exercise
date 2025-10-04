@@ -37,3 +37,8 @@ class SoundWorker(threading.Thread):
             except Exception as e:
                 print(f"Error {e}")
                 break
+
+        print(f"[{self.name}] Thread successfully terminated and exited run().")
+
+    def stop(self):
+        self.stop_event.set()
