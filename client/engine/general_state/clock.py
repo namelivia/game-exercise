@@ -1,6 +1,6 @@
 from typing import Any, Type
 
-from client.engine.external.foundational_wrapper import FoundationalWrapper
+from client.engine.backend.foundational_wrapper import FoundationalWrapper
 
 
 class Clock:

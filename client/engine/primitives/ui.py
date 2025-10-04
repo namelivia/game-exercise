@@ -28,10 +28,11 @@ class UIElement(ABC):
 
 
 class ClickableUIElement:
-    def __init__(self) -> None:
+    def __init__(self, on_click) -> None:
         self.element = UIElement()
         self.mouse_over = False
         self._was_mouse_over = False
+        self.on_click = on_click
 
     def _is_mouse_over(self, x: int, y: int) -> bool:
         return (

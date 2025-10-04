@@ -1,3 +1,4 @@
+from client.engine.features.game_logic.commands import ChangeCursor
 from client.engine.graphics.shapes import Image
 from client.engine.primitives.ui import ClickableUIElement, UIElement
 from client.experiment.images import BACKGROUND
@@ -10,14 +11,16 @@ class Background(UIElement):
 
 
 class Portrait(ClickableUIElement):
-    def __init__(self, image: str, highlight: str, x: int, y: int) -> None:
-        super().__init__()
+    def __init__(self, image: str, highlight: str, x: int, y: int, on_click) -> None:
+        super().__init__(on_click)
         self.image = Image(image, x, y)
         self.highlight = Image(highlight, x, y)
         self.set_shapes([self.image])
 
     def on_mouse_enter(self):
+        ChangeCursor("HAND").execute()
         self.set_shapes([self.highlight])
 
     def on_mouse_leave(self):
+        ChangeCursor("ARROW").execute()
         self.set_shapes([self.image])
