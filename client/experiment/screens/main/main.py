@@ -79,8 +79,8 @@ class MainScreen(Screen):
                 Portrait(
                     animal["image"],
                     animal["highlight"],
-                    50 + (i % 3) * 160,
-                    50 + (i // 3) * 160,
+                    95 + (i % 3) * 160,
+                    97 + (i // 3) * 160,
                     lambda animal=animal: PlaySound(animal["sound"]).execute(),
                 )
             )
