@@ -15,6 +15,14 @@ class FoundationalSurface(pygame.Surface):
     pass
 
 
+class FoundationalClock:
+    def __init__(self):
+        self._clock = pygame.time.Clock()
+
+    def tick(self, framerate: int = 0) -> int:
+        return self._clock.tick(framerate)
+
+
 class FoundationalWrapper:
     K_RETURN = pygame.K_RETURN
     K_ESCAPE = pygame.K_ESCAPE

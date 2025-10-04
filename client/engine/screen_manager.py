@@ -2,13 +2,13 @@ from typing import TYPE_CHECKING, Any
 
 from client.engine.event_handler import EventHandler
 from client.engine.features.network.worker import NetworkWorker
+from client.engine.features.render.worker import RenderWorker
 from client.engine.features.sound.worker import SoundWorker
 from client.engine.features.user_input.worker import UserInputWorker
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.options import Options
 from client.engine.general_state.profile_manager import ProfileManager
 from client.engine.general_state.queue import QueueManager
-from client.engine.graphics.graphics import Graphics
 from client.engine.primitives.event import InGameEvent
 from client.engine.server_polling import ServerPolling
 
@@ -29,6 +29,11 @@ class ScreenManagerFactory:
         QueueManager().initialize(initial_event)
         CurrentScreen().initialize()
         Options().initialize()
+
+        # Initialize render thread
+        render_thread = RenderWorker(name="Render")
+
+        render_thread.start()
 
         # Initialize sound thread
         sound_thread = SoundWorker(
@@ -52,7 +57,6 @@ class ScreenManagerFactory:
         network_thread.start()
 
         return ScreenManager(
-            Graphics(),
             event_handler,
         )
 
@@ -60,10 +64,8 @@ class ScreenManagerFactory:
 class ScreenManager:
     def __init__(
         self,
-        graphics: "Graphics",
         event_handler: Any,
     ):
-        self.graphics = graphics
         self.events_processor = EventsProcessor(
             [event_handler, EventHandler()]  # Regular events and in game events
         )
@@ -83,10 +85,7 @@ class ScreenManager:
         current_screen = CurrentScreen().get_current_screen()
 
         if current_screen is not None:
-            # 3 - Draw the screen
-            self.graphics.render(current_screen)
-
-            # 4 - Update the current screen
+            # 3 - Update the current screen
 
             # TODO: I don't like this if
             if not isinstance(event, InGameEvent):

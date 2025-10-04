@@ -1,7 +1,5 @@
 import logging
 
-import pygame
-
 from client.engine.screen_manager import ScreenManagerFactory
 from client.experiment.event_handler import EventHandler as GameEventHandler
 from client.experiment.events import ScreenTransitionEvent
@@ -17,8 +15,6 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    pygame.init()
-    pygame.mixer.init()
     screen_manager = ScreenManagerFactory.create(
         initial_event=ScreenTransitionEvent("main"), event_handler=GameEventHandler()
     )
