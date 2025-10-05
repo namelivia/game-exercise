@@ -1,8 +1,6 @@
 import threading
-from queue import Empty
 
-import pygame
-
+from client.engine.backend.backend import Backend
 from client.engine.backend.foundational_wrapper import FoundationalClock
 from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.graphics.graphics import Graphics
@@ -28,19 +26,14 @@ class RenderWorker(threading.Thread):
     def run(self):
         """The main execution loop for the thread."""
         print(f"[{self.name}] Thread started, waiting for events...")
-        pygame.init()
+        Backend.init()
         self.graphics = Graphics()
         while not self.stop_event.is_set():
-            try:
-                screen = self.current_screen.get_current_screen()
-                if screen is not None:
-                    self.graphics.render(screen)
-            except Empty:
-                continue
-            except StopThread:
-                # Internal exception to cleanly exit the loop
-                break
-            except Exception as e:
-                print(f"Error {e}")
-                break
+            screen = self.current_screen.get_current_screen()
+            if screen is not None:
+                self.graphics.render(screen)
             self.clock.tick(60)  # 60 FPS
+        print(f"[{self.name}] Thread successfully terminated and exited run().")
+
+    def stop(self):
+        self.stop_event.set()

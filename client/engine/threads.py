@@ -43,8 +43,10 @@ class ThreadManager:
                 queue=QueueManager().get("network"),
             ),
         ]
-        [thread.start() for thread in self.threads]
+        for thread in self.threads:
+            thread.start()
 
     def shutdown(self) -> None:
-        [thread.stop() for thread in self.threads]
-        [thread.join() for thread in self.threads]
+        for thread in self.threads:
+            thread.stop()
+            thread.join()

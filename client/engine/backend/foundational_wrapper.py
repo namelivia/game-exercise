@@ -26,11 +26,6 @@ class FoundationalClock:
 class FoundationalWrapper:
 
     @staticmethod
-    def quit() -> None:
-        pygame.quit()
-        return None
-
-    @staticmethod
     def update_display() -> None:
         pygame.display.update()
         return None

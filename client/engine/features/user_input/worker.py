@@ -44,12 +44,9 @@ class UserInputWorker(threading.Thread):
         """The main execution loop for the thread."""
         print(f"[{self.name}] Thread started, waiting for events...")
         while not self.stop_event.is_set():
-            try:
-                self.process()
-                time.sleep(0.01)
-            except StopThread:
-                # Internal exception to cleanly exit the loop
-                break
-            except Exception as e:
-                print(f"Error {e}")
-                break
+            self.process()
+            time.sleep(0.01)
+        print(f"[{self.name}] Thread successfully terminated and exited run().")
+
+    def stop(self):
+        self.stop_event.set()
