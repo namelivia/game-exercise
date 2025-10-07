@@ -1,5 +1,7 @@
 from typing import Any, Tuple
 
+import pygame
+
 from client.engine.backend.foundational_wrapper import (
     FoundationalColor,
     FoundationalSurface,
@@ -12,6 +14,31 @@ from .sprite import Sprite
 
 WHITE = FoundationalColor(255, 255, 255)
 BLACK = FoundationalColor(0, 0, 0)
+
+from OpenGL.GL import (
+    GL_LINEAR,
+    GL_QUADS,
+    GL_RGBA,
+    GL_TEXTURE_2D,
+    GL_TEXTURE_MAG_FILTER,
+    GL_TEXTURE_MIN_FILTER,
+    GL_UNPACK_ALIGNMENT,
+    GL_UNSIGNED_BYTE,
+    glBegin,
+    glBindTexture,
+    glDisable,
+    glEnable,
+    glEnd,
+    glGenTextures,
+    glPixelStorei,
+    glPopMatrix,
+    glPushMatrix,
+    glTexCoord2f,
+    glTexImage2D,
+    glTexParameteri,
+    glTranslatef,
+    glVertex2f,
+)
 
 
 # This all depends on PYGAME/OPENGL
@@ -69,13 +96,89 @@ class SmallText(Shape):
 
 
 class Image(Shape):
+    def _create_opengl_texture(self, pygame_surface):
+        # 1. Prepare Pygame Surface
+        # Convert the surface to a format suitable for OpenGL (RGBA bytes).
+        # 'RGBA' is often preferred for images, especially with transparency.
+        # The 'True' flag flips the image vertically, which is often required
+        # because OpenGL textures start (0,0) at the bottom-left, but Pygame
+        # surfaces start (0,0) at the top-left.
+        texture_data = pygame.image.tostring(pygame_surface, "RGBA", True)
+
+        width = pygame_surface.get_width()
+        height = pygame_surface.get_height()
+
+        # 2. Generate and Bind Texture
+        # Generate a single new Texture ID
+        texture_id = glGenTextures(1)
+
+        # Bind the new texture to the current 2D texture unit
+        glBindTexture(GL_TEXTURE_2D, texture_id)
+
+        # 3. Set Texture Parameters
+        # Define how the texture should be filtered when scaled up (MAG) or down (MIN)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+
+        # Optional: Handle texture alignment, which can fix issues where image width
+        # is not a multiple of 4 (a common OpenGL requirement).
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
+
+        # 4. Upload Texture Data to GPU
+        # Uploads the raw data string from the Pygame surface to the GPU.
+        glTexImage2D(
+            GL_TEXTURE_2D,  # Target: Always GL_TEXTURE_2D
+            0,  # Mipmap Level: 0 (Base image)
+            GL_RGBA,  # Internal Format: How OpenGL stores the data (e.g., Red, Green, Blue, Alpha)
+            width,  # Width of the image
+            height,  # Height of the image
+            0,  # Border: Must be 0 (legacy)
+            GL_RGBA,  # Format: Format of the source data (matching step 1)
+            GL_UNSIGNED_BYTE,  # Data Type: Type of data in the source string (bytes)
+            texture_data,  # The raw pixel data
+        )
+
+        # 5. Unbind the texture to clean the state
+        glBindTexture(GL_TEXTURE_2D, 0)
+
+        return texture_id
+
     def __init__(self, path: str, x: int, y: int):
         super().__init__(x, y)
         self.image = FoundationalWrapper.load_image(path)
+        # This is ONLY for OpenGL
+        self.texture_id = self._create_opengl_texture(self.image)
 
     def render(self, window: Any) -> None:
         if window is not None:
-            window.blit(self.image, dest=(self.x, self.y))
+            # This is ONLY for Pygame Native
+            # window.blit(self.image, dest=(self.x, self.y))
+            # This is only for OpenGL
+            glPushMatrix()
+
+            # Step 2: Bind the texture and draw a quad
+            glEnable(GL_TEXTURE_2D)
+            glBindTexture(GL_TEXTURE_2D, self.texture_id)
+
+            # Apply the image's position to the current matrix
+            glTranslatef(self.x, self.y, 0)
+
+            # Draw a quad using texture coordinates (0,0 to 1,1)
+            glBegin(GL_QUADS)
+            glTexCoord2f(0, 0)
+            glVertex2f(0, 0)
+            glTexCoord2f(1, 0)
+            glVertex2f(self.get_width(), 0)
+            glTexCoord2f(1, 1)
+            glVertex2f(self.get_width(), self.get_height())
+            glTexCoord2f(0, 1)
+            glVertex2f(0, self.get_height())
+            glEnd()
+
+            glBindTexture(GL_TEXTURE_2D, 0)  # Unbind
+            glDisable(GL_TEXTURE_2D)
+
+            glPopMatrix()
 
     def get_x(self) -> int:
         return self.x
