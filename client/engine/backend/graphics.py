@@ -7,39 +7,32 @@ import pygame
 class BaseGraphicsBackend(ABC):
 
     @abstractmethod
-    @staticmethod
-    def update_display() -> None:
+    def update_display(self) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    @staticmethod
-    def get_new_window(width: int, height: int) -> pygame.Surface:
+    def get_new_window(self, width: int, height: int) -> pygame.Surface:
         raise NotImplementedError
 
     @abstractmethod
-    @staticmethod
-    def set_mouse_cursor(new_cursor: str) -> None:
+    def set_mouse_cursor(self, new_cursor: str) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    @staticmethod
-    def sprite_group() -> Any:
+    def sprite_group(self) -> Any:
         raise NotImplementedError
 
     @abstractmethod
-    @staticmethod
-    def get_default_font() -> str:
+    def get_default_font(self) -> str:
         raise NotImplementedError
 
     @abstractmethod
-    @staticmethod
-    def get_font(font: str, size: int) -> pygame.font.Font:
+    def get_font(self, font: str, size: int) -> pygame.font.Font:
         raise NotImplementedError
 
 
 class PygameGraphicsBackend(BaseGraphicsBackend):
-    @staticmethod
-    def set_mouse_cursor(new_cursor: str) -> None:
+    def set_mouse_cursor(self, new_cursor: str) -> None:
         cursors: Dict[str, Any] = {
             "ARROW": pygame.SYSTEM_CURSOR_ARROW,
             "IBEAM": pygame.SYSTEM_CURSOR_IBEAM,
@@ -60,37 +53,30 @@ class PygameGraphicsBackend(BaseGraphicsBackend):
             pass
         return None
 
-    @staticmethod
-    def get_default_font() -> str:
+    def get_default_font(self) -> str:
         return pygame.font.get_default_font()
 
-    @staticmethod
-    def get_font(font: str, size: int) -> pygame.font.Font:
+    def get_font(self, font: str, size: int) -> pygame.font.Font:
         return pygame.font.Font(font, size)
 
-    @staticmethod
-    def sprite_group() -> Any:
+    def sprite_group(self) -> Any:
         return pygame.sprite.Group()
 
 
 class PygameNativeGraphicsBackend(PygameGraphicsBackend):
-    @staticmethod
-    def update_display() -> None:
+    def update_display(self) -> None:
         pygame.display.update()
         return None
 
-    @staticmethod
-    def get_new_window(width: int, height: int) -> pygame.Surface:
+    def get_new_window(self, width: int, height: int) -> pygame.Surface:
         return pygame.display.set_mode((width, height), pygame.DOUBLEBUF)
 
 
 class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
-    @staticmethod
-    def update_display() -> None:
+    def update_display(self) -> None:
         raise NotImplementedError
 
-    @staticmethod
-    def get_new_window(width: int, height: int) -> pygame.Surface:
+    def get_new_window(self, width: int, height: int) -> pygame.Surface:
         return pygame.display.set_mode(
             (width, height), pygame.OPENGL | pygame.DOUBLEBUF
         )
