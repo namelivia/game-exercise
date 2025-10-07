@@ -10,7 +10,6 @@ class Graphics:
     def __init__(self) -> None:
         self.window = GraphicsBackend.get().get_new_window(640, 480)
 
-    # THIS DEPENDS ON PYGAME/OPENGL
     def render(self, screen: "Screen") -> None:
         ui_elements = screen.get_ui_elements()
         self.window.fill((255, 255, 255))
