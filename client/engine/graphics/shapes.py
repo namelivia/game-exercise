@@ -5,7 +5,7 @@ from client.engine.backend.foundational_wrapper import (
     FoundationalSurface,
     FoundationalWrapper,
 )
-from client.engine.backend.graphics import PygameNativeGraphicsBackend
+from client.engine.backend.graphics import GraphicsBackend
 from client.engine.primitives.shape import Shape
 
 from .sprite import Sprite
@@ -23,8 +23,8 @@ class Text(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            font = PygameNativeGraphicsBackend().get_font(
-                PygameNativeGraphicsBackend().get_default_font(), 24
+            font = GraphicsBackend.get().get_font(
+                GraphicsBackend.get().get_default_font(), 24
             )
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
@@ -58,8 +58,8 @@ class SmallText(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            font = PygameNativeGraphicsBackend().get_font(
-                PygameNativeGraphicsBackend().get_default_font(), 12
+            font = GraphicsBackend.get().get_font(
+                GraphicsBackend.get().get_default_font(), 12
             )
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
@@ -93,7 +93,7 @@ class Image(Shape):
 class Animation(Shape):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int = 0):
         super().__init__(x, y)
-        self.sprite_group = PygameNativeGraphicsBackend().sprite_group()
+        self.sprite_group = GraphicsBackend.get().sprite_group()
         self.animation = Sprite(folder, x, y, initial_frame)
         self.sprite_group.add(self.animation)
 

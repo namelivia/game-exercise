@@ -80,3 +80,15 @@ class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
         return pygame.display.set_mode(
             (width, height), pygame.OPENGL | pygame.DOUBLEBUF
         )
+
+
+class GraphicsBackend:
+
+    TYPE = "NATIVE"
+
+    @staticmethod
+    def get():
+        if GraphicsBackend.TYPE == "NATIVE":
+            return PygameNativeGraphicsBackend()
+        else:
+            return PygameOpenGLGraphicsBackend()
