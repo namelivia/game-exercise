@@ -74,7 +74,8 @@ class PygameNativeGraphicsBackend(PygameGraphicsBackend):
 
 class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
     def update_display(self) -> None:
-        raise NotImplementedError
+        pygame.display.flip()
+        return None
 
     def get_new_window(self, width: int, height: int) -> pygame.Surface:
         return pygame.display.set_mode(
@@ -84,7 +85,7 @@ class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
 
 class GraphicsBackend:
 
-    TYPE = "NATIVE"
+    TYPE = "OPENGL"
 
     @staticmethod
     def get():
