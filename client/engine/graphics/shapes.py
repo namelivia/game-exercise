@@ -5,7 +5,6 @@ import pygame
 from client.engine.backend.foundational_wrapper import (
     FoundationalColor,
     FoundationalSurface,
-    FoundationalWrapper,
 )
 from client.engine.backend.graphics import GraphicsBackend
 from client.engine.primitives.shape import Shape
@@ -125,7 +124,7 @@ class Image(Shape):
 
     def __init__(self, path: str, x: int, y: int):
         super().__init__(x, y)
-        self.image = FoundationalWrapper.load_image(path)
+        self.image = GraphicsBackend().get().load_image(path)
 
     def render(self, window: Any) -> None:
         # This should only happen ONCE, not here.

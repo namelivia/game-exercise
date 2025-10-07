@@ -4,6 +4,7 @@ from typing import Any, Dict
 import pygame
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from PIL import Image
 
 
 class BaseGraphicsBackend(ABC):
@@ -70,6 +71,9 @@ class PygameNativeGraphicsBackend(PygameGraphicsBackend):
         pygame.display.update()
         return None
 
+    def load_image(self, path: str):
+        return pygame.image.load(path)
+
     def get_new_window(self, width: int, height: int) -> pygame.Surface:
         return pygame.display.set_mode((width, height), pygame.DOUBLEBUF)
 
@@ -78,6 +82,9 @@ class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
     def update_display(self) -> None:
         pygame.display.flip()
         return None
+
+    def load_image(self, path: str):
+        return Image.open(path).transpose(Image.FLIP_TOP_BOTTOM)
 
     def get_new_window(self, width: int, height: int) -> pygame.Surface:
         window = pygame.display.set_mode(
