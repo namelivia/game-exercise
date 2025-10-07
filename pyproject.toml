@@ -11,6 +11,7 @@ python = "^3.11"
 pygame = "*"
 pyopengl = "^3.1.10"
 pyopengl-accelerate = "^3.1.10"
+pillow = "^11.3.0"
 
 
 [tool.poetry.group.dev.dependencies]

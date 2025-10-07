@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from typing import Any, Dict
 
 import pygame
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
 
 class BaseGraphicsBackend(ABC):
@@ -78,9 +80,23 @@ class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
         return None
 
     def get_new_window(self, width: int, height: int) -> pygame.Surface:
-        return pygame.display.set_mode(
-            (width, height), pygame.OPENGL | pygame.DOUBLEBUF
+        window = pygame.display.set_mode(
+            (width, height), pygame.FULLSCREEN | pygame.OPENGL | pygame.DOUBLEBUF
         )
+        # 2. Set the Viewport (which part of the window to render to)
+        glViewport(0, 0, width, height)
+
+        # 3. Set up the PROJECTION matrix
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        # Set up a 2D projection (e.g., matching screen pixels)
+        # This is crucial for fixing the blurriness you were seeing!
+        gluOrtho2D(0, width, height, 0)  # Left, Right, Bottom, Top (Flipped Y)
+
+        # 4. Set the MODELVIEW matrix (where objects are placed/rotated)
+        glMatrixMode(GL_MODELVIEW)
+        glLoadIdentity()
+        return window
 
 
 class GraphicsBackend:

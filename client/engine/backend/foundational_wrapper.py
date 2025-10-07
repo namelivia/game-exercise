@@ -1,6 +1,7 @@
 from typing import Any
 
 import pygame
+from PIL import Image
 
 
 class FoundationalSprite(pygame.sprite.Sprite):
@@ -32,4 +33,6 @@ class FoundationalWrapper:
 
     @staticmethod
     def load_image(path: str) -> pygame.Surface:
-        return pygame.image.load(path)
+        # Only for Openg
+        return Image.open(path).transpose(Image.FLIP_TOP_BOTTOM)
+        # return pygame.image.load(path)
