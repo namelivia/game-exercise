@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class ChangeCursorEventHandler(EventHandler[ChangeCursorEvent]):
     def handle(self, event: "ChangeCursorEvent") -> None:
-        PygameNativeGraphicsBackend.set_mouse_cursor(event.key)
+        PygameNativeGraphicsBackend().set_mouse_cursor(event.key)
 
 
 handlers_map: Dict[Type["Event"], Any] = {
