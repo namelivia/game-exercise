@@ -5,7 +5,7 @@ from client.engine.backend.foundational_wrapper import (
     FoundationalSurface,
     FoundationalWrapper,
 )
-from client.engine.backend.graphics import GraphicsBackend
+from client.engine.backend.graphics import PygameNativeGraphicsBackend
 from client.engine.primitives.shape import Shape
 
 from .sprite import Sprite
@@ -14,6 +14,7 @@ WHITE = FoundationalColor(255, 255, 255)
 BLACK = FoundationalColor(0, 0, 0)
 
 
+# This all depends on PYGAME/OPENGL
 class Text(Shape):
     def __init__(self, message: str, x: int, y: int, color: FoundationalColor = BLACK):
         super().__init__(x, y)
@@ -22,7 +23,9 @@ class Text(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            font = GraphicsBackend.get_font(GraphicsBackend.get_default_font(), 24)
+            font = PygameNativeGraphicsBackend.get_font(
+                PygameNativeGraphicsBackend.get_default_font(), 24
+            )
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 
@@ -55,7 +58,9 @@ class SmallText(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            font = GraphicsBackend.get_font(GraphicsBackend.get_default_font(), 12)
+            font = PygameNativeGraphicsBackend.get_font(
+                PygameNativeGraphicsBackend.get_default_font(), 12
+            )
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 
@@ -88,7 +93,7 @@ class Image(Shape):
 class Animation(Shape):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int = 0):
         super().__init__(x, y)
-        self.sprite_group = GraphicsBackend.sprite_group()
+        self.sprite_group = PygameNativeGraphicsBackend.sprite_group()
         self.animation = Sprite(folder, x, y, initial_frame)
         self.sprite_group.add(self.animation)
 

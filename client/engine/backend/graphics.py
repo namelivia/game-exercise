@@ -1,22 +1,46 @@
-from typing import Any
+from abc import ABC, abstractmethod
+from typing import Any, Dict
 
 import pygame
 
 
-class GraphicsBackend:
+class BaseGraphicsBackend(ABC):
 
+    @abstractmethod
     @staticmethod
     def update_display() -> None:
-        pygame.display.update()
-        return None
+        raise NotImplementedError
 
+    @abstractmethod
     @staticmethod
     def get_new_window(width: int, height: int) -> pygame.Surface:
-        return pygame.display.set_mode((width, height))
+        raise NotImplementedError
 
+    @abstractmethod
     @staticmethod
     def set_mouse_cursor(new_cursor: str) -> None:
-        cursors = {
+        raise NotImplementedError
+
+    @abstractmethod
+    @staticmethod
+    def sprite_group() -> Any:
+        raise NotImplementedError
+
+    @abstractmethod
+    @staticmethod
+    def get_default_font() -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    @staticmethod
+    def get_font(font: str, size: int) -> pygame.font.Font:
+        raise NotImplementedError
+
+
+class PygameGraphicsBackend(BaseGraphicsBackend):
+    @staticmethod
+    def set_mouse_cursor(new_cursor: str) -> None:
+        cursors: Dict[str, Any] = {
             "ARROW": pygame.SYSTEM_CURSOR_ARROW,
             "IBEAM": pygame.SYSTEM_CURSOR_IBEAM,
             "WAIT": pygame.SYSTEM_CURSOR_WAIT,
@@ -36,11 +60,6 @@ class GraphicsBackend:
             pass
         return None
 
-    # TODO: I had to add Any here as I could not find a way to type hint this
-    @staticmethod
-    def sprite_group() -> Any:
-        return pygame.sprite.Group()
-
     @staticmethod
     def get_default_font() -> str:
         return pygame.font.get_default_font()
@@ -48,3 +67,30 @@ class GraphicsBackend:
     @staticmethod
     def get_font(font: str, size: int) -> pygame.font.Font:
         return pygame.font.Font(font, size)
+
+    @staticmethod
+    def sprite_group() -> Any:
+        return pygame.sprite.Group()
+
+
+class PygameNativeGraphicsBackend(PygameGraphicsBackend):
+    @staticmethod
+    def update_display() -> None:
+        pygame.display.update()
+        return None
+
+    @staticmethod
+    def get_new_window(width: int, height: int) -> pygame.Surface:
+        return pygame.display.set_mode((width, height), pygame.DOUBLEBUF)
+
+
+class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
+    @staticmethod
+    def update_display() -> None:
+        raise NotImplementedError
+
+    @staticmethod
+    def get_new_window(width: int, height: int) -> pygame.Surface:
+        return pygame.display.set_mode(
+            (width, height), pygame.OPENGL | pygame.DOUBLEBUF
+        )

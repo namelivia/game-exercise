@@ -11,6 +11,7 @@ class FoundationalColor(pygame.Color):
     pass
 
 
+# This won't work on opengl
 class FoundationalSurface(pygame.Surface):
     pass
 
