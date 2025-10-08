@@ -127,8 +127,8 @@ class Image(Shape):
         self.image = GraphicsBackend().get().load_image(path)
 
     def render(self, window: Any) -> None:
-        # This should only happen ONCE, not here.
-        self.texture_id = self._create_opengl_texture(self.image)
+        if not hasattr(self, "texture_id"):
+            self.texture_id = self._create_opengl_texture(self.image)
         # This is ONLY for OpenGL
         if window is not None:
             # This is ONLY for Pygame Native
