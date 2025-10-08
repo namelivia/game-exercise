@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 import pygame
 
-from .pygame_window import PygameGraphicsBackend
+from ..pygame_window import PygameGraphicsBackend
 
 
 class PygameNativeGraphicsBackend(PygameGraphicsBackend):
