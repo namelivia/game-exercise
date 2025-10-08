@@ -6,6 +6,7 @@ from client.engine.backend.foundational_wrapper import (
     FoundationalSprite,
     FoundationalWrapper,
 )
+from client.engine.backend.graphics.graphics import GraphicsBackend
 
 
 class Sprite(FoundationalSprite):
@@ -23,15 +24,15 @@ class Sprite(FoundationalSprite):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int):
         super().__init__()
         self.sprites = [
-            FoundationalWrapper.load_image(frame)
+            GraphicsBackend().get().load_image(frame)
             for frame in self._get_frames_path(folder)
         ]
         self.current_sprite = initial_frame % self._animation_length()
         self.image = self.sprites[self.current_sprite]
 
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
+        # self.rect = self.image.get_rect() #TODO: This function belongs to a pygame surface
+        # self.rect.x = x
+        # self.rect.y = y
 
     def update(self) -> None:
         self.current_sprite = (self.current_sprite + 1) % self._animation_length()

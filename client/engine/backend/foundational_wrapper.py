@@ -28,7 +28,3 @@ class FoundationalWrapper:
     @staticmethod
     def get_clock_ticks() -> int:
         return int(pygame.time.get_ticks())
-
-    @staticmethod
-    def load_image(path: str) -> pygame.Surface:
-        return pygame.image.load(path)

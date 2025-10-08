@@ -1,22 +1,13 @@
-from typing import Any
+from typing import Any, Dict
 
 import pygame
 
+from .base import BaseGraphicsBackend
 
-class GraphicsBackend:
 
-    @staticmethod
-    def update_display() -> None:
-        pygame.display.update()
-        return None
-
-    @staticmethod
-    def get_new_window(width: int, height: int) -> pygame.Surface:
-        return pygame.display.set_mode((width, height))
-
-    @staticmethod
-    def set_mouse_cursor(new_cursor: str) -> None:
-        cursors = {
+class PygameGraphicsBackend(BaseGraphicsBackend):
+    def set_mouse_cursor(self, new_cursor: str) -> None:
+        cursors: Dict[str, Any] = {
             "ARROW": pygame.SYSTEM_CURSOR_ARROW,
             "IBEAM": pygame.SYSTEM_CURSOR_IBEAM,
             "WAIT": pygame.SYSTEM_CURSOR_WAIT,
@@ -36,15 +27,11 @@ class GraphicsBackend:
             pass
         return None
 
-    # TODO: I had to add Any here as I could not find a way to type hint this
-    @staticmethod
-    def sprite_group() -> Any:
-        return pygame.sprite.Group()
-
-    @staticmethod
-    def get_default_font() -> str:
+    def get_default_font(self) -> str:
         return pygame.font.get_default_font()
 
-    @staticmethod
-    def get_font(font: str, size: int) -> pygame.font.Font:
+    def get_font(self, font: str, size: int) -> pygame.font.Font:
         return pygame.font.Font(font, size)
+
+    def sprite_group(self) -> Any:
+        return pygame.sprite.Group()

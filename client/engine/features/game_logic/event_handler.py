@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.backend.graphics import GraphicsBackend
+from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.primitives.event_handler import EventHandler
 
 from .events import ChangeCursorEvent
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class ChangeCursorEventHandler(EventHandler[ChangeCursorEvent]):
     def handle(self, event: "ChangeCursorEvent") -> None:
-        GraphicsBackend.set_mouse_cursor(event.key)
+        GraphicsBackend.get().set_mouse_cursor(event.key)
 
 
 handlers_map: Dict[Type["Event"], Any] = {

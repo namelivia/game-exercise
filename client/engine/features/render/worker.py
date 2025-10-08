@@ -17,7 +17,6 @@ class RenderWorker(threading.Thread):
     def __init__(self, name):
         super().__init__()
         self.name = name
-        self.current_screen = CurrentScreen()
         self.clock = FoundationalClock()
         # Event used to signal the thread to stop gracefully
         self.stop_event = threading.Event()
@@ -29,7 +28,7 @@ class RenderWorker(threading.Thread):
         Backend.init()
         self.graphics = Graphics()
         while not self.stop_event.is_set():
-            screen = self.current_screen.get_current_screen()
+            screen = CurrentScreen().get_current_screen()
             if screen is not None:
                 self.graphics.render(screen)
             self.clock.tick(60)  # 60 FPS
