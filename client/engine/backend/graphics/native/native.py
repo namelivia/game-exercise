@@ -17,4 +17,4 @@ class PygameNativeGraphicsBackend(PygameGraphicsBackend):
         return pygame.display.set_mode((width, height), pygame.DOUBLEBUF)
 
     def clear_window(self, window):
-        window.fill((255, 255, 255))
+        window.fill((0, 0, 0))
