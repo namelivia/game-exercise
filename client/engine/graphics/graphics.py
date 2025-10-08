@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from client.engine.backend.graphics import GraphicsBackend
+from client.engine.backend.graphics.graphics import GraphicsBackend
 
 if TYPE_CHECKING:
     from client.engine.primitives.screen import Screen

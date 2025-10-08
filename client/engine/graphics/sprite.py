@@ -6,7 +6,7 @@ from client.engine.backend.foundational_wrapper import (
     FoundationalSprite,
     FoundationalWrapper,
 )
-from client.engine.backend.graphics import GraphicsBackend
+from client.engine.backend.graphics.graphics import GraphicsBackend
 
 
 class Sprite(FoundationalSprite):

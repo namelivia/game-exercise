@@ -6,7 +6,7 @@ from client.engine.backend.foundational_wrapper import (
     FoundationalColor,
     FoundationalSurface,
 )
-from client.engine.backend.graphics import GraphicsBackend
+from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.primitives.shape import Shape
 
 from .sprite import Sprite

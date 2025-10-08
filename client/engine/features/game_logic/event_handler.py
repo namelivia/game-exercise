@@ -1,7 +1,7 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.backend.graphics import GraphicsBackend
+from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.primitives.event_handler import EventHandler
 
 from .events import ChangeCursorEvent
