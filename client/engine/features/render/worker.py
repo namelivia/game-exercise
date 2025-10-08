@@ -2,8 +2,8 @@ import threading
 
 from client.engine.backend.backend import Backend
 from client.engine.backend.foundational_wrapper import FoundationalClock
+from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.general_state.current_screen import CurrentScreen
-from client.engine.graphics.graphics import Graphics
 
 
 class StopThread(Exception):
@@ -26,11 +26,13 @@ class RenderWorker(threading.Thread):
         """The main execution loop for the thread."""
         print(f"[{self.name}] Thread started, waiting for events...")
         Backend.init()
-        self.graphics = Graphics()
+        window = GraphicsBackend.get().get_new_window(640, 480)
         while not self.stop_event.is_set():
             screen = CurrentScreen().get_current_screen()
             if screen is not None:
-                self.graphics.render(screen)
+                GraphicsBackend.get().clear_window(window)
+                screen.render(window)
+                GraphicsBackend.get().update_display()
             self.clock.tick(60)  # 60 FPS
         print(f"[{self.name}] Thread successfully terminated and exited run().")
 

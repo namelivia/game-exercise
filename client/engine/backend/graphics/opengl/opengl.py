@@ -31,3 +31,6 @@ class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
         )
         self._setup_opengl_view(width, height)
         return window
+
+    def clear_window(self, window):
+        glClear(GL_COLOR_BUFFER_BIT)
