@@ -46,22 +46,6 @@ class Rectangle(Shape):
             window.blit(rectangle, dest=(self.x, self.y))
 
 
-class SmallText(Shape):
-    def __init__(self, message: str, x: int, y: int, color: FoundationalColor = BLACK):
-        super().__init__(x, y)
-        self.message = message
-        self.color = color
-
-    def render(self, window: Any) -> None:
-        if window is not None:
-            font = FontManager.get_font(FontManager.get_default_font(), 24)
-            text_surface = font.render(self.message, True, self.color)
-            window.blit(text_surface, dest=(self.x, self.y))
-
-    def set_message(self, message: str) -> None:
-        self.message = message
-
-
 class Image(Shape):
     def __init__(self, path: str, x: int, y: int):
         super().__init__(x, y)

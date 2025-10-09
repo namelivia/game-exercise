@@ -64,19 +64,6 @@ class Rectangle(Shape):
         raise NotImplementedError("OpenGL Rectangle not implemented")
 
 
-class SmallText(Shape):
-    def __init__(self, message: str, x: int, y: int, color: FoundationalColor = BLACK):
-        super().__init__(x, y)
-        self.message = message
-        self.color = color
-
-    def render(self, window: Any) -> None:
-        raise NotImplementedError("SmallText not implemented")
-
-    def set_message(self, message: str) -> None:
-        self.message = message
-
-
 class Image(Shape):
     def _create_opengl_texture(self, image):
         img_data = image.convert("RGBA").tobytes()
