@@ -21,7 +21,7 @@ class Text(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            font = FontManager.get_font(FontManager.get_default_font(), 24)
+            font = FontManager.get().get_font(FontManager.get().get_default_font(), 24)
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 

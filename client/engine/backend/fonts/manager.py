@@ -1,11 +1,25 @@
 import pygame
 
+from ..constants import GRAPHICS
+
+
+class PygameFontManager:
+    def get_default_font(self) -> str:
+        return "freesansbold.ttf"
+
+    def get_font(self, font: str, size: int) -> pygame.font.Font:
+        return pygame.font.Font(font, size)
+
+
+class FreeTypeFontManager:
+    pass  # TODO
+
 
 class FontManager:
-    @staticmethod
-    def get_default_font() -> str:
-        return pygame.font.get_default_font()
 
     @staticmethod
-    def get_font(font: str, size: int) -> pygame.font.Font:
-        return pygame.font.Font(font, size)
+    def get():
+        if GRAPHICS == "NATIVE":
+            return PygameFontManager()
+        else:
+            return FreeTypeFontManager()
