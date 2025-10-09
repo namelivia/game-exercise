@@ -1,5 +1,6 @@
 from typing import Any, Tuple
 
+from client.engine.backend.fonts.manager import FontManager
 from client.engine.backend.foundational_wrapper import (
     FoundationalColor,
     FoundationalSurface,
@@ -20,10 +21,7 @@ class Text(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            # Circular import
-            from client.engine.backend.graphics.graphics import GraphicsBackend
-
-            font = GraphicsBackend.get_font(GraphicsBackend.get_default_font(), 24)
+            font = FontManager.get_font(FontManager.get_default_font(), 24)
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 
@@ -56,10 +54,7 @@ class SmallText(Shape):
 
     def render(self, window: Any) -> None:
         if window is not None:
-            # Circular import
-            from client.engine.backend.graphics.graphics import GraphicsBackend
-
-            font = GraphicsBackend.get_font(GraphicsBackend.get_default_font(), 12)
+            font = FontManager.get_font(FontManager.get_default_font(), 24)
             text_surface = font.render(self.message, True, self.color)
             window.blit(text_surface, dest=(self.x, self.y))
 

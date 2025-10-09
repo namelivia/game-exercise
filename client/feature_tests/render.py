@@ -1,6 +1,6 @@
 from client.engine.features.render.worker import RenderWorker
 from client.engine.general_state.current_screen import CurrentScreen
-from client.engine.graphics.shapes import Image
+from client.engine.graphics.shapes import Image, Text
 from client.engine.primitives.screen import Screen
 from client.engine.primitives.ui import UIElement
 
@@ -8,7 +8,12 @@ from client.engine.primitives.ui import UIElement
 class Background(UIElement):
     def __init__(self) -> None:
         super().__init__()
-        self.set_shapes([Image("client/experiment/images/background.png", 0, 0)])
+        self.set_shapes(
+            [
+                Image("client/experiment/images/background.png", 0, 0),
+                Text(f"This is a test", 20, 20),
+            ]
+        )
 
 
 class TestScreen(Screen):

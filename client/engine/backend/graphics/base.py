@@ -20,13 +20,5 @@ class BaseGraphicsBackend(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_default_font(self) -> str:
-        raise NotImplementedError
-
-    @abstractmethod
-    def get_font(self, font: str, size: int):
-        raise NotImplementedError
-
-    @abstractmethod
     def clear_window(self, window):
         raise NotImplementedError

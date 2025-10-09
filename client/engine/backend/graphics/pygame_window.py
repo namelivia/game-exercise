@@ -27,11 +27,5 @@ class PygameGraphicsBackend(BaseGraphicsBackend):
             pass
         return None
 
-    def get_default_font(self) -> str:
-        return pygame.font.get_default_font()
-
-    def get_font(self, font: str, size: int) -> pygame.font.Font:
-        return pygame.font.Font(font, size)
-
     def sprite_group(self) -> Any:
         return pygame.sprite.Group()
