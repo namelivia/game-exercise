@@ -20,7 +20,6 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
         # Could I just push the instances to the queue?
         if event.dest_screen == "main":
             screen = MainScreen()
-            screen.load()
             CurrentScreen().set_current_screen(screen)
 
 

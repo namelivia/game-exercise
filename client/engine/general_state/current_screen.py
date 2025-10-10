@@ -23,4 +23,5 @@ class CurrentScreen:
         return self.current_screen
 
     def set_current_screen(self, current_screen: "Screen") -> None:
+        current_screen.load()
         self.current_screen = current_screen
