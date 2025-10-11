@@ -20,6 +20,10 @@ class Screen(ABC):
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
+    def load(self) -> None:
+        for ui_element in self.ui_elements:
+            ui_element.load()
+
     def render(self, window) -> None:
         for ui_element in self.ui_elements:
             ui_element.render(window)

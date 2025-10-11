@@ -28,7 +28,10 @@ class ThreadManager:
     def initialize(self) -> None:
 
         self.threads = [
-            RenderWorker(name="Render"),
+            RenderWorker(
+                name="Render",
+                queue=QueueManager().get("render"),
+            ),
             SoundWorker(
                 name="Sound",
                 queue=QueueManager().get("sound"),

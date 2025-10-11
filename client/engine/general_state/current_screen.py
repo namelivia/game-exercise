@@ -1,6 +1,8 @@
 import uuid
 from typing import TYPE_CHECKING, Any, Optional, Type
 
+from client.engine.features.render.commands import StartRendering
+
 if TYPE_CHECKING:
     from client.engine.primitives.screen import Screen
 
@@ -23,4 +25,6 @@ class CurrentScreen:
         return self.current_screen
 
     def set_current_screen(self, current_screen: "Screen") -> None:
+        # Tell the render thread to start rendering
+        StartRendering(current_screen).execute()
         self.current_screen = current_screen

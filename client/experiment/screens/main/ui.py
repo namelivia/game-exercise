@@ -15,12 +15,15 @@ class Portrait(ClickableUIElement):
         super().__init__(on_click)
         self.image = Image(image, x, y)
         self.highlight = Image(highlight, x, y)
-        self.set_shapes([self.image])
+        self.highlight.hide()
+        self.set_shapes([self.image, self.highlight])
 
     def on_mouse_enter(self):
         ChangeCursor("HAND").execute()
-        self.set_shapes([self.highlight])
+        self.highlight.show()
+        self.image.hide()
 
     def on_mouse_leave(self):
         ChangeCursor("ARROW").execute()
-        self.set_shapes([self.image])
+        self.highlight.hide()
+        self.image.show()
