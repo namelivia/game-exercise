@@ -94,11 +94,13 @@ class Image(Shape):
 
     def __init__(self, path: str, x: int, y: int):
         super().__init__(x, y)
-        self.image = GraphicsBackend().get().load_image(path)
+        self.path = path
+
+    def load(self):
+        self.image = GraphicsBackend().get().load_image(self.path)
+        self.texture_id = self._create_opengl_texture(self.image)
 
     def render(self, window: Any) -> None:
-        if not hasattr(self, "texture_id"):
-            self.texture_id = self._create_opengl_texture(self.image)
         if window is not None:
             glPushMatrix()
 

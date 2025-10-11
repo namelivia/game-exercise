@@ -5,6 +5,7 @@ from client.engine.backend.foundational_wrapper import (
     FoundationalColor,
     FoundationalSurface,
 )
+from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.primitives.shape import Shape
 
 from .sprite import Sprite
@@ -19,11 +20,13 @@ class Text(Shape):
         self.message = message
         self.color = color
 
+    def load(self):
+        font = FontManager.get().get_font(FontManager.get().get_default_font(), 24)
+        self.surface = font.render(self.message, True, self.color)
+
     def render(self, window: Any) -> None:
         if window is not None:
-            font = FontManager.get().get_font(FontManager.get().get_default_font(), 24)
-            text_surface = font.render(self.message, True, self.color)
-            window.blit(text_surface, dest=(self.x, self.y))
+            window.blit(self.surface, dest=(self.x, self.y))
 
     def set_message(self, message: str) -> None:
         self.message = message
@@ -38,21 +41,24 @@ class Rectangle(Shape):
         self.height = height
         self.color = color
 
+    def load(self):
+        self.rectangle = FoundationalSurface((self.width, self.height))
+        self.rectangle.fill(self.color)
+        self.rectangle.set_alpha(128)  # TODO: Alpha could be passed
+
     def render(self, window: Any) -> None:
         if window is not None:
-            rectangle = FoundationalSurface((self.width, self.height))
-            rectangle.fill(self.color)
-            rectangle.set_alpha(128)  # TODO: Alpha could be passed
-            window.blit(rectangle, dest=(self.x, self.y))
+            window.blit(self.rectangle, dest=(self.x, self.y))
 
 
 class Image(Shape):
     def __init__(self, path: str, x: int, y: int):
         super().__init__(x, y)
-        # Circular import
-        from client.engine.backend.graphics.graphics import GraphicsBackend
+        self.path = path
 
-        self.image = GraphicsBackend().get().load_image(path)
+    def load(self):
+
+        self.image = GraphicsBackend().get().load_image(self.path)
 
     def render(self, window: Any) -> None:
         if window is not None:
@@ -75,7 +81,6 @@ class Animation(Shape):
     def __init__(self, folder: str, x: int, y: int, initial_frame: int = 0):
         super().__init__(x, y)
         # Circular import
-        from client.engine.backend.graphics import GraphicsBackend
 
         self.sprite_group = GraphicsBackend.sprite_group()
         self.animation = Sprite(folder, x, y, initial_frame)

@@ -8,6 +8,16 @@ class Shape(ABC):
         self.y = y
         self.hidden = False
 
+    def load(self) -> None:
+        pass
+
+    def render(self, window: Any) -> None:
+        pass
+
+    def draw(self, window: Any) -> None:
+        if not self.hidden:
+            self.render(window)
+
     def hide(self) -> None:
         self.hidden = True
 
@@ -32,12 +42,3 @@ class Shape(ABC):
 
     def get_height(self) -> int:
         return 0
-
-    # TODO: Can I type pygame types?
-    def render(self, window: Any) -> None:
-        pass
-
-    # TODO: Can I type pygame types?
-    def draw(self, window: Any) -> None:
-        if not self.hidden:
-            self.render(window)

@@ -9,13 +9,17 @@ class UIElement(ABC):
     def __init__(self) -> None:
         self.shapes: List["Shape"] = []
 
-    # TODO: Can I type pygame types?
-    # UI elements can hold a small state too that can be updated
+    def load(self) -> None:
+        for shape in self.shapes:
+            shape.load()
+        return None
+
     def render(self, window: Any) -> None:
         for shape in self.shapes:
             shape.draw(window)
         return None
 
+    # UI elements can hold a small state too that can be updated
     def update(self, time: int, data: Dict[str, Any]) -> None:
         pass
 
@@ -44,6 +48,9 @@ class ClickableUIElement:
 
     def render(self, window: Any) -> None:
         self.element.render(window)
+
+    def load(self) -> None:
+        self.element.load()
 
     def show(self) -> None:
         self.element.show()
