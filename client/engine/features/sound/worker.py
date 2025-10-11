@@ -27,7 +27,6 @@ class SoundWorker(threading.Thread):
         while True:
             try:
                 event = self.queue.get_for_workers()
-                print(event)
                 if type(event) is StopThreadEvent:
                     break
                 else:
