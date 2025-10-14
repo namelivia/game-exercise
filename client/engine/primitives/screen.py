@@ -20,14 +20,7 @@ class Screen(ABC):
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
-    def load(self) -> None:
-        for ui_element in self.ui_elements:
-            ui_element.load()
-
-    def render(self, window) -> None:
-        for ui_element in self.ui_elements:
-            ui_element.render(window)
-
+    # =============== STATE =========================
     def update(self, event: Optional["InGameEvent"] = None) -> None:
         self.time = Clock().get() - self.initial_time
 
@@ -50,3 +43,12 @@ class Screen(ABC):
             else:
                 element.update(self.time, self.data)
         return None
+
+    # =============== RENDERING =========================
+    def render(self, window) -> None:
+        for ui_element in self.ui_elements:
+            ui_element.render(window)
+
+    def load(self) -> None:
+        for ui_element in self.ui_elements:
+            ui_element.load()

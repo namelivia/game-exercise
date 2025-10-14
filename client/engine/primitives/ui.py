@@ -9,6 +9,19 @@ class UIElement(ABC):
     def __init__(self) -> None:
         self.shapes: List["Shape"] = []
 
+    # =============== STATE =========================
+    # UI elements can hold a small state too that can be updated
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        pass
+
+    def set_shapes(self, shapes: List["Shape"]) -> None:
+        self.shapes = shapes
+
+    # =============== RENDERING =========================
+    def show(self) -> None:
+        for shape in self.shapes:
+            shape.show()
+
     def load(self) -> None:
         for shape in self.shapes:
             shape.load()
@@ -19,17 +32,6 @@ class UIElement(ABC):
             shape.draw(window)
         return None
 
-    # UI elements can hold a small state too that can be updated
-    def update(self, time: int, data: Dict[str, Any]) -> None:
-        pass
-
-    def set_shapes(self, shapes: List["Shape"]) -> None:
-        self.shapes = shapes
-
-    def show(self) -> None:
-        for shape in self.shapes:
-            shape.show()
-
 
 class ClickableUIElement:
     def __init__(self, on_click) -> None:
@@ -38,6 +40,7 @@ class ClickableUIElement:
         self._was_mouse_over = False
         self.on_click = on_click
 
+    # =============== STATE =========================
     def _is_mouse_over(self, x: int, y: int) -> bool:
         return (
             x > self.element.shapes[0].get_x()
@@ -45,18 +48,6 @@ class ClickableUIElement:
             and y > self.element.shapes[0].get_y()
             and y < self.element.shapes[0].get_y() + self.element.shapes[0].get_height()
         )
-
-    def render(self, window: Any) -> None:
-        self.element.render(window)
-
-    def load(self) -> None:
-        self.element.load()
-
-    def show(self) -> None:
-        self.element.show()
-
-    def set_shapes(self, shapes: List["Shape"]) -> None:
-        self.element.shapes = shapes
 
     def on_mouse_enter(self) -> None:
         pass
@@ -74,3 +65,16 @@ class ClickableUIElement:
             self.on_mouse_enter()
         elif self._was_mouse_over and not self.mouse_over:
             self.on_mouse_leave()
+
+    # ============= RENDER =========================
+    def render(self, window: Any) -> None:
+        self.element.render(window)
+
+    def load(self) -> None:
+        self.element.load()
+
+    def show(self) -> None:
+        self.element.show()
+
+    def set_shapes(self, shapes: List["Shape"]) -> None:
+        self.element.shapes = shapes
