@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class StartRenderingEventHandler(EventHandler[StartRenderingEvent]):
     def handle(self, event: "StartRenderingEvent") -> None:
         event.screen.load()
-        State().start_rendering()
+        State().start_rendering(event.screen)
 
 
 handlers_map: Dict[Type["Event"], Any] = {

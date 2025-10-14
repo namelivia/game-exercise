@@ -5,19 +5,11 @@ if TYPE_CHECKING:
     from client.engine.primitives.shape import Shape
 
 
-class UIElement(ABC):
-    def __init__(self) -> None:
-        self.shapes: List["Shape"] = []
-
-    # =============== STATE =========================
-    # UI elements can hold a small state too that can be updated
-    def update(self, time: int, data: Dict[str, Any]) -> None:
-        pass
-
-    def set_shapes(self, shapes: List["Shape"]) -> None:
+# This is the graphical representation of the UIElement
+class UIElementRender(ABC):
+    def __init__(self, shapes) -> None:
         self.shapes = shapes
 
-    # =============== RENDERING =========================
     def show(self) -> None:
         for shape in self.shapes:
             shape.show()
@@ -31,6 +23,24 @@ class UIElement(ABC):
         for shape in self.shapes:
             shape.draw(window)
         return None
+
+
+class UIElement(ABC):
+    def __init__(self) -> None:
+        self.shapes: List["Shape"] = []
+
+    # =============== STATE =========================
+    # UI elements can hold a small state too that can be updated
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        pass
+
+    def set_shapes(self, shapes: List["Shape"]) -> None:
+        self.shapes = shapes
+
+    def get_render(self) -> UIElementRender:
+        return UIElementRender(self.shapes)
+
+    # =============== RENDERING =========================
 
 
 class ClickableUIElement:
@@ -68,13 +78,16 @@ class ClickableUIElement:
 
     # ============= RENDER =========================
     def render(self, window: Any) -> None:
-        self.element.render(window)
+        self.element.get_render().render(window)
 
     def load(self) -> None:
-        self.element.load()
+        self.element.get_render().load()
 
     def show(self) -> None:
-        self.element.show()
+        self.element.get_render().show()
+
+    def get_render(self) -> UIElementRender:
+        return self.element.get_render()
 
     def set_shapes(self, shapes: List["Shape"]) -> None:
         self.element.shapes = shapes

@@ -9,6 +9,20 @@ if TYPE_CHECKING:
     from client.engine.primitives.event import InGameEvent
 
 
+# This is the graphical representation of the screen
+class ScreenRender(ABC):
+    def __init__(self, render_elements) -> None:
+        self.render_elements = render_elements
+
+    def render(self, window) -> None:
+        for render_element in self.render_elements:
+            render_element.render(window)
+
+    def load(self) -> None:
+        for render_element in self.render_elements:
+            render_element.load()
+
+
 class Screen(ABC):
     def __init__(self) -> None:
         self.ui_elements: List[UIElement | ClickableUIElement] = []
@@ -20,7 +34,12 @@ class Screen(ABC):
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
-    # =============== STATE =========================
+    # Get the screen's graphical representation
+    def get_render(self) -> ScreenRender:
+        return ScreenRender(
+            [ui_element.get_render() for ui_element in self.ui_elements]
+        )
+
     def update(self, event: Optional["InGameEvent"] = None) -> None:
         self.time = Clock().get() - self.initial_time
 
@@ -43,12 +62,3 @@ class Screen(ABC):
             else:
                 element.update(self.time, self.data)
         return None
-
-    # =============== RENDERING =========================
-    def render(self, window) -> None:
-        for ui_element in self.ui_elements:
-            ui_element.render(window)
-
-    def load(self) -> None:
-        for ui_element in self.ui_elements:
-            ui_element.load()

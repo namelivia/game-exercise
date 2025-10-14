@@ -26,5 +26,5 @@ class CurrentScreen:
 
     def set_current_screen(self, current_screen: "Screen") -> None:
         # Tell the render thread to start rendering
-        StartRendering(current_screen).execute()
+        StartRendering(current_screen.get_render()).execute()
         self.current_screen = current_screen
