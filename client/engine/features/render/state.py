@@ -1,6 +1,6 @@
 from typing import Any, Optional, Type
 
-from client.engine.primitives.screen import ScreenRender
+from client.engine.features.render.temp import ScreenRender
 
 
 # This is a singleton

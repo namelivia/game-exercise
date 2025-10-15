@@ -1,6 +1,9 @@
 from abc import ABC
 from typing import TYPE_CHECKING, Any, Dict, List, Tuple
 
+from client.engine.features.render.temp import UIElementRender
+from client.engine.features.user_input.mouse_position import MousePosition
+
 if TYPE_CHECKING:
     from client.engine.primitives.shape import Shape
 
@@ -16,38 +19,6 @@ def create_ui_element(shapes: List["Shape"], custom_logic=None):
     return UIElement(UIElementRender(shapes), logic)
 
 
-# This is the graphical representation of the UIElement
-class UIElementRender(ABC):
-    def __init__(self, shapes) -> None:
-        self.shapes = shapes
-
-    def show(self) -> None:
-        for shape in self.shapes:
-            shape.show()
-
-    def hide(self) -> None:
-        for shape in self.shapes:
-            shape.hide()
-
-    def load(self) -> None:
-        for shape in self.shapes:
-            shape.load()
-        return None
-
-    def render(self, window: Any) -> None:
-        for shape in self.shapes:
-            shape.draw(window)
-        return None
-
-    def contains_point(self, x, y):
-        return (
-            x > self.shapes[0].get_x()
-            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
-            and y > self.shapes[0].get_y()
-            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
-        )
-
-
 # This is the logic part of the UIElement
 # UI elements can hold a small state too that can be updated
 # This is what will be extended.
@@ -56,6 +27,8 @@ class UIElementLogic(ABC):
         pass
 
 
+# The UI Element has two parts, the logic part and the
+# render part
 class UIElement(ABC):
     def __init__(self, render, logic) -> None:
         self.render = render
@@ -66,6 +39,9 @@ class UIElement(ABC):
 
     def get_logic(self) -> UIElementLogic:
         return self.logic
+
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        pass
 
 
 class ClickableUIElement:
@@ -90,11 +66,10 @@ class ClickableUIElement:
         if self.on_click is not None:
             self.on_click()
 
-    def update(
-        self, time: int, data: Dict[str, Any], mouse_position: Tuple[int, int]
-    ) -> None:
+    def update(self, time: int, data: Dict[str, Any]) -> None:
         self.element.get_logic().update(time, data)
         self._was_mouse_over = self.mouse_over
+        mouse_position = MousePosition().get()
         self.mouse_over = self._is_mouse_over(mouse_position[0], mouse_position[1])
         if not self._was_mouse_over and self.mouse_over:
             if self.on_mouse_enter is not None:
@@ -114,3 +89,6 @@ class ClickableUIElement:
 
     def get_render(self) -> UIElementRender:
         return self.element.get_render()
+
+    def get_logic(self) -> UIElementLogic:
+        return self.element.get_logic()

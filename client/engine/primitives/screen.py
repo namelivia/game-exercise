@@ -2,7 +2,6 @@ from abc import ABC
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 from client.engine.general_state.clock import Clock
-from client.engine.general_state.mouse import Mouse
 from client.engine.primitives.ui import ClickableUIElement, UIElement
 
 if TYPE_CHECKING:
@@ -10,20 +9,6 @@ if TYPE_CHECKING:
 
 
 # This is the graphical representation of the screen
-# it only contains UIElementRender
-class ScreenRender(ABC):
-    def __init__(self, render_elements) -> None:
-        self.render_elements = render_elements
-
-    def render(self, window) -> None:
-        for render_element in self.render_elements:
-            render_element.render(window)
-
-    def load(self) -> None:
-        for render_element in self.render_elements:
-            render_element.load()
-
-
 class Screen(ABC):
     def __init__(self) -> None:
         self.ui_elements: List[UIElement | ClickableUIElement] = []
@@ -34,12 +19,6 @@ class Screen(ABC):
         self.initial_time = Clock().get()
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
-
-    # Get the screen's graphical representation
-    def get_render(self) -> ScreenRender:
-        return ScreenRender(
-            [ui_element.get_render() for ui_element in self.ui_elements]
-        )
 
     def update(self, event: Optional["InGameEvent"] = None) -> None:
         self.time = Clock().get() - self.initial_time
@@ -58,8 +37,5 @@ class Screen(ABC):
         # Update ui elements they need to access the data and time to do so
         # I'm also adding the mouse position for clickable elements.
         for element in self.ui_elements:
-            if isinstance(element, ClickableUIElement):
-                element.update(self.time, self.data, Mouse().get())
-            else:
-                element.get_logic().update(self.time, self.data)
+            element.update(self.time, self.data)
         return None
