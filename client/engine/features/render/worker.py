@@ -46,7 +46,7 @@ class RenderWorker(threading.Thread):
                 self._render_next_frame(state.get_current_screen(), window)
             else:  # Queue mode
                 try:
-                    event = self.queue.get_for_workers()
+                    event = self.queue.get()
                     if type(event) is StopThreadEvent:
                         break
                     else:

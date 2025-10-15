@@ -24,7 +24,7 @@ class NetworkWorker(threading.Thread):
         print(f"[{self.name}] Thread started, waiting for events...")
         while True:
             try:
-                event = self.queue.get_for_workers()
+                event = self.queue.get()
                 if type(event) is StopThreadEvent:
                     break
                 else:

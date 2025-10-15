@@ -20,22 +20,17 @@ class Screen(ABC):
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
-    def update(self, event: Optional["InGameEvent"] = None) -> None:
-        self.time = Clock().get() - self.initial_time
-
-        # TODO: These can be skipped sometimes, I have to fix this
-        # Process timers
-        if self.time in self.timers:
-            self.timers[self.time]()
-
-        # Process events
+    def update_events(self, event: Optional["InGameEvent"] = None) -> None:
         if event is not None:
             event_type = event.__class__
             if event_type in self.events:
                 self.events[event_type](event)
+        return None
 
-        # Update ui elements they need to access the data and time to do so
-        # I'm also adding the mouse position for clickable elements.
+    def update(self) -> None:
+        self.time = Clock().get() - self.initial_time
+        if self.time in self.timers:
+            self.timers[self.time]()
         for element in self.ui_elements:
             element.update(self.time, self.data)
         return None
