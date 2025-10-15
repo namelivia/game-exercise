@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserClickedEvent
 from client.engine.primitives.screen import Screen
+from client.engine.primitives.ui import ClickableUIElement
 from client.experiment.images import (
     CHEETAH_BLACK,
     CHEETAH_COLOR,
@@ -22,7 +23,7 @@ from client.experiment.images import (
 )
 from client.experiment.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
 
-from .ui import Background, Portrait
+from .ui import create_background, create_portrait
 
 
 class MainScreen(Screen):
@@ -70,13 +71,11 @@ class MainScreen(Screen):
             ]
         }
 
-        self.ui_elements = [
-            Background(),
-        ]
+        self.ui_elements = [create_background()]
 
         for i, animal in enumerate(self.data["animals"]):
             self.ui_elements.append(
-                Portrait(
+                create_portrait(
                     animal["image"],
                     animal["highlight"],
                     95 + (i % 3) * 160,
@@ -89,5 +88,5 @@ class MainScreen(Screen):
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
         for element in self.ui_elements:
-            if isinstance(element, Portrait) and element.mouse_over:
-                element.on_click()
+            if isinstance(element, ClickableUIElement) and element.mouse_over:
+                element.clicked()

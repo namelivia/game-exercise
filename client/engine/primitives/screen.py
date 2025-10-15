@@ -10,6 +10,7 @@ if TYPE_CHECKING:
 
 
 # This is the graphical representation of the screen
+# it only contains UIElementRender
 class ScreenRender(ABC):
     def __init__(self, render_elements) -> None:
         self.render_elements = render_elements
@@ -60,5 +61,5 @@ class Screen(ABC):
             if isinstance(element, ClickableUIElement):
                 element.update(self.time, self.data, Mouse().get())
             else:
-                element.update(self.time, self.data)
+                element.get_logic().update(self.time, self.data)
         return None
