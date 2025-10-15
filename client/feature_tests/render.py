@@ -1,5 +1,6 @@
+from client.engine.features.render.commands import StartRendering
+from client.engine.features.render.state import State
 from client.engine.features.render.worker import RenderWorker
-from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.general_state.queue import QueueManager
 from client.engine.graphics.shapes import Image, Text
 from client.engine.primitives.screen import Screen
@@ -26,11 +27,9 @@ class TestScreen(Screen):
 
 if __name__ == "__main__":
     QueueManager().initialize()
-    screen = CurrentScreen()
-    screen.initialize()
-    screen.set_current_screen(TestScreen())
     render_thread = RenderWorker(
         name="Render",
         queue=QueueManager().get("render"),
     )
     render_thread.start()
+    StartRendering(TestScreen().get_render()).execute()
