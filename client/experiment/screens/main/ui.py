@@ -1,29 +1,44 @@
 from client.engine.features.game_logic.commands import ChangeCursor
 from client.engine.graphics.shapes import Image
-from client.engine.primitives.ui import ClickableUIElement, UIElement
+from client.engine.primitives.ui import ClickableUIElement, create_ui_element
 from client.experiment.images import BACKGROUND
 
 
-class Background(UIElement):
-    def __init__(self) -> None:
-        super().__init__()
-        self.set_shapes([Image(BACKGROUND, 0, 0)])
+def create_background():
+    return create_ui_element([Image(BACKGROUND, 0, 0)])
 
 
-class Portrait(ClickableUIElement):
-    def __init__(self, image: str, highlight: str, x: int, y: int, on_click) -> None:
-        super().__init__(on_click)
-        self.image = Image(image, x, y)
-        self.highlight = Image(highlight, x, y)
-        self.highlight.hide()
-        self.set_shapes([self.image, self.highlight])
-
-    def on_mouse_enter(self):
+def _create_portrait_enter_handler(image, highlight):
+    def handle_enter():
         ChangeCursor("HAND").execute()
-        self.highlight.show()
-        self.image.hide()
+        highlight.show()
+        image.hide()
 
-    def on_mouse_leave(self):
+    return handle_enter
+
+
+def _create_portrait_leave_handler(image, highlight):
+    def handle_leave():
         ChangeCursor("ARROW").execute()
-        self.highlight.hide()
-        self.image.show()
+        highlight.hide()
+        image.show()
+
+    return handle_leave
+
+
+def create_portrait(image_path: str, highlight_path: str, x: int, y: int, on_click):
+    default_image = Image(image_path, x, y)
+    highlight_image = Image(highlight_path, x, y)
+    highlight_image.hide()
+
+    core_element = create_ui_element([default_image, highlight_image])
+
+    enter_cb = _create_portrait_enter_handler(default_image, highlight_image)
+    leave_cb = _create_portrait_leave_handler(default_image, highlight_image)
+
+    return ClickableUIElement(
+        element=core_element,
+        on_click=on_click,
+        on_mouse_enter=enter_cb,
+        on_mouse_leave=leave_cb,
+    )

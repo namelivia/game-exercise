@@ -1,5 +1,7 @@
 from typing import Any, Optional, Type
 
+from client.engine.features.render.temp import ScreenRender
+
 
 # This is a singleton
 class State:
@@ -12,9 +14,14 @@ class State:
 
     def initialize(self) -> None:
         self.is_rendering = False
+        self.current_screen = None
 
     def get_is_rendering(self) -> bool:
         return self.is_rendering
 
-    def start_rendering(self) -> None:
+    def start_rendering(self, screen: ScreenRender) -> None:
+        self.current_screen = screen
         self.is_rendering = True
+
+    def get_current_screen(self):
+        return self.current_screen

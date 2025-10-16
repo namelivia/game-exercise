@@ -18,18 +18,15 @@ class QueueManager:
         return cls._instance
 
     def initialize(self, initial_event: Optional["Event"] = None) -> None:
-        main_queue = _Queue()
-        main_queue.initialize(initial_event)
         sound_queue = _Queue()
         sound_queue.initialize()
         game_logic_queue = _Queue()
-        game_logic_queue.initialize()
+        game_logic_queue.initialize(initial_event)
         network_queue = _Queue()
         network_queue.initialize()
         render_queue = _Queue()
         render_queue.initialize()
         self.queues = {
-            "main": main_queue,
             "sound": sound_queue,
             "game_logic": game_logic_queue,
             "network": network_queue,
@@ -38,9 +35,6 @@ class QueueManager:
 
     def get(self, key) -> "_Queue":
         return self.queues[key]
-
-    def main_queue(self) -> "_Queue":
-        return self.get("main")
 
 
 class _Queue:
@@ -55,15 +49,7 @@ class _Queue:
     def empty(self) -> bool:
         return self.simple_queue.empty()
 
-    def pop(self) -> Optional["Event"]:
-        try:
-            event = self.simple_queue.get(block=False)
-            logger.info(f"[Event] {event.__class__.__name__}")
-            return event
-        except Empty:
-            return None
-
-    def get_for_workers(self) -> Optional["Event"]:
+    def get(self) -> Optional["Event"]:
         event = self.simple_queue.get(block=True)
         logger.info(f"[Event] {event.__class__.__name__}")
         return event

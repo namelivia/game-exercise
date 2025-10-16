@@ -5,7 +5,6 @@ from client.engine.backend.backend import Backend
 from client.engine.backend.foundational_wrapper import FoundationalClock
 from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.features.render.event_handler import handlers_map
-from client.engine.general_state.current_screen import CurrentScreen
 from client.engine.primitives.event import StopThreadEvent
 
 from .state import State
@@ -28,8 +27,7 @@ class RenderWorker(threading.Thread):
         self.queue = queue
         # Log that the worked has started?
 
-    def _render_next_frame(self, window):
-        screen = CurrentScreen().get_current_screen()
+    def _render_next_frame(self, screen, window):
         if screen is not None:
             GraphicsBackend.get().clear_window(window)
             screen.render(window)
@@ -45,10 +43,10 @@ class RenderWorker(threading.Thread):
         state.initialize()
         while not self.stop_event.is_set():
             if state.get_is_rendering():  # Rendering mode
-                self._render_next_frame(window)
+                self._render_next_frame(state.get_current_screen(), window)
             else:  # Queue mode
                 try:
-                    event = self.queue.get_for_workers()
+                    event = self.queue.get()
                     if type(event) is StopThreadEvent:
                         break
                     else:
