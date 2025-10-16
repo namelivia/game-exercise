@@ -14,7 +14,7 @@ class Command(ABC):
     def __init__(self, description: str):
         self.description = description
         self.events: List["Event"] = []
-        self.queue = "main"
+        self.queue = "game_logic"
 
     def execute(self) -> None:
         logger.info(f"[Command] {self.description}")

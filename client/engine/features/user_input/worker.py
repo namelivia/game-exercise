@@ -45,7 +45,7 @@ class UserInputWorker(threading.Thread):
         print(f"[{self.name}] Thread started, waiting for events...")
         while not self.stop_event.is_set():
             self.process()
-            time.sleep(0.01)
+            time.sleep(0.005)
         print(f"[{self.name}] Thread successfully terminated and exited run().")
 
     def stop(self):
