@@ -3,6 +3,7 @@ import time
 from typing import TYPE_CHECKING, Any
 
 from client.engine.backend.backend import Backend
+from client.engine.clock import Clock
 from client.engine.event_handler import EventHandler
 from client.engine.features.game_logic.game_event_handler import GameEventHandler
 from client.engine.general_state.current_screen import CurrentScreen
@@ -20,6 +21,7 @@ class ScreenManagerFactory:
         initial_event: "Event",
         game_event_handler: Any,
     ) -> "ScreenManager":
+        Clock().initialize()
         GameEventHandler().set(game_event_handler)
         QueueManager().initialize(initial_event)
         CurrentScreen().initialize()

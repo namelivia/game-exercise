@@ -2,8 +2,8 @@ import threading
 from queue import Empty
 
 from client.engine.backend.backend import Backend
-from client.engine.backend.foundational_wrapper import FoundationalClock
 from client.engine.backend.graphics.graphics import GraphicsBackend
+from client.engine.clock import Clock
 from client.engine.features.render.event_handler import handlers_map
 from client.engine.primitives.event import StopThreadEvent
 
@@ -21,7 +21,6 @@ class RenderWorker(threading.Thread):
     def __init__(self, name, queue):
         super().__init__()
         self.name = name
-        self.clock = FoundationalClock()
         # Event used to signal the thread to stop gracefully
         self.stop_event = threading.Event()
         self.queue = queue
@@ -32,7 +31,7 @@ class RenderWorker(threading.Thread):
             GraphicsBackend.get().clear_window(window)
             screen.render(window)
             GraphicsBackend.get().update_display()
-        self.clock.tick(60)  # 60 FPS
+        Clock().tick(60)  # 60 FPS
 
     def run(self):
         """The main execution loop for the thread."""
