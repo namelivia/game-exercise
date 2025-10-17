@@ -40,7 +40,6 @@ class Clock:
     def get_ticks(self) -> int:
         """
         Returns the total number of milliseconds since the clock was initialized.
-        (The FoundationalWrapper purpose)
         """
         elapsed_seconds = time.monotonic() - self._program_start_time
         return int(elapsed_seconds * 1000)
