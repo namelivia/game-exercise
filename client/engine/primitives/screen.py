@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
-from client.engine.general_state.clock import Clock
+from client.engine.clock import Clock
 from client.engine.primitives.ui import ClickableUIElement, UIElement
 
 if TYPE_CHECKING:
@@ -16,7 +16,7 @@ class Screen(ABC):
         self.events: Dict[Any, Callable[[Any], None]] = (
             {}
         )  # Event based actions # TODO: Type this, should be InGameEvent > Callable
-        self.initial_time = Clock().get()
+        self.initial_time = Clock().get_ticks()
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
@@ -28,7 +28,7 @@ class Screen(ABC):
         return None
 
     def update(self) -> None:
-        self.time = Clock().get() - self.initial_time
+        self.time = Clock().get_ticks() - self.initial_time
         if self.time in self.timers:
             self.timers[self.time]()
         for element in self.ui_elements:
