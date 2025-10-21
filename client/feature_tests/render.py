@@ -1,3 +1,4 @@
+from client.engine.clock import Clock
 from client.engine.features.render.commands import StartRendering
 from client.engine.features.render.state import State
 from client.engine.features.render.worker import RenderWorker
@@ -21,6 +22,7 @@ class TestScreen(Screen):
 
 if __name__ == "__main__":
     QueueManager().initialize()
+    Clock().initialize()
     render_thread = RenderWorker(
         name="Render",
         queue=QueueManager().get("render"),
