@@ -5,7 +5,7 @@ from ..constants import GRAPHICS
 
 class PygameFontManager:
     def get_default_font(self) -> str:
-        return "freesansbold.ttf"
+        return "client/experiment/fonts/AccidentalPresidency.ttf"
 
     def get_font(self, font: str, size: int) -> pygame.font.Font:
         return pygame.font.Font(font, size)
