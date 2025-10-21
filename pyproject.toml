@@ -12,6 +12,8 @@ pygame = "*"
 pyopengl = "^3.1.10"
 pyopengl-accelerate = "^3.1.10"
 pillow = "^11.3.0"
+freetype-py = "^2.5.1"
+numpy = "^2.3.4"
 
 
 [tool.poetry.group.dev.dependencies]
