@@ -162,17 +162,10 @@ class Text(Shape):
             h = ch.size[1] * scale
 
             # x_offset: Horizontal offset from the cursor position to the bitmap's left edge
-            # y_offset: Vertical offset to align the bitmap's top edge to the baseline
             x_offset = x + ch.bearing[0] * scale
-            y_offset = (
-                y + (ch.bearing[1] - ch.size[1]) * scale
-            )  # Corrected for OpenGL texture coordinate inversion
 
             # The rendering quad's corner positions:
             x_left = x_offset
-            x_right = x_offset + w
-            y_bottom = y_offset + h  # Bottom-most edge (y_offset is the top edge)
-            y_top = y_offset  # Top-most edge
             y_top = y - ch.bearing[1] * scale
 
             # Use glPushMatrix/glPopMatrix for matrix isolation and translation
