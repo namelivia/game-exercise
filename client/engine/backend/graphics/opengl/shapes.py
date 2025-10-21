@@ -22,6 +22,7 @@ from OpenGL.GL import (
     GL_UNSIGNED_BYTE,
     glBegin,
     glBindTexture,
+    glColor3f,
     glDisable,
     glEnable,
     glEnd,
@@ -61,7 +62,41 @@ class Rectangle(Shape):
         self.color = color
 
     def render(self, window: Any) -> None:
-        raise NotImplementedError("OpenGL Rectangle not implemented")
+        """
+        Renders the rectangle using immediate mode OpenGL (GL_QUADS).
+        It uses the same matrix manipulation style as the Image class.
+        """
+        # Start a new matrix scope
+        glPushMatrix()
+
+        r, g, b = self.color
+        glColor3f(r, g, b)
+
+        # Apply the rectangle's top-left position (x, y)
+        glTranslatef(self.x, self.y, 0)
+
+        # Draw a filled quad for the rectangle
+        glBegin(GL_QUADS)
+
+        # Vertex 1: Top-Left (relative to the translated origin)
+        glVertex2f(0, 0)
+
+        # Vertex 2: Top-Right
+        glVertex2f(self.width, 0)
+
+        # Vertex 3: Bottom-Right
+        glVertex2f(self.width, self.height)
+
+        # Vertex 4: Bottom-Left
+        glVertex2f(0, self.height)
+
+        glEnd()
+
+        # Restore the previous matrix
+        glPopMatrix()
+
+        # Reset color
+        glColor3f(1.0, 1.0, 1.0)
 
 
 class Image(Shape):
