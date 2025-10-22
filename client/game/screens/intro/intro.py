@@ -2,18 +2,14 @@ from client.engine.features.sound.commands import PlayMusic, PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.primitives.screen import Screen
 
-from .ui import Background, Coins, Title
+from .ui import create_background, create_title  # Background, Coins, Title
 
 
 class Intro(Screen):
     def __init__(self) -> None:
         super().__init__()
 
-        self.ui_elements = [
-            Background(),
-            Coins(),
-            Title(),
-        ]
+        self.ui_elements = [create_background(), create_title()]
 
         PlayMusic(
             "client/game/music/main_theme.mp3",
