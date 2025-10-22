@@ -17,8 +17,21 @@ class Title(UIElement):
 """
 
 
+class TitleCustomLogic:
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        inverse_speed = 8  # The higher the slower
+        offset = 300
+        # THIS IS NOT POSSIBLE ANYMORE! Since now logic and
+        # render are completely separated!
+        """ 
+        self.shapes[0].set_x(
+            int((time / inverse_speed) % (640 + offset) - offset)
+        )  # Not supersure about this
+        """
+
+
 def create_title():
-    return create_ui_element([Text("Welcome to the game", 20, 10)])
+    return create_ui_element([Text("Welcome to the game", 20, 10)], TitleCustomLogic())
 
 
 def create_background():
