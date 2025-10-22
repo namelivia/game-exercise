@@ -44,7 +44,6 @@ class Rectangle(Shape):
     def load(self):
         self.rectangle = FoundationalSurface((self.width, self.height))
         self.rectangle.fill(self.color)
-        self.rectangle.set_alpha(128)  # TODO: Alpha could be passed
 
     def render(self, window: Any) -> None:
         if window is not None:
