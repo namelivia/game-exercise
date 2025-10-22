@@ -1,8 +1,12 @@
 from client.engine.backend.constants import GRAPHICS
-from client.engine.backend.graphics.native.shapes import Animation as AnimationNative
-from client.engine.backend.graphics.native.shapes import Image as ImageNative
-from client.engine.backend.graphics.native.shapes import Rectangle as RectangleNative
-from client.engine.backend.graphics.native.shapes import Text as TextNative
+from client.engine.backend.graphics.native.shapes.animation import (
+    Animation as AnimationNative,
+)
+from client.engine.backend.graphics.native.shapes.image import Image as ImageNative
+from client.engine.backend.graphics.native.shapes.rectangle import (
+    Rectangle as RectangleNative,
+)
+from client.engine.backend.graphics.native.shapes.text import Text as TextNative
 from client.engine.backend.graphics.opengl.shapes.animation import (
     Animation as AnimationOpengl,
 )
