@@ -1,7 +1,5 @@
 from typing import Any, Tuple
 
-import pygame
-
 from client.engine.backend.foundational_wrapper import FoundationalColor
 from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.primitives.shape import Shape
@@ -234,7 +232,36 @@ class Rectangle(Shape):
         self.color = color
 
     def render(self, window: Any) -> None:
-        raise NotImplementedError("OpenGL Rectangle not implemented")
+        # Start a new matrix scope
+        glPushMatrix()
+
+        glColor3f(self.color[0], self.color[1], self.color[2])
+
+        # Apply the rectangle's top-left position (x, y)
+        glTranslatef(self.x, self.y, 0)
+
+        # Draw a filled quad for the rectangle
+        glBegin(GL_QUADS)
+
+        # Vertex 1: Top-Left (relative to the translated origin)
+        glVertex2f(0, 0)
+
+        # Vertex 2: Top-Right
+        glVertex2f(self.width, 0)
+
+        # Vertex 3: Bottom-Right
+        glVertex2f(self.width, self.height)
+
+        # Vertex 4: Bottom-Left
+        glVertex2f(0, self.height)
+
+        glEnd()
+
+        # Restore the previous matrix
+        glPopMatrix()
+
+        # Reset color
+        glColor3f(1.0, 1.0, 1.0)
 
 
 class Image(Shape):
