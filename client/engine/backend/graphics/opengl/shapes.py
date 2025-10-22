@@ -64,17 +64,8 @@ class Text(Shape):
         self.message = message
         self.color = color
 
-    def load(self):
-        font_path = "client/experiment/fonts/AccidentalPresidency.ttf"
-        size = 24
-
-        # Load font file
-        self.face = freetype.Face(font_path)
-        self.face.set_pixel_sizes(0, size)
-        self.font_ascent = self.face.ascender >> 6
-
-        # Now store the glyph info
-        self.Characters = {}
+    def _store_gliph_information(self, face):
+        Characters = {}
 
         # Disable byte-alignment restriction, which is common for monochrome (GL_RED) textures
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1)
@@ -86,11 +77,11 @@ class Text(Shape):
             # 1. Load the glyph
             # FT_LOAD_RENDER tells FreeType to rasterize the glyph into a bitmap
             # face.load_char(char, freetype.FT_LOAD_RENDER)
-            self.face.load_char(
+            face.load_char(
                 char
             )  # In freetype-py, rendering happens by default with load_char
 
-            glyph = self.face.glyph
+            glyph = face.glyph
 
             # 2. Generate the Texture (for this single character)
             # The bitmap data from FreeType is stored in face.glyph.bitmap
@@ -123,7 +114,7 @@ class Text(Shape):
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
             # 4. Store the metrics
-            self.Characters[char] = CharacterSlot(
+            Characters[char] = CharacterSlot(
                 texture,
                 (glyph.bitmap.width, glyph.bitmap.rows),
                 (glyph.bitmap_left, glyph.bitmap_top),
@@ -133,6 +124,80 @@ class Text(Shape):
 
         # Bind back to the default texture
         glBindTexture(GL_TEXTURE_2D, 0)
+        return Characters
+
+    def load(self):
+        font_path = "client/experiment/fonts/AccidentalPresidency.ttf"
+        size = 24
+
+        # Load font file
+        self.face = freetype.Face(font_path)
+        self.face.set_pixel_sizes(0, size)
+        self.font_ascent = self.face.ascender >> 6
+
+        # TODO: This should happen once per font, not per string
+        self.Characters = self._store_gliph_information(self.face)
+
+    def _render_character(self, x, y, char, Characters, face):
+        scale = 1.0  # Hardcode this for now
+        if char not in Characters:
+            # Optionally, render a placeholder or skip
+            x += (
+                face.glyph.advance.x >> 6
+            ) * scale  # Use a generic advance if possible
+            return x
+
+        ch = Characters[char]
+
+        # Calculate character position (w, h is glyph size, bearing is offset)
+        w = ch.size[0] * scale
+        h = ch.size[1] * scale
+
+        # x_offset: Horizontal offset from the cursor position to the bitmap's left edge
+        x_offset = x + ch.bearing[0] * scale
+
+        # The rendering quad's corner positions:
+        x_left = x_offset
+        y_top = y - ch.bearing[1] * scale
+
+        # Use glPushMatrix/glPopMatrix for matrix isolation and translation
+        glPushMatrix()
+
+        # Translate the drawing origin to the calculated top-left corner of the quad
+        # The vertices below will be relative to this new origin.
+        glTranslatef(x_left, y_top, 0)
+
+        # Bind the specific texture for this character
+        glBindTexture(GL_TEXTURE_2D, ch.texture_id)
+
+        # Draw the character quad
+        glBegin(GL_QUADS)
+
+        # Your image code's coordinate system (0,0 is Top-Left of quad):
+        # Top-Left Vertex: (0, 0) in local space
+        glTexCoord2f(0, 0)  # U=0, V=0
+        glVertex2f(0, 0)
+
+        # Top-Right Vertex: (w, 0)
+        glTexCoord2f(1, 0)  # U=1, V=0
+        glVertex2f(w, 0)
+
+        # Bottom-Right Vertex: (w, h)
+        glTexCoord2f(1, 1)  # U=1, V=1
+        glVertex2f(w, h)
+
+        # Bottom-Left Vertex: (0, h)
+        glTexCoord2f(0, 1)  # U=0, V=1
+        glVertex2f(0, h)
+
+        glEnd()
+
+        # Clean up this character's state
+        glBindTexture(GL_TEXTURE_2D, 0)
+        glPopMatrix()
+
+        # Advance the cursor for the next character
+        return x + ch.advance * scale
 
     def render(self, window: Any) -> None:
         scale = 1.0  # Hardcoding this value for now
@@ -148,64 +213,7 @@ class Text(Shape):
         glColor3f(self.color[0], self.color[1], self.color[2])
 
         for char in self.message:
-            if char not in self.Characters:
-                # Optionally, render a placeholder or skip
-                x += (
-                    self.face.glyph.advance.x >> 6
-                ) * scale  # Use a generic advance if possible
-                continue
-
-            ch = self.Characters[char]
-
-            # Calculate character position (w, h is glyph size, bearing is offset)
-            w = ch.size[0] * scale
-            h = ch.size[1] * scale
-
-            # x_offset: Horizontal offset from the cursor position to the bitmap's left edge
-            x_offset = x + ch.bearing[0] * scale
-
-            # The rendering quad's corner positions:
-            x_left = x_offset
-            y_top = y - ch.bearing[1] * scale
-
-            # Use glPushMatrix/glPopMatrix for matrix isolation and translation
-            glPushMatrix()
-
-            # Translate the drawing origin to the calculated top-left corner of the quad
-            # The vertices below will be relative to this new origin.
-            glTranslatef(x_left, y_top, 0)
-
-            # Bind the specific texture for this character
-            glBindTexture(GL_TEXTURE_2D, ch.texture_id)
-
-            # Draw the character quad
-            glBegin(GL_QUADS)
-
-            # Your image code's coordinate system (0,0 is Top-Left of quad):
-            # Top-Left Vertex: (0, 0) in local space
-            glTexCoord2f(0, 0)  # U=0, V=0
-            glVertex2f(0, 0)
-
-            # Top-Right Vertex: (w, 0)
-            glTexCoord2f(1, 0)  # U=1, V=0
-            glVertex2f(w, 0)
-
-            # Bottom-Right Vertex: (w, h)
-            glTexCoord2f(1, 1)  # U=1, V=1
-            glVertex2f(w, h)
-
-            # Bottom-Left Vertex: (0, h)
-            glTexCoord2f(0, 1)  # U=0, V=1
-            glVertex2f(0, h)
-
-            glEnd()
-
-            # Clean up this character's state
-            glBindTexture(GL_TEXTURE_2D, 0)
-            glPopMatrix()
-
-            # Advance the cursor for the next character
-            x += ch.advance * scale
+            x = self._render_character(x, y, char, self.Characters, self.face)
 
         # Final cleanup
         glDisable(GL_TEXTURE_2D)
