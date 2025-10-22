@@ -1,9 +1,9 @@
 from typing import Any, Dict
 
 from client.engine.graphics.shapes import Animation, Image, Text
-from client.engine.primitives.ui import UIElement
+from client.engine.primitives.ui import create_ui_element
 
-
+"""
 class Title(UIElement):
     def __init__(self) -> None:
         self.shapes = [Text("Welcome to the game", 20, 10)]
@@ -14,13 +14,18 @@ class Title(UIElement):
         self.shapes[0].set_x(
             int((time / inverse_speed) % (640 + offset) - offset)
         )  # Not supersure about this
+"""
 
 
-class Background(UIElement):
-    def __init__(self) -> None:
-        self.shapes = [Image("client/game/images/background.png", 0, 0)]
+def create_title():
+    return create_ui_element([Text("Welcome to the game", 20, 10)])
 
 
+def create_background():
+    return create_ui_element([Image("client/game/images/background.png", 0, 0)])
+
+
+"""
 class Coins(UIElement):
     def __init__(self) -> None:
         self.shapes = [
@@ -48,3 +53,4 @@ class Coins(UIElement):
         self.shapes[1].set_y(
             int((time / movement_speed) % 480)
         )  # Not supersure about this
+"""

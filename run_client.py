@@ -16,7 +16,8 @@ if __name__ == "__main__":
     )
 
     screen_manager = ScreenManagerFactory.create(
-        initial_event=ScreenTransitionEvent("intro"), event_handler=GameEventHandler()
+        initial_event=ScreenTransitionEvent("intro"),
+        game_event_handler=GameEventHandler(),
     )
     while True:
         screen_manager.run()
