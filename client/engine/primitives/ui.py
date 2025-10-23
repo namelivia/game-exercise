@@ -11,24 +11,49 @@ if TYPE_CHECKING:
 # A UI Element can accept any custom logic
 # right now custom logics are re-definitions of the update
 # function
-def create_ui_element(shapes: List["Shape"], custom_logic=None):
+def create_ui_element(shapes: List["Shape"], state=None, custom_logic=None):
+    if state is None:
+        state = UIElementState(0, 0)
     if custom_logic is None:
-        logic = UIElementLogic()
+        logic = UIElementLogic(state)
     else:
         logic = custom_logic
-    return UIElement(UIElementRender(shapes), logic)
+    render = UIElementRender(state, shapes)
+    return UIElement(render, logic)
 
 
 # This is the logic part of the UIElement
 # UI elements can hold a small state too that can be updated
 # This is what will be extended.
 class UIElementLogic(ABC):
+    def __init__(self, state):
+        self.state = state
+
     def update(self, time: int, data: Dict[str, Any]) -> None:
         pass
 
 
-# The UI Element has two parts, the logic part and the
-# render part
+class UIElementState(ABC):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
+    def set_x(self, x):
+        self.x = x
+
+    def set_y(self, y):
+        self.y = y
+
+
+# The UI Element has three parts, the logic part, the
+# render part, and the shared state between the two, it currently only holds
+# the coordinates.
 class UIElement(ABC):
     def __init__(self, render, logic) -> None:
         self.render = render
@@ -39,9 +64,6 @@ class UIElement(ABC):
 
     def get_logic(self) -> UIElementLogic:
         return self.logic
-
-    def update(self, time: int, data: Dict[str, Any]) -> None:
-        pass
 
 
 class ClickableUIElement:

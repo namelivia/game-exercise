@@ -27,14 +27,16 @@ class Rectangle(Shape):
         self.height = height
         self.color = color
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
+        dest_x = self.x + x
+        dest_y = self.y + y
         # Start a new matrix scope
         glPushMatrix()
 
         glColor3f(self.color[0], self.color[1], self.color[2])
 
         # Apply the rectangle's top-left position (x, y)
-        glTranslatef(self.x, self.y, 0)
+        glTranslatef(dest_x, dest_y, 0)
 
         # Draw a filled quad for the rectangle
         glBegin(GL_QUADS)

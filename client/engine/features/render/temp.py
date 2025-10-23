@@ -4,7 +4,8 @@ from abc import ABC
 # A UI Element render is a collection of shapes that will be
 # drawn in the screen
 class UIElementRender(ABC):
-    def __init__(self, shapes) -> None:
+    def __init__(self, state, shapes) -> None:
+        self.state = state
         self.shapes = shapes
 
     def show(self) -> None:
@@ -22,7 +23,7 @@ class UIElementRender(ABC):
 
     def render(self, window) -> None:
         for shape in self.shapes:
-            shape.draw(window)
+            shape.draw(self.state.get_x(), self.state.get_y(), window)
         return None
 
     def contains_point(self, x, y):

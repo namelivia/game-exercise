@@ -23,6 +23,8 @@ class Rectangle(Shape):
         self.rectangle = FoundationalSurface((self.width, self.height))
         self.rectangle.fill(self.color)
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
+        dest_x = self.x + x
+        dest_y = self.y + y
         if window is not None:
-            window.blit(self.rectangle, dest=(self.x, self.y))
+            window.blit(self.rectangle, dest=(dest_x, dest_y))

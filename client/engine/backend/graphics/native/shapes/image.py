@@ -17,9 +17,11 @@ class Image(Shape):
 
         self.image = GraphicsBackend().get().load_image(self.path)
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
+        dest_x = x + self.x
+        dest_y = y + self.y
         if window is not None:
-            window.blit(self.image, dest=(self.x, self.y))
+            window.blit(self.image, dest=(dest_x, dest_y))
 
     def get_x(self) -> int:
         return self.x
