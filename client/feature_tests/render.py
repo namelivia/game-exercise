@@ -15,7 +15,9 @@ class TestScreen(Screen):
                     Image("client/experiment/images/background.png", 0, 0),
                     Text(f"This is a test", 20, 20),
                     Rectangle(0, 0, 20, 20),
-                    Animation("client/experiment/images/animation_debug.png", 100, 100),
+                    Animation(
+                        "client/experiment/images/animation_debug.png", 100, 100, 3, 3
+                    ),
                 ]
             )
         ]
