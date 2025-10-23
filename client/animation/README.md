@@ -1,3 +1,3 @@
-# Experiments
+# Animation
 
-Little pygame animations to test ideas.
+I will use this to test animations mainly
