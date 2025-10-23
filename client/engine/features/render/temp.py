@@ -26,13 +26,20 @@ class UIElementRender(ABC):
             shape.draw(self.state.get_x(), self.state.get_y(), window)
         return None
 
-    def contains_point(self, x, y):
+    def _is_point_in_shape(self, x, y, shape):
         return (
-            x > self.shapes[0].get_x()
-            and x < self.shapes[0].get_x() + self.shapes[0].get_width()
-            and y > self.shapes[0].get_y()
-            and y < self.shapes[0].get_y() + self.shapes[0].get_height()
+            x > shape.get_x()
+            and x < shape.get_x() + shape.get_width()
+            and y > shape.get_y()
+            and y < shape.get_y() + shape.get_height()
         )
+
+    def contains_point(self, x, y):
+        for shape in self.shapes:
+            if self._is_point_in_shape(x, y, shape):
+                return True
+
+        return False
 
 
 # A screen render is a collection of UI Elements that will be
