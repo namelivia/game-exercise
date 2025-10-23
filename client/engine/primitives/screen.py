@@ -32,5 +32,5 @@ class Screen(ABC):
         if self.time in self.timers:
             self.timers[self.time]()
         for element in self.ui_elements:
-            element.get_logic().update(self.time, self.data)
+            element.update(self.time, self.data)
         return None

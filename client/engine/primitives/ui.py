@@ -65,6 +65,9 @@ class UIElement(ABC):
     def get_logic(self) -> UIElementLogic:
         return self.logic
 
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        self.logic.update(time, data)
+
 
 class ClickableUIElement:
     def __init__(
@@ -89,7 +92,7 @@ class ClickableUIElement:
             self.on_click()
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
-        self.element.get_logic().update(time, data)
+        self.element.update(time, data)
         self._was_mouse_over = self.mouse_over
         mouse_position = MousePosition().get()
         self.mouse_over = self._is_mouse_over(mouse_position[0], mouse_position[1])
