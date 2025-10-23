@@ -64,7 +64,8 @@ class Animation(Shape):
         self.path = path
         self.rows = rows
         self.cols = cols
-        self.current_frame = 0
+        self.animation_frames = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        self.current_frame = self.animation_frames[0]
 
     def load(self):
         self.image = GraphicsBackend().get().load_image(self.path)
