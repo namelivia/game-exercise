@@ -1,7 +1,11 @@
 from typing import Any, Dict
 
 from client.engine.graphics.shapes import Animation, Image, Text
-from client.engine.primitives.ui import create_ui_element
+from client.engine.primitives.ui import (
+    UIElementLogic,
+    UIElementState,
+    create_ui_element,
+)
 
 """
 class Title(UIElement):
@@ -17,21 +21,20 @@ class Title(UIElement):
 """
 
 
-class TitleCustomLogic:
+class TitleCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
         inverse_speed = 8  # The higher the slower
         offset = 300
-        # THIS IS NOT POSSIBLE ANYMORE! Since now logic and
-        # render are completely separated!
-        """ 
-        self.shapes[0].set_x(
+        self.state.set_x(
             int((time / inverse_speed) % (640 + offset) - offset)
         )  # Not supersure about this
-        """
 
 
 def create_title():
-    return create_ui_element([Text("Welcome to the game", 20, 10)], TitleCustomLogic())
+    state = UIElementState(20, 10)
+    return create_ui_element(
+        [Text("Welcome to the game", 0, 0)], state, TitleCustomLogic(state)
+    )
 
 
 def create_background():
