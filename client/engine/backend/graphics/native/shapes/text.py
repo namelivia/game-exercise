@@ -18,9 +18,11 @@ class Text(Shape):
         font = FontManager.get().get_font(FontManager.get().get_default_font(), 24)
         self.surface = font.render(self.message, True, self.color)
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
+        dest_x = self.x + x
+        dest_y = self.y + y
         if window is not None:
-            window.blit(self.surface, dest=(self.x, self.y))
+            window.blit(self.surface, dest=(dest_x, dest_y))
 
     def set_message(self, message: str) -> None:
         self.message = message

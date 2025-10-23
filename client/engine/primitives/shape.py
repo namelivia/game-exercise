@@ -11,12 +11,12 @@ class Shape(ABC):
     def load(self) -> None:
         pass
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
         pass
 
-    def draw(self, window: Any) -> None:
+    def draw(self, x, y, window: Any) -> None:
         if not self.hidden:
-            self.render(window)
+            self.render(x, y, window)
 
     def hide(self) -> None:
         self.hidden = True

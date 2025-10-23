@@ -194,10 +194,12 @@ class Text(Shape):
         # Advance the cursor for the next character
         return x + ch.advance * scale
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
+        dest_x = self.x + x
+        dest_y = self.y + y
         scale = 1.0  # Hardcoding this value for now
-        x = self.x  # Current horizontal position (cursor)
-        y = self.y + self.font_ascent * scale
+        x = dest_x  # Current horizontal position (cursor)
+        y = dest_y + self.font_ascent * scale
 
         # 1. Enable Blending for transparency (essential for anti-aliasing)
         glEnable(GL_BLEND)

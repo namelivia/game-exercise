@@ -67,8 +67,10 @@ class Image(Shape):
         self.image = GraphicsBackend().get().load_image(self.path)
         self.texture_id = self._create_opengl_texture(self.image)
 
-    def render(self, window: Any) -> None:
+    def render(self, x, y, window: Any) -> None:
         if window is not None:
+            dest_x = self.x + x
+            dest_y = self.y + y
             glPushMatrix()
 
             # Step 2: Bind the texture and draw a quad
@@ -76,7 +78,7 @@ class Image(Shape):
             glBindTexture(GL_TEXTURE_2D, self.texture_id)
 
             # Apply the image's position to the current matrix
-            glTranslatef(self.x, self.y, 0)
+            glTranslatef(dest_x, dest_y, 0)
 
             # Draw a quad using texture coordinates (0,0 to 1,1)
             glBegin(GL_QUADS)
