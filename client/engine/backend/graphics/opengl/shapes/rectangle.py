@@ -27,7 +27,7 @@ class Rectangle(Shape):
         self.height = height
         self.color = color
 
-    def render(self, x, y, window: Any) -> None:
+    def render(self, x, y, window: Any, index) -> None:
         dest_x = self.x + x
         dest_y = self.y + y
         # Start a new matrix scope

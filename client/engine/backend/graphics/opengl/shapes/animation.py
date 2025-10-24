@@ -64,14 +64,13 @@ class Animation(Shape):
         self.path = path
         self.rows = rows
         self.cols = cols
-        self.animation_frames = [0, 1, 2, 3, 4, 5, 6, 7, 8]
-        self.current_frame = self.animation_frames[0]
 
     def load(self):
         self.image = GraphicsBackend().get().load_image(self.path)
         self.texture_id = self._create_opengl_texture(self.image)
 
     def _get_frame_uvs(self, index):
+        print(index)
         # 1. Determine the frame's position in the grid
         row = index // self.cols
         col = index % self.cols
@@ -105,10 +104,10 @@ class Animation(Shape):
         # Return (u_min, v_bottom, u_max, v_top)
         return u_min, v_bottom, u_max, v_top
 
-    def render(self, x, y, window: Any) -> None:
+    def render(self, x, y, window: Any, index) -> None:
         if window is not None:
 
-            u_min, v_bottom, u_max, v_top = self._get_frame_uvs(self.current_frame)
+            u_min, v_bottom, u_max, v_top = self._get_frame_uvs(index)
 
             dest_x = self.x + x
             dest_y = self.y + y

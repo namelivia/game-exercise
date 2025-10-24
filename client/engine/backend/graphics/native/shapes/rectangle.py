@@ -23,7 +23,7 @@ class Rectangle(Shape):
         self.rectangle = FoundationalSurface((self.width, self.height))
         self.rectangle.fill(self.color)
 
-    def render(self, x, y, window: Any) -> None:
+    def render(self, x, y, window: Any, index) -> None:
         dest_x = self.x + x
         dest_y = self.y + y
         if window is not None:

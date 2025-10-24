@@ -49,6 +49,9 @@ class UIElementState(ABC):
     def get_y(self):
         return self.y
 
+    def get_index(self):
+        return 0
+
     def set_x(self, x):
         self.x = x
 
@@ -59,7 +62,7 @@ class UIElementState(ABC):
 class AnimationState(UIElementState):
     def __init__(self, x, y, animations):
         super().__init__(x, y)
-        self.playing = False
+        self.playing = True
         self.animations = animations
         self.current_animation = list(self.animations.keys())[0]
         self.index = 0
@@ -70,7 +73,7 @@ class AnimationState(UIElementState):
     def stop(self):
         self.playing = False
 
-    def current_frame(self):
+    def get_index(self):
         return self.animations[self.current_animation][self.index]
 
     def get_animations(self):
