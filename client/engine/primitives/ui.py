@@ -33,6 +33,11 @@ class UIElementLogic(ABC):
         pass
 
 
+class AnimationLogic(UIElementLogic):
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        self.state.update()
+
+
 class UIElementState(ABC):
     def __init__(self, x, y):
         self.x = x
@@ -49,6 +54,36 @@ class UIElementState(ABC):
 
     def set_y(self, y):
         self.y = y
+
+
+class AnimationState(UIElementState):
+    def __init__(self, x, y, animations):
+        super().__init__(x, y)
+        self.playing = False
+        self.animations = animations
+        self.current_animation = list(self.animations.keys())[0]
+        self.index = 0
+
+    def play(self):
+        self.playing = True
+
+    def stop(self):
+        self.playing = False
+
+    def current_frame(self):
+        return self.animations[self.current_animation][self.index]
+
+    def get_animations(self):
+        return list(self.animations.keys())
+
+    def set_animation(self, new_animation):
+        self.current_animation = new_animation
+        self.index = 0
+
+    def update(self):
+        if self.playing:
+            animation_keys = self.animations[self.current_animation]
+            self.index = (self.index + 1) % len(animation_keys)
 
 
 # The UI Element has three parts, the logic part, the
