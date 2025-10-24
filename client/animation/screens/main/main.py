@@ -4,7 +4,7 @@ logger = logging.getLogger(__name__)
 
 from client.engine.primitives.screen import Screen
 
-from .ui import create_animation, create_background
+from .ui import create_background, create_debug_animation
 
 
 class MainScreen(Screen):
@@ -14,6 +14,6 @@ class MainScreen(Screen):
         self.data = {}
         self.ui_elements = [
             create_background(),
-            create_animation(),
+            create_debug_animation(),
         ]
         self.events = {}
