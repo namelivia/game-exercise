@@ -16,10 +16,6 @@ class SpriteSheetData:
     animations: Dict[str, List[int]] = field(default_factory=dict)
 
 
-# Animation factory!
-# In order to create an animation, we need to open and parse
-# the json file that describes it. And use that information
-# to create the shape that will be rendered on the screen.
 def create_animation(json_file_path, x, y, fps):
     with open(json_file_path, "r") as file:
         data = json.load(file)
