@@ -20,13 +20,13 @@ class SpriteSheetData:
 # In order to create an animation, we need to open and parse
 # the json file that describes it. And use that information
 # to create the shape that will be rendered on the screen.
-def create_animation(json_file_path, x, y):
+def create_animation(json_file_path, x, y, fps):
     with open(json_file_path, "r") as file:
         data = json.load(file)
     sprite_data = SpriteSheetData(**data)
     json_file_dir = os.path.abspath(os.path.dirname(json_file_path))
 
-    state = AnimationState(x, y, sprite_data.animations)
+    state = AnimationState(x, y, sprite_data.animations, fps)
 
     shape = Animation(
         os.path.join(json_file_dir, sprite_data.image),

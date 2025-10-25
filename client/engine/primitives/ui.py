@@ -55,16 +55,15 @@ class UIElementState(ABC):
 
 
 class AnimationState(UIElementState):
-    def __init__(self, x, y, animations):
+    def __init__(self, x, y, animations, fps):
         super().__init__(x, y)
         self.playing = True
         self.animations = animations
         self.current_animation = list(self.animations.keys())[0]
         self.index = 0
         self.frame_counter = 0
-        target_fps = 1  # This will be the input value
-        actual_frame_rate = 60  # This is a constant
-        self.frame_delay = actual_frame_rate / target_fps
+        actual_frame_rate = 60  # This is a constant, same as in the render thread
+        self.frame_delay = actual_frame_rate / fps
         print(self.frame_delay)
 
     def play(self):
