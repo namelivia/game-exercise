@@ -106,6 +106,12 @@ class UIElement(ABC):
     def get_logic(self) -> UIElementLogic:
         return self.logic
 
+    def show(self):
+        self.render.show()
+
+    def hide(self):
+        self.render.hide()
+
     def update(self, time: int, data: Dict[str, Any]) -> None:
         self.logic.update(time, data)
 
@@ -151,7 +157,7 @@ class ClickableUIElement:
         self.element.get_render().load()
 
     def show(self) -> None:
-        self.element.get_render().show()
+        self.element.show()
 
     def get_render(self) -> UIElementRender:
         return self.element.get_render()
