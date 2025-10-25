@@ -5,8 +5,6 @@ client_data/*
 client_data/.gitkeep
 experiment_data/*
 experiment_data/.gitkeep
-animation_data/*
-animation_data/.gitkeep
 htmlcov
 .coverage
 tags
