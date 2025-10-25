@@ -64,7 +64,6 @@ class AnimationState(UIElementState):
         self.frame_counter = 0
         actual_frame_rate = 60  # This is a constant, same as in the render thread
         self.frame_delay = actual_frame_rate / fps
-        print(self.frame_delay)
 
     def play(self):
         self.playing = True

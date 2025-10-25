@@ -2,9 +2,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+from client.animation.images import ANIMATION, BACKGROUND
+from client.engine.animation_factory import create_animation
+from client.engine.graphics.shapes import Image
 from client.engine.primitives.screen import Screen
-
-from .ui import create_background, create_debug_animation
+from client.engine.primitives.ui import create_ui_element
 
 
 class MainScreen(Screen):
@@ -13,7 +15,7 @@ class MainScreen(Screen):
 
         self.data = {}
         self.ui_elements = [
-            create_background(),
-            create_debug_animation(),
+            create_ui_element([Image(BACKGROUND, 0, 0)]),
+            create_animation(ANIMATION, 50, 50, 2),
         ]
         self.events = {}
