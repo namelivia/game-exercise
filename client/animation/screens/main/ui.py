@@ -2,7 +2,7 @@ from typing import Any, Dict
 
 from client.animation.images import ANIMATION, ANIMATION_OLD, BACKGROUND
 from client.engine.animation_factory import create_animation
-from client.engine.graphics.shapes import Animation, Image
+from client.engine.graphics.shapes import Image
 from client.engine.primitives.ui import UIElementState, create_ui_element
 
 

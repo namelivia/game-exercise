@@ -70,7 +70,6 @@ class Animation(Shape):
         self.texture_id = self._create_opengl_texture(self.image)
 
     def _get_frame_uvs(self, index):
-        print(index)
         # 1. Determine the frame's position in the grid
         row = index // self.cols
         col = index % self.cols
