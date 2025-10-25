@@ -1,0 +1,8 @@
+{
+    "image": "coin.png",
+    "rows": 2,
+    "columns": 4,
+    "animations": {
+        "spin": [0, 1, 2, 3, 4, 5, 6]
+    }
+}
