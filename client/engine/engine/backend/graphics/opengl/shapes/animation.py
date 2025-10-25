@@ -8,15 +8,19 @@ WHITE = FoundationalColor(255, 255, 255)
 BLACK = FoundationalColor(0, 0, 0)
 
 from OpenGL.GL import (
+    GL_BLEND,
     GL_LINEAR,
+    GL_ONE_MINUS_SRC_ALPHA,
     GL_QUADS,
     GL_RGBA,
+    GL_SRC_ALPHA,
     GL_TEXTURE_2D,
     GL_TEXTURE_MAG_FILTER,
     GL_TEXTURE_MIN_FILTER,
     GL_UNSIGNED_BYTE,
     glBegin,
     glBindTexture,
+    glBlendFunc,
     glDisable,
     glEnable,
     glEnd,
@@ -112,6 +116,9 @@ class Animation(Shape):
             dest_y = self.y + y
             glPushMatrix()
 
+            glEnable(GL_BLEND)
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+
             # Step 2: Bind the texture and draw a quad
             glEnable(GL_TEXTURE_2D)
             glBindTexture(GL_TEXTURE_2D, self.texture_id)
@@ -140,6 +147,8 @@ class Animation(Shape):
 
             glBindTexture(GL_TEXTURE_2D, 0)  # Unbind
             glDisable(GL_TEXTURE_2D)
+
+            glDisable(GL_BLEND)
 
             glPopMatrix()
 

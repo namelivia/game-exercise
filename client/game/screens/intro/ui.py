@@ -1,5 +1,6 @@
 from typing import Any, Dict
 
+from client.engine.animation_factory import create_animation
 from client.engine.graphics.shapes import Animation, Image, Text
 from client.engine.primitives.ui import (
     UIElementLogic,
@@ -39,6 +40,18 @@ def create_title():
 
 def create_background():
     return create_ui_element([Image("client/game/images/background.png", 0, 0)])
+
+
+def create_coin_1():
+    coin = create_animation("client/game/images/coin.json", 150, 150, 30)
+    coin.hide()
+    return coin
+
+
+def create_coin_2():
+    coin = create_animation("client/game/images/coin.json", 90, 100, 15)
+    coin.hide()
+    return coin
 
 
 """

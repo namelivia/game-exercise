@@ -2,14 +2,19 @@ from client.engine.features.sound.commands import PlayMusic, PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.primitives.screen import Screen
 
-from .ui import create_background, create_title  # Background, Coins, Title
+from .ui import create_background, create_coin_1, create_coin_2, create_title
 
 
 class Intro(Screen):
     def __init__(self) -> None:
         super().__init__()
 
-        self.ui_elements = [create_background(), create_title()]
+        self.ui_elements = [
+            create_background(),
+            create_title(),
+            create_coin_1(),
+            create_coin_2(),
+        ]
 
         PlayMusic(
             "client/game/music/main_theme.mp3",
@@ -32,7 +37,8 @@ class Intro(Screen):
         PlaySound(
             "client/game/sounds/user_joined.mp3",
         ).execute()
-        self.ui_elements[1].show()
+        self.ui_elements[2].show()
+        self.ui_elements[3].show()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape" or event.key == "return":
