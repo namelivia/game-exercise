@@ -194,7 +194,7 @@ class Text(Shape):
         # Advance the cursor for the next character
         return x + ch.advance * scale
 
-    def render(self, x, y, window: Any) -> None:
+    def render(self, x, y, window: Any, index) -> None:
         dest_x = self.x + x
         dest_y = self.y + y
         scale = 1.0  # Hardcoding this value for now

@@ -1,3 +1,4 @@
+from client.engine.animation_factory import create_animation
 from client.engine.clock import Clock
 from client.engine.features.render.commands import StartRendering
 from client.engine.features.render.worker import RenderWorker
@@ -16,7 +17,10 @@ class TestScreen(Screen):
                     Text(f"This is a test", 20, 20),
                     Rectangle(0, 0, 20, 20),
                 ]
-            )
+            ),
+            create_animation(
+                "client/experiment/images/animation_debug.json", 50, 50, 2
+            ),
         ]
 
 

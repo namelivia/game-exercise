@@ -30,7 +30,7 @@ class Animation(Shape):
     def update(self) -> None:
         self.sprite_group.update()  # Calls update on every sprite on the group
 
-    def render(self, x, y, window: Any) -> None:
+    def render(self, x, y, window: Any, index) -> None:
         if window is not None:
             self.sprite_group.draw(x, y, window)
 
