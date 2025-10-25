@@ -1,3 +1,4 @@
+from client.engine.animation_factory import create_animation
 from client.engine.clock import Clock
 from client.engine.features.render.commands import StartRendering
 from client.engine.features.render.worker import RenderWorker
@@ -19,7 +20,8 @@ class TestScreen(Screen):
                         "client/animation/images/animation_debug.png", 100, 100, 3, 3
                     ),
                 ]
-            )
+            ),
+            create_animation("client/animation/images/animation_debug.json", 50, 50, 2),
         ]
 
 
