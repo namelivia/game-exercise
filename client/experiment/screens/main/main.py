@@ -85,6 +85,12 @@ class MainScreen(Screen):
             )
 
         self.events = {UserClickedEvent: self.on_user_clicked}
+        self.timers = {
+            10000: self.timer_debug,
+        }
+
+    def timer_debug(self) -> None:
+        print("This is the test timer")
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
         for element in self.ui_elements:
