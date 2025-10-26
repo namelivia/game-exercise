@@ -31,9 +31,9 @@ class Intro(Screen):
 
     # Actions
     def go_back_to_lobby(self) -> None:
-        from client.game.commands import BackToLobby
+        from client.game.commands import ToLobby
 
-        BackToLobby().execute()
+        ToLobby().execute()
 
     def show_coin_1(self) -> None:
         PlaySound(
