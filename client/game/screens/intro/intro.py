@@ -1,6 +1,7 @@
 from client.engine.features.sound.commands import PlayMusic, PlaySound
 from client.engine.features.user_input.events import UserTypedEvent
 from client.engine.primitives.screen import Screen
+from client.engine.primitives.timer import Timer
 
 from .ui import create_background, create_coin_1, create_coin_2, create_title
 
@@ -20,10 +21,11 @@ class Intro(Screen):
             "client/game/music/main_theme.mp3",
         ).execute()
 
-        self.timers = {
-            10000: self.show_coins,
-            30000: self.go_back_to_lobby,
-        }
+        self.timers = [
+            Timer(1000, self.show_coin_1),
+            Timer(1200, self.show_coin_2),
+            Timer(3000, self.go_back_to_lobby),
+        ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
 
@@ -33,11 +35,16 @@ class Intro(Screen):
 
         BackToLobby().execute()
 
-    def show_coins(self) -> None:
+    def show_coin_1(self) -> None:
         PlaySound(
-            "client/game/sounds/user_joined.mp3",
+            "client/game/sounds/user_connected.mp3",
         ).execute()
         self.ui_elements[2].show()
+
+    def show_coin_2(self) -> None:
+        PlaySound(
+            "client/game/sounds/user_connected.mp3",
+        ).execute()
         self.ui_elements[3].show()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
