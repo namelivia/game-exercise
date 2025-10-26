@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.user_input.events import UserClickedEvent
 from client.engine.primitives.screen import Screen
+from client.engine.primitives.timer import Timer
 from client.engine.primitives.ui import ClickableUIElement
 from client.experiment.images import (
     CHEETAH_BLACK,
