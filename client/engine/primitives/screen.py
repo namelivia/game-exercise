@@ -6,13 +6,14 @@ from client.engine.primitives.ui import ClickableUIElement, UIElement
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import InGameEvent
+    from client.engine.primitives.timer import Timer
 
 
 # This is the graphical representation of the screen
 class Screen(ABC):
     def __init__(self) -> None:
         self.ui_elements: List[UIElement | ClickableUIElement] = []
-        self.timers: Dict[int, Callable[[], None]] = {}  # Time based actions
+        self.timers: List["Timer"] = []  # Time based actions
         self.events: Dict[Any, Callable[[Any], None]] = (
             {}
         )  # Event based actions # TODO: Type this, should be InGameEvent > Callable
@@ -29,8 +30,8 @@ class Screen(ABC):
 
     def update(self) -> None:
         self.time = Clock().get_ticks() - self.initial_time
-        if self.time in self.timers:
-            self.timers[self.time]()
+        for timer in self.timers:
+            timer.update()
         for element in self.ui_elements:
             element.update(self.time, self.data)
         return None
