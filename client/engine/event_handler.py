@@ -9,12 +9,15 @@ from .events import QuitGameEvent
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
+    from client.engine.primitives.event_handler import (
+        EventHandler as GenericEventHandler,
+    )
 
 logger = logging.getLogger(__name__)
 
 
 class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
-    def handle(self, event: "QuitGameEvent") -> None:
+    def handle(self, event: QuitGameEvent) -> None:
         import sys
 
         ThreadManager().shutdown()
@@ -22,11 +25,13 @@ class QuitGameEventHandler(BaseEventHandler[QuitGameEvent]):
         sys.exit()
 
 
-handlers_map: Dict[Type["Event"], Any] = {
+handlers_map: Dict[Type["Event"], Type["GenericEventHandler[Any]"]] = {
     QuitGameEvent: QuitGameEventHandler,
 }
 
 
 class EventHandler(BaseEventHandler["Event"]):
     def handle(self, event: "Event") -> None:
-        handlers_map[type(event)]().handle(event)
+        handler_class: Type["GenericEventHandler[Any]"] = handlers_map[type(event)]
+        handler: "GenericEventHandler[Any]" = handler_class()
+        handler.handle(event)

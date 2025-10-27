@@ -1,32 +1,30 @@
 import time
-from typing import Any, Type
+from typing import Any, Optional, Type
 
 
 class Clock:
-    _instance = None
+    _instance: Optional["Clock"] = None
 
-    # This class is a singleton
+    _program_start_time: float
+    _last_tick_time: float
+
     def __new__(cls: Type["Clock"], *args: Any, **kwargs: Any) -> "Clock":
         if not cls._instance:
             cls._instance = super(Clock, cls).__new__(cls)
         return cls._instance
 
-    def initialize(self):
+    def initialize(self) -> None:
         self._program_start_time = time.monotonic()
         self._last_tick_time = time.perf_counter()
 
     def tick(self, framerate: int = 0) -> int:
-        """
-        Pauses the program to limit the framerate and returns the milliseconds
-        elapsed since the last call (delta time).
-        """
-        current_time = time.perf_counter()
-        elapsed_seconds = current_time - self._last_tick_time
+        current_time: float = time.perf_counter()
+        elapsed_seconds: float = current_time - self._last_tick_time
 
-        # Frame Rate Capping (The FoundationalClock purpose)
+        # Frame Rate Capping (The Pygame Clock purpose)
         if framerate > 0:
-            target_frame_time = 1.0 / framerate
-            delay_needed = target_frame_time - elapsed_seconds
+            target_frame_time: float = 1.0 / framerate
+            delay_needed: float = target_frame_time - elapsed_seconds
 
             if delay_needed > 0:
                 time.sleep(delay_needed)
@@ -41,5 +39,5 @@ class Clock:
         """
         Returns the total number of milliseconds since the clock was initialized.
         """
-        elapsed_seconds = time.monotonic() - self._program_start_time
+        elapsed_seconds: float = time.monotonic() - self._program_start_time
         return int(elapsed_seconds * 1000)

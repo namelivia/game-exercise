@@ -1,6 +1,6 @@
 import sys
 import time
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Callable, Optional  # Added Callable and Optional
 
 from client.engine.backend.backend import Backend
 from client.engine.clock import Clock
@@ -12,6 +12,7 @@ from client.engine.threads import ThreadManager
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
+    from client.engine.primitives.screen import Screen
 
 
 class ScreenManagerFactory:
@@ -19,7 +20,8 @@ class ScreenManagerFactory:
     def create(
         *,
         initial_event: "Event",
-        game_event_handler: Any,
+        # Assuming game_event_handler is a callable (a function or method) that takes an Event and returns None
+        game_event_handler: Callable[["Event"], None],
     ) -> "ScreenManager":
         Clock().initialize()
         GameEventHandler().set(game_event_handler)
@@ -31,12 +33,15 @@ class ScreenManagerFactory:
 
 
 class ScreenManager:
-    # Main loop
     def run(self) -> None:
+        current_screen: Optional["Screen"]
+
         try:
             current_screen = CurrentScreen().get_current_screen()
+
             if current_screen is not None:
                 current_screen.update()
+
             time.sleep(0.01)
 
         except KeyboardInterrupt:
