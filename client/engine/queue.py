@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 class QueueManager:
     _instance = None
 
-    # This class is a singleton
     def __new__(cls: Type["QueueManager"], *args: Any, **kwargs: Any) -> "QueueManager":
         if not cls._instance:
             cls._instance = super(QueueManager, cls).__new__(cls)

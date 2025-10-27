@@ -1,7 +1,7 @@
 from abc import ABC
 from typing import TYPE_CHECKING, Any, Dict, List, Tuple
 
-from client.engine.features.render.temp import UIElementRender
+from client.engine.features.render.ui_element import UIElementRender
 from client.engine.features.user_input.mouse_position import MousePosition
 
 if TYPE_CHECKING:

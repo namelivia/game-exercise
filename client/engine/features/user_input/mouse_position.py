@@ -6,7 +6,6 @@ from client.engine.backend.input import InputBackend
 class MousePosition:
     _instance = None
 
-    # This class is a singleton
     def __new__(
         cls: Type["MousePosition"], *args: Any, **kwargs: Any
     ) -> "MousePosition":

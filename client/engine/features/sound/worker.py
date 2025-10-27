@@ -1,40 +1,12 @@
-import threading
-from queue import Empty
-
 from client.engine.backend.sound import SoundBackend
 from client.engine.features.sound.event_handler import handlers_map
-from client.engine.primitives.event import StopThreadEvent
+from client.engine.threading.queue_worker import QueueWorker
 
 
-class StopThread(Exception):
-    """Exception raised to signal a thread to stop processing."""
+class SoundWorker(QueueWorker):
 
-    pass
-
-
-class SoundWorker(threading.Thread):
-
-    def __init__(self, name, queue):
-        super().__init__()
-        self.name = name
-        self.queue = queue
-        # Log that the worked has started?
-
-    def run(self):
+    def initialize(self):
         SoundBackend.init()
-        """The main execution loop for the thread."""
-        print(f"[{self.name}] Thread started, waiting for events...")
-        while True:
-            try:
-                event = self.queue.get()
-                if type(event) is StopThreadEvent:
-                    break
-                else:
-                    handlers_map[type(event)]().handle(event)
-            except Empty:
-                continue
 
-        print(f"[{self.name}] Thread successfully terminated and exited run().")
-
-    def stop(self):
-        self.queue.put(StopThreadEvent())
+    def process_event(self, event):
+        handlers_map[type(event)]().handle(event)

@@ -3,7 +3,7 @@ import os
 from dataclasses import dataclass, field
 from typing import Dict, List
 
-from client.engine.features.render.temp import UIElementRender
+from client.engine.features.render.ui_element import UIElementRender
 from client.engine.graphics.shapes import Animation
 from client.engine.primitives.ui import AnimationState, UIElement, UIElementLogic
 

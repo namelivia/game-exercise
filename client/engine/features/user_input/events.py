@@ -1,5 +1,3 @@
-from typing import List
-
 from client.engine.primitives.event import InGameEvent
 
 

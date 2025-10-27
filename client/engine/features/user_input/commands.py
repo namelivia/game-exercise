@@ -1,5 +1,3 @@
-from typing import TYPE_CHECKING, List
-
 from client.engine.primitives.command import Command
 
 from .events import UserClickedEvent, UserTypedEvent

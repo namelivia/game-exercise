@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from client.engine.general_state.queue import QueueManager
+from client.engine.queue import QueueManager
 
 
 class TestQueueManager(TestCase):

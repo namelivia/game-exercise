@@ -1,5 +1,6 @@
-from client.engine.features.render.temp import ScreenRender
 from client.engine.primitives.event import Event
+
+from .screen import ScreenRender
 
 
 class StartRenderingEvent(Event):

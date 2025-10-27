@@ -1,15 +1,12 @@
-import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.features.network.channel import Channel
 from client.engine.primitives.event_handler import EventHandler
 
+from .channel import Channel
 from .events import NetworkRequestEvent
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
-
-logger = logging.getLogger(__name__)
 
 
 class NetworkRequestEventHandler(EventHandler[NetworkRequestEvent]):

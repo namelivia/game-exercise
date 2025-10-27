@@ -1,52 +1,25 @@
-import threading
-import time
-
 from client.engine.backend.input import InputBackend
-from client.engine.features.user_input.commands import UserClicked, UserTyped
-from client.engine.features.user_input.keyboard import KeyboardInput
-from client.engine.features.user_input.mouse import MouseInput
+from client.engine.threading.polling_worker import PollingWorker
+
+from .commands import UserClicked, UserTyped
+from .keyboard import KeyboardInput
+from .mouse import MouseInput
 
 
-class StopThread(Exception):
-    """Exception raised to signal a thread to stop processing."""
+class UserInputWorker(PollingWorker):
 
-    pass
-
-
-class UserInputWorker(threading.Thread):
+    IDLE_TIME = 0.005
 
     def __init__(self, name):
-        super().__init__()
-        self.name = name
-        # Event used to signal the thread to stop gracefully
-        self.stop_event = threading.Event()
-        # Log that the worked has started?
+        super().__init__(name)
         self.keyboard_input = KeyboardInput()
         self.mouse_input = MouseInput()
 
-    def process(self) -> None:
+    def step(self):
         events = InputBackend.get_event()
-        # Get events from keyboard
         keyboard_events = self.keyboard_input.read(events)
-
-        # Run the user typed command for each user event
         for keyboard_event in keyboard_events:
             UserTyped(keyboard_event).execute()
-
-        # Get events from mouse, currently only one event is returned
         mouse_event = self.mouse_input.read(events)
-
-        # If there is a mouse event, run the user clicked command
         if mouse_event is not None:
             UserClicked().execute()
-
-    def run(self):
-        """The main execution loop for the thread."""
-        print(f"[{self.name}] Thread started, waiting for events...")
-        while not self.stop_event.is_set():
-            self.process()
-            time.sleep(0.005)
-        print(f"[{self.name}] Thread successfully terminated and exited run().")
-
-    def stop(self):
-        self.stop_event.set()

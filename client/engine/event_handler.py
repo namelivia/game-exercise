@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.backend.backend import Backend
 from client.engine.primitives.event_handler import EventHandler as BaseEventHandler
-from client.engine.threads import ThreadManager
+from client.engine.threading.manager import ThreadManager
 
 from .events import QuitGameEvent
 

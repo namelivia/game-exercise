@@ -2,7 +2,7 @@ import logging
 from abc import ABC
 from typing import TYPE_CHECKING, List
 
-from client.engine.general_state.queue import QueueManager
+from client.engine.queue import QueueManager
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event

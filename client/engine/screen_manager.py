@@ -7,8 +7,8 @@ from client.engine.clock import Clock
 from client.engine.event_handler import EventHandler
 from client.engine.features.game_logic.game_event_handler import GameEventHandler
 from client.engine.general_state.current_screen import CurrentScreen
-from client.engine.general_state.queue import QueueManager
-from client.engine.threads import ThreadManager
+from client.engine.queue import QueueManager
+from client.engine.threading.manager import ThreadManager
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event

@@ -1,4 +1,3 @@
-import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
 from client.engine.backend.sound import SoundBackend
@@ -8,8 +7,6 @@ from .events import PlayMusicEvent, PlaySoundEvent, StopMusicEvent
 
 if TYPE_CHECKING:
     from client.engine.primitives.event import Event
-
-logger = logging.getLogger(__name__)
 
 
 class PlaySoundEventHandler(EventHandler[PlaySoundEvent]):

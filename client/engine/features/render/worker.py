@@ -4,16 +4,10 @@ from queue import Empty
 from client.engine.backend.backend import Backend
 from client.engine.backend.graphics.graphics import GraphicsBackend
 from client.engine.clock import Clock
-from client.engine.features.render.event_handler import handlers_map
 from client.engine.primitives.event import StopThreadEvent
 
+from .event_handler import handlers_map
 from .state import State
-
-
-class StopThread(Exception):
-    """Exception raised to signal a thread to stop processing."""
-
-    pass
 
 
 class RenderWorker(threading.Thread):
@@ -21,10 +15,8 @@ class RenderWorker(threading.Thread):
     def __init__(self, name, queue):
         super().__init__()
         self.name = name
-        # Event used to signal the thread to stop gracefully
         self.stop_event = threading.Event()
         self.queue = queue
-        # Log that the worked has started?
 
     def _render_next_frame(self, screen, window):
         if screen is not None:

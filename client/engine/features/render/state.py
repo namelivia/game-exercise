@@ -1,9 +1,9 @@
-from typing import Any, Optional, Type
+from typing import TYPE_CHECKING, Any, Type
 
-from client.engine.features.render.temp import ScreenRender
+if TYPE_CHECKING:
+    from .screen import ScreenRender
 
 
-# This is a singleton
 class State:
     _instance = None
 
@@ -19,7 +19,7 @@ class State:
     def get_is_rendering(self) -> bool:
         return self.is_rendering
 
-    def start_rendering(self, screen: ScreenRender) -> None:
+    def start_rendering(self, screen: "ScreenRender") -> None:
         self.current_screen = screen
         self.is_rendering = True
 

@@ -4,7 +4,7 @@ from client.engine.backend.input import InputBackend
 
 
 class KeyboardInput:
-    def _get_key_value(self, event: Any) -> Any:
+    def _get_key_value(self, event: Any) -> str:
         special_keys = {
             InputBackend.K_RETURN: "return",
             InputBackend.K_ESCAPE: "escape",
