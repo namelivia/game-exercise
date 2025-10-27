@@ -1,7 +1,7 @@
 from typing import Dict
 
 from client.engine.graphics.shapes import Image, Text
-from client.engine.primitives.ui import UIElement
+from client.engine.primitives.ui import UIElement, create_ui_element
 
 
 class WelcomeMessage(UIElement):
@@ -11,9 +11,8 @@ class WelcomeMessage(UIElement):
         self.shapes = [Text(f"Welcome to game, {name} {id}", 20, 0)]
 
 
-class Background(UIElement):
-    def __init__(self) -> None:
-        self.shapes = [Image("client/game/images/background2.png", 0, 0)]
+def create_background():
+    return create_ui_element([Image("client/game/images/background2.png", 0, 0)])
 
 
 class OptionList(UIElement):

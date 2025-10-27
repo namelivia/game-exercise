@@ -27,7 +27,6 @@ class ToLobby(Command):
     def __init__(self) -> None:
         super().__init__("Move forward to lobby")
         self.events = [
-            PlaySoundEvent("client/game/sounds/select.mp3"),
             ScreenTransitionEvent("lobby"),
         ]
 
