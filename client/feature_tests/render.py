@@ -2,10 +2,10 @@ from client.engine.animation_factory import create_animation
 from client.engine.clock import Clock
 from client.engine.features.render.commands import StartRendering
 from client.engine.features.render.worker import RenderWorker
-from client.engine.general_state.queue import QueueManager
 from client.engine.graphics.shapes import Image, Rectangle, Text
 from client.engine.primitives.screen import Screen
 from client.engine.primitives.ui import create_ui_element
+from client.engine.queue import QueueManager
 
 
 class TestScreen(Screen):

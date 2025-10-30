@@ -33,17 +33,15 @@ class RenderWorker(threading.Thread):
         state = State()
         state.initialize()
         while not self.stop_event.is_set():
-            if state.get_is_rendering():  # Rendering mode
-                self._render_next_frame(state.get_current_screen(), window)
-            else:  # Queue mode
-                try:
-                    event = self.queue.get()
-                    if type(event) is StopThreadEvent:
-                        break
-                    else:
-                        handlers_map[type(event)]().handle(event)
-                except Empty:
-                    continue
+            self._render_next_frame(state.get_current_screen(), window)
+            try:
+                event = self.queue.get(timeout=0.001)
+                if type(event) is StopThreadEvent:
+                    break
+                else:
+                    handlers_map[type(event)]().handle(event)
+            except Empty:
+                continue
         print(f"[{self.name}] Thread successfully terminated and exited run().")
 
     def stop(self):

@@ -1,7 +1,7 @@
 import pygame
 
 from client.engine.features.user_input.worker import UserInputWorker
-from client.engine.general_state.queue import QueueManager
+from client.engine.queue import QueueManager
 
 if __name__ == "__main__":
     pygame.init()
@@ -15,5 +15,5 @@ if __name__ == "__main__":
 
     user_input_thread.start()
     while True:
-        if not QueueManager().main_queue().empty():
-            print(QueueManager().main_queue().pop().__dict__)
+        if not QueueManager().get("game_logic").empty():
+            print(QueueManager().get("game_logic").get().__dict__)

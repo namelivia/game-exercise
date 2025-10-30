@@ -48,7 +48,7 @@ class _Queue:
     def empty(self) -> bool:
         return self.simple_queue.empty()
 
-    def get(self) -> Optional["Event"]:
-        event = self.simple_queue.get(block=True)
+    def get(self, timeout: Optional[float] = None) -> Optional["Event"]:
+        event = self.simple_queue.get(block=True, timeout=timeout)
         logger.info(f"[Event] {event.__class__.__name__}")
         return event

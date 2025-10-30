@@ -1,6 +1,6 @@
 from client.engine.features.sound.commands import PlaySound
 from client.engine.features.sound.worker import SoundWorker
-from client.engine.general_state.queue import QueueManager
+from client.engine.queue import QueueManager
 
 if __name__ == "__main__":
     QueueManager().initialize()
