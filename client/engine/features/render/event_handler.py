@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 class StartRenderingEventHandler(EventHandler[StartRenderingEvent]):
     def handle(self, event: StartRenderingEvent) -> None:
         event.screen.load()
-        State().start_rendering(event.screen)
+        State().set_current_screen(event.screen)
 
 
 handlers_map: Dict[Type["Event"], Any] = {

@@ -1,6 +1,6 @@
 from client.engine.features.network.commands import SendNetworkRequest
 from client.engine.features.network.worker import NetworkWorker
-from client.engine.general_state.queue import QueueManager
+from client.engine.queue import QueueManager
 
 
 def on_sucess(event, response):

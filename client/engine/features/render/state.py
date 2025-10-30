@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Type
+from typing import TYPE_CHECKING, Any, Optional, Type
 
 if TYPE_CHECKING:
     from .screen import ScreenRender
@@ -13,15 +13,10 @@ class State:
         return cls._instance
 
     def initialize(self) -> None:
-        self.is_rendering = False
-        self.current_screen = None
+        self.current_screen: Optional["ScreenRender"] = None
 
-    def get_is_rendering(self) -> bool:
-        return self.is_rendering
-
-    def start_rendering(self, screen: "ScreenRender") -> None:
+    def set_current_screen(self, screen: "ScreenRender") -> None:
         self.current_screen = screen
-        self.is_rendering = True
 
     def get_current_screen(self):
         return self.current_screen
