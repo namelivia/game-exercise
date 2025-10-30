@@ -4,20 +4,16 @@ from client.engine.graphics.shapes import Image, Text
 from client.engine.primitives.ui import UIElement, create_ui_element
 
 
-class WelcomeMessage(UIElement):
-    def __init__(self, name: str, id: str):
-        self.name = name
-        self.name = id
-        self.shapes = [Text(f"Welcome to game, {name} {id}", 20, 0)]
+def create_welcome_message():
+    return create_ui_element([Text("Welcome to game", 20, 0)])
 
 
 def create_background():
     return create_ui_element([Image("client/game/images/background2.png", 0, 0)])
 
 
-class OptionList(UIElement):
-    def __init__(self, options: Dict[str, str]):
-        self.options = options
-        self.shapes = []
-        for index, option in self.options.items():
-            self.shapes.append(Text(f"{index} - {option}", 20, 200 + (30 * int(index))))
+def create_options(options: Dict[str, str]):
+    shapes = []
+    for index, option in options.items():
+        shapes.append(Text(f"{index} - {option}", 20, 200 + (30 * int(index))))
+    return create_ui_element(shapes)
