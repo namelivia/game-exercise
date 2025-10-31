@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
 
-from client.engine.features.chat.events import ChatMessageInGameEvent
-from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.primitives.command import Command
+from engine.features.chat.events import ChatMessageInGameEvent
+from engine.general_state.profile_manager import ProfileManager
+from engine.primitives.command import Command
 
 from .events import SendChatRequestEvent
 

@@ -1,8 +1,9 @@
-from client.engine.features.sound.commands import PlayMusic, PlaySound
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.primitives.screen import Screen
-from client.engine.primitives.timer import Timer
-from client.game.commands import ToLobby
+from engine.features.sound.commands import PlayMusic, PlaySound
+from engine.features.user_input.events import UserTypedEvent
+from engine.primitives.screen import Screen
+from engine.primitives.timer import Timer
+
+from game.commands import ToLobby
 
 from .ui import create_background, create_coin_1, create_coin_2, create_title
 
@@ -19,7 +20,7 @@ class Intro(Screen):
         ]
 
         PlayMusic(
-            "client/game/music/main_theme.mp3",
+            "music/main_theme.mp3",
         ).execute()
 
         self.timers = [
@@ -36,17 +37,17 @@ class Intro(Screen):
 
     def show_coin_1(self) -> None:
         PlaySound(
-            "client/game/sounds/user_connected.mp3",
+            "sounds/user_connected.mp3",
         ).execute()
         self.ui_elements[2].show()
 
     def show_coin_2(self) -> None:
         PlaySound(
-            "client/game/sounds/user_connected.mp3",
+            "sounds/user_connected.mp3",
         ).execute()
         self.ui_elements[3].show()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape" or event.key == "return":
-            PlaySound("client/game/sounds/select.mp3").execute()
+            PlaySound("sounds/select.mp3").execute()
             ToLobby().execute()

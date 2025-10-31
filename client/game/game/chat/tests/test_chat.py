@@ -1,11 +1,11 @@
 from unittest import TestCase
 
 import mock
+from engine.features.chat.events import ChatMessageInGameEvent
+from engine.general_state.queue import QueueManager
 
-from client.engine.features.chat.events import ChatMessageInGameEvent
-from client.engine.general_state.queue import QueueManager
-from client.game.chat.commands import RequestSendChat
-from client.game.chat.events import SendChatRequestEvent
+from game.chat.commands import RequestSendChat
+from game.chat.events import SendChatRequestEvent
 
 
 class TestChat(TestCase):

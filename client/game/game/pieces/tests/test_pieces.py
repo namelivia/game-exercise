@@ -1,17 +1,17 @@
 from unittest import TestCase
 
 import mock
+from engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
+from engine.general_state.profile.profile import Profile
+from engine.general_state.profile_manager import ProfileManager
+from engine.general_state.queue import QueueManager
 
-from client.engine.features.pieces.events import PlayerPlacedSymbolInGameEvent
-from client.engine.general_state.profile.profile import Profile
-from client.engine.general_state.profile_manager import ProfileManager
-from client.engine.general_state.queue import QueueManager
-from client.game.pieces.commands import RequestPlaceASymbol
-from client.game.pieces.events import PlaceASymbolRequestEvent
+from game.pieces.commands import RequestPlaceASymbol
+from game.pieces.events import PlaceASymbolRequestEvent
 
 
 class TestPieces(TestCase):
-    @mock.patch("client.engine.general_state.profile_manager.Persistence")
+    @mock.patch("engine.general_state.profile_manager.Persistence")
     def _initialize_test_profile(self, m_persistence):
         m_persistence.load.return_value = Profile(
             key="test_profile",

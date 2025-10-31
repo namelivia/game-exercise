@@ -1,7 +1,7 @@
 from typing import Dict
 
-from client.engine.graphics.shapes import Image, Text
-from client.engine.primitives.ui import UIElement, create_ui_element
+from engine.graphics.shapes import Image, Text
+from engine.primitives.ui import UIElement, create_ui_element
 
 
 def create_welcome_message():
@@ -9,7 +9,7 @@ def create_welcome_message():
 
 
 def create_background():
-    return create_ui_element([Image("client/game/images/background2.png", 0, 0)])
+    return create_ui_element([Image("images/background2.png", 0, 0)])
 
 
 def create_options(options: Dict[str, str]):

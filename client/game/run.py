@@ -1,8 +1,9 @@
 import logging
 
-from client.engine.screen_manager import ScreenManagerFactory
-from client.game.event_handler import EventHandler as GameEventHandler
-from client.game.events import ScreenTransitionEvent
+from engine.screen_manager import ScreenManagerFactory
+
+from game.event_handler import EventHandler as GameEventHandler
+from game.events import ScreenTransitionEvent
 
 """
 This initializes the client
@@ -10,7 +11,7 @@ This initializes the client
 
 if __name__ == "__main__":
     logging.basicConfig(
-        filename="client_data/logs/client.log",
+        filename="game_data/logs/client.log",
         level=logging.DEBUG,
         format="[%(asctime)s] %(message)s",
     )

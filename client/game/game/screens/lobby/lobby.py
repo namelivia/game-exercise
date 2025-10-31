@@ -1,5 +1,5 @@
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.primitives.screen import Screen
+from engine.features.user_input.events import UserTypedEvent
+from engine.primitives.screen import Screen
 
 from .ui import create_background, create_options, create_welcome_message
 
@@ -27,7 +27,7 @@ class Lobby(Screen):
         self.events = {UserTypedEvent: self.on_user_typed}
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
-        from client.game.commands import (
+        from game.commands import (
             GoToCredits,
             GoToGameList,
             GoToJoinAGame,

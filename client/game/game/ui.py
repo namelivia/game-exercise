@@ -1,7 +1,7 @@
 from typing import Any, Dict
 
-from client.engine.graphics.shapes import Animation, Text
-from client.engine.primitives.ui import UIElement
+from engine.graphics.shapes import Animation, Text
+from engine.primitives.ui import UIElement
 
 
 # UI components than can be shared among many screens
@@ -18,7 +18,7 @@ class ClockUI(UIElement):
 class AnimationDebug(UIElement):
     def __init__(self) -> None:
         self.shapes = [
-            Animation("client/game/images/debug", 250, 0, 3),
+            Animation("images/debug", 250, 0, 3),
         ]
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
