@@ -20,7 +20,7 @@ class Intro(Screen):
         ]
 
         PlayMusic(
-            "music/main_theme.mp3",
+            "assets/music/main_theme.mp3",
         ).execute()
 
         self.timers = [
@@ -37,17 +37,17 @@ class Intro(Screen):
 
     def show_coin_1(self) -> None:
         PlaySound(
-            "sounds/user_connected.mp3",
+            "assets/sounds/user_connected.mp3",
         ).execute()
         self.ui_elements[2].show()
 
     def show_coin_2(self) -> None:
         PlaySound(
-            "sounds/user_connected.mp3",
+            "assets/sounds/user_connected.mp3",
         ).execute()
         self.ui_elements[3].show()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape" or event.key == "return":
-            PlaySound("sounds/select.mp3").execute()
+            PlaySound("assets/sounds/select.mp3").execute()
             ToLobby().execute()

@@ -9,7 +9,7 @@ def create_welcome_message():
 
 
 def create_background():
-    return create_ui_element([Image("images/background2.png", 0, 0)])
+    return create_ui_element([Image("assets/images/background2.png", 0, 0)])
 
 
 def create_options(options: Dict[str, str]):

@@ -35,17 +35,17 @@ def create_title():
 
 
 def create_background():
-    return create_ui_element([Image("images/background.png", 0, 0)])
+    return create_ui_element([Image("assets/images/background.png", 0, 0)])
 
 
 def create_coin_1():
-    coin = create_animation("images/coin.json", 150, 150, 30)
+    coin = create_animation("assets/images/coin.json", 150, 150, 30)
     coin.hide()
     return coin
 
 
 def create_coin_2():
-    coin = create_animation("images/coin.json", 90, 100, 15)
+    coin = create_animation("assets/images/coin.json", 90, 100, 15)
     coin.hide()
     return coin
 
@@ -54,8 +54,8 @@ def create_coin_2():
 class Coins(UIElement):
     def __init__(self) -> None:
         self.shapes = [
-            Animation("images/coin", 0, 150),
-            Animation("images/coin", 250, 0, 3),
+            Animation("assets/images/coin", 0, 150),
+            Animation("assets/images/coin", 250, 0, 3),
         ]
 
         self.shapes[0].hide()

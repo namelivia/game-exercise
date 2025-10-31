@@ -18,7 +18,7 @@ class ClockUI(UIElement):
 class AnimationDebug(UIElement):
     def __init__(self) -> None:
         self.shapes = [
-            Animation("images/debug", 250, 0, 3),
+            Animation("assets/images/debug", 250, 0, 3),
         ]
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
