@@ -1,10 +1,10 @@
 __pycache__
 server_data/*
 !server_data/.gitkeep
-client/game/game_data/*
-client/game/game_data/.gitkeep
-client/experiment/experiment_data/*
-client/experiment/experiment_data/.gitkeep
+client/demos/game/game_data/*
+client/demos/game/game_data/.gitkeep
+client/demos/experiment/experiment_data/*
+client/demos/experiment/experiment_data/.gitkeep
 htmlcov
 .coverage
 tags
