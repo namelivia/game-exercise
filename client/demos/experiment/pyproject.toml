@@ -2,7 +2,7 @@
 name = "experiment"
 version = "0.1.0"
 description = ""
-authors = ["José Ignacio Amelivia Santiago <jignacio.amelivia@gmail.com>"]
+authors = ["José Ignacio Amelivia Santiago <hello@namelivia.com>"]
 readme = "README.md"
 package-mode = false
 
