@@ -2,6 +2,6 @@
 
 This is just an expermient, or a programming exercise, to see if I can make a simple humble multiplayer game engine.
 
-## How to run demos
+## How to run
 
-Open one terminal and execute `./demos`, then choose the one you want to run. The script will ask you to install `gum` if you don't have it.
+Open one terminal and execute `./run`. The script will ask you to install `gum` if you don't have it.

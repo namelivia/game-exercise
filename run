@@ -1,0 +1,39 @@
+#!/bin/bash
+
+if ! command -v gum &> /dev/null; then
+    echo "This script requires 'gum' for the interactive menu:"
+    echo "https://github.com/charmbracelet/gum"
+    exit 1
+fi
+
+CATEGORY_CHOICE=$(echo -e "Demos\nFeature Tests" | gum choose --header "Choose a Category to run:")
+
+if [ -z "$CATEGORY_CHOICE" ]; then
+    echo "No category selected. Exiting."
+    exit 0
+fi
+
+if [ "$CATEGORY_CHOICE" == "Demos" ]; then
+    BASE_DIR="client/demos"
+    ITEM_NAMES=$(find "$BASE_DIR" -mindepth 1 -maxdepth 1 -type d | sed "s|^$BASE_DIR/||")
+    CHOSEN_ITEM=$(echo "$ITEM_NAMES" | gum choose --header "Choose a Demo:")
+    ITEM_TYPE="demo"
+elif [ "$CATEGORY_CHOICE" == "Feature Tests" ]; then
+    BASE_DIR="client/feature-tests"
+    ITEM_NAMES=$(find "$BASE_DIR" -mindepth 1 -maxdepth 1 -type d | sed "s|^$BASE_DIR/||")
+    CHOSEN_ITEM=$(echo "$ITEM_NAMES" | gum choose --header "Choose a Test:")
+    ITEM_TYPE="test"
+else
+    echo "Invalid category selected. Exiting."
+    exit 1
+fi
+
+if [ -n "$CHOSEN_ITEM" ]; then
+    ITEM_PATH="$BASE_DIR/$CHOSEN_ITEM/run"
+    echo "Launching $CHOSEN_ITEM ($ITEM_TYPE)..."
+    ITEM_DIR=$(dirname "$ITEM_PATH")
+    cd "$ITEM_DIR" || { echo "Error: Could not change directory to $ITEM_DIR"; exit 1; }
+    exec "./run"
+else
+    echo "No $ITEM_TYPE selected. Exiting."
+fi
