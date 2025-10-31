@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "network"
+version = "0.1.0"
+description = ""
+authors = ["José Ignacio Amelivia Santiago <jignacio.amelivia@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+engine = { path = "../engine", develop=true }
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

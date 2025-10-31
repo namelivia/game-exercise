@@ -1,7 +1,6 @@
 import pygame
-
-from client.engine.features.user_input.worker import UserInputWorker
-from client.engine.queue import QueueManager
+from engine.features.user_input.worker import UserInputWorker
+from engine.queue import QueueManager
 
 if __name__ == "__main__":
     pygame.init()
