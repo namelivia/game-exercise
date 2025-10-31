@@ -1,0 +1,27 @@
+import logging
+from typing import TYPE_CHECKING, Any, Dict, Type
+
+from engine.backend.graphics.graphics import GraphicsBackend
+from engine.primitives.event_handler import EventHandler as BaseEventHandler
+
+from .events import ChangeCursorEvent
+
+if TYPE_CHECKING:
+    from engine.primitives.event import Event
+
+logger = logging.getLogger(__name__)
+
+
+class ChangeCursorEventHandler(BaseEventHandler[ChangeCursorEvent]):
+    def handle(self, event: "ChangeCursorEvent") -> None:
+        GraphicsBackend.get().set_mouse_cursor(event.key)
+
+
+handlers_map: Dict[Type["Event"], Any] = {
+    ChangeCursorEvent: ChangeCursorEventHandler,
+}
+
+
+class EventHandler(BaseEventHandler["Event"]):
+    def handle(self, event: "Event") -> None:
+        handlers_map[type(event)]().handle(event)

@@ -3,8 +3,8 @@ server_data/*
 !server_data/.gitkeep
 client_data/*
 client_data/.gitkeep
-experiment_data/*
-experiment_data/.gitkeep
+client/experiment/experiment_data/*
+client/experiment/experiment_data/.gitkeep
 htmlcov
 .coverage
 tags
