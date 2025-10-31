@@ -15,7 +15,6 @@ from OpenGL.GL import (
     GL_LINEAR,
     GL_ONE_MINUS_SRC_ALPHA,
     GL_QUADS,
-    GL_RGBA,
     GL_SRC_ALPHA,
     GL_TEXTURE_2D,
     GL_TEXTURE_MAG_FILTER,

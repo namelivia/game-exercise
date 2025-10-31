@@ -1,8 +1,8 @@
 __pycache__
 server_data/*
 !server_data/.gitkeep
-client_data/*
-client_data/.gitkeep
+client/game/game_data/*
+client/game/game_data/.gitkeep
 client/experiment/experiment_data/*
 client/experiment/experiment_data/.gitkeep
 htmlcov
