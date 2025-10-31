@@ -1,6 +1,6 @@
-from client.engine.backend.input import InputBackend
 from client.engine.threading.polling_worker import PollingWorker
 
+from .backend.pygame.input import InputBackend
 from .commands import UserClicked, UserTyped
 from .keyboard import KeyboardInput
 from .mouse import MouseInput

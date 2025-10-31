@@ -1,6 +1,6 @@
 from typing import Any, Tuple, Type
 
-from client.engine.backend.input import InputBackend
+from .backend.pygame.input import InputBackend
 
 
 class MousePosition:
