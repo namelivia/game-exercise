@@ -7,4 +7,4 @@ if env_value is not None:
     GRAPHICS = env_value
 else:
     print(f"Graphics will default to native")
-    GRAPHICS = "NATIVE"
+    GRAPHICS = "OPENGL"

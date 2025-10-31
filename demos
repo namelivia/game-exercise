@@ -1,0 +1,12 @@
+DEMO_NAMES=$(find client/demos -mindepth 1 -maxdepth 1 -type d | sed 's|^client/demos/||')
+CHOSEN_DEMO=$(echo "$DEMO_NAMES" | gum choose --header "Choose a Demo:")
+
+if [ -n "$CHOSEN_DEMO" ]; then
+    DEMO_PATH="client/demos/$CHOSEN_DEMO/run"
+    echo "Launching $CHOSEN_DEMO..."
+    DEMO_DIR=$(dirname "$DEMO_PATH")
+    cd "$DEMO_DIR" || { echo "Error: Could not change directory to $DEMO_DIR"; exit 1; }
+    exec "./run"
+else
+    echo "No demo selected. Exiting."
+fi
