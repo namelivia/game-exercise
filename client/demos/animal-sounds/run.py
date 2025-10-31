@@ -15,9 +15,7 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    application = ApplicationFactory.create(
+    ApplicationFactory.create(
         initial_event=ScreenTransitionEvent("main"),
         game_event_handler=GameEventHandler(),
-    )
-    while True:
-        application.run()
+    ).run()

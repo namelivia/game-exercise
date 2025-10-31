@@ -33,13 +33,14 @@ class ApplicationFactory:
 class Application:
     # Main loop
     def run(self) -> None:
-        try:
-            current_screen = CurrentScreen().get_current_screen()
-            if current_screen is not None:
-                current_screen.update()
-            time.sleep(0.01)
+        while True:
+            try:
+                current_screen = CurrentScreen().get_current_screen()
+                if current_screen is not None:
+                    current_screen.update()
+                time.sleep(0.01)
 
-        except KeyboardInterrupt:
-            ThreadManager().shutdown()
-            Backend.quit()
-            sys.exit()
+            except KeyboardInterrupt:
+                ThreadManager().shutdown()
+                Backend.quit()
+                sys.exit()
