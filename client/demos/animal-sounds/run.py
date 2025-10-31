@@ -2,7 +2,7 @@ import logging
 
 from animal_sounds.event_handler import EventHandler as GameEventHandler
 from animal_sounds.events import ScreenTransitionEvent
-from engine.application import ApplicationFactory
+from engine.api import ApplicationFactory
 
 """
 This initializes the animal_sounds

@@ -1,6 +1,6 @@
 import logging
 
-from engine.application import ApplicationFactory
+from engine.api import ApplicationFactory
 
 from game.event_handler import EventHandler as GameEventHandler
 from game.events import ScreenTransitionEvent
