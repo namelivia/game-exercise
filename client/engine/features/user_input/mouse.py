@@ -1,6 +1,6 @@
 from typing import Any, List, Optional
 
-from client.engine.backend.input import InputBackend
+from .backend.pygame.input import InputBackend
 
 
 class MouseInput:
