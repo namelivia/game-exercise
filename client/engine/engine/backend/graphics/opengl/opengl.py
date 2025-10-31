@@ -5,10 +5,10 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 from PIL import Image
 
-from ..pygame_window import PygameGraphicsBackend
+from ..base import BaseGraphicsBackend
 
 
-class PygameOpenGLGraphicsBackend(PygameGraphicsBackend):
+class PygameOpenGLGraphicsBackend(BaseGraphicsBackend):
     def update_display(self) -> None:
         pygame.display.flip()
         return None

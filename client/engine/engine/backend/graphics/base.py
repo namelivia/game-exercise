@@ -12,13 +12,5 @@ class BaseGraphicsBackend(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def set_mouse_cursor(self, new_cursor: str) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
-    def sprite_group(self):
-        raise NotImplementedError
-
-    @abstractmethod
     def clear_window(self, window):
         raise NotImplementedError

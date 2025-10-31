@@ -2,10 +2,10 @@ from typing import Any, Dict
 
 import pygame
 
-from .base import BaseGraphicsBackend
+from .basewindow import BaseWindow
 
 
-class PygameGraphicsBackend(BaseGraphicsBackend):
+class PygameWindow(BaseWindow):
     def set_mouse_cursor(self, new_cursor: str) -> None:
         cursors: Dict[str, Any] = {
             "ARROW": pygame.SYSTEM_CURSOR_ARROW,

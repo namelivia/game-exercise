@@ -2,10 +2,10 @@ from typing import Any, Dict
 
 import pygame
 
-from ..pygame_window import PygameGraphicsBackend
+from ..base import BaseGraphicsBackend
 
 
-class PygameNativeGraphicsBackend(PygameGraphicsBackend):
+class PygameNativeGraphicsBackend(BaseGraphicsBackend):
     def update_display(self) -> None:
         pygame.display.update()
         return None
