@@ -1,6 +1,6 @@
 import logging
 
-from engine.screen_manager import ScreenManagerFactory
+from engine.application import ApplicationFactory
 
 from game.event_handler import EventHandler as GameEventHandler
 from game.events import ScreenTransitionEvent
@@ -16,9 +16,9 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    screen_manager = ScreenManagerFactory.create(
+    application = ApplicationFactory.create(
         initial_event=ScreenTransitionEvent("intro"),
         game_event_handler=GameEventHandler(),
     )
     while True:
-        screen_manager.run()
+        application.run()

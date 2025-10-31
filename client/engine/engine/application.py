@@ -14,23 +14,23 @@ if TYPE_CHECKING:
     from engine.primitives.event import Event
 
 
-class ScreenManagerFactory:
+class ApplicationFactory:
     @staticmethod
     def create(
         *,
         initial_event: "Event",
         game_event_handler: Any,
-    ) -> "ScreenManager":
+    ) -> "Application":
         Clock().initialize()
         GameEventHandler().set(game_event_handler)
         QueueManager().initialize(initial_event)
         CurrentScreen().initialize()
         ThreadManager().initialize()
 
-        return ScreenManager()
+        return Application()
 
 
-class ScreenManager:
+class Application:
     # Main loop
     def run(self) -> None:
         try:
