@@ -1,3 +1,3 @@
-# Experiments
+# Animal sounds
 
-Little pygame animal_soundss to test ideas.
+Click on the animal portraits to hear the sound they make.
