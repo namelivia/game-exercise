@@ -1,6 +1,7 @@
-from client.engine.backend.sound import SoundBackend
 from client.engine.features.sound.event_handler import handlers_map
 from client.engine.threading.queue_worker import QueueWorker
+
+from .backend.pygame.sound import SoundBackend
 
 
 class SoundWorker(QueueWorker):

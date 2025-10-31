@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from client.engine.backend.sound import SoundBackend
 from client.engine.primitives.event_handler import EventHandler
 
+from .backend.pygame.sound import SoundBackend
 from .events import PlayMusicEvent, PlaySoundEvent, StopMusicEvent
 
 if TYPE_CHECKING:
