@@ -2,10 +2,12 @@ from typing import Any, Dict
 
 import pygame
 
-from .basewindow import BaseWindow
+from .basecursor import BaseCursor
 
 
-class PygameWindow(BaseWindow):
+# This is using pygame, that uses SDL under the hood.
+# An alternative implementation could be using GLFW.
+class PygameCursor(BaseCursor):
     def set_mouse_cursor(self, new_cursor: str) -> None:
         cursors: Dict[str, Any] = {
             "ARROW": pygame.SYSTEM_CURSOR_ARROW,
@@ -26,6 +28,3 @@ class PygameWindow(BaseWindow):
         except KeyError:
             pass
         return None
-
-    def sprite_group(self) -> Any:
-        return pygame.sprite.Group()

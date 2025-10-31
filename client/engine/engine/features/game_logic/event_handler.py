@@ -1,9 +1,9 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from engine.backend.graphics.graphics import GraphicsBackend
 from engine.primitives.event_handler import EventHandler as BaseEventHandler
 
+from .backend.cursor.pygame_cursor import PygameCursor
 from .events import ChangeCursorEvent
 
 if TYPE_CHECKING:
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class ChangeCursorEventHandler(BaseEventHandler[ChangeCursorEvent]):
     def handle(self, event: "ChangeCursorEvent") -> None:
-        GraphicsBackend.get().set_mouse_cursor(event.key)
+        PygameCursor().set_mouse_cursor(event.key)
 
 
 handlers_map: Dict[Type["Event"], Any] = {
