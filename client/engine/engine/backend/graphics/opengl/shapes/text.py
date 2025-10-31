@@ -121,7 +121,7 @@ class Text(Shape):
         return Characters
 
     def load(self):
-        font_path = "client/experiment/fonts/AccidentalPresidency.ttf"
+        font_path = "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
         size = 24
 
         # Load font file
