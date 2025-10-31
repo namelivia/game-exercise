@@ -1,8 +1,4 @@
-from engine.features.sound.commands import PlaySound
-from engine.features.user_input.events import UserClickedEvent
-from engine.primitives.screen import Screen
-from engine.primitives.ui import ClickableUIElement
-from experiment.images import (
+from animal_sounds.images import (
     CHEETAH_BLACK,
     CHEETAH_COLOR,
     ELEPHANT_BLACK,
@@ -16,7 +12,11 @@ from experiment.images import (
     RHINO_BLACK,
     RHINO_COLOR,
 )
-from experiment.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
+from animal_sounds.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
+from engine.features.sound.commands import PlaySound
+from engine.features.user_input.events import UserClickedEvent
+from engine.primitives.screen import Screen
+from engine.primitives.ui import ClickableUIElement
 
 from .ui import create_background, create_portrait
 

@@ -3,8 +3,8 @@ server_data/*
 !server_data/.gitkeep
 client/demos/game/game_data/*
 client/demos/game/game_data/.gitkeep
-client/demos/experiment/experiment_data/*
-client/demos/experiment/experiment_data/.gitkeep
+client/demos/animal-sounds/data/*
+client/demos/animal-sounds/data/.gitkeep
 htmlcov
 .coverage
 tags

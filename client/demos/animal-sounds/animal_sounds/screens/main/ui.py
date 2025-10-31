@@ -1,7 +1,7 @@
+from animal_sounds.images import BACKGROUND
 from engine.features.game_logic.commands import ChangeCursor
 from engine.graphics.shapes import Image
 from engine.primitives.ui import ClickableUIElement, create_ui_element
-from experiment.images import BACKGROUND
 
 
 def create_background():

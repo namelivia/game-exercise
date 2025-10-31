@@ -2,9 +2,9 @@ from unittest import TestCase
 
 import mock
 
+from client.animal_sounds.screens.main.main import MainScreen
 from client.engine.general_state.queue import QueueManager
 from client.engine.visual_regression.visual_regression import VisualRegression
-from client.experiment.screens.main.main import MainScreen
 
 
 class TestMainScreen(TestCase):
@@ -23,12 +23,12 @@ class TestMainScreen(TestCase):
         self.main.update()
         VisualRegression.assert_matches_snapshot(
             self.main,
-            "./client/experiment/screens/main/tests/screenshots/main_timestamp_0.png",
+            "./client/animal_sounds/screens/main/tests/screenshots/main_timestamp_0.png",
         )
 
         # self.clock.get.return_value = 5500  # Advance to 5500
         self.main.update()
         VisualRegression.assert_matches_snapshot(
             self.main,
-            "./client/experiment/screens/main/tests/screenshots/main_timestamp_5500.png",
+            "./client/animal_sounds/screens/main/tests/screenshots/main_timestamp_5500.png",
         )
