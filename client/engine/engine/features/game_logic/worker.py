@@ -1,4 +1,4 @@
-from engine.general_state.current_screen import CurrentScreen
+from engine.current_screen import CurrentScreen
 from engine.primitives.event import InGameEvent
 from engine.threading.queue_worker import QueueWorker
 
