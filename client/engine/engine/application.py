@@ -5,7 +5,6 @@ from typing import TYPE_CHECKING, Any
 from engine.backend.backend import Backend
 from engine.clock import Clock
 from engine.current_screen import CurrentScreen
-from engine.event_handler import EventHandler
 from engine.features.game_logic.game_event_handler import GameEventHandler
 from engine.queue import QueueManager
 from engine.threading.manager import ThreadManager
