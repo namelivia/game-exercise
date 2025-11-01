@@ -19,4 +19,4 @@ if __name__ == "__main__":
     ApplicationFactory.create(
         initial_event=ScreenTransitionEvent("intro"),
         game_event_handler=GameEventHandler(),
-    ).start()
+    ).run()

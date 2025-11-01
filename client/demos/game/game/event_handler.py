@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from engine.general_state.current_screen import CurrentScreen
+from engine.current_screen import CurrentScreen
 from engine.primitives.event_handler import EventHandler as BaseEventHandler
 
 from .events import ScreenTransitionEvent
