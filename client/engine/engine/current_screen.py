@@ -1,4 +1,3 @@
-import uuid
 from typing import TYPE_CHECKING, Any, Optional, Type
 
 from engine.features.render.commands import StartRendering
@@ -7,7 +6,6 @@ if TYPE_CHECKING:
     from engine.primitives.screen import Screen
 
 
-# This is a singleton
 class CurrentScreen:
     _instance = None
 
