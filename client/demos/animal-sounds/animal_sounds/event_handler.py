@@ -1,13 +1,13 @@
 from typing import TYPE_CHECKING, Any, Dict, Type
 
-from engine.current_screen import CurrentScreen
-from engine.primitives.event_handler import EventHandler as BaseEventHandler
+from engine.api import CurrentScreen
+from engine.api import EventHandler as BaseEventHandler
 
 from .events import ScreenTransitionEvent
 from .screens.main.main import MainScreen
 
 if TYPE_CHECKING:
-    from engine.primitives.event import Event
+    from engine.api import Event
 
 """
 Currently event handlers are the one that do the processing.
