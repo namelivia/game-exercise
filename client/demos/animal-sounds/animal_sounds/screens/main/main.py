@@ -13,10 +13,7 @@ from animal_sounds.images import (
     RHINO_COLOR,
 )
 from animal_sounds.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
-from engine.features.sound.commands import PlaySound
-from engine.features.user_input.events import UserClickedEvent
-from engine.primitives.screen import Screen
-from engine.primitives.ui import ClickableUIElement
+from engine.api import ClickableUIElement, PlaySound, Screen, UserClickedEvent
 
 from .ui import create_background, create_portrait
 
