@@ -4,6 +4,9 @@ from typing import TYPE_CHECKING, Any, Dict, List, Tuple
 from engine.features.render.ui_element import UIElementRender
 from engine.features.user_input.mouse_position import MousePosition
 
+from .logic import UIElementLogic
+from .state import UIElementState
+
 if TYPE_CHECKING:
     from engine.primitives.shape import Shape
 
@@ -20,38 +23,6 @@ def create_ui_element(shapes: List["Shape"], state=None, custom_logic=None):
         logic = custom_logic
     render = UIElementRender(state, shapes)
     return UIElement(render, logic)
-
-
-# This is the logic part of the UIElement
-# UI elements can hold a small state too that can be updated
-# This is what will be extended.
-class UIElementLogic(ABC):
-    def __init__(self, state):
-        self.state = state
-
-    def update(self, time: int, data: Dict[str, Any]) -> None:
-        pass
-
-
-class UIElementState(ABC):
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def get_x(self):
-        return self.x
-
-    def get_y(self):
-        return self.y
-
-    def get_index(self):
-        return 0
-
-    def set_x(self, x):
-        self.x = x
-
-    def set_y(self, y):
-        self.y = y
 
 
 class AnimationState(UIElementState):
