@@ -1,5 +1,5 @@
-# Animation
-from engine.application.factory import start_application
+# Application
+from engine.application.api import start_application
 
 # Current screen singleton
 from engine.current_screen import CurrentScreen
