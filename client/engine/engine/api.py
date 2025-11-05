@@ -16,10 +16,10 @@ from engine.features.user_input.events import UserClickedEvent, UserTypedEvent
 
 # Shapes
 from engine.graphics.shapes import Image, Text
-from engine.primitives.event import Event
-from engine.primitives.event_handler import EventHandler
 
 # PRIMITIVES to extend from
+from engine.primitives.event import Event
+from engine.primitives.event_handler import EventHandler
 from engine.primitives.screen import Screen
 from engine.primitives.timer import Timer
 from engine.primitives.ui import (
