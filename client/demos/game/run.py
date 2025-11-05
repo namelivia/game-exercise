@@ -1,6 +1,6 @@
 import logging
 
-from engine.api import ApplicationFactory
+from engine.api import start_application
 
 from game.event_handler import EventHandler as GameEventHandler
 from game.events import ScreenTransitionEvent
@@ -16,7 +16,7 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    ApplicationFactory.create(
+    start_application(
         initial_event=ScreenTransitionEvent("intro"),
         game_event_handler=GameEventHandler(),
-    ).run()
+    )

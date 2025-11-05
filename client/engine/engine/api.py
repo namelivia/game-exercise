@@ -1,6 +1,5 @@
-# Animation
-from engine.animation_factory import create_animation
-from engine.application import ApplicationFactory
+# Application
+from engine.application.api import start_application
 
 # Current screen singleton
 from engine.current_screen import CurrentScreen
@@ -22,9 +21,10 @@ from engine.primitives.event import Event
 from engine.primitives.event_handler import EventHandler
 from engine.primitives.screen import Screen
 from engine.primitives.timer import Timer
-from engine.primitives.ui import (
-    ClickableUIElement,
-    UIElementLogic,
-    UIElementState,
-    create_ui_element,
-)
+from engine.ui.animation.factory import create_animation
+from engine.ui.clickable import ClickableUIElement
+
+# UI
+from engine.ui.factory import create_ui_element
+from engine.ui.logic import UIElementLogic
+from engine.ui.state import UIElementState

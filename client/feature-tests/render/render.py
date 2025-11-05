@@ -1,11 +1,11 @@
-from engine.animation_factory import create_animation
 from engine.clock import Clock
 from engine.features.render.commands import StartRendering
 from engine.features.render.worker import RenderWorker
 from engine.graphics.shapes import Image, Rectangle, Text
 from engine.primitives.screen import Screen
-from engine.primitives.ui import create_ui_element
 from engine.queue import QueueManager
+from engine.ui.animation.factory import create_animation
+from engine.ui.factory import create_ui_element
 
 
 class TestScreen(Screen):

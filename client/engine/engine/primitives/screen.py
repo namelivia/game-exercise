@@ -2,7 +2,8 @@ from abc import ABC
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 from engine.clock import Clock
-from engine.primitives.ui import ClickableUIElement, UIElement
+from engine.ui.clickable import ClickableUIElement
+from engine.ui.ui import UIElement
 
 if TYPE_CHECKING:
     from engine.primitives.event import InGameEvent
