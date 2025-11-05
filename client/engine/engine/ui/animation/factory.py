@@ -2,9 +2,10 @@ import os
 
 from engine.features.render.ui_element import UIElementRender
 from engine.graphics.shapes import Animation
-from engine.ui.ui import AnimationState, UIElement, UIElementLogic
+from engine.ui.ui import UIElement, UIElementLogic
 
 from .loader import load_animation
+from .state import AnimationState
 
 
 def create_animation(json_file_path, x, y, fps):
