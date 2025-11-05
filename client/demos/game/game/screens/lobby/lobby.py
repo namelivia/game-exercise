@@ -1,5 +1,4 @@
-from engine.features.user_input.events import UserTypedEvent
-from engine.primitives.screen import Screen
+from engine.api import Screen, UserTypedEvent
 
 from .ui import create_background, create_options, create_welcome_message
 

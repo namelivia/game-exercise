@@ -1,4 +1,4 @@
-from engine.primitives.event import Event
+from engine.api import Event
 
 """
 Events contain an operation and the data needed in order to perform

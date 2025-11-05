@@ -1,7 +1,4 @@
-from engine.features.sound.commands import PlayMusic, PlaySound
-from engine.features.user_input.events import UserTypedEvent
-from engine.primitives.screen import Screen
-from engine.primitives.timer import Timer
+from engine.api import PlayMusic, PlaySound, Screen, Timer, UserTypedEvent
 
 from game.commands import ToLobby
 

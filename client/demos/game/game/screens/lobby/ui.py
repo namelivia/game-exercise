@@ -1,7 +1,6 @@
 from typing import Dict
 
-from engine.graphics.shapes import Image, Text
-from engine.primitives.ui import UIElement, create_ui_element
+from engine.api import Image, Text, create_ui_element
 
 
 def create_welcome_message():
