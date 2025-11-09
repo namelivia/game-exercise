@@ -26,28 +26,18 @@ class Lobby(Screen):
         self.events = {UserTypedEvent: self.on_user_typed}
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
-        from game.commands import (
-            GoToCredits,
-            GoToGameList,
-            GoToJoinAGame,
-            GoToOptions,
-            GoToProfiles,
-            GoToSetName,
-            NewGame,
-        )
-
         key = event.key
         if key == "1":
-            NewGame().execute()
+            pass
         if key == "2":
-            GoToJoinAGame().execute()
+            pass
         if key == "3":
-            GoToGameList().execute()
+            pass
         if key == "4":
-            GoToOptions().execute()
+            pass
         if key == "5":
-            GoToSetName().execute()
+            pass
         if key == "6":
-            GoToCredits().execute()
+            pass
         if key == "7":
-            GoToProfiles().execute()
+            pass

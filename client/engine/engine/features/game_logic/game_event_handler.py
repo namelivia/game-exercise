@@ -12,6 +12,9 @@ class GameEventHandler:
             cls._instance = super(GameEventHandler, cls).__new__(cls)
         return cls._instance
 
+    def initialize(self) -> None:
+        self.event_handler = None
+
     def set(self, event_handler):
         self.event_handler = event_handler
 

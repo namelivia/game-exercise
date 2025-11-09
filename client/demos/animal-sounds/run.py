@@ -1,7 +1,6 @@
 import logging
 
-from animal_sounds.event_handler import EventHandler as GameEventHandler
-from animal_sounds.events import ScreenTransitionEvent
+from animal_sounds.screens.main.main import MainScreen
 from engine.api import start_application
 
 """
@@ -15,7 +14,4 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    start_application(
-        initial_event=ScreenTransitionEvent("main"),
-        game_event_handler=GameEventHandler(),
-    )
+    start_application(initial_screen=MainScreen)

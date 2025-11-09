@@ -1,10 +1,11 @@
 import logging
 from typing import TYPE_CHECKING, Any, Dict, Type
 
+from engine.current_screen import CurrentScreen
 from engine.primitives.event_handler import EventHandler as BaseEventHandler
 
 from .backend.cursor.pygame_cursor import PygameCursor
-from .events import ChangeCursorEvent
+from .events import ChangeCursorEvent, ScreenTransitionEvent
 
 if TYPE_CHECKING:
     from engine.primitives.event import Event
@@ -17,8 +18,14 @@ class ChangeCursorEventHandler(BaseEventHandler[ChangeCursorEvent]):
         PygameCursor().set_mouse_cursor(event.key)
 
 
+class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
+    def handle(self, event: ScreenTransitionEvent) -> None:
+        CurrentScreen().set_current_screen(event.dest_screen)
+
+
 handlers_map: Dict[Type["Event"], Any] = {
     ChangeCursorEvent: ChangeCursorEventHandler,
+    ScreenTransitionEvent: ScreenTransitionEventHandler,
 }
 
 

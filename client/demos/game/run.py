@@ -2,8 +2,7 @@ import logging
 
 from engine.api import start_application
 
-from game.event_handler import EventHandler as GameEventHandler
-from game.events import ScreenTransitionEvent
+from game.screens.intro.intro import Intro
 
 """
 This initializes the client
@@ -17,6 +16,5 @@ if __name__ == "__main__":
     )
 
     start_application(
-        initial_event=ScreenTransitionEvent("intro"),
-        game_event_handler=GameEventHandler(),
+        initial_screen=Intro,
     )
