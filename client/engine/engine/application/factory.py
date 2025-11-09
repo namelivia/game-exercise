@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Any, Optional, Type
 
 from engine.clock import Clock
-from engine.current_screen import CurrentScreen
 from engine.features.game_logic.events import ScreenTransitionEvent
 from engine.features.game_logic.game_event_handler import GameEventHandler
 from engine.primitives.screen import Screen
@@ -21,7 +20,6 @@ def start_application(
     if game_event_handler is not None:
         GameEventHandler().set(game_event_handler)
     QueueManager().initialize(ScreenTransitionEvent(initial_screen()))
-    CurrentScreen().initialize()
     ThreadManager().initialize()
 
     application = Application()
