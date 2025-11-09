@@ -10,10 +10,10 @@ from .game_event_handler import GameEventHandler
 class GameLogicWorker(QueueWorker):
 
     def initialize(self):
-        game_handler = GameEventHandler().get()
-        self.events_processor = EventsProcessor(
-            [game_handler, EventHandler()]  # Regular events and in game events
-        )
+        game_handler = GameEventHandler().get()  # Game event handler
+        handlers = [game_handler] if game_handler is not None else []
+        handlers.append(EventHandler())  # Game engine event handler
+        self.events_processor = EventsProcessor(handlers)
 
     def process_event(self, event):
         if not isinstance(event, InGameEvent):

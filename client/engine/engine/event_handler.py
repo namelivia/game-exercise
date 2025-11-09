@@ -29,4 +29,5 @@ handlers_map: Dict[Type["Event"], Any] = {
 
 class EventHandler(BaseEventHandler["Event"]):
     def handle(self, event: "Event") -> None:
+        print(event)
         handlers_map[type(event)]().handle(event)
