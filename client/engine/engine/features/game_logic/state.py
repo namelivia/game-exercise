@@ -1,19 +1,15 @@
-from typing import TYPE_CHECKING, Any, Optional, Type
+from typing import Any, Optional, Type
 
 from engine.features.render.commands import StartRendering
-
-if TYPE_CHECKING:
-    from engine.primitives.screen import Screen
+from engine.primitives.screen import Screen
 
 
-class CurrentScreen:
+class State:
     _instance = None
 
-    def __new__(
-        cls: Type["CurrentScreen"], *args: Any, **kwargs: Any
-    ) -> "CurrentScreen":
+    def __new__(cls: Type["State"], *args: Any, **kwargs: Any) -> "State":
         if not cls._instance:
-            cls._instance = super(CurrentScreen, cls).__new__(cls)
+            cls._instance = super(State, cls).__new__(cls)
         return cls._instance
 
     def initialize(self) -> None:
