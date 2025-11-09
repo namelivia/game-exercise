@@ -1,6 +1,13 @@
-from engine.api import PlayMusic, PlaySound, Screen, Timer, UserTypedEvent
+from engine.api import (
+    PlayMusic,
+    PlaySound,
+    Screen,
+    ScreenTransition,
+    Timer,
+    UserTypedEvent,
+)
 
-from game.commands import ToLobby
+from game.screens.lobby.lobby import Lobby
 
 from .ui import create_background, create_coin_1, create_coin_2, create_title
 
@@ -16,9 +23,10 @@ class Intro(Screen):
             create_coin_2(),
         ]
 
-        PlayMusic(
-            "assets/music/main_theme.mp3",
-        ).execute()
+        # TODO: This should NOT go here in __init__!!
+        # PlayMusic(
+        #    "assets/music/main_theme.mp3",
+        # ).execute()
 
         self.timers = [
             Timer(1000, self.show_coin_1),
@@ -30,7 +38,7 @@ class Intro(Screen):
 
     # Actions
     def go_back_to_lobby(self) -> None:
-        ToLobby().execute()
+        ScreenTransition(Lobby).execute()
 
     def show_coin_1(self) -> None:
         PlaySound(
@@ -47,4 +55,4 @@ class Intro(Screen):
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape" or event.key == "return":
             PlaySound("assets/sounds/select.mp3").execute()
-            ToLobby().execute()
+            ScreenTransition(Lobby).execute()
