@@ -1,9 +1,6 @@
 # Application
 from engine.application.api import start_application
 
-# Current screen singleton
-from engine.current_screen import CurrentScreen
-
 # GAME Logic commands
 from engine.features.game_logic.commands import ChangeCursor, ScreenTransition
 
