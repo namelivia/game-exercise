@@ -4,6 +4,7 @@ from .backend.pygame.input import InputBackend
 from .commands import UserClicked, UserTyped
 from .keyboard import KeyboardInput
 from .mouse import MouseInput
+from .state import State
 
 
 class UserInputWorker(PollingWorker):
@@ -15,11 +16,15 @@ class UserInputWorker(PollingWorker):
         self.keyboard_input = KeyboardInput()
         self.mouse_input = MouseInput()
 
+    def initialize(self):
+        State().initialize()
+
     def step(self):
-        events = InputBackend.get_event()
-        keyboard_events = self.keyboard_input.read(events)
-        for keyboard_event in keyboard_events:
-            UserTyped(keyboard_event).execute()
-        mouse_event = self.mouse_input.read(events)
-        if mouse_event is not None:
-            UserClicked().execute()
+        if State().user_input_is_enabled():
+            events = InputBackend.get_event()
+            keyboard_events = self.keyboard_input.read(events)
+            for keyboard_event in keyboard_events:
+                UserTyped(keyboard_event).execute()
+            mouse_event = self.mouse_input.read(events)
+            if mouse_event is not None:
+                UserClicked().execute()
