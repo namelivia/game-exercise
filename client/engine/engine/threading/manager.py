@@ -33,7 +33,10 @@ class ThreadManager:
                 name="Game Logic",
                 queue=QueueManager().get("game_logic"),
             ),
-            UserInputWorker(name="UserInput"),
+            UserInputWorker(
+                name="UserInput",
+                queue=QueueManager().get("user_input"),
+            ),
             NetworkWorker(
                 name="Network",
                 queue=QueueManager().get("network"),
