@@ -14,8 +14,12 @@ class PollingWorker(threading.Thread):
     def step(self):
         pass
 
+    def initialize(self):
+        pass
+
     def run(self):
         print(f"[{self.name}] Thread started...")
+        self.initialize()
         while not self.stop_event.is_set():
             self.step()
             time.sleep(PollingWorker.IDLE_TIME)

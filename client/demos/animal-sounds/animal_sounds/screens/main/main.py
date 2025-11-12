@@ -1,3 +1,5 @@
+import time
+
 from animal_sounds.images import (
     CHEETAH_BLACK,
     CHEETAH_COLOR,
@@ -13,7 +15,15 @@ from animal_sounds.images import (
     RHINO_COLOR,
 )
 from animal_sounds.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
-from engine.api import ClickableUIElement, PlaySound, Screen, UserClickedEvent
+from engine.api import (
+    ChangeCursor,
+    ClickableUIElement,
+    DisableUserInput,
+    EnableUserInput,
+    PlaySound,
+    Screen,
+    UserClickedEvent,
+)
 
 from .ui import create_background, create_portrait
 
@@ -72,7 +82,7 @@ class MainScreen(Screen):
                     animal["highlight"],
                     95 + (i % 3) * 160,
                     97 + (i // 3) * 160,
-                    lambda animal=animal: PlaySound(animal["sound"]).execute(),
+                    lambda animal=animal: self.handle_animal_click(animal),
                 )
             )
 
@@ -82,3 +92,8 @@ class MainScreen(Screen):
         for element in self.ui_elements:
             if isinstance(element, ClickableUIElement) and element.mouse_over:
                 element.clicked()
+
+    def handle_animal_click(self, animal: dict) -> None:
+        ChangeCursor("WAIT").execute()
+        PlaySound(animal["sound"]).execute()
+        DisableUserInput().execute()

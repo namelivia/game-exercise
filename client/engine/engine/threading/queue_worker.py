@@ -17,6 +17,7 @@ class QueueWorker(threading.Thread):
         pass
 
     def run(self):
+        print(f"[{self.name}] Thread started...")
         self.initialize()
         while True:
             event = self.queue.get()
