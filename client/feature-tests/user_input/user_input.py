@@ -10,6 +10,7 @@ if __name__ == "__main__":
     QueueManager().initialize()
     user_input_thread = UserInputWorker(
         name="UserInput",
+        queue=QueueManager().get("user_input"),
     )
 
     user_input_thread.start()
