@@ -1,3 +1,5 @@
+import time
+
 from animal_sounds.images import (
     CHEETAH_BLACK,
     CHEETAH_COLOR,
@@ -14,8 +16,10 @@ from animal_sounds.images import (
 )
 from animal_sounds.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
 from engine.api import (
+    ChangeCursor,
     ClickableUIElement,
     DisableUserInput,
+    EnableUserInput,
     PlaySound,
     Screen,
     UserClickedEvent,
@@ -90,5 +94,6 @@ class MainScreen(Screen):
                 element.clicked()
 
     def handle_animal_click(self, animal: dict) -> None:
+        ChangeCursor("WAIT").execute()
         PlaySound(animal["sound"]).execute()
         DisableUserInput().execute()

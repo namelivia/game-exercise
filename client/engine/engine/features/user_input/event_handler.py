@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Any, Dict, Type
 
 from engine.primitives.event_handler import EventHandler
 
-from .events import DisableUserInputEvent
+from .events import DisableUserInputEvent, EnableUserInputEvent
 from .state import State
 
 if TYPE_CHECKING:
@@ -14,6 +14,12 @@ class DisableUserInputEventHandler(EventHandler[DisableUserInputEvent]):
         State().disable()
 
 
+class EnableUserInputEventHandler(EventHandler[EnableUserInputEvent]):
+    def handle(self, event: EnableUserInputEvent) -> None:
+        State().enable()
+
+
 handlers_map: Dict[Type["Event"], Any] = {
-    DisableUserInputEvent: DisableUserInputEventHandler
+    DisableUserInputEvent: DisableUserInputEventHandler,
+    EnableUserInputEvent: EnableUserInputEventHandler,
 }

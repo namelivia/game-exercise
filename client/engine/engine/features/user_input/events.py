@@ -13,3 +13,7 @@ class UserClickedEvent(InGameEvent):
 
 class DisableUserInputEvent(Event):
     pass
+
+
+class EnableUserInputEvent(Event):
+    pass
