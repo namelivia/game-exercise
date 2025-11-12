@@ -1,4 +1,4 @@
-from engine.primitives.event import InGameEvent
+from engine.primitives.event import Event, InGameEvent
 
 
 class UserTypedEvent(InGameEvent):
@@ -8,4 +8,8 @@ class UserTypedEvent(InGameEvent):
 
 
 class UserClickedEvent(InGameEvent):
+    pass
+
+
+class DisableUserInputEvent(Event):
     pass

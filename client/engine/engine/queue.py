@@ -25,11 +25,14 @@ class QueueManager:
         network_queue.initialize()
         render_queue = _Queue()
         render_queue.initialize()
+        user_input_queue = _Queue()
+        user_input_queue.initialize()
         self.queues = {
             "sound": sound_queue,
             "game_logic": game_logic_queue,
             "network": network_queue,
             "render": render_queue,
+            "user_input": user_input_queue,
         }
 
     def get(self, key) -> "_Queue":
