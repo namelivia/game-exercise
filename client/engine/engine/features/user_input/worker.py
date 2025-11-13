@@ -25,14 +25,15 @@ class UserInputWorker(threading.Thread):
         self.keyboard_input = KeyboardInput()
         self.mouse_input = MouseInput()
 
-    def _read_user_input(self):
+    def _read_user_input(self, process_events: bool):
         events = InputBackend.get_event()
         keyboard_events = self.keyboard_input.read(events)
-        for keyboard_event in keyboard_events:
-            UserTyped(keyboard_event).execute()
         mouse_event = self.mouse_input.read(events)
-        if mouse_event is not None:
-            UserClicked().execute()
+        if process_events:
+            for keyboard_event in keyboard_events:
+                UserTyped(keyboard_event).execute()
+            if mouse_event is not None:
+                UserClicked().execute()
         time.sleep(UserInputWorker.IDLE_TIME)
 
     def run(self):
@@ -40,8 +41,7 @@ class UserInputWorker(threading.Thread):
         state = State()
         state.initialize()
         while not self.stop_event.is_set():
-            if state.user_input_is_enabled():
-                self._read_user_input()
+            self._read_user_input(state.user_input_is_enabled())
             try:
                 event = self.queue.get(timeout=0.001)
                 if type(event) is StopThreadEvent:
