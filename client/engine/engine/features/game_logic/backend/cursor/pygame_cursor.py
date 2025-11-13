@@ -28,3 +28,9 @@ class PygameCursor(BaseCursor):
         except KeyError:
             pass
         return None
+
+    def hide_cursor(self):
+        pygame.mouse.set_visible(False)
+
+    def show_cursor(self):
+        pygame.mouse.set_visible(True)

@@ -4,7 +4,12 @@ from typing import TYPE_CHECKING, Any, Dict, Type
 from engine.primitives.event_handler import EventHandler as BaseEventHandler
 
 from .backend.cursor.pygame_cursor import PygameCursor
-from .events import ChangeCursorEvent, ScreenTransitionEvent
+from .events import (
+    ChangeCursorEvent,
+    HideCursorEvent,
+    ScreenTransitionEvent,
+    ShowCursorEvent,
+)
 from .state import State
 
 if TYPE_CHECKING:
@@ -18,6 +23,16 @@ class ChangeCursorEventHandler(BaseEventHandler[ChangeCursorEvent]):
         PygameCursor().set_mouse_cursor(event.key)
 
 
+class ShowCursorEventHandler(BaseEventHandler[ShowCursorEvent]):
+    def handle(self, event: "ShowCursorEvent") -> None:
+        PygameCursor().show_cursor()
+
+
+class HideCursorEventHandler(BaseEventHandler[HideCursorEvent]):
+    def handle(self, event: "HideCursorEvent") -> None:
+        PygameCursor().hide_cursor()
+
+
 class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
     def handle(self, event: ScreenTransitionEvent) -> None:
         State().set_current_screen(event.dest_screen)
@@ -25,6 +40,8 @@ class ScreenTransitionEventHandler(BaseEventHandler[ScreenTransitionEvent]):
 
 handlers_map: Dict[Type["Event"], Any] = {
     ChangeCursorEvent: ChangeCursorEventHandler,
+    HideCursorEvent: HideCursorEventHandler,
+    ShowCursorEvent: ShowCursorEventHandler,
     ScreenTransitionEvent: ScreenTransitionEventHandler,
 }
 

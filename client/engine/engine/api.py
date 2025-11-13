@@ -2,7 +2,12 @@
 from engine.application.api import start_application
 
 # GAME Logic commands
-from engine.features.game_logic.commands import ChangeCursor, ScreenTransition
+from engine.features.game_logic.commands import (
+    ChangeCursor,
+    HideCursor,
+    ScreenTransition,
+    ShowCursor,
+)
 
 # SOUND Commands
 from engine.features.sound.commands import PlayMusic, PlaySound

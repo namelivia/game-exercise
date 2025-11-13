@@ -3,7 +3,12 @@ from typing import TYPE_CHECKING, Type
 from engine.primitives.command import Command
 from engine.primitives.screen import Screen
 
-from .events import ChangeCursorEvent, ScreenTransitionEvent
+from .events import (
+    ChangeCursorEvent,
+    HideCursorEvent,
+    ScreenTransitionEvent,
+    ShowCursorEvent,
+)
 
 
 class ChangeCursor(Command):
@@ -12,6 +17,24 @@ class ChangeCursor(Command):
         self.queue = "game_logic"
         self.events = [
             ChangeCursorEvent(key),
+        ]
+
+
+class HideCursor(Command):
+    def __init__(self) -> None:
+        super().__init__(f"Hiding cursor")
+        self.queue = "game_logic"
+        self.events = [
+            HideCursorEvent(),
+        ]
+
+
+class ShowCursor(Command):
+    def __init__(self) -> None:
+        super().__init__(f"Showing cursor")
+        self.queue = "game_logic"
+        self.events = [
+            ShowCursorEvent(),
         ]
 
 

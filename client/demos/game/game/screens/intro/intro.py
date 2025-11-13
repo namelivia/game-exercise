@@ -1,8 +1,10 @@
 from engine.api import (
+    HideCursor,
     PlayMusic,
     PlaySound,
     Screen,
     ScreenTransition,
+    ShowCursor,
     Timer,
     UserTypedEvent,
 )
@@ -44,12 +46,14 @@ class Intro(Screen):
         PlaySound(
             "assets/sounds/user_connected.mp3",
         ).execute()
+        HideCursor().execute()
         self.ui_elements[2].show()
 
     def show_coin_2(self) -> None:
         PlaySound(
             "assets/sounds/user_connected.mp3",
         ).execute()
+        ShowCursor().execute()
         self.ui_elements[3].show()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:

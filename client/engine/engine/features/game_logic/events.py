@@ -8,6 +8,14 @@ class ChangeCursorEvent(Event):
         self.key = key
 
 
+class ShowCursorEvent(Event):
+    pass
+
+
+class HideCursorEvent(Event):
+    pass
+
+
 class ScreenTransitionEvent(Event):
     def __init__(self, dest_screen: Screen):
         super().__init__()
