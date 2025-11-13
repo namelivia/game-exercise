@@ -1,4 +1,4 @@
-from engine.api import Screen, UserTypedEvent
+from engine.api import Screen, ScreenTransition, UserTypedEvent
 
 from .ui import create_background, create_options, create_welcome_message
 
@@ -38,6 +38,8 @@ class Lobby(Screen):
         if key == "5":
             pass
         if key == "6":
-            pass
+            from game.screens.credits.credits import Credits
+
+            ScreenTransition(Credits).execute()
         if key == "7":
             pass
