@@ -22,6 +22,9 @@ class Screen(ABC):
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
 
+    def initialize(self) -> None:
+        pass
+
     def update_events(self, event: Optional["InGameEvent"] = None) -> None:
         if event is not None:
             event_type = event.__class__

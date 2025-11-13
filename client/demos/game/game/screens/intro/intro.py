@@ -1,4 +1,6 @@
 from engine.api import (
+    DisableUserInput,
+    EnableUserInput,
     HideCursor,
     PlayMusic,
     PlaySound,
@@ -25,11 +27,6 @@ class Intro(Screen):
             create_coin_2(),
         ]
 
-        # TODO: This should NOT go here in __init__!!
-        # PlayMusic(
-        #    "assets/music/main_theme.mp3",
-        # ).execute()
-
         self.timers = [
             Timer(1000, self.show_coin_1),
             Timer(1200, self.show_coin_2),
@@ -37,6 +34,13 @@ class Intro(Screen):
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
+
+    def initialize(self) -> None:
+        PlayMusic(
+            "assets/music/main_theme.mp3",
+        ).execute()
+        HideCursor().execute()
+        DisableUserInput().execute()
 
     # Actions
     def go_back_to_lobby(self) -> None:
@@ -46,14 +50,14 @@ class Intro(Screen):
         PlaySound(
             "assets/sounds/user_connected.mp3",
         ).execute()
-        HideCursor().execute()
+        ShowCursor().execute()
+        EnableUserInput().execute()
         self.ui_elements[2].show()
 
     def show_coin_2(self) -> None:
         PlaySound(
             "assets/sounds/user_connected.mp3",
         ).execute()
-        ShowCursor().execute()
         self.ui_elements[3].show()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:

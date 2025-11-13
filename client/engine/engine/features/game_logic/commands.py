@@ -42,6 +42,8 @@ class ScreenTransition(Command):
     def __init__(self, dest_screen: Type[Screen]) -> None:
         super().__init__(f"Transitioning to another screen")
         self.queue = "game_logic"
+        screen = dest_screen()
+        screen.initialize()
         self.events = [
-            ScreenTransitionEvent(dest_screen()),
+            ScreenTransitionEvent(screen),
         ]

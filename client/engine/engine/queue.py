@@ -16,11 +16,11 @@ class QueueManager:
             cls._instance = super(QueueManager, cls).__new__(cls)
         return cls._instance
 
-    def initialize(self, initial_event: Optional["Event"] = None) -> None:
+    def initialize(self) -> None:
         sound_queue = _Queue()
         sound_queue.initialize()
         game_logic_queue = _Queue()
-        game_logic_queue.initialize(initial_event)
+        game_logic_queue.initialize()
         network_queue = _Queue()
         network_queue.initialize()
         render_queue = _Queue()
@@ -40,10 +40,8 @@ class QueueManager:
 
 
 class _Queue:
-    def initialize(self, initial_event: Optional["Event"] = None) -> None:
+    def initialize(self) -> None:
         self.simple_queue: SimpleQueue["Event"] = SimpleQueue()
-        if initial_event:
-            self.simple_queue.put(initial_event)
 
     def put(self, new_event: "Event") -> None:
         self.simple_queue.put(new_event)
