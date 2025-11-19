@@ -16,3 +16,13 @@ class PlayMusicEvent(Event):
 class StopMusicEvent(Event):
     def __init__(self):
         super().__init__()
+
+
+class TurnSoundOnEvent(Event):
+    def __init__(self):
+        super().__init__()
+
+
+class TurnSoundOffEvent(Event):
+    def __init__(self):
+        super().__init__()
