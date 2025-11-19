@@ -38,7 +38,9 @@ class Lobby(Screen):
 
             ScreenTransition(Options).execute()
         if key == "5":
-            pass
+            from game.screens.enter_name.enter_name import EnterName
+
+            ScreenTransition(EnterName).execute()
         if key == "6":
             from game.screens.credits.credits import Credits
 
