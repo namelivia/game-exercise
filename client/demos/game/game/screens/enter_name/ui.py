@@ -1,9 +1,8 @@
 from typing import Any, Dict
 
-from client.engine.graphics.shapes import Image, Text
-from client.engine.primitives.ui import UIElement
+from engine.api import Image, create_ui_element
 
-
+"""
 class EnterNameMessage(UIElement):
     def __init__(self, name: str):
         self.name = name
@@ -19,8 +18,8 @@ class EnterNameMessage(UIElement):
         name_text = self.shapes[2]
         if isinstance(name_text, Text):
             name_text.set_message(name)  # Not supersure about this
+"""
 
 
-class Background(UIElement):
-    def __init__(self) -> None:
-        self.shapes = [Image("client/game/images/background3.png", 0, 0)]
+def create_background():
+    return create_ui_element([Image("assets/images/background3.png", 0, 0)])
