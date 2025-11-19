@@ -10,7 +10,12 @@ from engine.features.game_logic.commands import (
 )
 
 # SOUND Commands
-from engine.features.sound.commands import PlayMusic, PlaySound
+from engine.features.sound.commands import (
+    PlayMusic,
+    PlaySound,
+    TurnSoundOff,
+    TurnSoundOn,
+)
 from engine.features.user_input.commands import DisableUserInput, EnableUserInput
 
 # INPUT events

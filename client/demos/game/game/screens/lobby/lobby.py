@@ -34,7 +34,9 @@ class Lobby(Screen):
         if key == "3":
             pass
         if key == "4":
-            pass
+            from game.screens.options.options import Options
+
+            ScreenTransition(Options).execute()
         if key == "5":
             pass
         if key == "6":
