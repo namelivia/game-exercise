@@ -18,7 +18,8 @@ class Shape(ABC):
 
     def draw(self, x, y, window: Any, index) -> None:
         if not self.hidden:
-            self.render(x, y, window, index)
+            # Add the local x and y to the coordinates
+            self.render(x + self.x, y + self.y, window, index)
 
     def hide(self) -> None:
         self.hidden = True
