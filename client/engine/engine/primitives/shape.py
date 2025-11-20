@@ -1,5 +1,6 @@
 from abc import ABC
 from typing import Any
+from uuid import uuid4
 
 
 class Shape(ABC):
@@ -7,6 +8,7 @@ class Shape(ABC):
         self.x = x
         self.y = y
         self.hidden = False
+        self.name = uuid4()
 
     def load(self) -> None:
         pass
@@ -32,6 +34,9 @@ class Shape(ABC):
 
     def set_x(self, x: int) -> None:
         self.x = x
+
+    def set_name(self, name: str) -> None:
+        self.name = name
 
     def set_y(self, y: int) -> None:
         self.y = y

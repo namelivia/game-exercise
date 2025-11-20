@@ -20,6 +20,12 @@ class UIElementRender(ABC):
         for shape in self.shapes:
             shape.load()
 
+    def find_shape(self, name: str):
+        for shape in self.shapes:
+            if getattr(shape, "name", None) == name:
+                return shape
+        return None
+
     def render(self, window) -> None:
         for shape in self.shapes:
             shape.draw(
