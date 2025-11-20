@@ -1,42 +1,32 @@
 from animal_sounds.images import BACKGROUND
-from engine.api import ChangeCursor, ClickableUIElement, Image, create_ui_element
+from engine.api import ChangeCursor, ClickableUIElement, UIBuilder
 
 
 def create_background():
-    return create_ui_element([Image(BACKGROUND, 0, 0)])
-
-
-def _create_portrait_enter_handler(image, highlight):
-    def handle_enter():
-        ChangeCursor("HAND").execute()
-        highlight.show()
-        image.hide()
-
-    return handle_enter
-
-
-def _create_portrait_leave_handler(image, highlight):
-    def handle_leave():
-        ChangeCursor("ARROW").execute()
-        highlight.hide()
-        image.show()
-
-    return handle_leave
+    return UIBuilder(x=0, y=0).with_image(BACKGROUND).build()
 
 
 def create_portrait(image_path: str, highlight_path: str, x: int, y: int, on_click):
-    default_image = Image(image_path, x, y)
-    highlight_image = Image(highlight_path, x, y)
-    highlight_image.hide()
+    element = (
+        UIBuilder(x=x, y=y)
+        .with_image(image_path, 0, 0, True, "image")
+        .with_image(highlight_path, 0, 0, False, "highlight")
+        .build()
+    )
 
-    core_element = create_ui_element([default_image, highlight_image])
+    def on_enter():
+        ChangeCursor("HAND").execute()
+        element.get_render().find_shape("highlight").show()
+        element.get_render().find_shape("image").hide()
 
-    enter_cb = _create_portrait_enter_handler(default_image, highlight_image)
-    leave_cb = _create_portrait_leave_handler(default_image, highlight_image)
+    def on_leave():
+        ChangeCursor("ARROW").execute()
+        element.get_render().find_shape("highlight").hide()
+        element.get_render().find_shape("image").show()
 
     return ClickableUIElement(
-        element=core_element,
+        element=element,
         on_click=on_click,
-        on_mouse_enter=enter_cb,
-        on_mouse_leave=leave_cb,
+        on_mouse_enter=on_enter,
+        on_mouse_leave=on_leave,
     )

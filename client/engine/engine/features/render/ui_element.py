@@ -20,6 +20,12 @@ class UIElementRender(ABC):
         for shape in self.shapes:
             shape.load()
 
+    def find_shape(self, name: str):
+        for shape in self.shapes:
+            if getattr(shape, "name", None) == name:
+                return shape
+        return None
+
     def render(self, window) -> None:
         for shape in self.shapes:
             shape.draw(
@@ -28,10 +34,10 @@ class UIElementRender(ABC):
 
     def _is_point_in_shape(self, x: int, y: int, shape) -> bool:
         return (
-            x > shape.get_x()
-            and x < shape.get_x() + shape.get_width()
-            and y > shape.get_y()
-            and y < shape.get_y() + shape.get_height()
+            x > self.state.get_x() + shape.get_x()
+            and x < self.state.get_x() + shape.get_x() + shape.get_width()
+            and y > self.state.get_y() + shape.get_y()
+            and y < self.state.get_y() + shape.get_y() + shape.get_height()
         )
 
     def contains_point(self, x: int, y: int) -> bool:

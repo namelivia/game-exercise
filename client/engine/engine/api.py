@@ -32,6 +32,7 @@ from engine.primitives.timer import Timer
 
 # UI
 from engine.ui.animation.factory import create_animation
+from engine.ui.builder import UIBuilder
 from engine.ui.clickable import ClickableUIElement
 from engine.ui.factory import create_ui_element
 from engine.ui.logic import UIElementLogic
