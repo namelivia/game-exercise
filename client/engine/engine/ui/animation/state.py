@@ -1,6 +1,8 @@
 from ..state import UIElementState
 
 
+# TODO THIS SHOULD NOT BE STATE, THIS SHOULD BE MANAGED BY THE
+# LOGIC
 class AnimationState(UIElementState):
     def __init__(self, x, y, animations, fps):
         super().__init__(x, y)
