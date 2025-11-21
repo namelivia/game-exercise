@@ -1,8 +1,8 @@
 from typing import Any, Dict
 
 from engine.api import (
-    Image,
     Text,
+    UIBuilder,
     UIElementLogic,
     UIElementState,
     create_animation,
@@ -27,7 +27,7 @@ def create_title():
 
 
 def create_background():
-    return create_ui_element([Image("assets/images/background.png", 0, 0)])
+    return UIBuilder(x=0, y=0).with_image("assets/images/background.png").build()
 
 
 def create_coin_1():
