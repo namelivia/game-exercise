@@ -22,7 +22,7 @@ from engine.features.user_input.commands import DisableUserInput, EnableUserInpu
 from engine.features.user_input.events import UserClickedEvent, UserTypedEvent
 
 # Shapes
-from engine.graphics.shapes import Image, Text
+from engine.graphics.shapes import Text
 
 # PRIMITIVES to extend from
 from engine.primitives.event import Event

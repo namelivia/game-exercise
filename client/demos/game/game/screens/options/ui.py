@@ -1,6 +1,6 @@
 from typing import Dict
 
-from engine.api import Image, Text, create_ui_element
+from engine.api import Text, UIBuilder, create_ui_element
 
 
 def create_title():
@@ -8,7 +8,7 @@ def create_title():
 
 
 def create_background():
-    return create_ui_element([Image("assets/images/background4.png", 0, 0)])
+    return UIBuilder(x=0, y=0).with_image("assets/images/background4.png").build()
 
 
 def create_options(options: Dict[str, str]):
