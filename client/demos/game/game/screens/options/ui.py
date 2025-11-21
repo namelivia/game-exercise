@@ -1,10 +1,10 @@
 from typing import Dict
 
-from engine.api import Text, UIBuilder, create_ui_element
+from engine.api import UIBuilder
 
 
 def create_title():
-    return create_ui_element([Text("Options", 20, 0)])
+    return UIBuilder(x=20, y=0).with_text("Options").build()
 
 
 def create_background():
@@ -12,7 +12,7 @@ def create_background():
 
 
 def create_options(options: Dict[str, str]):
-    shapes = []
+    builder = UIBuilder(x=20, y=50)
     for index, option in options.items():
-        shapes.append(Text(f"{index} - {option}", 20, 200 + (30 * int(index))))
-    return create_ui_element(shapes)
+        builder.with_text(f"{index} - {option}", 0, 30 * int(index))
+    return builder.build()

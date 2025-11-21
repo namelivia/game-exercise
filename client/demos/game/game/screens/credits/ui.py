@@ -1,8 +1,13 @@
-from engine.api import Text, UIBuilder, create_ui_element
+from engine.api import UIBuilder
 
 
 def create_credits():
-    return create_ui_element([Text("Credits", 100, 100), Text("@namelivia", 100, 150)])
+    return (
+        UIBuilder(x=0, y=0)
+        .with_text("Credits", 100, 100)
+        .with_text("@namelivia", 100, 150)
+        .build()
+    )
 
 
 def create_background():

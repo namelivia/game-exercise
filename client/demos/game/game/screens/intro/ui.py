@@ -1,28 +1,21 @@
 from typing import Any, Dict
 
-from engine.api import (
-    Text,
-    UIBuilder,
-    UIElementLogic,
-    UIElementState,
-    create_animation,
-    create_ui_element,
-)
+from engine.api import UIBuilder, UIElementLogic, create_animation
 
 
 class TitleCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
         inverse_speed = 8  # The higher the slower
         offset = 300
-        self.state.set_x(
-            int((time / inverse_speed) % (640 + offset) - offset)
-        )  # Not supersure about this
+        self.state.set_x(int((time / inverse_speed) % (640 + offset) - offset))
 
 
 def create_title():
-    state = UIElementState(20, 10)
-    return create_ui_element(
-        [Text("Welcome to the game", 0, 0)], state, TitleCustomLogic(state)
+    return (
+        UIBuilder(x=20, y=10)
+        .with_text("Welcome to the game")
+        .with_logic(TitleCustomLogic)
+        .build()
     )
 
 
