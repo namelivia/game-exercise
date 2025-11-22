@@ -1,0 +1,39 @@
+from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
+
+from .ui import create_background
+
+
+class EnterName(Screen):
+    def __init__(self) -> None:
+        super().__init__()
+
+        self.data = {"name": ""}
+
+        self.ui_elements = [
+            create_background(),
+            # EnterNameMessage(self.data["name"]),
+        ]
+
+        self.events = {UserTypedEvent: self.on_user_typed}
+
+    def on_user_typed(self, event: UserTypedEvent) -> None:
+        if event.key == "escape":
+            from game.screens.lobby.lobby import Lobby
+
+            ScreenTransition(Lobby).execute()
+        if event.key == "return":
+            # SetPlayerName(self.data["name"]).execute()
+            from game.screens.lobby.lobby import Lobby
+
+            ScreenTransition(Lobby).execute()
+        if event.key == "backspace":
+            PlaySound(
+                "assets/sounds/erase.mp3",
+            ).execute()
+            self.data["name"] = self.data["name"][:-1]
+            return
+        else:
+            PlaySound(
+                "assets/sounds/type.mp3",
+            ).execute()
+            self.data["name"] += event.key
