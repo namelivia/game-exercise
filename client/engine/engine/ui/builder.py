@@ -1,7 +1,7 @@
 import os
 
+from engine.animation.loader import load_animation
 from engine.graphics.shapes import Animation, Image, Rectangle, Text
-from engine.ui.animation.loader import load_animation
 
 from .factory import create_ui_element
 from .state import UIElementState

@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from engine.api import UIBuilder, UIElementLogic, create_animation
+from engine.api import UIBuilder, UIElementLogic
 
 
 class TitleCustomLogic(UIElementLogic):
@@ -24,12 +24,20 @@ def create_background():
 
 
 def create_coin_1():
-    coin = create_animation("assets/images/coin.json", 150, 150, 30)
+    coin = (
+        UIBuilder(x=150, y=150)
+        .with_animation("assets/images/coin.json", 0, 0, 30)
+        .build()
+    )
     coin.hide()
     return coin
 
 
 def create_coin_2():
-    coin = create_animation("assets/images/coin.json", 90, 100, 15)
+    coin = (
+        UIBuilder(x=90, y=100)
+        .with_animation("assets/images/coin.json", 0, 0, 15)
+        .build()
+    )
     coin.hide()
     return coin
