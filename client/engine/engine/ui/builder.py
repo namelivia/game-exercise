@@ -50,6 +50,8 @@ class UIBuilder:
             y,
             sprite_data.rows,
             sprite_data.columns,
+            sprite_data.animations,
+            fps,
         )
         self._shapes.append(animation_shape)
         return self

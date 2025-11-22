@@ -33,6 +33,9 @@ class Shape(ABC):
     def get_y(self) -> int:
         return self.y
 
+    def get_index(self):
+        return 0
+
     def set_x(self, x: int) -> None:
         self.x = x
 

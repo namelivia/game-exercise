@@ -2,7 +2,7 @@ from typing import Any
 
 from engine.backend.foundational_wrapper import FoundationalColor
 from engine.backend.graphics.graphics import GraphicsBackend
-from engine.primitives.shape import Shape
+from engine.primitives.animated_shape import AnimatedShape
 
 WHITE = FoundationalColor(255, 255, 255)
 BLACK = FoundationalColor(0, 0, 0)
@@ -35,7 +35,7 @@ from OpenGL.GL import (
 )
 
 
-class Animation(Shape):
+class Animation(AnimatedShape):
     def _create_opengl_texture(self, image):
         img_data = image.convert("RGBA").tobytes()
         width = image.width
@@ -63,8 +63,10 @@ class Animation(Shape):
         )
         return texture_id
 
-    def __init__(self, path: str, x: int, y: int, rows: int, cols: int):
-        super().__init__(x, y)
+    def __init__(
+        self, path: str, x: int, y: int, rows: int, cols: int, animations, fps
+    ):
+        super().__init__(x, y, animations, fps)
         self.path = path
         self.rows = rows
         self.cols = cols
