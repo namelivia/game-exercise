@@ -18,7 +18,11 @@ class TestScreen(Screen):
                 .with_rectangle(0, 0, 20, 20)
                 .build()
             ),
-            create_animation("images/animation_debug.json", 50, 50, 2),
+            (
+                UIBuilder(x=50, y=50).with_animation(
+                    "images/animation_debug.json", 0, 0, 2
+                )
+            ),
         ]
 
 

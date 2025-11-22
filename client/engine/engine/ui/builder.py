@@ -41,7 +41,7 @@ class UIBuilder:
         self._shapes.append(rectangle)
         return self
 
-    def with_animation(self, json_file_path: str, fps: int = 10):
+    def with_animation(self, json_file_path: str, x=0, y=0, fps: int = 10):
         sprite_data = load_animation(json_file_path)
         json_file_dir = os.path.abspath(os.path.dirname(json_file_path))
         animation_shape = Animation(
