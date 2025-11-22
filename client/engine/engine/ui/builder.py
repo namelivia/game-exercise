@@ -1,4 +1,7 @@
-from engine.graphics.shapes import Image, Text
+import os
+
+from engine.graphics.shapes import Animation, Image, Rectangle, Text
+from engine.ui.animation.loader import load_animation
 
 from .factory import create_ui_element
 from .state import UIElementState
@@ -27,6 +30,28 @@ class UIBuilder:
         if name:
             text.set_name(name)
         self._shapes.append(text)
+        return self
+
+    def with_rectangle(self, x=0, y=0, width=0, height=0, visible=True, name=None):
+        rectangle = Rectangle(x, y, width, height)
+        if not visible:
+            rectangle.hide()
+        if name:
+            rectangle.set_name(name)
+        self._shapes.append(rectangle)
+        return self
+
+    def with_animation(self, json_file_path: str, fps: int = 10):
+        sprite_data = load_animation(json_file_path)
+        json_file_dir = os.path.abspath(os.path.dirname(json_file_path))
+        animation_shape = Animation(
+            os.path.join(json_file_dir, sprite_data.image),
+            self.x,
+            self.y,
+            sprite_data.rows,
+            sprite_data.columns,
+        )
+        self._shapes.append(animation_shape)
         return self
 
     def with_logic(self, logic):

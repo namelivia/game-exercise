@@ -5,18 +5,18 @@ from engine.graphics.shapes import Image, Rectangle, Text
 from engine.primitives.screen import Screen
 from engine.queue import QueueManager
 from engine.ui.animation.factory import create_animation
-from engine.ui.factory import create_ui_element
+from engine.ui.builder import UIBuilder
 
 
 class TestScreen(Screen):
     def __init__(self) -> None:
         self.ui_elements = [
-            create_ui_element(
-                [
-                    Image("images/background.png", 0, 0),
-                    Text(f"This is a test", 20, 20),
-                    Rectangle(0, 0, 20, 20),
-                ]
+            (
+                UIBuilder(x=0, y=0)
+                .with_image("images/background.png")
+                .with_text("This is a test", 20, 20)
+                .with_rectangle(0, 0, 20, 20)
+                .build()
             ),
             create_animation("images/animation_debug.json", 50, 50, 2),
         ]
