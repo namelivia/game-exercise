@@ -19,7 +19,7 @@ class TestScreen(Screen):
                 .build()
             ),
             (
-                UIBuilder(x=50, y=50)
+                UIBuilder(x=150, y=150)
                 .with_animation("images/animation_debug.json", 0, 0, 2)
                 .build()
             ),

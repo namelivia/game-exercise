@@ -46,8 +46,8 @@ class UIBuilder:
         json_file_dir = os.path.abspath(os.path.dirname(json_file_path))
         animation_shape = Animation(
             os.path.join(json_file_dir, sprite_data.image),
-            self.x,
-            self.y,
+            x,
+            y,
             sprite_data.rows,
             sprite_data.columns,
         )
