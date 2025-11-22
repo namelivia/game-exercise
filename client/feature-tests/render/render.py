@@ -1,10 +1,8 @@
 from engine.clock import Clock
 from engine.features.render.commands import StartRendering
 from engine.features.render.worker import RenderWorker
-from engine.graphics.shapes import Image, Rectangle, Text
 from engine.primitives.screen import Screen
 from engine.queue import QueueManager
-from engine.ui.animation.factory import create_animation
 from engine.ui.builder import UIBuilder
 
 
@@ -18,7 +16,12 @@ class TestScreen(Screen):
                 .with_rectangle(0, 0, 20, 20)
                 .build()
             ),
-            create_animation("images/animation_debug.json", 50, 50, 2),
+            (
+                UIBuilder(x=150, y=150)
+                .with_animation("images/animation_debug.json", 0, 0, 2)
+                .with_animation("images/animation_debug.json", 100, 100, 6)
+                .build()
+            ),
         ]
 
 

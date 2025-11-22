@@ -12,9 +12,6 @@ class UIElementState(ABC):
     def get_y(self):
         return self.y
 
-    def get_index(self):
-        return 0
-
     def set_x(self, x):
         self.x = x
 

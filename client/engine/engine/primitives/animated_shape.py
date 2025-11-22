@@ -1,7 +1,7 @@
-from ..state import UIElementState
+from .shape import Shape
 
 
-class AnimationState(UIElementState):
+class AnimatedShape(Shape):
     def __init__(self, x, y, animations, fps):
         super().__init__(x, y)
         self.playing = True

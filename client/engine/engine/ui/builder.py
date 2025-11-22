@@ -1,7 +1,7 @@
 import os
 
+from engine.animation.loader import load_animation
 from engine.graphics.shapes import Animation, Image, Rectangle, Text
-from engine.ui.animation.loader import load_animation
 
 from .factory import create_ui_element
 from .state import UIElementState
@@ -41,15 +41,17 @@ class UIBuilder:
         self._shapes.append(rectangle)
         return self
 
-    def with_animation(self, json_file_path: str, fps: int = 10):
+    def with_animation(self, json_file_path: str, x=0, y=0, fps: int = 10):
         sprite_data = load_animation(json_file_path)
         json_file_dir = os.path.abspath(os.path.dirname(json_file_path))
         animation_shape = Animation(
             os.path.join(json_file_dir, sprite_data.image),
-            self.x,
-            self.y,
+            x,
+            y,
             sprite_data.rows,
             sprite_data.columns,
+            sprite_data.animations,
+            fps,
         )
         self._shapes.append(animation_shape)
         return self
