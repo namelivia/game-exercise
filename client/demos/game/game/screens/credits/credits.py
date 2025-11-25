@@ -1,4 +1,4 @@
-from engine.api import Screen, ScreenTransition, UserTypedEvent
+from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
 
 from .ui import create_background, create_credits
 
@@ -16,6 +16,7 @@ class Credits(Screen):
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape" or event.key == "return":
+            PlaySound("assets/sounds/back.mp3").execute()
             from game.screens.lobby.lobby import Lobby
 
             ScreenTransition(Lobby).execute()

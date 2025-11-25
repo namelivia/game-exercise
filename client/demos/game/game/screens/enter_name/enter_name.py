@@ -18,10 +18,12 @@ class EnterName(Screen):
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
+            PlaySound("assets/sounds/back.mp3").execute()
             from game.screens.lobby.lobby import Lobby
 
             ScreenTransition(Lobby).execute()
         if event.key == "return":
+            PlaySound("assets/sounds/select.mp3").execute()
             # SetPlayerName(self.data["name"]).execute()
             from game.screens.lobby.lobby import Lobby
 
