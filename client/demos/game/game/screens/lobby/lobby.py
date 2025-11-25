@@ -28,7 +28,10 @@ class Lobby(Screen):
     def on_user_typed(self, event: UserTypedEvent) -> None:
         key = event.key
         if key == "1":
-            pass
+            PlaySound("assets/sounds/select.mp3").execute()
+            from game.screens.create_game.create_game import CreateGame
+
+            ScreenTransition(CreateGame).execute()
         if key == "2":
             pass
         if key == "3":

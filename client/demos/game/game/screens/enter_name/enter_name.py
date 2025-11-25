@@ -22,12 +22,14 @@ class EnterName(Screen):
             from game.screens.lobby.lobby import Lobby
 
             ScreenTransition(Lobby).execute()
+            return
         if event.key == "return":
             PlaySound("assets/sounds/select.mp3").execute()
             # SetPlayerName(self.data["name"]).execute()
             from game.screens.lobby.lobby import Lobby
 
             ScreenTransition(Lobby).execute()
+            return
         if event.key == "backspace":
             PlaySound(
                 "assets/sounds/erase.mp3",
