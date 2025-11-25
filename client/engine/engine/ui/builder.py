@@ -64,10 +64,10 @@ class UIBuilder:
 
     def build(self):
         state = UIElementState(self.x, self.y)
+        render = UIElementRender(state, self._shapes)
         logic_instance = None
         if self._logic_class:
-            logic_instance = self._logic_class(state)
+            logic_instance = self._logic_class(state, render)
         else:
-            logic_instance = UIElementLogic(state)
-        render = UIElementRender(state, self._shapes)
+            logic_instance = UIElementLogic(state, render)
         return UIElement(render, logic_instance)

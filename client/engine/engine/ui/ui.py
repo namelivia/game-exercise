@@ -26,5 +26,8 @@ class UIElement(ABC):
     def hide(self):
         self.render.hide()
 
+    def find_shape(self, name: str):
+        return self.render.find_shape(name)
+
     def update(self, time: int, data: Dict[str, Any]) -> None:
         self.logic.update(time, data)
