@@ -1,6 +1,6 @@
 from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
 
-from .ui import create_background
+from .ui import create_background, create_name_input
 
 
 class EnterName(Screen):
@@ -11,7 +11,7 @@ class EnterName(Screen):
 
         self.ui_elements = [
             create_background(),
-            # EnterNameMessage(self.data["name"]),
+            create_name_input(self.data["name"]),
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
