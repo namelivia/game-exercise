@@ -39,7 +39,11 @@ class Lobby(Screen):
             ScreenTransition(CreateGame).execute()
             return
         if key == "2":
-            pass
+            PlaySound("assets/sounds/select.mp3").execute()
+            from game.screens.join_game.join_game import JoinGame
+
+            ScreenTransition(JoinGame).execute()
+            return
         if key == "3":
             PlaySound("assets/sounds/select.mp3").execute()
             from game.screens.game_list.game_list import GameList
