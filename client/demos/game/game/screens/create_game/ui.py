@@ -1,35 +1,32 @@
 from typing import Any, Dict
 
-from client.engine.graphics.shapes import Image, Text
-from client.engine.primitives.ui import UIElement
+from engine.api import UIBuilder, UIElementLogic
 
 
-class NewGameMessage(UIElement):
-    def __init__(self, name: str):
-        self.name = name
-        self.shapes = [
-            Text("Create a new game", 20, 0),
-            Text("Please write the name for your new game:", 20, 40),
-            Text(name, 20, 70),
-        ]
-
+class NewGameInputCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
-        # What if data does not contain new_game_name? Throw an exception
         name = data["new_game_name"]
-        name_text = self.shapes[2]
-        if isinstance(name_text, Text):
-            name_text.set_message(name)  # Not supersure about this
+        name_text = self.render.find_shape("name")
+        if name_text is not None:
+            name_text.set_message(name)
 
 
-class Background(UIElement):
-    def __init__(self) -> None:
-        self.shapes = [Image("client/game/images/background3.png", 0, 0)]
+def create_new_game_name_input(name: str):
+    return (
+        UIBuilder(x=20, y=0)
+        .with_text("Create a new game", 0, 0)
+        .with_text("Please write the name for your new game:", 0, 40)
+        .with_text(name, 0, 70, True, "name")
+        .with_logic(NewGameInputCustomLogic)
+        .build()
+    )
 
 
-class ErrorPopup(UIElement):
-    def __init__(self) -> None:
-        self.shapes = [
-            Text("Error Creating Game", 200, 250),
-        ]
+def create_background():
+    return UIBuilder(x=0, y=0).with_image("assets/images/background3.png").build()
 
-        self.shapes[0].hide()
+
+def create_error_popup():
+    popup = UIBuilder(x=200, y=250).with_text("Error creating game").build()
+    popup.hide()
+    return popup

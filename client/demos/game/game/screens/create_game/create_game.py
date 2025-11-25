@@ -1,10 +1,8 @@
-from client.engine.features.game_management.commands import RequestGameCreation
-from client.engine.features.game_management.events import ErrorCreatingGameEvent
-from client.engine.features.sound.commands import PlaySound
-from client.engine.features.user_input.events import UserTypedEvent
-from client.engine.primitives.screen import Screen
+# from client.engine.features.game_management.events import ErrorCreatingGameEvent
 
-from .ui import Background, ErrorPopup, NewGameMessage
+from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
+
+from .ui import create_background, create_error_popup, create_new_game_name_input
 
 
 class CreateGame(Screen):
@@ -14,39 +12,39 @@ class CreateGame(Screen):
         self.data = {"new_game_name": ""}
 
         self.ui_elements = [
-            Background(),
-            NewGameMessage(self.data["new_game_name"]),
-            ErrorPopup(),
+            create_background(),
+            create_error_popup(),
+            create_new_game_name_input(self.data["new_game_name"]),
         ]
 
         self.events = {
             UserTypedEvent: self.on_user_typed,
-            ErrorCreatingGameEvent: self.on_error_creating_game,
+            # ErrorCreatingGameEvent: self.on_error_creating_game,
         }
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape":
-            # Avoid circular import
-            from client.game.commands import BackToLobby
+            PlaySound("assets/sounds/back.mp3").execute()
+            from game.screens.lobby.lobby import Lobby
 
-            BackToLobby().execute()
+            ScreenTransition(Lobby).execute()
             return
         if event.key == "return":
-            RequestGameCreation(
-                self.data["new_game_name"],
-            ).execute()
+            # RequestGameCreation(
+            #    self.data["new_game_name"],
+            # ).execute()
             return
         if event.key == "backspace":
             PlaySound(
-                "client/game/sounds/erase.mp3",
+                "assets/sounds/erase.mp3",
             ).execute()
             self.data["new_game_name"] = self.data["new_game_name"][:-1]
             return
         else:
             PlaySound(
-                "client/game/sounds/type.mp3",
+                "assets/sounds/type.mp3",
             ).execute()
             self.data["new_game_name"] += event.key
 
-    def on_error_creating_game(self, event: ErrorCreatingGameEvent) -> None:
-        self.ui_elements[2].show()
+    # def on_error_creating_game(self, event: ErrorCreatingGameEvent) -> None:
+    # self.ui_elements[2].show()
