@@ -37,24 +37,32 @@ class Lobby(Screen):
             from game.screens.create_game.create_game import CreateGame
 
             ScreenTransition(CreateGame).execute()
+            return
         if key == "2":
             pass
         if key == "3":
-            pass
+            PlaySound("assets/sounds/select.mp3").execute()
+            from game.screens.game_list.game_list import GameList
+
+            ScreenTransition(GameList).execute()
+            return
         if key == "4":
             PlaySound("assets/sounds/select.mp3").execute()
             from game.screens.options.options import Options
 
             ScreenTransition(Options).execute()
+            return
         if key == "5":
             PlaySound("assets/sounds/select.mp3").execute()
             from game.screens.enter_name.enter_name import EnterName
 
             ScreenTransition(EnterName).execute()
+            return
         if key == "6":
             PlaySound("assets/sounds/select.mp3").execute()
             from game.screens.credits.credits import Credits
 
             ScreenTransition(Credits).execute()
+            return
         if key == "7":
             pass
