@@ -1,10 +1,12 @@
 import os
 
 from engine.animation.loader import load_animation
+from engine.features.render.ui_element import UIElementRender
 from engine.graphics.shapes import Animation, Image, Rectangle, Text
 
-from .factory import create_ui_element
+from .logic import UIElementLogic
 from .state import UIElementState
+from .ui import UIElement
 
 
 class UIBuilder:
@@ -65,8 +67,7 @@ class UIBuilder:
         logic_instance = None
         if self._logic_class:
             logic_instance = self._logic_class(state)
-        return create_ui_element(
-            shapes=self._shapes,
-            state=state,
-            custom_logic=logic_instance,
-        )
+        else:
+            logic_instance = UIElementLogic(state)
+        render = UIElementRender(state, self._shapes)
+        return UIElement(render, logic_instance)
