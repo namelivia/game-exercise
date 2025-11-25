@@ -6,8 +6,9 @@ from typing import Any, Dict
 # UI elements can hold a small state too that can be updated
 # This is what will be extended.
 class UIElementLogic(ABC):
-    def __init__(self, state):
+    def __init__(self, state, render):
         self.state = state
+        self.render = render
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
         pass
