@@ -1,10 +1,23 @@
-from typing import Dict
+from typing import Any, Dict
 
-from engine.api import UIBuilder
+from engine.api import UIBuilder, UIElementLogic
+
+
+class WelcomeMessageCustomLogic(UIElementLogic):
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        welcome_text = self.render.find_shape("welcome")
+        if welcome_text is not None:
+            message = f"Welcome to game, {data['player_name']}"
+            welcome_text.set_message(message)
 
 
 def create_welcome_message():
-    return UIBuilder(x=20, y=0).with_text("Welcome to game").build()
+    return (
+        UIBuilder(x=20, y=0)
+        .with_text("Welcome to game", 0, 0, True, "welcome")
+        .with_logic(WelcomeMessageCustomLogic)
+        .build()
+    )
 
 
 def create_background():

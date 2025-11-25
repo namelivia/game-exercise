@@ -1,5 +1,7 @@
 from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
 
+from game.state import State
+
 from .ui import create_background, create_name_input
 
 
@@ -25,7 +27,7 @@ class EnterName(Screen):
             return
         if event.key == "return":
             PlaySound("assets/sounds/select.mp3").execute()
-            # SetPlayerName(self.data["name"]).execute()
+            State().set_player_name(self.data["name"])
             from game.screens.lobby.lobby import Lobby
 
             ScreenTransition(Lobby).execute()

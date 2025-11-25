@@ -1,5 +1,7 @@
 from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
 
+from game.state import State
+
 from .ui import create_background, create_options, create_welcome_message
 
 
@@ -24,6 +26,9 @@ class Lobby(Screen):
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
+
+    def initialize(self) -> None:
+        self.data = {"player_name": State().get_player_name()}
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         key = event.key
