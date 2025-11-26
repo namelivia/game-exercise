@@ -1,6 +1,7 @@
 from typing import Any, Tuple, Type
 
 from .backend.pygame.input import InputBackend
+from .state import State
 
 
 class MousePosition:
@@ -14,4 +15,11 @@ class MousePosition:
         return cls._instance
 
     def get(self) -> Tuple[int, int]:
-        return InputBackend.get_mouse_position()
+        # If the user input is disabled the mouse is "frozen"
+        # in place
+        state = State()
+        if state.user_input_is_enabled():
+            position = InputBackend.get_mouse_position()
+            self.last_position = position
+            return position
+        return self.last_position

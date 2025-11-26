@@ -32,6 +32,9 @@ class Screen(ABC):
                 self.events[event_type](event)
         return None
 
+    def add_timer(self, timer):
+        self.timers.append(timer)
+
     def update(self) -> None:
         self.time = Clock().get_ticks() - self.initial_time
         for timer in self.timers:
