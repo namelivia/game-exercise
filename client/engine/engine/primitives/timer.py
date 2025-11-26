@@ -4,6 +4,9 @@ class Timer:
         self.executed = False
         self.callback = callback
 
+    def is_active(self):
+        return not self.executed
+
     def update(self):
         if self.time > 0:
             self.time -= 1

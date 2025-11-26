@@ -36,6 +36,9 @@ class Screen(ABC):
         self.time = Clock().get_ticks() - self.initial_time
         for timer in self.timers:
             timer.update()
+
+        # Cleanup inactive timers
+        self.timers = [timer for timer in self.timers if timer.is_active()]
         for element in self.ui_elements:
             element.update(self.time, self.data)
         return None
