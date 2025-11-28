@@ -8,7 +8,8 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
-engine = { path = "../engine", develop=true }
+engine = { path = "../../engine", develop=true }
+components = { path = "../../components", develop=true }
 
 
 [build-system]

@@ -15,6 +15,7 @@ from animal_sounds.images import (
     RHINO_COLOR,
 )
 from animal_sounds.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
+from components.api import create_overlay
 from engine.api import (
     ChangeCursor,
     ClickableUIElement,
@@ -27,7 +28,7 @@ from engine.api import (
     UserClickedEvent,
 )
 
-from .ui import create_background, create_overlay, create_portrait
+from .ui import create_background, create_portrait
 
 
 class MainScreen(Screen):
