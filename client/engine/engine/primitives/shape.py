@@ -22,7 +22,7 @@ class Shape(ABC):
             self.render(
                 state.get_x() + self.x,
                 state.get_y() + self.y,
-                state.get_opacity,
+                state.get_opacity(),
                 window,
                 index,
             )

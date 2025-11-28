@@ -1,7 +1,14 @@
 from typing import Any, Dict
 
 from animal_sounds.images import BACKGROUND
-from engine.api import ChangeCursor, ClickableUIElement, UIBuilder, UIElementLogic
+from engine.api import (
+    ChangeCursor,
+    ClickableUIElement,
+    EnableUserInput,
+    ShowCursor,
+    UIBuilder,
+    UIElementLogic,
+)
 
 
 def create_background():
@@ -9,8 +16,20 @@ def create_background():
 
 
 class OverlayCustomLogic(UIElementLogic):
+
+    DURATION = 2500
+
     def update(self, time: int, data: Dict[str, Any]) -> None:
-        self.state.set_x(self.state.get_x() - 1)
+        progress = time / OverlayCustomLogic.DURATION
+
+        if progress > 1.0:
+            progress = 1.0
+            self.enabled = False
+            EnableUserInput().execute()
+            ShowCursor().execute()
+
+        opacity = 1.0 - progress
+        self.state.set_opacity(opacity)
 
 
 def create_overlay():

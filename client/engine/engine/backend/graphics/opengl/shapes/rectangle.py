@@ -7,9 +7,15 @@ WHITE = FoundationalColor(255, 255, 255)
 BLACK = FoundationalColor(0, 0, 0)
 
 from OpenGL.GL import (
+    GL_BLEND,
+    GL_ONE_MINUS_SRC_ALPHA,
     GL_QUADS,
+    GL_SRC_ALPHA,
     glBegin,
-    glColor3f,
+    glBlendFunc,
+    glColor4f,
+    glDisable,
+    glEnable,
     glEnd,
     glPopMatrix,
     glPushMatrix,
@@ -30,10 +36,12 @@ class Rectangle(Shape):
     def render(self, x, y, opacity, window: Any, index) -> None:
         dest_x = self.x + x
         dest_y = self.y + y
+        glEnable(GL_BLEND)
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
         # Start a new matrix scope
         glPushMatrix()
 
-        glColor3f(self.color[0], self.color[1], self.color[2])
+        glColor4f(self.color[0], self.color[1], self.color[2], opacity)
 
         # Apply the rectangle's top-left position (x, y)
         glTranslatef(dest_x, dest_y, 0)
@@ -59,4 +67,5 @@ class Rectangle(Shape):
         glPopMatrix()
 
         # Reset color
-        glColor3f(1.0, 1.0, 1.0)
+        glColor4f(1.0, 1.0, 1.0, 1.0)
+        glDisable(GL_BLEND)

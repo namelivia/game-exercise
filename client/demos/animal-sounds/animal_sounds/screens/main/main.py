@@ -20,6 +20,7 @@ from engine.api import (
     ClickableUIElement,
     DisableUserInput,
     EnableUserInput,
+    HideCursor,
     PlaySound,
     Screen,
     Timer,
@@ -96,6 +97,10 @@ class MainScreen(Screen):
         self.ui_elements.append(create_overlay())
 
         self.events = {UserClickedEvent: self.on_user_clicked}
+
+    def initialize(self):
+        DisableUserInput().execute()
+        HideCursor().execute()
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
         for element in self.ui_elements:

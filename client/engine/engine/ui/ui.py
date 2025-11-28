@@ -30,4 +30,5 @@ class UIElement(ABC):
         return self.render.find_shape(name)
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
-        self.logic.update(time, data)
+        if self.logic.enabled:
+            self.logic.update(time, data)

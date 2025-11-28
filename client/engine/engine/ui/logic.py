@@ -9,6 +9,7 @@ class UIElementLogic(ABC):
     def __init__(self, state, render):
         self.state = state
         self.render = render
+        self.enabled = True
 
     def update(self, time: int, data: Dict[str, Any]) -> None:
         pass
