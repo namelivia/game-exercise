@@ -28,9 +28,7 @@ class UIElementRender(ABC):
 
     def render(self, window) -> None:
         for shape in self.shapes:
-            shape.draw(
-                self.state.get_x(), self.state.get_y(), window, shape.get_index()
-            )
+            shape.draw(self.state, window, shape.get_index())
 
     def _is_point_in_shape(self, x: int, y: int, shape) -> bool:
         return (

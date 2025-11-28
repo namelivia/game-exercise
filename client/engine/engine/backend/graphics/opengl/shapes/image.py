@@ -67,7 +67,7 @@ class Image(Shape):
         self.image = GraphicsBackend().get().load_image(self.path)
         self.texture_id = self._create_opengl_texture(self.image)
 
-    def render(self, x, y, window: Any, index) -> None:
+    def render(self, x, y, opacity, window: Any, index) -> None:
         if window is not None:
             dest_x = self.x + x
             dest_y = self.y + y

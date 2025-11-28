@@ -1,9 +1,25 @@
+from typing import Any, Dict
+
 from animal_sounds.images import BACKGROUND
-from engine.api import ChangeCursor, ClickableUIElement, UIBuilder
+from engine.api import ChangeCursor, ClickableUIElement, UIBuilder, UIElementLogic
 
 
 def create_background():
     return UIBuilder(x=0, y=0).with_image(BACKGROUND).build()
+
+
+class OverlayCustomLogic(UIElementLogic):
+    def update(self, time: int, data: Dict[str, Any]) -> None:
+        self.state.set_x(self.state.get_x() - 1)
+
+
+def create_overlay():
+    return (
+        UIBuilder(x=0, y=0)
+        .with_rectangle(0, 0, 640, 480, (0, 0, 0))
+        .with_logic(OverlayCustomLogic)
+        .build()
+    )
 
 
 def create_portrait(image_path: str, highlight_path: str, x: int, y: int, on_click):

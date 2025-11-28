@@ -109,7 +109,7 @@ class Animation(AnimatedShape):
         # Return (u_min, v_bottom, u_max, v_top)
         return u_min, v_bottom, u_max, v_top
 
-    def render(self, x, y, window: Any, index) -> None:
+    def render(self, x, y, opacity, window: Any, index) -> None:
         if window is not None:
 
             u_min, v_bottom, u_max, v_top = self._get_frame_uvs(index)
