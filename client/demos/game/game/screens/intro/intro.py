@@ -1,3 +1,4 @@
+from components.api import create_overlay
 from engine.api import (
     DisableUserInput,
     EnableUserInput,
@@ -25,6 +26,7 @@ class Intro(Screen):
             create_title(),
             create_coin_1(),
             create_coin_2(),
+            create_overlay(),
         ]
 
         self.timers = [
