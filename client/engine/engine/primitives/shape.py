@@ -13,13 +13,19 @@ class Shape(ABC):
     def load(self) -> None:
         pass
 
-    def render(self, x, y, window: Any, index) -> None:
+    def render(self, x, y, opacity, window: Any, index) -> None:
         pass
 
-    def draw(self, x, y, window: Any, index) -> None:
+    def draw(self, state, window: Any, index) -> None:
         if not self.hidden:
             # Add the local x and y to the coordinates
-            self.render(x + self.x, y + self.y, window, index)
+            self.render(
+                state.get_x() + self.x,
+                state.get_y() + self.y,
+                state.get_opacity(),
+                window,
+                index,
+            )
 
     def hide(self) -> None:
         self.hidden = True

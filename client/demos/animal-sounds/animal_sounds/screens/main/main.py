@@ -20,13 +20,14 @@ from engine.api import (
     ClickableUIElement,
     DisableUserInput,
     EnableUserInput,
+    HideCursor,
     PlaySound,
     Screen,
     Timer,
     UserClickedEvent,
 )
 
-from .ui import create_background, create_portrait
+from .ui import create_background, create_overlay, create_portrait
 
 
 class MainScreen(Screen):
@@ -93,7 +94,13 @@ class MainScreen(Screen):
                 )
             )
 
+        self.ui_elements.append(create_overlay())
+
         self.events = {UserClickedEvent: self.on_user_clicked}
+
+    def initialize(self):
+        DisableUserInput().execute()
+        HideCursor().execute()
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
         for element in self.ui_elements:
@@ -109,3 +116,6 @@ class MainScreen(Screen):
         PlaySound(animal["sound"]).execute()
         DisableUserInput().execute()
         self.add_timer(Timer(animal["sound_length"], self.reenable_user_input))
+
+    def hide_overlay(self) -> None:
+        self.ui_elements[-1].hide()
