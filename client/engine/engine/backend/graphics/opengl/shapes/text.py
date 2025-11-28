@@ -132,7 +132,7 @@ class Text(Shape):
         # TODO: This should happen once per font, not per string
         self.Characters = self._store_gliph_information(self.face)
 
-    def _render_character(self, x, y, opacity, char, Characters, face):
+    def _render_character(self, x, y, char, Characters, face):
         scale = 1.0  # Hardcode this for now
         if char not in Characters:
             # Optionally, render a placeholder or skip
@@ -193,7 +193,7 @@ class Text(Shape):
         # Advance the cursor for the next character
         return x + ch.advance * scale
 
-    def render(self, x, y, window: Any, index) -> None:
+    def render(self, x, y, opacity, window: Any, index) -> None:
         dest_x = self.x + x
         dest_y = self.y + y
         scale = 1.0  # Hardcoding this value for now
