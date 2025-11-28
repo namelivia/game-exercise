@@ -1,17 +1,17 @@
 [tool.poetry]
-name = "animal_sounds"
+name = "components"
 version = "0.1.0"
 description = ""
 authors = ["José Ignacio Amelivia Santiago <hello@namelivia.com>"]
 readme = "README.md"
-package-mode = false
+package-mode = true
 
 [tool.poetry.dependencies]
 python = "^3.11"
-engine = { path = "../../engine", develop=true }
-components = { path = "../../components", develop=true }
+engine = { path = "../engine", develop=true }
 
 
+[tool.poetry.group.dev.dependencies]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
