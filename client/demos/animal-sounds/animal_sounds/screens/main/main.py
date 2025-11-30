@@ -15,8 +15,9 @@ from animal_sounds.images import (
     RHINO_COLOR,
 )
 from animal_sounds.sounds import CHEETAH, ELEPHANT, GIRAFFE, HYENA, LION, RHINO
-from components.api import create_overlay
+from components.api import create_fade_in
 from engine.api import (
+    AnimationFinishedEvent,
     ChangeCursor,
     ClickableUIElement,
     DisableUserInput,
@@ -24,6 +25,7 @@ from engine.api import (
     HideCursor,
     PlaySound,
     Screen,
+    ShowCursor,
     Timer,
     UserClickedEvent,
 )
@@ -95,9 +97,12 @@ class MainScreen(Screen):
                 )
             )
 
-        self.ui_elements.append(create_overlay())
+        self.ui_elements.append(create_fade_in())
 
-        self.events = {UserClickedEvent: self.on_user_clicked}
+        self.events = {
+            UserClickedEvent: self.on_user_clicked,
+            AnimationFinishedEvent: self.on_animation_finished,
+        }
 
     def initialize(self):
         DisableUserInput().execute()
@@ -107,6 +112,11 @@ class MainScreen(Screen):
         for element in self.ui_elements:
             if isinstance(element, ClickableUIElement) and element.mouse_over:
                 element.clicked()
+
+    def on_animation_finished(self, event: AnimationFinishedEvent) -> None:
+        if event.key == "fade_in":
+            EnableUserInput().execute()
+            ShowCursor().execute()
 
     def reenable_user_input(self):
         ChangeCursor("ARROW").execute()

@@ -9,6 +9,7 @@ from .commands import UserClicked, UserTyped
 from .event_handler import handlers_map
 from .keyboard import KeyboardInput
 from .mouse import MouseInput
+from .mouse_position import MousePosition
 from .state import State
 
 
@@ -38,6 +39,7 @@ class UserInputWorker(threading.Thread):
 
     def run(self):
         print(f"[{self.name}] Thread started, waiting for events...")
+        MousePosition().initialize()
         state = State()
         state.initialize()
         while not self.stop_event.is_set():

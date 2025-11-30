@@ -3,11 +3,15 @@ from engine.application.api import start_application
 
 # GAME Logic commands
 from engine.features.game_logic.commands import (
+    AnimationFinished,
     ChangeCursor,
     HideCursor,
     ScreenTransition,
     ShowCursor,
 )
+
+# GAME LOGIC events
+from engine.features.game_logic.events import AnimationFinishedEvent
 
 # SOUND Commands
 from engine.features.sound.commands import (

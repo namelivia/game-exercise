@@ -14,6 +14,9 @@ class MousePosition:
             cls._instance = super(MousePosition, cls).__new__(cls)
         return cls._instance
 
+    def initialize(self):
+        self.last_position = (0, 0)
+
     def get(self) -> Tuple[int, int]:
         # If the user input is disabled the mouse is "frozen"
         # in place

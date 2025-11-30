@@ -4,6 +4,7 @@ from engine.primitives.command import Command
 from engine.primitives.screen import Screen
 
 from .events import (
+    AnimationFinishedEvent,
     ChangeCursorEvent,
     HideCursorEvent,
     ScreenTransitionEvent,
@@ -46,4 +47,13 @@ class ScreenTransition(Command):
         screen.initialize()
         self.events = [
             ScreenTransitionEvent(screen),
+        ]
+
+
+class AnimationFinished(Command):
+    def __init__(self, key: str) -> None:
+        super().__init__(f"Animation {key} finished")
+        self.queue = "game_logic"
+        self.events = [
+            AnimationFinishedEvent(key),
         ]

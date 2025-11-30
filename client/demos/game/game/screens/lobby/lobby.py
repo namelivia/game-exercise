@@ -1,3 +1,4 @@
+from components.api import create_fade_in
 from engine.api import PlaySound, Screen, ScreenTransition, UserTypedEvent
 
 from game.state import State
@@ -23,6 +24,7 @@ class Lobby(Screen):
                     "7": "Profiles",
                 }
             ),
+            create_fade_in(),
         ]
 
         self.events = {UserTypedEvent: self.on_user_typed}
