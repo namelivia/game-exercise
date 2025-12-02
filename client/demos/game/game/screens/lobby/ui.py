@@ -5,6 +5,7 @@ from engine.api import UIBuilder, UIElementLogic
 
 class WelcomeMessageCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
+        super().update(time, data)
         welcome_text = self.render.find_shape("welcome")
         if welcome_text is not None:
             message = f"Welcome to game, {data['player_name']}"

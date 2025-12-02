@@ -5,6 +5,7 @@ from engine.api import UIBuilder, UIElementLogic
 
 class GameIdInputCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
+        super().update(time, data)
         name = data["game_id"]
         id_text = self.render.find_shape("game_id")
         if id_text is not None:

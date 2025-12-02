@@ -5,6 +5,7 @@ from engine.api import UIBuilder, UIElementLogic
 
 class TitleCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
+        super().update(time, data)
         inverse_speed = 8  # The higher the slower
         offset = 300
         self.state.set_x(int((time / inverse_speed) % (640 + offset) - offset))
