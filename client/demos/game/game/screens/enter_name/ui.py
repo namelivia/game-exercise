@@ -5,6 +5,7 @@ from engine.api import UIBuilder, UIElementLogic
 
 class NameInputCustomLogic(UIElementLogic):
     def update(self, time: int, data: Dict[str, Any]) -> None:
+        super().update(time, data)
         name = data["name"]
         name_text = self.render.find_shape("name")
         if name_text is not None:
