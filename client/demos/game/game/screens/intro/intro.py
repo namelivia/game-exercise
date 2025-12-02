@@ -33,9 +33,7 @@ class Intro(Screen):
             Timer(3000, self.go_back_to_lobby),
         ]
 
-        self.events = {
-            UserTypedEvent: self.on_user_typed
-        }
+        self.events = {UserTypedEvent: self.on_user_typed}
 
     def initialize(self) -> None:
         PlayMusic(
@@ -54,9 +52,7 @@ class Intro(Screen):
         ).execute()
         ShowCursor().execute()
         EnableUserInput().execute()
-        self.add_ui_element(
-            create_coin_1()
-        )
+        self.add_ui_element(create_coin_1())
 
     def show_coin_2(self) -> None:
         PlaySound(

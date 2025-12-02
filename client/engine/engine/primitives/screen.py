@@ -2,16 +2,15 @@ from abc import ABC
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 
 from engine.clock import Clock
+from engine.features.render.commands import RefreshRenderScreen
 from engine.ui.clickable import ClickableUIElement
 from engine.ui.ui import UIElement
-from engine.features.render.commands import StartRendering
 
 if TYPE_CHECKING:
     from engine.primitives.event import InGameEvent
     from engine.primitives.timer import Timer
 
 
-# This is the graphical representation of the screen
 class Screen(ABC):
     def __init__(self) -> None:
         self.ui_elements: List[UIElement | ClickableUIElement] = []
@@ -49,5 +48,4 @@ class Screen(ABC):
 
     def add_ui_element(self, new_ui_element) -> None:
         self.ui_elements.append(new_ui_element)
-        StartRendering(self).execute()
-
+        RefreshRenderScreen(self).execute()
