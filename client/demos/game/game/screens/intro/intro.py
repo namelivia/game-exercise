@@ -44,6 +44,7 @@ class Intro(Screen):
             "assets/music/main_theme.mp3",
         ).execute()
         HideCursor().execute()
+        DisableUserInput()
 
     # Actions
     def go_to_lobby(self) -> None:
@@ -73,7 +74,8 @@ class Intro(Screen):
             self.go_to_lobby()
 
     def on_animation_finished(self, event: AnimationFinishedEvent) -> None:
+        if event.key == "fade_in":
+            EnableUserInput().execute()
         if event.key == "fade_out":
             ScreenTransition(Lobby).execute()
             EnableUserInput().execute()
-            ShowCursor().execute()

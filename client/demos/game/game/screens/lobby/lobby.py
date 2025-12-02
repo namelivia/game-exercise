@@ -43,6 +43,7 @@ class Lobby(Screen):
 
     def initialize(self) -> None:
         self.data = {"player_name": State().get_player_name()}
+        DisableUserInput().execute()
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         key = event.key
@@ -98,6 +99,8 @@ class Lobby(Screen):
             pass
 
     def on_animation_finished(self, event: AnimationFinishedEvent) -> None:
+        if event.key == "fade_in":
+            EnableUserInput().execute()
         if event.key == "fade_out":
             ScreenTransition(self.next_screen).execute()
             EnableUserInput().execute()
