@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional
 from engine.clock import Clock
 from engine.ui.clickable import ClickableUIElement
 from engine.ui.ui import UIElement
+from engine.features.render.commands import StartRendering
 
 if TYPE_CHECKING:
     from engine.primitives.event import InGameEvent
@@ -45,3 +46,8 @@ class Screen(ABC):
         for element in self.ui_elements:
             element.update(self.time, self.data)
         return None
+
+    def add_ui_element(self, new_ui_element) -> None:
+        self.ui_elements.append(new_ui_element)
+        StartRendering(self).execute()
+

@@ -29,7 +29,6 @@ def create_coin_1():
         .with_animation("assets/images/coin.json", 0, 0, 30)
         .build()
     )
-    coin.hide()
     return coin
 
 
@@ -39,5 +38,4 @@ def create_coin_2():
         .with_animation("assets/images/coin.json", 0, 0, 15)
         .build()
     )
-    coin.hide()
     return coin
