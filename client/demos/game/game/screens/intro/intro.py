@@ -24,8 +24,6 @@ class Intro(Screen):
         self.ui_elements = [
             create_background(),
             create_title(),
-            create_coin_1(),
-            create_coin_2(),
             create_fade_in(),
         ]
 
@@ -54,13 +52,13 @@ class Intro(Screen):
         ).execute()
         ShowCursor().execute()
         EnableUserInput().execute()
-        self.ui_elements[2].show()
+        self.add_ui_element(create_coin_1())
 
     def show_coin_2(self) -> None:
         PlaySound(
             "assets/sounds/user_connected.mp3",
         ).execute()
-        self.ui_elements[3].show()
+        self.add_ui_element(create_coin_2())
 
     def on_user_typed(self, event: UserTypedEvent) -> None:
         if event.key == "escape" or event.key == "return":

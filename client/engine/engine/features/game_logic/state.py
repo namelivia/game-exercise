@@ -1,6 +1,6 @@
 from typing import Any, Optional, Type
 
-from engine.features.render.commands import StartRendering
+from engine.features.render.commands import RefreshRenderScreen
 from engine.primitives.screen import Screen
 
 
@@ -20,5 +20,5 @@ class State:
 
     def set_current_screen(self, current_screen: "Screen") -> None:
         # Tell the render thread to start rendering
-        StartRendering(current_screen).execute()
+        RefreshRenderScreen(current_screen).execute()
         self.current_screen = current_screen

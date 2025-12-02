@@ -1,5 +1,5 @@
 from engine.clock import Clock
-from engine.features.render.commands import StartRendering
+from engine.features.render.commands import RefreshRenderScreen
 from engine.features.render.worker import RenderWorker
 from engine.primitives.screen import Screen
 from engine.queue import QueueManager
@@ -33,4 +33,4 @@ if __name__ == "__main__":
         queue=QueueManager().get("render"),
     )
     render_thread.start()
-    StartRendering(TestScreen()).execute()
+    RefreshRenderScreen(TestScreen()).execute()

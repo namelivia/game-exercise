@@ -7,13 +7,13 @@ from .screen import create_render_from_screen
 if TYPE_CHECKING:
     from engine.primitives.screen import Screen
 
-from .events import StartRenderingEvent
+from .events import RefreshRenderScreenEvent
 
 
-class StartRendering(Command):
+class RefreshRenderScreen(Command):
     def __init__(self, screen: "Screen") -> None:
-        super().__init__(f"Start rendering the screen")
+        super().__init__(f"Refreshing the render for the screen")
         self.queue = "render"
         self.events = [
-            StartRenderingEvent(create_render_from_screen(screen)),
+            RefreshRenderScreenEvent(create_render_from_screen(screen)),
         ]
