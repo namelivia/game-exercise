@@ -1,5 +1,3 @@
-import time
-
 from animal_sounds.images import (
     CHEETAH_BLACK,
     CHEETAH_COLOR,

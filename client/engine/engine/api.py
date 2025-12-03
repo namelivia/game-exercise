@@ -25,6 +25,9 @@ from engine.features.user_input.commands import DisableUserInput, EnableUserInpu
 # INPUT events
 from engine.features.user_input.events import UserClickedEvent, UserTypedEvent
 
+# Mouse position singleton
+from engine.features.user_input.mouse_position import MousePosition
+
 # PRIMITIVES to extend from
 from engine.primitives.event import Event
 from engine.primitives.event_handler import EventHandler
