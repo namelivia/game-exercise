@@ -40202,3 +40202,1307 @@
 [2025-12-03 12:02:12,228] [Event] StopThreadEvent
 [2025-12-03 12:02:12,229] [Event] StopThreadEvent
 [2025-12-03 12:02:12,236] [Event] StopThreadEvent
+[2025-12-03 12:53:58,355] [Command] Transitioning to another screen
+[2025-12-03 12:53:58,381] [Event] ScreenTransitionEvent
+[2025-12-03 12:53:58,384] [Command] Refreshing the render for the screen
+[2025-12-03 12:53:58,424] [Event] RefreshRenderScreenEvent
+[2025-12-03 12:53:58,431] STREAM b'IHDR' 16 13
+[2025-12-03 12:53:58,431] STREAM b'sRGB' 41 1
+[2025-12-03 12:53:58,431] STREAM b'gAMA' 54 4
+[2025-12-03 12:53:58,431] STREAM b'cHRM' 70 32
+[2025-12-03 12:53:58,431] STREAM b'eXIf' 114 54
+[2025-12-03 12:53:58,431] STREAM b'oFFs' 180 9
+[2025-12-03 12:53:58,431] b'oFFs' 180 9 (unknown)
+[2025-12-03 12:53:58,431] STREAM b'pHYs' 201 9
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 222 15
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 249 24
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 285 16
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 313 9
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 334 13
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 359 11
+[2025-12-03 12:53:58,432] STREAM b'tEXt' 382 19
+[2025-12-03 12:53:58,432] STREAM b'IDAT' 413 8192
+[2025-12-03 12:54:05,237] [Event] StopThreadEvent
+[2025-12-03 12:54:05,238] [Event] StopThreadEvent
+[2025-12-03 12:54:05,244] [Event] StopThreadEvent
+[2025-12-03 12:55:36,330] [Command] Disable user input
+[2025-12-03 12:55:36,331] [Command] Hiding cursor
+[2025-12-03 12:55:36,331] [Command] Transitioning to another screen
+[2025-12-03 12:55:36,397] [Event] HideCursorEvent
+[2025-12-03 12:55:36,398] [Event] ScreenTransitionEvent
+[2025-12-03 12:55:36,398] [Command] Refreshing the render for the screen
+[2025-12-03 12:55:36,399] [Event] RefreshRenderScreenEvent
+[2025-12-03 12:55:36,403] [Event] DisableUserInputEvent
+[2025-12-03 12:55:36,406] STREAM b'IHDR' 16 13
+[2025-12-03 12:55:36,406] STREAM b'sRGB' 41 1
+[2025-12-03 12:55:36,406] STREAM b'gAMA' 54 4
+[2025-12-03 12:55:36,406] STREAM b'cHRM' 70 32
+[2025-12-03 12:55:36,406] STREAM b'eXIf' 114 54
+[2025-12-03 12:55:36,406] STREAM b'oFFs' 180 9
+[2025-12-03 12:55:36,406] b'oFFs' 180 9 (unknown)
+[2025-12-03 12:55:36,406] STREAM b'pHYs' 201 9
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 222 15
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 249 24
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 285 16
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 313 9
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 334 13
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 359 11
+[2025-12-03 12:55:36,406] STREAM b'tEXt' 382 19
+[2025-12-03 12:55:36,406] STREAM b'IDAT' 413 8192
+[2025-12-03 12:55:41,223] [Command] Disable user input
+[2025-12-03 12:55:41,223] [Command] Hiding cursor
+[2025-12-03 12:55:41,223] [Command] Transitioning to another screen
+[2025-12-03 12:55:41,244] [Event] HideCursorEvent
+[2025-12-03 12:55:41,246] [Event] ScreenTransitionEvent
+[2025-12-03 12:55:41,246] [Command] Refreshing the render for the screen
+[2025-12-03 12:55:41,287] [Event] DisableUserInputEvent
+[2025-12-03 12:55:41,288] [Event] RefreshRenderScreenEvent
+[2025-12-03 12:55:41,293] STREAM b'IHDR' 16 13
+[2025-12-03 12:55:41,293] STREAM b'sRGB' 41 1
+[2025-12-03 12:55:41,294] STREAM b'gAMA' 54 4
+[2025-12-03 12:55:41,294] STREAM b'cHRM' 70 32
+[2025-12-03 12:55:41,294] STREAM b'eXIf' 114 54
+[2025-12-03 12:55:41,294] STREAM b'oFFs' 180 9
+[2025-12-03 12:55:41,294] b'oFFs' 180 9 (unknown)
+[2025-12-03 12:55:41,294] STREAM b'pHYs' 201 9
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 222 15
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 249 24
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 285 16
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 313 9
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 334 13
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 359 11
+[2025-12-03 12:55:41,294] STREAM b'tEXt' 382 19
+[2025-12-03 12:55:41,294] STREAM b'IDAT' 413 8192
+[2025-12-03 12:55:43,730] [Command] Animation fade_in finished
+[2025-12-03 12:55:43,730] [Event] AnimationFinishedEvent
+[2025-12-03 12:55:43,730] [Command] Disable user input
+[2025-12-03 12:55:43,730] [Command] Showing cursor
+[2025-12-03 12:55:43,730] [Event] ShowCursorEvent
+[2025-12-03 12:55:43,739] [Event] EnableUserInputEvent
+[2025-12-03 12:55:56,156] [Event] StopThreadEvent
+[2025-12-03 12:55:56,157] [Event] StopThreadEvent
+[2025-12-03 12:55:56,159] [Event] StopThreadEvent
+[2025-12-03 13:06:39,777] [Command] Playing music assets/music/ambient.ogg
+[2025-12-03 13:06:39,777] [Command] Disable user input
+[2025-12-03 13:06:39,777] [Command] Hiding cursor
+[2025-12-03 13:06:39,777] [Command] Transitioning to another screen
+[2025-12-03 13:06:39,800] [Event] PlayMusicEvent
+[2025-12-03 13:06:39,801] [Event] HideCursorEvent
+[2025-12-03 13:06:39,801] [Event] ScreenTransitionEvent
+[2025-12-03 13:06:39,801] [Command] Refreshing the render for the screen
+[2025-12-03 13:06:39,845] [Event] RefreshRenderScreenEvent
+[2025-12-03 13:06:39,849] [Event] DisableUserInputEvent
+[2025-12-03 13:06:39,852] STREAM b'IHDR' 16 13
+[2025-12-03 13:06:39,852] STREAM b'sRGB' 41 1
+[2025-12-03 13:06:39,852] STREAM b'gAMA' 54 4
+[2025-12-03 13:06:39,852] STREAM b'cHRM' 70 32
+[2025-12-03 13:06:39,852] STREAM b'eXIf' 114 54
+[2025-12-03 13:06:39,852] STREAM b'oFFs' 180 9
+[2025-12-03 13:06:39,852] b'oFFs' 180 9 (unknown)
+[2025-12-03 13:06:39,852] STREAM b'pHYs' 201 9
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 222 15
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 249 24
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 285 16
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 313 9
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 334 13
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 359 11
+[2025-12-03 13:06:39,852] STREAM b'tEXt' 382 19
+[2025-12-03 13:06:39,853] STREAM b'IDAT' 413 8192
+[2025-12-03 13:06:42,280] [Command] Animation fade_in finished
+[2025-12-03 13:06:42,280] [Event] AnimationFinishedEvent
+[2025-12-03 13:06:42,281] [Command] Disable user input
+[2025-12-03 13:06:42,281] [Command] Showing cursor
+[2025-12-03 13:06:42,281] [Event] ShowCursorEvent
+[2025-12-03 13:06:42,286] [Event] EnableUserInputEvent
+[2025-12-03 13:06:42,463] [Event] StopThreadEvent
+[2025-12-03 13:06:42,466] [Event] StopThreadEvent
+[2025-12-03 13:06:58,448] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 13:06:58,448] [Command] Disable user input
+[2025-12-03 13:06:58,448] [Command] Hiding cursor
+[2025-12-03 13:06:58,448] [Command] Transitioning to another screen
+[2025-12-03 13:06:58,471] [Event] HideCursorEvent
+[2025-12-03 13:06:58,476] [Event] ScreenTransitionEvent
+[2025-12-03 13:06:58,476] [Event] PlayMusicEvent
+[2025-12-03 13:06:58,476] [Command] Refreshing the render for the screen
+[2025-12-03 13:06:58,515] [Event] DisableUserInputEvent
+[2025-12-03 13:06:58,516] [Event] RefreshRenderScreenEvent
+[2025-12-03 13:06:58,522] STREAM b'IHDR' 16 13
+[2025-12-03 13:06:58,522] STREAM b'sRGB' 41 1
+[2025-12-03 13:06:58,522] STREAM b'gAMA' 54 4
+[2025-12-03 13:06:58,522] STREAM b'cHRM' 70 32
+[2025-12-03 13:06:58,522] STREAM b'eXIf' 114 54
+[2025-12-03 13:06:58,522] STREAM b'oFFs' 180 9
+[2025-12-03 13:06:58,522] b'oFFs' 180 9 (unknown)
+[2025-12-03 13:06:58,522] STREAM b'pHYs' 201 9
+[2025-12-03 13:06:58,522] STREAM b'tEXt' 222 15
+[2025-12-03 13:06:58,522] STREAM b'tEXt' 249 24
+[2025-12-03 13:06:58,523] STREAM b'tEXt' 285 16
+[2025-12-03 13:06:58,523] STREAM b'tEXt' 313 9
+[2025-12-03 13:06:58,523] STREAM b'tEXt' 334 13
+[2025-12-03 13:06:58,523] STREAM b'tEXt' 359 11
+[2025-12-03 13:06:58,523] STREAM b'tEXt' 382 19
+[2025-12-03 13:06:58,523] STREAM b'IDAT' 413 8192
+[2025-12-03 13:07:00,950] [Command] Animation fade_in finished
+[2025-12-03 13:07:00,950] [Event] AnimationFinishedEvent
+[2025-12-03 13:07:00,951] [Command] Disable user input
+[2025-12-03 13:07:00,951] [Command] Showing cursor
+[2025-12-03 13:07:00,951] [Event] ShowCursorEvent
+[2025-12-03 13:07:00,960] [Event] EnableUserInputEvent
+[2025-12-03 13:07:08,525] [Event] StopThreadEvent
+[2025-12-03 13:07:08,525] [Event] StopThreadEvent
+[2025-12-03 13:07:08,530] [Event] StopThreadEvent
+[2025-12-03 13:07:45,126] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 13:07:45,126] [Command] Disable user input
+[2025-12-03 13:07:45,126] [Command] Hiding cursor
+[2025-12-03 13:07:45,126] [Command] Transitioning to another screen
+[2025-12-03 13:07:45,153] [Event] PlayMusicEvent
+[2025-12-03 13:07:45,198] [Event] HideCursorEvent
+[2025-12-03 13:07:45,198] [Event] ScreenTransitionEvent
+[2025-12-03 13:07:45,198] [Command] Refreshing the render for the screen
+[2025-12-03 13:07:45,199] [Event] RefreshRenderScreenEvent
+[2025-12-03 13:07:45,205] [Event] DisableUserInputEvent
+[2025-12-03 13:07:45,208] STREAM b'IHDR' 16 13
+[2025-12-03 13:07:45,209] STREAM b'sRGB' 41 1
+[2025-12-03 13:07:45,209] STREAM b'gAMA' 54 4
+[2025-12-03 13:07:45,209] STREAM b'cHRM' 70 32
+[2025-12-03 13:07:45,209] STREAM b'eXIf' 114 54
+[2025-12-03 13:07:45,209] STREAM b'oFFs' 180 9
+[2025-12-03 13:07:45,209] b'oFFs' 180 9 (unknown)
+[2025-12-03 13:07:45,209] STREAM b'pHYs' 201 9
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 222 15
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 249 24
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 285 16
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 313 9
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 334 13
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 359 11
+[2025-12-03 13:07:45,209] STREAM b'tEXt' 382 19
+[2025-12-03 13:07:45,209] STREAM b'IDAT' 413 8192
+[2025-12-03 13:07:47,631] [Command] Animation fade_in finished
+[2025-12-03 13:07:47,631] [Event] AnimationFinishedEvent
+[2025-12-03 13:07:47,631] [Command] Disable user input
+[2025-12-03 13:07:47,631] [Command] Showing cursor
+[2025-12-03 13:07:47,631] [Event] ShowCursorEvent
+[2025-12-03 13:07:47,640] [Event] EnableUserInputEvent
+[2025-12-03 13:07:54,886] [Event] StopThreadEvent
+[2025-12-03 13:07:54,886] [Event] StopThreadEvent
+[2025-12-03 13:07:54,888] [Event] StopThreadEvent
+[2025-12-03 16:10:56,519] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:10:56,519] [Command] Disable user input
+[2025-12-03 16:10:56,519] [Command] Hiding cursor
+[2025-12-03 16:10:56,519] [Command] Transitioning to another screen
+[2025-12-03 16:10:56,546] [Event] PlayMusicEvent
+[2025-12-03 16:10:56,546] [Event] HideCursorEvent
+[2025-12-03 16:10:56,550] [Event] ScreenTransitionEvent
+[2025-12-03 16:10:56,550] [Command] Refreshing the render for the screen
+[2025-12-03 16:10:56,605] [Event] DisableUserInputEvent
+[2025-12-03 16:10:56,606] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:10:56,617] STREAM b'IHDR' 16 13
+[2025-12-03 16:10:56,617] STREAM b'sRGB' 41 1
+[2025-12-03 16:10:56,617] STREAM b'gAMA' 54 4
+[2025-12-03 16:10:56,617] STREAM b'cHRM' 70 32
+[2025-12-03 16:10:56,617] STREAM b'eXIf' 114 54
+[2025-12-03 16:10:56,617] STREAM b'oFFs' 180 9
+[2025-12-03 16:10:56,617] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:10:56,617] STREAM b'pHYs' 201 9
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 222 15
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 249 24
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 285 16
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 313 9
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 334 13
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 359 11
+[2025-12-03 16:10:56,617] STREAM b'tEXt' 382 19
+[2025-12-03 16:10:56,617] STREAM b'IDAT' 413 8192
+[2025-12-03 16:10:59,026] [Command] Animation fade_in finished
+[2025-12-03 16:10:59,026] [Event] AnimationFinishedEvent
+[2025-12-03 16:10:59,026] [Command] Disable user input
+[2025-12-03 16:10:59,026] [Command] Showing cursor
+[2025-12-03 16:10:59,026] [Event] ShowCursorEvent
+[2025-12-03 16:10:59,036] [Event] EnableUserInputEvent
+[2025-12-03 16:11:01,588] [Event] StopThreadEvent
+[2025-12-03 16:11:01,588] [Event] StopThreadEvent
+[2025-12-03 16:11:01,594] [Event] StopThreadEvent
+[2025-12-03 16:11:41,743] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:11:41,743] [Command] Disable user input
+[2025-12-03 16:11:41,743] [Command] Hiding cursor
+[2025-12-03 16:11:41,743] [Command] Transitioning to another screen
+[2025-12-03 16:11:41,772] [Event] PlayMusicEvent
+[2025-12-03 16:11:41,825] [Event] HideCursorEvent
+[2025-12-03 16:11:41,826] [Event] ScreenTransitionEvent
+[2025-12-03 16:11:41,826] [Command] Refreshing the render for the screen
+[2025-12-03 16:11:41,829] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:11:41,833] [Event] DisableUserInputEvent
+[2025-12-03 16:11:41,840] STREAM b'IHDR' 16 13
+[2025-12-03 16:11:41,840] STREAM b'sRGB' 41 1
+[2025-12-03 16:11:41,840] STREAM b'gAMA' 54 4
+[2025-12-03 16:11:41,840] STREAM b'cHRM' 70 32
+[2025-12-03 16:11:41,840] STREAM b'eXIf' 114 54
+[2025-12-03 16:11:41,840] STREAM b'oFFs' 180 9
+[2025-12-03 16:11:41,840] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:11:41,840] STREAM b'pHYs' 201 9
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 222 15
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 249 24
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 285 16
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 313 9
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 334 13
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 359 11
+[2025-12-03 16:11:41,840] STREAM b'tEXt' 382 19
+[2025-12-03 16:11:41,841] STREAM b'IDAT' 413 8192
+[2025-12-03 16:11:44,244] [Command] Animation fade_in finished
+[2025-12-03 16:11:44,244] [Event] AnimationFinishedEvent
+[2025-12-03 16:11:44,244] [Command] Disable user input
+[2025-12-03 16:11:44,244] [Command] Showing cursor
+[2025-12-03 16:11:44,245] [Event] ShowCursorEvent
+[2025-12-03 16:11:44,245] [Event] EnableUserInputEvent
+[2025-12-03 16:11:57,806] [Event] StopThreadEvent
+[2025-12-03 16:11:57,806] [Event] StopThreadEvent
+[2025-12-03 16:11:57,814] [Event] StopThreadEvent
+[2025-12-03 16:12:56,526] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:12:56,526] [Command] Disable user input
+[2025-12-03 16:12:56,526] [Command] Hiding cursor
+[2025-12-03 16:12:56,526] [Command] Transitioning to another screen
+[2025-12-03 16:12:56,555] [Event] PlayMusicEvent
+[2025-12-03 16:12:56,556] [Event] HideCursorEvent
+[2025-12-03 16:12:56,560] [Event] ScreenTransitionEvent
+[2025-12-03 16:12:56,560] [Command] Refreshing the render for the screen
+[2025-12-03 16:12:56,617] [Event] DisableUserInputEvent
+[2025-12-03 16:12:56,618] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:12:56,629] STREAM b'IHDR' 16 13
+[2025-12-03 16:12:56,629] STREAM b'sRGB' 41 1
+[2025-12-03 16:12:56,629] STREAM b'gAMA' 54 4
+[2025-12-03 16:12:56,629] STREAM b'cHRM' 70 32
+[2025-12-03 16:12:56,629] STREAM b'eXIf' 114 54
+[2025-12-03 16:12:56,629] STREAM b'oFFs' 180 9
+[2025-12-03 16:12:56,629] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:12:56,629] STREAM b'pHYs' 201 9
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 222 15
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 249 24
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 285 16
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 313 9
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 334 13
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 359 11
+[2025-12-03 16:12:56,629] STREAM b'tEXt' 382 19
+[2025-12-03 16:12:56,629] STREAM b'IDAT' 413 8192
+[2025-12-03 16:12:59,034] [Command] Animation fade_in finished
+[2025-12-03 16:12:59,034] [Event] AnimationFinishedEvent
+[2025-12-03 16:12:59,034] [Command] Disable user input
+[2025-12-03 16:12:59,034] [Command] Showing cursor
+[2025-12-03 16:12:59,034] [Event] ShowCursorEvent
+[2025-12-03 16:12:59,043] [Event] EnableUserInputEvent
+[2025-12-03 16:13:01,784] [Event] StopThreadEvent
+[2025-12-03 16:13:01,784] [Event] StopThreadEvent
+[2025-12-03 16:13:01,786] [Event] StopThreadEvent
+[2025-12-03 16:13:41,716] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:13:41,716] [Command] Disable user input
+[2025-12-03 16:13:41,717] [Command] Hiding cursor
+[2025-12-03 16:13:41,717] [Command] Transitioning to another screen
+[2025-12-03 16:13:41,746] [Event] PlayMusicEvent
+[2025-12-03 16:13:41,746] [Event] HideCursorEvent
+[2025-12-03 16:13:41,803] [Event] ScreenTransitionEvent
+[2025-12-03 16:13:41,804] [Command] Refreshing the render for the screen
+[2025-12-03 16:13:41,807] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:13:41,809] [Event] DisableUserInputEvent
+[2025-12-03 16:13:41,817] STREAM b'IHDR' 16 13
+[2025-12-03 16:13:41,817] STREAM b'sRGB' 41 1
+[2025-12-03 16:13:41,817] STREAM b'gAMA' 54 4
+[2025-12-03 16:13:41,817] STREAM b'cHRM' 70 32
+[2025-12-03 16:13:41,817] STREAM b'eXIf' 114 54
+[2025-12-03 16:13:41,817] STREAM b'oFFs' 180 9
+[2025-12-03 16:13:41,817] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:13:41,817] STREAM b'pHYs' 201 9
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 222 15
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 249 24
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 285 16
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 313 9
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 334 13
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 359 11
+[2025-12-03 16:13:41,817] STREAM b'tEXt' 382 19
+[2025-12-03 16:13:41,817] STREAM b'IDAT' 413 8192
+[2025-12-03 16:13:44,219] [Command] Animation fade_in finished
+[2025-12-03 16:13:44,219] [Event] AnimationFinishedEvent
+[2025-12-03 16:13:44,219] [Command] Disable user input
+[2025-12-03 16:13:44,219] [Command] Showing cursor
+[2025-12-03 16:13:44,219] [Event] ShowCursorEvent
+[2025-12-03 16:13:44,228] [Event] EnableUserInputEvent
+[2025-12-03 16:13:46,533] [Event] StopThreadEvent
+[2025-12-03 16:13:46,534] [Event] StopThreadEvent
+[2025-12-03 16:13:46,540] [Event] StopThreadEvent
+[2025-12-03 16:16:04,478] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:16:04,478] [Command] Disable user input
+[2025-12-03 16:16:04,478] [Command] Hiding cursor
+[2025-12-03 16:16:04,478] [Command] Transitioning to another screen
+[2025-12-03 16:16:04,553] [Event] PlayMusicEvent
+[2025-12-03 16:16:04,553] [Event] HideCursorEvent
+[2025-12-03 16:16:04,555] [Event] ScreenTransitionEvent
+[2025-12-03 16:16:04,555] [Command] Refreshing the render for the screen
+[2025-12-03 16:16:04,556] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:16:04,561] [Event] DisableUserInputEvent
+[2025-12-03 16:16:04,578] STREAM b'IHDR' 16 13
+[2025-12-03 16:16:04,578] STREAM b'sRGB' 41 1
+[2025-12-03 16:16:04,578] STREAM b'gAMA' 54 4
+[2025-12-03 16:16:04,578] STREAM b'cHRM' 70 32
+[2025-12-03 16:16:04,578] STREAM b'eXIf' 114 54
+[2025-12-03 16:16:04,578] STREAM b'oFFs' 180 9
+[2025-12-03 16:16:04,578] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:16:04,578] STREAM b'pHYs' 201 9
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 222 15
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 249 24
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 285 16
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 313 9
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 334 13
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 359 11
+[2025-12-03 16:16:04,578] STREAM b'tEXt' 382 19
+[2025-12-03 16:16:04,578] STREAM b'IDAT' 413 8192
+[2025-12-03 16:16:06,982] [Command] Animation fade_in finished
+[2025-12-03 16:16:06,982] [Event] AnimationFinishedEvent
+[2025-12-03 16:16:06,983] [Command] Disable user input
+[2025-12-03 16:16:06,983] [Command] Showing cursor
+[2025-12-03 16:16:06,983] [Event] ShowCursorEvent
+[2025-12-03 16:16:06,991] [Event] EnableUserInputEvent
+[2025-12-03 16:16:15,384] [Event] StopThreadEvent
+[2025-12-03 16:16:15,385] [Event] StopThreadEvent
+[2025-12-03 16:16:15,386] [Event] StopThreadEvent
+[2025-12-03 16:16:33,723] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:16:33,723] [Command] Disable user input
+[2025-12-03 16:16:33,723] [Command] Hiding cursor
+[2025-12-03 16:16:33,723] [Command] Transitioning to another screen
+[2025-12-03 16:16:33,754] [Event] PlayMusicEvent
+[2025-12-03 16:16:33,819] [Event] HideCursorEvent
+[2025-12-03 16:16:33,820] [Event] ScreenTransitionEvent
+[2025-12-03 16:16:33,820] [Command] Refreshing the render for the screen
+[2025-12-03 16:16:33,824] [Event] DisableUserInputEvent
+[2025-12-03 16:16:33,824] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:16:33,832] STREAM b'IHDR' 16 13
+[2025-12-03 16:16:33,832] STREAM b'sRGB' 41 1
+[2025-12-03 16:16:33,832] STREAM b'gAMA' 54 4
+[2025-12-03 16:16:33,832] STREAM b'cHRM' 70 32
+[2025-12-03 16:16:33,832] STREAM b'eXIf' 114 54
+[2025-12-03 16:16:33,832] STREAM b'oFFs' 180 9
+[2025-12-03 16:16:33,832] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:16:33,832] STREAM b'pHYs' 201 9
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 222 15
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 249 24
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 285 16
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 313 9
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 334 13
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 359 11
+[2025-12-03 16:16:33,832] STREAM b'tEXt' 382 19
+[2025-12-03 16:16:33,833] STREAM b'IDAT' 413 8192
+[2025-12-03 16:16:37,844] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:16:37,844] [Command] Disable user input
+[2025-12-03 16:16:37,844] [Command] Hiding cursor
+[2025-12-03 16:16:37,844] [Command] Transitioning to another screen
+[2025-12-03 16:16:37,926] [Event] PlayMusicEvent
+[2025-12-03 16:16:37,927] [Event] HideCursorEvent
+[2025-12-03 16:16:37,927] [Event] ScreenTransitionEvent
+[2025-12-03 16:16:37,929] [Command] Refreshing the render for the screen
+[2025-12-03 16:16:37,929] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:16:37,934] [Event] DisableUserInputEvent
+[2025-12-03 16:16:37,939] STREAM b'IHDR' 16 13
+[2025-12-03 16:16:37,939] STREAM b'sRGB' 41 1
+[2025-12-03 16:16:37,939] STREAM b'gAMA' 54 4
+[2025-12-03 16:16:37,939] STREAM b'cHRM' 70 32
+[2025-12-03 16:16:37,939] STREAM b'eXIf' 114 54
+[2025-12-03 16:16:37,939] STREAM b'oFFs' 180 9
+[2025-12-03 16:16:37,939] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:16:37,939] STREAM b'pHYs' 201 9
+[2025-12-03 16:16:37,939] STREAM b'tEXt' 222 15
+[2025-12-03 16:16:37,939] STREAM b'tEXt' 249 24
+[2025-12-03 16:16:37,939] STREAM b'tEXt' 285 16
+[2025-12-03 16:16:37,939] STREAM b'tEXt' 313 9
+[2025-12-03 16:16:37,939] STREAM b'tEXt' 334 13
+[2025-12-03 16:16:37,939] STREAM b'tEXt' 359 11
+[2025-12-03 16:16:37,940] STREAM b'tEXt' 382 19
+[2025-12-03 16:16:37,940] STREAM b'IDAT' 413 8192
+[2025-12-03 16:16:40,353] [Command] Animation fade_in finished
+[2025-12-03 16:16:40,354] [Event] AnimationFinishedEvent
+[2025-12-03 16:16:40,354] [Command] Disable user input
+[2025-12-03 16:16:40,354] [Command] Showing cursor
+[2025-12-03 16:16:40,354] [Event] ShowCursorEvent
+[2025-12-03 16:16:40,363] [Event] EnableUserInputEvent
+[2025-12-03 16:16:43,672] [Event] StopThreadEvent
+[2025-12-03 16:16:43,673] [Event] StopThreadEvent
+[2025-12-03 16:16:43,675] [Event] StopThreadEvent
+[2025-12-03 16:17:04,738] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:17:04,738] [Command] Disable user input
+[2025-12-03 16:17:04,738] [Command] Hiding cursor
+[2025-12-03 16:17:04,738] [Command] Transitioning to another screen
+[2025-12-03 16:17:04,824] [Event] PlayMusicEvent
+[2025-12-03 16:17:04,825] [Event] HideCursorEvent
+[2025-12-03 16:17:04,825] [Event] ScreenTransitionEvent
+[2025-12-03 16:17:04,825] [Command] Refreshing the render for the screen
+[2025-12-03 16:17:04,827] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:17:04,831] [Event] DisableUserInputEvent
+[2025-12-03 16:17:04,841] STREAM b'IHDR' 16 13
+[2025-12-03 16:17:04,841] STREAM b'sRGB' 41 1
+[2025-12-03 16:17:04,841] STREAM b'gAMA' 54 4
+[2025-12-03 16:17:04,841] STREAM b'cHRM' 70 32
+[2025-12-03 16:17:04,841] STREAM b'eXIf' 114 54
+[2025-12-03 16:17:04,841] STREAM b'oFFs' 180 9
+[2025-12-03 16:17:04,841] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:17:04,841] STREAM b'pHYs' 201 9
+[2025-12-03 16:17:04,841] STREAM b'tEXt' 222 15
+[2025-12-03 16:17:04,842] STREAM b'tEXt' 249 24
+[2025-12-03 16:17:04,842] STREAM b'tEXt' 285 16
+[2025-12-03 16:17:04,842] STREAM b'tEXt' 313 9
+[2025-12-03 16:17:04,842] STREAM b'tEXt' 334 13
+[2025-12-03 16:17:04,842] STREAM b'tEXt' 359 11
+[2025-12-03 16:17:04,842] STREAM b'tEXt' 382 19
+[2025-12-03 16:17:04,842] STREAM b'IDAT' 413 8192
+[2025-12-03 16:17:13,173] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:17:13,173] [Command] Disable user input
+[2025-12-03 16:17:13,173] [Command] Hiding cursor
+[2025-12-03 16:17:13,173] [Command] Transitioning to another screen
+[2025-12-03 16:17:13,204] [Event] PlayMusicEvent
+[2025-12-03 16:17:13,256] [Event] HideCursorEvent
+[2025-12-03 16:17:13,257] [Event] ScreenTransitionEvent
+[2025-12-03 16:17:13,257] [Command] Refreshing the render for the screen
+[2025-12-03 16:17:13,260] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:17:13,265] [Event] DisableUserInputEvent
+[2025-12-03 16:17:13,274] STREAM b'IHDR' 16 13
+[2025-12-03 16:17:13,274] STREAM b'sRGB' 41 1
+[2025-12-03 16:17:13,274] STREAM b'gAMA' 54 4
+[2025-12-03 16:17:13,274] STREAM b'cHRM' 70 32
+[2025-12-03 16:17:13,274] STREAM b'eXIf' 114 54
+[2025-12-03 16:17:13,274] STREAM b'oFFs' 180 9
+[2025-12-03 16:17:13,275] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:17:13,275] STREAM b'pHYs' 201 9
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 222 15
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 249 24
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 285 16
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 313 9
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 334 13
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 359 11
+[2025-12-03 16:17:13,275] STREAM b'tEXt' 382 19
+[2025-12-03 16:17:13,275] STREAM b'IDAT' 413 8192
+[2025-12-03 16:17:15,683] [Command] Animation fade_in finished
+[2025-12-03 16:17:15,684] [Event] AnimationFinishedEvent
+[2025-12-03 16:17:15,684] [Command] Disable user input
+[2025-12-03 16:17:15,684] [Command] Showing cursor
+[2025-12-03 16:17:15,684] [Event] ShowCursorEvent
+[2025-12-03 16:17:15,693] [Event] EnableUserInputEvent
+[2025-12-03 16:17:17,560] [Command] User clicked
+[2025-12-03 16:17:17,560] [Event] UserClickedEvent
+[2025-12-03 16:17:22,213] [Event] StopThreadEvent
+[2025-12-03 16:17:22,213] [Event] StopThreadEvent
+[2025-12-03 16:17:22,219] [Event] StopThreadEvent
+[2025-12-03 16:17:50,454] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:17:50,454] [Command] Disable user input
+[2025-12-03 16:17:50,454] [Command] Hiding cursor
+[2025-12-03 16:17:50,454] [Command] Transitioning to another screen
+[2025-12-03 16:17:50,487] [Event] PlayMusicEvent
+[2025-12-03 16:17:50,538] [Event] HideCursorEvent
+[2025-12-03 16:17:50,539] [Event] ScreenTransitionEvent
+[2025-12-03 16:17:50,540] [Command] Refreshing the render for the screen
+[2025-12-03 16:17:50,540] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:17:50,545] [Event] DisableUserInputEvent
+[2025-12-03 16:17:50,555] STREAM b'IHDR' 16 13
+[2025-12-03 16:17:50,555] STREAM b'sRGB' 41 1
+[2025-12-03 16:17:50,555] STREAM b'gAMA' 54 4
+[2025-12-03 16:17:50,555] STREAM b'cHRM' 70 32
+[2025-12-03 16:17:50,555] STREAM b'eXIf' 114 54
+[2025-12-03 16:17:50,555] STREAM b'oFFs' 180 9
+[2025-12-03 16:17:50,555] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:17:50,555] STREAM b'pHYs' 201 9
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 222 15
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 249 24
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 285 16
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 313 9
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 334 13
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 359 11
+[2025-12-03 16:17:50,555] STREAM b'tEXt' 382 19
+[2025-12-03 16:17:50,555] STREAM b'IDAT' 413 8192
+[2025-12-03 16:17:52,956] [Command] Animation fade_in finished
+[2025-12-03 16:17:52,956] [Event] AnimationFinishedEvent
+[2025-12-03 16:17:52,956] [Command] Disable user input
+[2025-12-03 16:17:52,956] [Command] Showing cursor
+[2025-12-03 16:17:52,956] [Event] ShowCursorEvent
+[2025-12-03 16:17:52,965] [Event] EnableUserInputEvent
+[2025-12-03 16:17:57,843] [Command] User clicked
+[2025-12-03 16:17:57,844] [Event] UserClickedEvent
+[2025-12-03 16:18:02,389] [Event] StopThreadEvent
+[2025-12-03 16:18:02,390] [Event] StopThreadEvent
+[2025-12-03 16:18:02,394] [Event] StopThreadEvent
+[2025-12-03 16:18:51,005] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:18:51,005] [Command] Disable user input
+[2025-12-03 16:18:51,005] [Command] Hiding cursor
+[2025-12-03 16:18:51,005] [Command] Transitioning to another screen
+[2025-12-03 16:18:51,029] [Event] PlayMusicEvent
+[2025-12-03 16:18:51,029] [Event] HideCursorEvent
+[2025-12-03 16:18:51,029] [Event] ScreenTransitionEvent
+[2025-12-03 16:18:51,029] [Command] Refreshing the render for the screen
+[2025-12-03 16:18:51,085] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:18:51,090] [Event] DisableUserInputEvent
+[2025-12-03 16:18:51,099] STREAM b'IHDR' 16 13
+[2025-12-03 16:18:51,099] STREAM b'sRGB' 41 1
+[2025-12-03 16:18:51,099] STREAM b'gAMA' 54 4
+[2025-12-03 16:18:51,099] STREAM b'cHRM' 70 32
+[2025-12-03 16:18:51,099] STREAM b'eXIf' 114 54
+[2025-12-03 16:18:51,099] STREAM b'oFFs' 180 9
+[2025-12-03 16:18:51,099] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:18:51,099] STREAM b'pHYs' 201 9
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 222 15
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 249 24
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 285 16
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 313 9
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 334 13
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 359 11
+[2025-12-03 16:18:51,100] STREAM b'tEXt' 382 19
+[2025-12-03 16:18:51,100] STREAM b'IDAT' 413 8192
+[2025-12-03 16:18:54,772] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:18:54,772] [Command] Disable user input
+[2025-12-03 16:18:54,772] [Command] Hiding cursor
+[2025-12-03 16:18:54,772] [Command] Transitioning to another screen
+[2025-12-03 16:18:54,800] [Event] HideCursorEvent
+[2025-12-03 16:18:54,857] [Event] ScreenTransitionEvent
+[2025-12-03 16:18:54,859] [Command] Refreshing the render for the screen
+[2025-12-03 16:18:54,859] [Event] PlayMusicEvent
+[2025-12-03 16:18:54,863] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:18:54,864] [Event] DisableUserInputEvent
+[2025-12-03 16:18:54,871] STREAM b'IHDR' 16 13
+[2025-12-03 16:18:54,871] STREAM b'sRGB' 41 1
+[2025-12-03 16:18:54,871] STREAM b'gAMA' 54 4
+[2025-12-03 16:18:54,871] STREAM b'cHRM' 70 32
+[2025-12-03 16:18:54,871] STREAM b'eXIf' 114 54
+[2025-12-03 16:18:54,871] STREAM b'oFFs' 180 9
+[2025-12-03 16:18:54,871] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:18:54,871] STREAM b'pHYs' 201 9
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 222 15
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 249 24
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 285 16
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 313 9
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 334 13
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 359 11
+[2025-12-03 16:18:54,871] STREAM b'tEXt' 382 19
+[2025-12-03 16:18:54,871] STREAM b'IDAT' 413 8192
+[2025-12-03 16:18:57,275] [Command] Animation fade_in finished
+[2025-12-03 16:18:57,275] [Event] AnimationFinishedEvent
+[2025-12-03 16:18:57,275] [Command] Disable user input
+[2025-12-03 16:18:57,275] [Command] Showing cursor
+[2025-12-03 16:18:57,275] [Event] ShowCursorEvent
+[2025-12-03 16:18:57,279] [Event] EnableUserInputEvent
+[2025-12-03 16:18:57,358] [Event] StopThreadEvent
+[2025-12-03 16:18:57,358] [Event] StopThreadEvent
+[2025-12-03 16:18:57,362] [Event] StopThreadEvent
+[2025-12-03 16:19:37,989] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:19:37,990] [Command] Disable user input
+[2025-12-03 16:19:37,990] [Command] Hiding cursor
+[2025-12-03 16:19:37,990] [Command] Transitioning to another screen
+[2025-12-03 16:19:38,023] [Event] PlayMusicEvent
+[2025-12-03 16:19:38,071] [Event] HideCursorEvent
+[2025-12-03 16:19:38,073] [Event] ScreenTransitionEvent
+[2025-12-03 16:19:38,073] [Command] Refreshing the render for the screen
+[2025-12-03 16:19:38,074] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:19:38,078] [Event] DisableUserInputEvent
+[2025-12-03 16:19:38,085] STREAM b'IHDR' 16 13
+[2025-12-03 16:19:38,085] STREAM b'sRGB' 41 1
+[2025-12-03 16:19:38,085] STREAM b'gAMA' 54 4
+[2025-12-03 16:19:38,085] STREAM b'cHRM' 70 32
+[2025-12-03 16:19:38,085] STREAM b'eXIf' 114 54
+[2025-12-03 16:19:38,085] STREAM b'oFFs' 180 9
+[2025-12-03 16:19:38,085] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:19:38,085] STREAM b'pHYs' 201 9
+[2025-12-03 16:19:38,085] STREAM b'tEXt' 222 15
+[2025-12-03 16:19:38,086] STREAM b'tEXt' 249 24
+[2025-12-03 16:19:38,086] STREAM b'tEXt' 285 16
+[2025-12-03 16:19:38,086] STREAM b'tEXt' 313 9
+[2025-12-03 16:19:38,086] STREAM b'tEXt' 334 13
+[2025-12-03 16:19:38,086] STREAM b'tEXt' 359 11
+[2025-12-03 16:19:38,086] STREAM b'tEXt' 382 19
+[2025-12-03 16:19:38,086] STREAM b'IDAT' 413 8192
+[2025-12-03 16:19:40,498] [Command] Animation fade_in finished
+[2025-12-03 16:19:40,498] [Event] AnimationFinishedEvent
+[2025-12-03 16:19:40,498] [Command] Disable user input
+[2025-12-03 16:19:40,498] [Command] Showing cursor
+[2025-12-03 16:19:40,498] [Event] ShowCursorEvent
+[2025-12-03 16:19:40,501] [Event] EnableUserInputEvent
+[2025-12-03 16:19:40,514] [Event] StopThreadEvent
+[2025-12-03 16:19:40,514] [Event] StopThreadEvent
+[2025-12-03 16:19:40,521] [Event] StopThreadEvent
+[2025-12-03 16:20:22,699] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:20:22,699] [Command] Disable user input
+[2025-12-03 16:20:22,699] [Command] Hiding cursor
+[2025-12-03 16:20:22,699] [Command] Transitioning to another screen
+[2025-12-03 16:20:22,729] [Event] HideCursorEvent
+[2025-12-03 16:20:22,729] [Event] ScreenTransitionEvent
+[2025-12-03 16:20:22,730] [Command] Refreshing the render for the screen
+[2025-12-03 16:20:22,730] [Event] PlayMusicEvent
+[2025-12-03 16:20:22,788] [Event] DisableUserInputEvent
+[2025-12-03 16:20:22,789] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:20:22,799] STREAM b'IHDR' 16 13
+[2025-12-03 16:20:22,799] STREAM b'sRGB' 41 1
+[2025-12-03 16:20:22,799] STREAM b'gAMA' 54 4
+[2025-12-03 16:20:22,799] STREAM b'cHRM' 70 32
+[2025-12-03 16:20:22,799] STREAM b'eXIf' 114 54
+[2025-12-03 16:20:22,799] STREAM b'oFFs' 180 9
+[2025-12-03 16:20:22,799] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:20:22,799] STREAM b'pHYs' 201 9
+[2025-12-03 16:20:22,799] STREAM b'tEXt' 222 15
+[2025-12-03 16:20:22,799] STREAM b'tEXt' 249 24
+[2025-12-03 16:20:22,799] STREAM b'tEXt' 285 16
+[2025-12-03 16:20:22,799] STREAM b'tEXt' 313 9
+[2025-12-03 16:20:22,799] STREAM b'tEXt' 334 13
+[2025-12-03 16:20:22,799] STREAM b'tEXt' 359 11
+[2025-12-03 16:20:22,800] STREAM b'tEXt' 382 19
+[2025-12-03 16:20:22,800] STREAM b'IDAT' 413 8192
+[2025-12-03 16:20:25,207] [Command] Animation fade_in finished
+[2025-12-03 16:20:25,208] [Event] AnimationFinishedEvent
+[2025-12-03 16:20:25,208] [Command] Disable user input
+[2025-12-03 16:20:25,208] [Command] Showing cursor
+[2025-12-03 16:20:25,208] [Event] ShowCursorEvent
+[2025-12-03 16:20:25,216] [Event] EnableUserInputEvent
+[2025-12-03 16:20:25,696] [Command] Setting cursor to HAND
+[2025-12-03 16:20:25,696] [Event] ChangeCursorEvent
+[2025-12-03 16:20:26,216] [Command] Setting cursor to ARROW
+[2025-12-03 16:20:26,216] [Event] ChangeCursorEvent
+[2025-12-03 16:20:26,765] [Command] Setting cursor to HAND
+[2025-12-03 16:20:26,765] [Event] ChangeCursorEvent
+[2025-12-03 16:20:27,284] [Command] Setting cursor to ARROW
+[2025-12-03 16:20:27,284] [Event] ChangeCursorEvent
+[2025-12-03 16:20:28,027] [Command] Setting cursor to HAND
+[2025-12-03 16:20:28,027] [Event] ChangeCursorEvent
+[2025-12-03 16:20:28,403] [Command] Setting cursor to ARROW
+[2025-12-03 16:20:28,403] [Event] ChangeCursorEvent
+[2025-12-03 16:20:28,649] [Command] User typed key 
+[2025-12-03 16:20:28,650] [Event] UserTypedEvent
+[2025-12-03 16:20:29,261] [Command] User clicked
+[2025-12-03 16:20:29,262] [Event] UserClickedEvent
+[2025-12-03 16:20:29,293] [Command] User typed key 
+[2025-12-03 16:20:29,293] [Event] UserTypedEvent
+[2025-12-03 16:20:29,513] [Command] User typed key 
+[2025-12-03 16:20:29,513] [Event] UserTypedEvent
+[2025-12-03 16:20:30,034] [Event] StopThreadEvent
+[2025-12-03 16:20:30,034] [Event] StopThreadEvent
+[2025-12-03 16:20:30,042] [Event] StopThreadEvent
+[2025-12-03 16:20:58,526] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:20:58,526] [Command] Disable user input
+[2025-12-03 16:20:58,526] [Command] Hiding cursor
+[2025-12-03 16:20:58,526] [Command] Transitioning to another screen
+[2025-12-03 16:20:58,555] [Event] PlayMusicEvent
+[2025-12-03 16:20:58,612] [Event] HideCursorEvent
+[2025-12-03 16:20:58,612] [Event] ScreenTransitionEvent
+[2025-12-03 16:20:58,612] [Command] Refreshing the render for the screen
+[2025-12-03 16:20:58,614] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:20:58,618] [Event] DisableUserInputEvent
+[2025-12-03 16:20:58,629] STREAM b'IHDR' 16 13
+[2025-12-03 16:20:58,630] STREAM b'sRGB' 41 1
+[2025-12-03 16:20:58,630] STREAM b'gAMA' 54 4
+[2025-12-03 16:20:58,630] STREAM b'cHRM' 70 32
+[2025-12-03 16:20:58,630] STREAM b'eXIf' 114 54
+[2025-12-03 16:20:58,630] STREAM b'oFFs' 180 9
+[2025-12-03 16:20:58,630] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:20:58,630] STREAM b'pHYs' 201 9
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 222 15
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 249 24
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 285 16
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 313 9
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 334 13
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 359 11
+[2025-12-03 16:20:58,630] STREAM b'tEXt' 382 19
+[2025-12-03 16:20:58,630] STREAM b'IDAT' 413 8192
+[2025-12-03 16:21:01,036] [Command] Animation fade_in finished
+[2025-12-03 16:21:01,036] [Event] AnimationFinishedEvent
+[2025-12-03 16:21:01,037] [Command] Disable user input
+[2025-12-03 16:21:01,037] [Command] Showing cursor
+[2025-12-03 16:21:01,037] [Event] ShowCursorEvent
+[2025-12-03 16:21:01,046] [Event] EnableUserInputEvent
+[2025-12-03 16:21:01,972] [Command] Setting cursor to HAND
+[2025-12-03 16:21:01,973] [Event] ChangeCursorEvent
+[2025-12-03 16:21:02,726] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:02,726] [Event] ChangeCursorEvent
+[2025-12-03 16:21:03,245] [Command] Setting cursor to HAND
+[2025-12-03 16:21:03,246] [Event] ChangeCursorEvent
+[2025-12-03 16:21:03,888] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:03,888] [Event] ChangeCursorEvent
+[2025-12-03 16:21:04,336] [Command] Setting cursor to HAND
+[2025-12-03 16:21:04,336] [Event] ChangeCursorEvent
+[2025-12-03 16:21:05,241] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:05,242] [Event] ChangeCursorEvent
+[2025-12-03 16:21:06,262] [Command] Setting cursor to HAND
+[2025-12-03 16:21:06,262] [Event] ChangeCursorEvent
+[2025-12-03 16:21:06,805] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:06,805] [Event] ChangeCursorEvent
+[2025-12-03 16:21:14,857] [Command] Setting cursor to HAND
+[2025-12-03 16:21:14,858] [Event] ChangeCursorEvent
+[2025-12-03 16:21:15,561] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:15,561] [Event] ChangeCursorEvent
+[2025-12-03 16:21:16,253] [Command] Setting cursor to HAND
+[2025-12-03 16:21:16,254] [Event] ChangeCursorEvent
+[2025-12-03 16:21:16,948] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:16,949] [Event] ChangeCursorEvent
+[2025-12-03 16:21:17,692] [Command] Setting cursor to HAND
+[2025-12-03 16:21:17,692] [Event] ChangeCursorEvent
+[2025-12-03 16:21:18,437] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:18,438] [Event] ChangeCursorEvent
+[2025-12-03 16:21:19,512] [Command] Setting cursor to HAND
+[2025-12-03 16:21:19,512] [Event] ChangeCursorEvent
+[2025-12-03 16:21:20,001] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:20,001] [Event] ChangeCursorEvent
+[2025-12-03 16:21:21,313] [Command] Setting cursor to HAND
+[2025-12-03 16:21:21,313] [Event] ChangeCursorEvent
+[2025-12-03 16:21:21,741] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:21,741] [Event] ChangeCursorEvent
+[2025-12-03 16:21:27,611] [Command] Setting cursor to HAND
+[2025-12-03 16:21:27,611] [Event] ChangeCursorEvent
+[2025-12-03 16:21:27,988] [Command] User clicked
+[2025-12-03 16:21:27,989] [Event] UserClickedEvent
+[2025-12-03 16:21:28,314] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:28,314] [Event] ChangeCursorEvent
+[2025-12-03 16:21:29,640] [Command] Setting cursor to HAND
+[2025-12-03 16:21:29,641] [Event] ChangeCursorEvent
+[2025-12-03 16:21:29,847] [Command] User clicked
+[2025-12-03 16:21:29,848] [Event] UserClickedEvent
+[2025-12-03 16:21:30,088] [Command] Setting cursor to ARROW
+[2025-12-03 16:21:30,088] [Event] ChangeCursorEvent
+[2025-12-03 16:21:31,924] [Event] StopThreadEvent
+[2025-12-03 16:21:31,924] [Event] StopThreadEvent
+[2025-12-03 16:21:31,926] [Event] StopThreadEvent
+[2025-12-03 16:23:56,795] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:23:56,795] [Command] Disable user input
+[2025-12-03 16:23:56,795] [Command] Hiding cursor
+[2025-12-03 16:23:56,795] [Command] Transitioning to another screen
+[2025-12-03 16:23:56,826] [Event] PlayMusicEvent
+[2025-12-03 16:23:56,874] [Event] HideCursorEvent
+[2025-12-03 16:23:56,875] [Event] ScreenTransitionEvent
+[2025-12-03 16:23:56,875] [Command] Refreshing the render for the screen
+[2025-12-03 16:23:56,877] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:23:56,882] [Event] DisableUserInputEvent
+[2025-12-03 16:23:56,887] STREAM b'IHDR' 16 13
+[2025-12-03 16:23:56,887] STREAM b'sRGB' 41 1
+[2025-12-03 16:23:56,887] STREAM b'gAMA' 54 4
+[2025-12-03 16:23:56,887] STREAM b'cHRM' 70 32
+[2025-12-03 16:23:56,887] STREAM b'eXIf' 114 54
+[2025-12-03 16:23:56,887] STREAM b'oFFs' 180 9
+[2025-12-03 16:23:56,887] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:23:56,888] STREAM b'pHYs' 201 9
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 222 15
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 249 24
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 285 16
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 313 9
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 334 13
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 359 11
+[2025-12-03 16:23:56,888] STREAM b'tEXt' 382 19
+[2025-12-03 16:23:56,888] STREAM b'IDAT' 413 8192
+[2025-12-03 16:23:59,299] [Command] Animation fade_in finished
+[2025-12-03 16:23:59,299] [Event] AnimationFinishedEvent
+[2025-12-03 16:23:59,299] [Command] Disable user input
+[2025-12-03 16:23:59,299] [Command] Showing cursor
+[2025-12-03 16:23:59,299] [Event] EnableUserInputEvent
+[2025-12-03 16:23:59,299] [Event] ShowCursorEvent
+[2025-12-03 16:24:00,392] [Command] Setting cursor to HAND
+[2025-12-03 16:24:00,392] [Event] ChangeCursorEvent
+[2025-12-03 16:24:01,322] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:01,322] [Event] ChangeCursorEvent
+[2025-12-03 16:24:01,885] [Command] Setting cursor to HAND
+[2025-12-03 16:24:01,886] [Event] ChangeCursorEvent
+[2025-12-03 16:24:03,091] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:03,092] [Event] ChangeCursorEvent
+[2025-12-03 16:24:03,794] [Command] Setting cursor to HAND
+[2025-12-03 16:24:03,795] [Event] ChangeCursorEvent
+[2025-12-03 16:24:04,641] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:04,641] [Event] ChangeCursorEvent
+[2025-12-03 16:24:05,510] [Command] Setting cursor to HAND
+[2025-12-03 16:24:05,510] [Event] ChangeCursorEvent
+[2025-12-03 16:24:05,874] [Command] User clicked
+[2025-12-03 16:24:05,875] [Event] UserClickedEvent
+[2025-12-03 16:24:06,352] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:06,352] [Event] ChangeCursorEvent
+[2025-12-03 16:24:06,679] [Command] Setting cursor to HAND
+[2025-12-03 16:24:06,679] [Event] ChangeCursorEvent
+[2025-12-03 16:24:07,009] [Command] User clicked
+[2025-12-03 16:24:07,009] [Event] UserClickedEvent
+[2025-12-03 16:24:07,374] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:07,374] [Event] ChangeCursorEvent
+[2025-12-03 16:24:07,547] [Command] Setting cursor to HAND
+[2025-12-03 16:24:07,547] [Event] ChangeCursorEvent
+[2025-12-03 16:24:08,002] [Command] User clicked
+[2025-12-03 16:24:08,002] [Event] UserClickedEvent
+[2025-12-03 16:24:08,281] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:08,282] [Event] ChangeCursorEvent
+[2025-12-03 16:24:08,639] [Command] Setting cursor to HAND
+[2025-12-03 16:24:08,639] [Event] ChangeCursorEvent
+[2025-12-03 16:24:21,293] [Command] Setting cursor to ARROW
+[2025-12-03 16:24:21,293] [Event] ChangeCursorEvent
+[2025-12-03 16:24:22,870] [Event] StopThreadEvent
+[2025-12-03 16:24:22,870] [Event] StopThreadEvent
+[2025-12-03 16:24:22,875] [Event] StopThreadEvent
+[2025-12-03 16:25:35,655] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 16:25:35,655] [Command] Disable user input
+[2025-12-03 16:25:35,655] [Command] Hiding cursor
+[2025-12-03 16:25:35,655] [Command] Transitioning to another screen
+[2025-12-03 16:25:35,686] [Event] PlayMusicEvent
+[2025-12-03 16:25:35,740] [Event] HideCursorEvent
+[2025-12-03 16:25:35,741] [Event] ScreenTransitionEvent
+[2025-12-03 16:25:35,742] [Command] Refreshing the render for the screen
+[2025-12-03 16:25:35,744] [Event] RefreshRenderScreenEvent
+[2025-12-03 16:25:35,750] [Event] DisableUserInputEvent
+[2025-12-03 16:25:35,766] STREAM b'IHDR' 16 13
+[2025-12-03 16:25:35,766] STREAM b'sRGB' 41 1
+[2025-12-03 16:25:35,766] STREAM b'gAMA' 54 4
+[2025-12-03 16:25:35,766] STREAM b'cHRM' 70 32
+[2025-12-03 16:25:35,766] STREAM b'eXIf' 114 54
+[2025-12-03 16:25:35,766] STREAM b'oFFs' 180 9
+[2025-12-03 16:25:35,766] b'oFFs' 180 9 (unknown)
+[2025-12-03 16:25:35,766] STREAM b'pHYs' 201 9
+[2025-12-03 16:25:35,766] STREAM b'tEXt' 222 15
+[2025-12-03 16:25:35,766] STREAM b'tEXt' 249 24
+[2025-12-03 16:25:35,766] STREAM b'tEXt' 285 16
+[2025-12-03 16:25:35,766] STREAM b'tEXt' 313 9
+[2025-12-03 16:25:35,766] STREAM b'tEXt' 334 13
+[2025-12-03 16:25:35,767] STREAM b'tEXt' 359 11
+[2025-12-03 16:25:35,767] STREAM b'tEXt' 382 19
+[2025-12-03 16:25:35,767] STREAM b'IDAT' 413 8192
+[2025-12-03 16:25:38,161] [Command] Animation fade_in finished
+[2025-12-03 16:25:38,161] [Event] AnimationFinishedEvent
+[2025-12-03 16:25:38,161] [Command] Disable user input
+[2025-12-03 16:25:38,161] [Command] Showing cursor
+[2025-12-03 16:25:38,162] [Event] ShowCursorEvent
+[2025-12-03 16:25:38,170] [Event] EnableUserInputEvent
+[2025-12-03 16:25:38,947] [Command] Setting cursor to HAND
+[2025-12-03 16:25:38,948] [Event] ChangeCursorEvent
+[2025-12-03 16:25:39,752] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:39,753] [Event] ChangeCursorEvent
+[2025-12-03 16:25:40,521] [Command] Setting cursor to HAND
+[2025-12-03 16:25:40,521] [Event] ChangeCursorEvent
+[2025-12-03 16:25:41,229] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:41,229] [Event] ChangeCursorEvent
+[2025-12-03 16:25:41,823] [Command] Setting cursor to HAND
+[2025-12-03 16:25:41,823] [Event] ChangeCursorEvent
+[2025-12-03 16:25:42,426] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:42,426] [Event] ChangeCursorEvent
+[2025-12-03 16:25:42,764] [Command] Setting cursor to HAND
+[2025-12-03 16:25:42,764] [Event] ChangeCursorEvent
+[2025-12-03 16:25:43,408] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:43,408] [Event] ChangeCursorEvent
+[2025-12-03 16:25:43,887] [Command] Setting cursor to HAND
+[2025-12-03 16:25:43,888] [Event] ChangeCursorEvent
+[2025-12-03 16:25:44,475] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:44,476] [Event] ChangeCursorEvent
+[2025-12-03 16:25:45,369] [Command] Setting cursor to HAND
+[2025-12-03 16:25:45,369] [Event] ChangeCursorEvent
+[2025-12-03 16:25:45,492] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:45,493] [Event] ChangeCursorEvent
+[2025-12-03 16:25:45,882] [Command] Setting cursor to HAND
+[2025-12-03 16:25:45,882] [Event] ChangeCursorEvent
+[2025-12-03 16:25:46,488] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:46,488] [Event] ChangeCursorEvent
+[2025-12-03 16:25:46,682] [Command] Setting cursor to HAND
+[2025-12-03 16:25:46,682] [Event] ChangeCursorEvent
+[2025-12-03 16:25:47,281] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:47,281] [Event] ChangeCursorEvent
+[2025-12-03 16:25:47,557] [Command] Setting cursor to HAND
+[2025-12-03 16:25:47,557] [Event] ChangeCursorEvent
+[2025-12-03 16:25:47,994] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:47,995] [Event] ChangeCursorEvent
+[2025-12-03 16:25:48,076] [Command] Setting cursor to HAND
+[2025-12-03 16:25:48,077] [Event] ChangeCursorEvent
+[2025-12-03 16:25:48,599] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:48,599] [Event] ChangeCursorEvent
+[2025-12-03 16:25:48,752] [Command] Setting cursor to HAND
+[2025-12-03 16:25:48,753] [Event] ChangeCursorEvent
+[2025-12-03 16:25:49,236] [Command] Setting cursor to ARROW
+[2025-12-03 16:25:49,237] [Event] ChangeCursorEvent
+[2025-12-03 16:25:49,505] [Command] Setting cursor to HAND
+[2025-12-03 16:25:49,506] [Event] ChangeCursorEvent
+[2025-12-03 16:25:49,622] [Command] User clicked
+[2025-12-03 16:25:49,623] [Event] UserClickedEvent
+[2025-12-03 16:25:49,773] [Command] User typed key 
+[2025-12-03 16:25:49,773] [Event] UserTypedEvent
+[2025-12-03 16:25:49,857] [Command] User typed key 
+[2025-12-03 16:25:49,857] [Event] UserTypedEvent
+[2025-12-03 16:25:50,320] [Event] StopThreadEvent
+[2025-12-03 16:25:50,320] [Event] StopThreadEvent
+[2025-12-03 16:25:50,326] [Event] StopThreadEvent
+[2025-12-03 17:00:29,373] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 17:00:29,373] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 17:00:29,373] [Command] Disable user input
+[2025-12-03 17:00:29,373] [Command] Hiding cursor
+[2025-12-03 17:00:29,373] [Command] Transitioning to another screen
+[2025-12-03 17:00:29,405] [Event] PlayMusicEvent
+[2025-12-03 17:00:29,405] [Event] HideCursorEvent
+[2025-12-03 17:00:29,409] [Event] ScreenTransitionEvent
+[2025-12-03 17:00:29,409] [Command] Refreshing the render for the screen
+[2025-12-03 17:00:29,410] [Event] PlaySoundEvent
+[2025-12-03 17:00:29,465] [Event] DisableUserInputEvent
+[2025-12-03 17:00:29,468] [Event] RefreshRenderScreenEvent
+[2025-12-03 17:00:29,486] STREAM b'IHDR' 16 13
+[2025-12-03 17:00:29,486] STREAM b'sRGB' 41 1
+[2025-12-03 17:00:29,486] STREAM b'gAMA' 54 4
+[2025-12-03 17:00:29,486] STREAM b'cHRM' 70 32
+[2025-12-03 17:00:29,486] STREAM b'eXIf' 114 54
+[2025-12-03 17:00:29,486] STREAM b'oFFs' 180 9
+[2025-12-03 17:00:29,486] b'oFFs' 180 9 (unknown)
+[2025-12-03 17:00:29,486] STREAM b'pHYs' 201 9
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 222 15
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 249 24
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 285 16
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 313 9
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 334 13
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 359 11
+[2025-12-03 17:00:29,486] STREAM b'tEXt' 382 19
+[2025-12-03 17:00:29,486] STREAM b'IDAT' 413 8192
+[2025-12-03 17:00:31,881] [Command] Animation fade_in finished
+[2025-12-03 17:00:31,881] [Event] AnimationFinishedEvent
+[2025-12-03 17:00:31,882] [Command] Disable user input
+[2025-12-03 17:00:31,882] [Command] Showing cursor
+[2025-12-03 17:00:31,882] [Event] ShowCursorEvent
+[2025-12-03 17:00:31,892] [Event] EnableUserInputEvent
+[2025-12-03 17:00:38,766] [Event] StopThreadEvent
+[2025-12-03 17:00:38,766] [Event] StopThreadEvent
+[2025-12-03 17:00:38,767] [Event] StopThreadEvent
+[2025-12-03 17:02:56,332] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 17:02:56,332] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 17:02:56,332] [Command] Disable user input
+[2025-12-03 17:02:56,333] [Command] Hiding cursor
+[2025-12-03 17:02:56,333] [Command] Transitioning to another screen
+[2025-12-03 17:02:56,362] [Event] HideCursorEvent
+[2025-12-03 17:02:56,362] [Event] ScreenTransitionEvent
+[2025-12-03 17:02:56,362] [Command] Refreshing the render for the screen
+[2025-12-03 17:02:56,368] [Event] PlayMusicEvent
+[2025-12-03 17:02:56,425] [Event] PlaySoundEvent
+[2025-12-03 17:02:56,425] [Event] DisableUserInputEvent
+[2025-12-03 17:02:56,427] [Event] RefreshRenderScreenEvent
+[2025-12-03 17:02:56,438] STREAM b'IHDR' 16 13
+[2025-12-03 17:02:56,439] STREAM b'sRGB' 41 1
+[2025-12-03 17:02:56,439] STREAM b'gAMA' 54 4
+[2025-12-03 17:02:56,439] STREAM b'cHRM' 70 32
+[2025-12-03 17:02:56,439] STREAM b'eXIf' 114 54
+[2025-12-03 17:02:56,439] STREAM b'oFFs' 180 9
+[2025-12-03 17:02:56,439] b'oFFs' 180 9 (unknown)
+[2025-12-03 17:02:56,439] STREAM b'pHYs' 201 9
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 222 15
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 249 24
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 285 16
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 313 9
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 334 13
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 359 11
+[2025-12-03 17:02:56,439] STREAM b'tEXt' 382 19
+[2025-12-03 17:02:56,439] STREAM b'IDAT' 413 8192
+[2025-12-03 17:02:58,837] [Command] Animation fade_in finished
+[2025-12-03 17:02:58,837] [Event] AnimationFinishedEvent
+[2025-12-03 17:03:06,625] [Command] Disable user input
+[2025-12-03 17:03:06,625] [Command] Showing cursor
+[2025-12-03 17:03:06,625] [Event] ShowCursorEvent
+[2025-12-03 17:03:06,634] [Event] EnableUserInputEvent
+[2025-12-03 17:03:06,656] [Command] Setting cursor to HAND
+[2025-12-03 17:03:06,656] [Event] ChangeCursorEvent
+[2025-12-03 17:03:06,707] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:06,707] [Event] ChangeCursorEvent
+[2025-12-03 17:03:06,972] [Command] Setting cursor to HAND
+[2025-12-03 17:03:06,972] [Event] ChangeCursorEvent
+[2025-12-03 17:03:07,228] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:07,228] [Event] ChangeCursorEvent
+[2025-12-03 17:03:07,608] [Command] Setting cursor to HAND
+[2025-12-03 17:03:07,608] [Event] ChangeCursorEvent
+[2025-12-03 17:03:07,628] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:07,629] [Event] ChangeCursorEvent
+[2025-12-03 17:03:08,079] [Event] StopThreadEvent
+[2025-12-03 17:03:08,080] [Event] StopThreadEvent
+[2025-12-03 17:03:08,084] [Event] StopThreadEvent
+[2025-12-03 17:03:21,831] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 17:03:21,832] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 17:03:21,832] [Command] Disable user input
+[2025-12-03 17:03:21,832] [Command] Hiding cursor
+[2025-12-03 17:03:21,832] [Command] Transitioning to another screen
+[2025-12-03 17:03:21,865] [Event] PlayMusicEvent
+[2025-12-03 17:03:21,923] [Event] DisableUserInputEvent
+[2025-12-03 17:03:21,925] [Event] PlaySoundEvent
+[2025-12-03 17:03:21,925] [Event] HideCursorEvent
+[2025-12-03 17:03:21,926] [Event] ScreenTransitionEvent
+[2025-12-03 17:03:21,927] [Command] Refreshing the render for the screen
+[2025-12-03 17:03:21,928] [Event] RefreshRenderScreenEvent
+[2025-12-03 17:03:21,938] STREAM b'IHDR' 16 13
+[2025-12-03 17:03:21,938] STREAM b'sRGB' 41 1
+[2025-12-03 17:03:21,938] STREAM b'gAMA' 54 4
+[2025-12-03 17:03:21,938] STREAM b'cHRM' 70 32
+[2025-12-03 17:03:21,938] STREAM b'eXIf' 114 54
+[2025-12-03 17:03:21,938] STREAM b'oFFs' 180 9
+[2025-12-03 17:03:21,938] b'oFFs' 180 9 (unknown)
+[2025-12-03 17:03:21,939] STREAM b'pHYs' 201 9
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 222 15
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 249 24
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 285 16
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 313 9
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 334 13
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 359 11
+[2025-12-03 17:03:21,939] STREAM b'tEXt' 382 19
+[2025-12-03 17:03:21,939] STREAM b'IDAT' 413 8192
+[2025-12-03 17:03:25,940] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 17:03:25,940] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 17:03:25,940] [Command] Disable user input
+[2025-12-03 17:03:25,940] [Command] Hiding cursor
+[2025-12-03 17:03:25,940] [Command] Transitioning to another screen
+[2025-12-03 17:03:26,020] [Event] PlayMusicEvent
+[2025-12-03 17:03:26,021] [Event] HideCursorEvent
+[2025-12-03 17:03:26,021] [Event] ScreenTransitionEvent
+[2025-12-03 17:03:26,021] [Command] Refreshing the render for the screen
+[2025-12-03 17:03:26,023] [Event] PlaySoundEvent
+[2025-12-03 17:03:26,024] [Event] RefreshRenderScreenEvent
+[2025-12-03 17:03:26,028] [Event] DisableUserInputEvent
+[2025-12-03 17:03:26,034] STREAM b'IHDR' 16 13
+[2025-12-03 17:03:26,034] STREAM b'sRGB' 41 1
+[2025-12-03 17:03:26,034] STREAM b'gAMA' 54 4
+[2025-12-03 17:03:26,034] STREAM b'cHRM' 70 32
+[2025-12-03 17:03:26,034] STREAM b'eXIf' 114 54
+[2025-12-03 17:03:26,035] STREAM b'oFFs' 180 9
+[2025-12-03 17:03:26,035] b'oFFs' 180 9 (unknown)
+[2025-12-03 17:03:26,035] STREAM b'pHYs' 201 9
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 222 15
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 249 24
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 285 16
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 313 9
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 334 13
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 359 11
+[2025-12-03 17:03:26,035] STREAM b'tEXt' 382 19
+[2025-12-03 17:03:26,035] STREAM b'IDAT' 413 8192
+[2025-12-03 17:03:28,444] [Command] Animation fade_in finished
+[2025-12-03 17:03:28,445] [Event] AnimationFinishedEvent
+[2025-12-03 17:03:33,231] [Command] Disable user input
+[2025-12-03 17:03:33,232] [Command] Showing cursor
+[2025-12-03 17:03:33,232] [Event] ShowCursorEvent
+[2025-12-03 17:03:33,241] [Event] EnableUserInputEvent
+[2025-12-03 17:03:33,242] [Command] Setting cursor to HAND
+[2025-12-03 17:03:33,242] [Event] ChangeCursorEvent
+[2025-12-03 17:03:33,497] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:33,497] [Event] ChangeCursorEvent
+[2025-12-03 17:03:34,387] [Command] Setting cursor to HAND
+[2025-12-03 17:03:34,388] [Event] ChangeCursorEvent
+[2025-12-03 17:03:35,318] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:35,319] [Event] ChangeCursorEvent
+[2025-12-03 17:03:35,614] [Command] Setting cursor to HAND
+[2025-12-03 17:03:35,615] [Event] ChangeCursorEvent
+[2025-12-03 17:03:37,228] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:37,229] [Event] ChangeCursorEvent
+[2025-12-03 17:03:37,606] [Command] Setting cursor to HAND
+[2025-12-03 17:03:37,607] [Event] ChangeCursorEvent
+[2025-12-03 17:03:38,514] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:38,514] [Event] ChangeCursorEvent
+[2025-12-03 17:03:38,727] [Command] Setting cursor to HAND
+[2025-12-03 17:03:38,727] [Event] ChangeCursorEvent
+[2025-12-03 17:03:39,730] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:39,730] [Event] ChangeCursorEvent
+[2025-12-03 17:03:39,903] [Command] Setting cursor to HAND
+[2025-12-03 17:03:39,903] [Event] ChangeCursorEvent
+[2025-12-03 17:03:40,484] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:40,484] [Event] ChangeCursorEvent
+[2025-12-03 17:03:40,577] [Command] Setting cursor to HAND
+[2025-12-03 17:03:40,577] [Event] ChangeCursorEvent
+[2025-12-03 17:03:40,710] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:40,710] [Event] ChangeCursorEvent
+[2025-12-03 17:03:41,362] [Command] Setting cursor to HAND
+[2025-12-03 17:03:41,363] [Event] ChangeCursorEvent
+[2025-12-03 17:03:41,811] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:41,811] [Event] ChangeCursorEvent
+[2025-12-03 17:03:41,933] [Command] Setting cursor to HAND
+[2025-12-03 17:03:41,933] [Event] ChangeCursorEvent
+[2025-12-03 17:03:42,289] [Command] User clicked
+[2025-12-03 17:03:42,289] [Event] UserClickedEvent
+[2025-12-03 17:03:42,617] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:42,617] [Event] ChangeCursorEvent
+[2025-12-03 17:03:42,679] [Command] Setting cursor to HAND
+[2025-12-03 17:03:42,679] [Event] ChangeCursorEvent
+[2025-12-03 17:03:42,699] [Command] Setting cursor to ARROW
+[2025-12-03 17:03:42,699] [Event] ChangeCursorEvent
+[2025-12-03 17:04:08,427] [Command] Setting cursor to HAND
+[2025-12-03 17:04:08,427] [Event] ChangeCursorEvent
+[2025-12-03 17:04:09,199] [Command] User clicked
+[2025-12-03 17:04:09,200] [Event] UserClickedEvent
+[2025-12-03 17:04:09,553] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:09,554] [Event] ChangeCursorEvent
+[2025-12-03 17:04:09,676] [Command] Setting cursor to HAND
+[2025-12-03 17:04:09,676] [Event] ChangeCursorEvent
+[2025-12-03 17:04:10,005] [Command] User clicked
+[2025-12-03 17:04:10,006] [Event] UserClickedEvent
+[2025-12-03 17:04:10,406] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:10,406] [Event] ChangeCursorEvent
+[2025-12-03 17:04:11,256] [Command] Setting cursor to HAND
+[2025-12-03 17:04:11,256] [Event] ChangeCursorEvent
+[2025-12-03 17:04:11,338] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:11,339] [Event] ChangeCursorEvent
+[2025-12-03 17:04:11,585] [Command] Setting cursor to HAND
+[2025-12-03 17:04:11,585] [Event] ChangeCursorEvent
+[2025-12-03 17:04:12,270] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:12,271] [Event] ChangeCursorEvent
+[2025-12-03 17:04:12,617] [Command] Setting cursor to HAND
+[2025-12-03 17:04:12,617] [Event] ChangeCursorEvent
+[2025-12-03 17:04:12,790] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:12,791] [Event] ChangeCursorEvent
+[2025-12-03 17:04:13,371] [Event] StopThreadEvent
+[2025-12-03 17:04:13,372] [Event] StopThreadEvent
+[2025-12-03 17:04:13,374] [Event] StopThreadEvent
+[2025-12-03 17:04:18,615] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 17:04:18,615] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 17:04:18,615] [Command] Disable user input
+[2025-12-03 17:04:18,615] [Command] Hiding cursor
+[2025-12-03 17:04:18,615] [Command] Transitioning to another screen
+[2025-12-03 17:04:18,680] [Event] PlayMusicEvent
+[2025-12-03 17:04:18,681] [Event] HideCursorEvent
+[2025-12-03 17:04:18,681] [Event] ScreenTransitionEvent
+[2025-12-03 17:04:18,681] [Command] Refreshing the render for the screen
+[2025-12-03 17:04:18,684] [Event] PlaySoundEvent
+[2025-12-03 17:04:18,685] [Event] RefreshRenderScreenEvent
+[2025-12-03 17:04:18,690] [Event] DisableUserInputEvent
+[2025-12-03 17:04:18,697] STREAM b'IHDR' 16 13
+[2025-12-03 17:04:18,698] STREAM b'sRGB' 41 1
+[2025-12-03 17:04:18,698] STREAM b'gAMA' 54 4
+[2025-12-03 17:04:18,698] STREAM b'cHRM' 70 32
+[2025-12-03 17:04:18,698] STREAM b'eXIf' 114 54
+[2025-12-03 17:04:18,698] STREAM b'oFFs' 180 9
+[2025-12-03 17:04:18,698] b'oFFs' 180 9 (unknown)
+[2025-12-03 17:04:18,698] STREAM b'pHYs' 201 9
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 222 15
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 249 24
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 285 16
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 313 9
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 334 13
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 359 11
+[2025-12-03 17:04:18,698] STREAM b'tEXt' 382 19
+[2025-12-03 17:04:18,698] STREAM b'IDAT' 413 8192
+[2025-12-03 17:04:21,123] [Command] Animation fade_in finished
+[2025-12-03 17:04:21,123] [Event] AnimationFinishedEvent
+[2025-12-03 17:04:25,899] [Command] Disable user input
+[2025-12-03 17:04:25,899] [Command] Showing cursor
+[2025-12-03 17:04:25,899] [Event] ShowCursorEvent
+[2025-12-03 17:04:25,901] [Event] EnableUserInputEvent
+[2025-12-03 17:04:27,629] [Command] Setting cursor to HAND
+[2025-12-03 17:04:27,629] [Event] ChangeCursorEvent
+[2025-12-03 17:04:28,434] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:28,434] [Event] ChangeCursorEvent
+[2025-12-03 17:04:28,802] [Command] Setting cursor to HAND
+[2025-12-03 17:04:28,802] [Event] ChangeCursorEvent
+[2025-12-03 17:04:29,445] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:29,445] [Event] ChangeCursorEvent
+[2025-12-03 17:04:29,741] [Command] Setting cursor to HAND
+[2025-12-03 17:04:29,741] [Event] ChangeCursorEvent
+[2025-12-03 17:04:30,408] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:30,408] [Event] ChangeCursorEvent
+[2025-12-03 17:04:30,582] [Command] Setting cursor to HAND
+[2025-12-03 17:04:30,582] [Event] ChangeCursorEvent
+[2025-12-03 17:04:31,144] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:31,144] [Event] ChangeCursorEvent
+[2025-12-03 17:04:31,277] [Command] Setting cursor to HAND
+[2025-12-03 17:04:31,277] [Event] ChangeCursorEvent
+[2025-12-03 17:04:32,074] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:32,074] [Event] ChangeCursorEvent
+[2025-12-03 17:04:32,177] [Command] Setting cursor to HAND
+[2025-12-03 17:04:32,177] [Event] ChangeCursorEvent
+[2025-12-03 17:04:32,739] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:32,739] [Event] ChangeCursorEvent
+[2025-12-03 17:04:32,924] [Command] Setting cursor to HAND
+[2025-12-03 17:04:32,924] [Event] ChangeCursorEvent
+[2025-12-03 17:04:33,607] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:33,608] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,058] [Command] Setting cursor to HAND
+[2025-12-03 17:04:34,058] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,109] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:34,109] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,364] [Command] Setting cursor to HAND
+[2025-12-03 17:04:34,364] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,733] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:34,733] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,794] [Command] Setting cursor to HAND
+[2025-12-03 17:04:34,794] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,825] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:34,825] [Event] ChangeCursorEvent
+[2025-12-03 17:04:34,968] [Command] Setting cursor to HAND
+[2025-12-03 17:04:34,969] [Event] ChangeCursorEvent
+[2025-12-03 17:04:38,411] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:38,411] [Event] ChangeCursorEvent
+[2025-12-03 17:04:41,890] [Command] Setting cursor to HAND
+[2025-12-03 17:04:41,890] [Event] ChangeCursorEvent
+[2025-12-03 17:04:41,900] [Command] Setting cursor to ARROW
+[2025-12-03 17:04:41,901] [Event] ChangeCursorEvent
+[2025-12-03 17:04:41,932] [Command] Setting cursor to HAND
+[2025-12-03 17:04:41,932] [Event] ChangeCursorEvent
+[2025-12-03 17:04:42,182] [Event] StopThreadEvent
+[2025-12-03 17:04:42,182] [Event] StopThreadEvent
+[2025-12-03 17:04:42,187] [Event] StopThreadEvent
+[2025-12-03 17:08:37,212] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 17:08:37,212] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 17:08:37,212] [Command] Disable user input
+[2025-12-03 17:08:37,212] [Command] Hiding cursor
+[2025-12-03 17:08:37,212] [Command] Transitioning to another screen
+[2025-12-03 17:08:37,251] [Event] HideCursorEvent
+[2025-12-03 17:08:37,255] [Event] PlayMusicEvent
+[2025-12-03 17:08:37,256] [Event] ScreenTransitionEvent
+[2025-12-03 17:08:37,257] [Command] Refreshing the render for the screen
+[2025-12-03 17:08:37,320] [Event] DisableUserInputEvent
+[2025-12-03 17:08:37,321] [Event] RefreshRenderScreenEvent
+[2025-12-03 17:08:37,321] [Event] PlaySoundEvent
+[2025-12-03 17:08:37,332] STREAM b'IHDR' 16 13
+[2025-12-03 17:08:37,332] STREAM b'sRGB' 41 1
+[2025-12-03 17:08:37,332] STREAM b'gAMA' 54 4
+[2025-12-03 17:08:37,332] STREAM b'cHRM' 70 32
+[2025-12-03 17:08:37,332] STREAM b'eXIf' 114 54
+[2025-12-03 17:08:37,332] STREAM b'oFFs' 180 9
+[2025-12-03 17:08:37,332] b'oFFs' 180 9 (unknown)
+[2025-12-03 17:08:37,332] STREAM b'pHYs' 201 9
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 222 15
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 249 24
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 285 16
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 313 9
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 334 13
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 359 11
+[2025-12-03 17:08:37,333] STREAM b'tEXt' 382 19
+[2025-12-03 17:08:37,333] STREAM b'IDAT' 413 8192
+[2025-12-03 17:08:39,723] [Command] Animation fade_in finished
+[2025-12-03 17:08:39,723] [Event] AnimationFinishedEvent
+[2025-12-03 17:08:44,475] [Command] Disable user input
+[2025-12-03 17:08:44,476] [Command] Showing cursor
+[2025-12-03 17:08:44,476] [Event] ShowCursorEvent
+[2025-12-03 17:08:44,490] [Event] EnableUserInputEvent
+[2025-12-03 17:08:45,846] [Command] Setting cursor to HAND
+[2025-12-03 17:08:45,846] [Event] ChangeCursorEvent
+[2025-12-03 17:08:46,469] [Command] Setting cursor to ARROW
+[2025-12-03 17:08:46,469] [Event] ChangeCursorEvent
+[2025-12-03 17:08:47,122] [Command] Setting cursor to HAND
+[2025-12-03 17:08:47,123] [Event] ChangeCursorEvent
+[2025-12-03 17:08:47,714] [Command] Setting cursor to ARROW
+[2025-12-03 17:08:47,714] [Event] ChangeCursorEvent
+[2025-12-03 17:08:48,298] [Command] Setting cursor to HAND
+[2025-12-03 17:08:48,299] [Event] ChangeCursorEvent
+[2025-12-03 17:08:49,430] [Command] Setting cursor to ARROW
+[2025-12-03 17:08:49,430] [Event] ChangeCursorEvent
+[2025-12-03 17:08:50,348] [Command] Setting cursor to HAND
+[2025-12-03 17:08:50,348] [Event] ChangeCursorEvent
+[2025-12-03 17:08:50,419] [Command] Setting cursor to ARROW
+[2025-12-03 17:08:50,420] [Event] ChangeCursorEvent
+[2025-12-03 17:08:51,368] [Event] StopThreadEvent
+[2025-12-03 17:08:51,368] [Event] StopThreadEvent
+[2025-12-03 17:08:51,375] [Event] StopThreadEvent
+[2025-12-03 18:02:57,754] [Command] Playing music assets/sounds/ambient.ogg
+[2025-12-03 18:02:57,754] [Command] Playing sound assets/sounds/intro.ogg
+[2025-12-03 18:02:57,754] [Command] Disable user input
+[2025-12-03 18:02:57,754] [Command] Hiding cursor
+[2025-12-03 18:02:57,754] [Command] Transitioning to another screen
+[2025-12-03 18:02:57,779] [Event] PlayMusicEvent
+[2025-12-03 18:02:57,811] [Event] HideCursorEvent
+[2025-12-03 18:02:57,812] [Event] ScreenTransitionEvent
+[2025-12-03 18:02:57,812] [Command] Refreshing the render for the screen
+[2025-12-03 18:02:57,812] [Event] RefreshRenderScreenEvent
+[2025-12-03 18:02:57,813] [Event] PlaySoundEvent
+[2025-12-03 18:02:57,817] [Event] DisableUserInputEvent
+[2025-12-03 18:02:57,821] STREAM b'IHDR' 16 13
+[2025-12-03 18:02:57,821] STREAM b'sRGB' 41 1
+[2025-12-03 18:02:57,821] STREAM b'gAMA' 54 4
+[2025-12-03 18:02:57,821] STREAM b'cHRM' 70 32
+[2025-12-03 18:02:57,821] STREAM b'eXIf' 114 54
+[2025-12-03 18:02:57,821] STREAM b'oFFs' 180 9
+[2025-12-03 18:02:57,821] b'oFFs' 180 9 (unknown)
+[2025-12-03 18:02:57,821] STREAM b'pHYs' 201 9
+[2025-12-03 18:02:57,821] STREAM b'tEXt' 222 15
+[2025-12-03 18:02:57,821] STREAM b'tEXt' 249 24
+[2025-12-03 18:02:57,821] STREAM b'tEXt' 285 16
+[2025-12-03 18:02:57,821] STREAM b'tEXt' 313 9
+[2025-12-03 18:02:57,821] STREAM b'tEXt' 334 13
+[2025-12-03 18:02:57,821] STREAM b'tEXt' 359 11
+[2025-12-03 18:02:57,822] STREAM b'tEXt' 382 19
+[2025-12-03 18:02:57,822] STREAM b'IDAT' 413 8192
+[2025-12-03 18:03:00,261] [Command] Animation fade_in finished
+[2025-12-03 18:03:00,261] [Event] AnimationFinishedEvent
+[2025-12-03 18:03:04,867] [Command] Disable user input
+[2025-12-03 18:03:04,867] [Command] Showing cursor
+[2025-12-03 18:03:04,867] [Event] EnableUserInputEvent
+[2025-12-03 18:03:04,867] [Event] ShowCursorEvent
+[2025-12-03 18:03:18,082] [Event] StopThreadEvent
+[2025-12-03 18:03:18,082] [Event] StopThreadEvent
+[2025-12-03 18:03:18,087] [Event] StopThreadEvent

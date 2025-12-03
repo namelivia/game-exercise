@@ -69,3 +69,9 @@ class Rectangle(Shape):
         # Reset color
         glColor4f(1.0, 1.0, 1.0, 1.0)
         glDisable(GL_BLEND)
+
+    def get_width(self) -> int:
+        return self.width
+
+    def get_height(self) -> int:
+        return self.height
