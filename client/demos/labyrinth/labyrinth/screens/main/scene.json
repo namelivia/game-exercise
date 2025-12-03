@@ -1,0 +1,69 @@
+{
+  "background": "assets/images/test_screen.png",
+  "timers": [
+    {
+      "id": "intro_finish_timer",
+      "delay_ms": 700,
+      "on_finish_action": "on_intro_finished"
+    }
+  ],
+  "initial_actions": [
+    {
+      "command": "PlayMusic",
+      "args": ["assets/sounds/ambient.ogg"]
+    },
+    {
+      "command": "PlaySound",
+      "args": ["assets/sounds/intro.ogg"]
+    },
+    {
+      "command": "DisableUserInput"
+    },
+    {
+      "command": "HideCursor"
+    }
+  ],
+  "clickable_elements": [
+      {
+        "id": "go_left",
+        "x": 150,
+        "y": 148,
+        "width": 69,
+        "height": 237
+      },
+      {
+        "id": "move_forward",
+        "x": 295,
+        "y": 221,
+        "width": 46,
+        "height": 44
+      },
+      {
+        "id": "look_at_window",
+        "x": 433,
+        "y": 196,
+        "width": 47,
+        "height": 97
+      },
+      {
+        "id": "go_back",
+        "x": 223,
+        "y": 407,
+        "width": 198,
+        "height": 80
+      }
+  ],
+  "callbacks": [
+    {
+      "id": "on_intro_finished",
+      "actions": [
+        {
+          "command": "EnableUserInput"
+        },
+        {
+          "command": "ShowCursor"
+        }
+      ]
+    }
+  ]
+}
