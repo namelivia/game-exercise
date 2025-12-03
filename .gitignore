@@ -5,6 +5,8 @@ client/demos/game/game_data/*
 client/demos/game/game_data/.gitkeep
 client/demos/animal-sounds/data/*
 client/demos/animal-sounds/data/.gitkeep
+client/demos/labyrinth/data/*
+client/demos/labyrinth/data/.gitkeep
 htmlcov
 .coverage
 tags
