@@ -1,3 +1,3 @@
-# Animal sounds
+# Labyrinth
 
-Click on the animal portraits to hear the sound they make.
+Try to find your way out of the labyrinth.
