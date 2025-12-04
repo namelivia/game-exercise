@@ -11,6 +11,7 @@ if __name__ == "__main__":
         format="[%(asctime)s] %(message)s",
     )
 
-    load_screen("labyrinth/screens/main/scene.json")
+    screen = load_screen("labyrinth/screens/main/scene.json")
+    print(screen.__dict__)
     exit()
     start_application(initial_screen=MainScreen)

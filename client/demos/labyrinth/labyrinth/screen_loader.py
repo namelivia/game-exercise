@@ -1,10 +1,43 @@
 import json
 
-from engine.api import ClickableUIElement, Screen, UIBuilder
+from engine.api import (
+    ClickableUIElement,
+    DisableUserInput,
+    HideCursor,
+    PlayMusic,
+    PlaySound,
+    Screen,
+    UIBuilder,
+)
 
 
 def create_background(path):
     return UIBuilder(x=0, y=0).with_image(path).build()
+
+
+ACTION_MAP = {
+    "PlayMusic": PlayMusic,
+    "PlaySound": PlaySound,
+    "DisableUserInput": DisableUserInput,
+    "HideCursor": HideCursor,
+}
+
+
+def parse_initialize(data):
+    result = []
+    for action in data:
+        command_name = action["command"]
+        args = action.get("args", [])
+
+        CommandClass = ACTION_MAP.get(command_name)
+
+        if CommandClass:
+            # Instantiate the object using the arguments
+            action_instance = CommandClass(*args)
+            result.append(action_instance)
+        else:
+            print(f"Warning: Unknown command '{command_name}' skipped.")
+    return result
 
 
 def _create_clickable_element(definition):
@@ -39,5 +72,6 @@ def load_screen(json_path):
         background = create_background(scene_data["background"])
         clickable_elements = create_clickable_elements(scene_data["clickable_elements"])
         new_screen.ui_elements = [background, *clickable_elements]
+        initialize = parse_initialize(scene_data["initial_actions"])
 
         return new_screen
