@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from engine.primitives.timer import Timer
 
 
-class Screen(ABC):
+class JSONScreen(ABC):
     def __init__(self) -> None:
         self.ui_elements: List[UIElement | ClickableUIElement] = []
         self.timers: List["Timer"] = []  # Time based actions
@@ -21,9 +21,11 @@ class Screen(ABC):
         self.initial_time = Clock().get_ticks()
         self.time = 0
         self.data: Dict[str, Any] = {}  # Internal state for the screen
+        self.initial_actions = []
 
     def initialize(self) -> None:
-        pass
+        for action in self.initial_actions:
+            action.execute()
 
     def update_events(self, event: Optional["InGameEvent"] = None) -> None:
         if event is not None:
@@ -34,6 +36,9 @@ class Screen(ABC):
 
     def add_timer(self, timer):
         self.timers.append(timer)
+
+    def set_initial_actions(self, initial_actions):
+        self.initial_actions = initial_actions
 
     def update(self) -> None:
         self.time = Clock().get_ticks() - self.initial_time

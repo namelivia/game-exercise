@@ -4,9 +4,9 @@ from engine.api import (
     ClickableUIElement,
     DisableUserInput,
     HideCursor,
+    JSONScreen,
     PlayMusic,
     PlaySound,
-    Screen,
     UIBuilder,
 )
 
@@ -21,6 +21,29 @@ ACTION_MAP = {
     "DisableUserInput": DisableUserInput,
     "HideCursor": HideCursor,
 }
+
+
+def parse_callbacks(data):
+    print(data)
+    exit()
+
+
+def parse_timers(data):
+    result = []
+    for timer in data:
+        delay = timer["delay_ms"]
+        callback_name = timer["on_finish_action"]
+
+        # TODO: This requires setting the callbacks first
+        # try:
+        #    callback_method = getattr(self, action_name)
+        # except AttributeError:
+        #    print(f"ERROR: Timer action '{action_name}' not found on Screen class.")
+        #    continue
+
+        # Create the Timer instance with the delay and the found method
+        # new_timer = Timer(delay, callback_method)
+        # result.append(new_timer)
 
 
 def parse_initialize(data):
@@ -68,10 +91,13 @@ def create_clickable_elements(definitions):
 def load_screen(json_path):
     with open(json_path, "r") as f:
         scene_data = json.load(f)
-        new_screen = Screen()
+        new_screen = JSONScreen()
         background = create_background(scene_data["background"])
         clickable_elements = create_clickable_elements(scene_data["clickable_elements"])
         new_screen.ui_elements = [background, *clickable_elements]
-        initialize = parse_initialize(scene_data["initial_actions"])
+        new_screen.initial_actions = parse_initialize(scene_data["initial_actions"])
+        # Callbacks need to be parsed before timers
+        parse_callbacks(scene_data["callbacks"])
+        new_screen.timers = parse_timers(scene_data["timers"])
 
         return new_screen
