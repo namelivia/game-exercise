@@ -9,14 +9,7 @@ from engine.api import (
     ShowCursor,
     Timer,
 )
-
-from .ui import (
-    create_background,
-    create_clickable_area_1,
-    create_clickable_area_2,
-    create_clickable_area_3,
-    create_clickable_area_4,
-)
+from labyrinth.ui_loader import load_ui
 
 
 def on_click():
@@ -28,14 +21,7 @@ class MainScreen(Screen):
         super().__init__()
 
         self.data = {}
-        self.ui_elements = [
-            create_background(),
-            create_clickable_area_1(on_click),
-            create_clickable_area_2(on_click),
-            create_clickable_area_3(on_click),
-            create_clickable_area_4(on_click),
-            create_fade_in(),
-        ]
+        self.ui_elements = load_ui("labyrinth/screens/main/ui.json")
         self.timers = [Timer(700, self.on_intro_finished)]
 
     def initialize(self):
