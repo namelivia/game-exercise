@@ -1,6 +1,6 @@
 import json
 
-from engine.api import ClickableUIElement, UIBuilder
+from engine.api import ChangeCursor, ClickableUIElement, UIBuilder
 
 
 def _create_background(path):
@@ -20,11 +20,17 @@ def _create_clickable_element(definition):
     )
     element.hide()
 
+    def on_enter():
+        ChangeCursor("HAND").execute()
+
+    def on_leave():
+        ChangeCursor("ARROW").execute()
+
     return ClickableUIElement(
         element=element,
         on_click=lambda *args, **kwargs: None,
-        on_mouse_enter=lambda *args, **kwargs: None,
-        on_mouse_leave=lambda *args, **kwargs: None,
+        on_mouse_enter=on_enter,
+        on_mouse_leave=on_leave,
     )
 
 
