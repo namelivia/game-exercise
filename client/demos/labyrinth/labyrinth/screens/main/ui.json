@@ -6,28 +6,36 @@
         "x": 150,
         "y": 148,
         "width": 69,
-        "height": 237
+        "height": 237,
+        "cursor": "HAND",
+        "destination": "another"
       },
       {
         "id": "move_forward",
         "x": 295,
         "y": 221,
         "width": 46,
-        "height": 44
+        "height": 44,
+        "cursor": "HAND",
+        "destination": "another"
       },
       {
         "id": "look_at_window",
         "x": 433,
         "y": 196,
         "width": 47,
-        "height": 97
+        "height": 97,
+        "cursor": "HAND",
+        "destination": "another"
       },
       {
         "id": "go_back",
         "x": 223,
         "y": 407,
         "width": 198,
-        "height": 80
+        "height": 80,
+        "cursor": "HAND",
+        "destination": "another"
       }
   ]
 }

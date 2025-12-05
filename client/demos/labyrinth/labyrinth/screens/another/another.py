@@ -1,44 +1,30 @@
 from components.api import create_fade_in
 from engine.api import (
-    ClickableUIElement,
     DisableUserInput,
     EnableUserInput,
     HideCursor,
-    PlayMusic,
     PlaySound,
     Screen,
     ShowCursor,
     Timer,
-    UserClickedEvent,
 )
 from labyrinth.ui_loader import load_ui
 
 
-class MainScreen(Screen):
+class AnotherScreen(Screen):
     def __init__(self) -> None:
         super().__init__()
 
         self.data = {}
         self.ui_elements = load_ui("labyrinth/screens/main/ui.json")
-        self.ui_elements.append(create_fade_in())
         self.timers = [Timer(700, self.on_intro_finished)]
 
     def initialize(self):
-        PlayMusic(
-            "assets/sounds/ambient.ogg",
-        ).execute()
         PlaySound(
             "assets/sounds/intro.ogg",
         ).execute()
         DisableUserInput().execute()
         HideCursor().execute()
-
-        self.events = {UserClickedEvent: self.on_user_clicked}
-
-    def on_user_clicked(self, event: UserClickedEvent) -> None:
-        for element in self.ui_elements:
-            if isinstance(element, ClickableUIElement) and element.mouse_over:
-                element.clicked()
 
     def on_intro_finished(self) -> None:
         EnableUserInput().execute()

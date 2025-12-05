@@ -1,6 +1,6 @@
 import json
 
-from engine.api import ChangeCursor, ClickableUIElement, UIBuilder
+from engine.api import ChangeCursor, ClickableUIElement, ScreenTransition, UIBuilder
 
 
 def _create_background(path):
@@ -20,15 +20,26 @@ def _create_clickable_element(definition):
     )
     element.hide()
 
+    def on_click():
+        if definition["destination"] == "main":
+            from labyrinth.screens.main.main import MainScreen
+
+            dest = MainScreen
+        else:
+            from labyrinth.screens.another.another import AnotherScreen
+
+            dest = AnotherScreen
+        ScreenTransition(dest).execute()
+
     def on_enter():
-        ChangeCursor("HAND").execute()
+        ChangeCursor(definition["cursor"]).execute()
 
     def on_leave():
         ChangeCursor("ARROW").execute()
 
     return ClickableUIElement(
         element=element,
-        on_click=lambda *args, **kwargs: None,
+        on_click=on_click,
         on_mouse_enter=on_enter,
         on_mouse_leave=on_leave,
     )
