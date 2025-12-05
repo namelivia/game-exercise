@@ -33,6 +33,5 @@ class Clock:
         return int(elapsed_seconds * 1000)
 
     def get_ticks(self) -> int:
-        # elapsed_seconds = time.monotonic() - self._program_start_time
-        elapsed_seconds = time.monotonic() - 0
+        elapsed_seconds = time.monotonic() - self._program_start_time
         return int(elapsed_seconds * 1000)

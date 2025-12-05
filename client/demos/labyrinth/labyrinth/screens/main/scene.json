@@ -1,28 +1,5 @@
 {
   "background": "assets/images/test_screen.png",
-  "timers": [
-    {
-      "id": "intro_finish_timer",
-      "delay_ms": 700,
-      "on_finish_action": "on_intro_finished"
-    }
-  ],
-  "initial_actions": [
-    {
-      "command": "PlayMusic",
-      "args": ["assets/sounds/ambient.ogg"]
-    },
-    {
-      "command": "PlaySound",
-      "args": ["assets/sounds/intro.ogg"]
-    },
-    {
-      "command": "DisableUserInput"
-    },
-    {
-      "command": "HideCursor"
-    }
-  ],
   "clickable_elements": [
       {
         "id": "go_left",
@@ -52,18 +29,5 @@
         "width": 198,
         "height": 80
       }
-  ],
-  "callbacks": [
-    {
-      "id": "on_intro_finished",
-      "actions": [
-        {
-          "command": "EnableUserInput"
-        },
-        {
-          "command": "ShowCursor"
-        }
-      ]
-    }
   ]
 }

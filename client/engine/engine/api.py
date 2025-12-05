@@ -31,7 +31,6 @@ from engine.features.user_input.mouse_position import MousePosition
 # PRIMITIVES to extend from
 from engine.primitives.event import Event
 from engine.primitives.event_handler import EventHandler
-from engine.primitives.json_screen import JSONScreen
 from engine.primitives.screen import Screen
 from engine.primitives.timer import Timer
 
