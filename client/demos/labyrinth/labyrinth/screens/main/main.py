@@ -1,4 +1,4 @@
-from components.api import create_fade_in
+from components.api import create_fade_in, create_image_cursor
 from engine.api import (
     ClickableUIElement,
     DisableUserInput,
@@ -7,7 +7,6 @@ from engine.api import (
     PlayMusic,
     PlaySound,
     Screen,
-    ShowCursor,
     Timer,
     UserClickedEvent,
 )
@@ -20,7 +19,9 @@ class MainScreen(Screen):
 
         self.data = {}
         self.ui_elements = load_ui("labyrinth/screens/main/ui.json")
-        self.ui_elements.append(create_fade_in())
+        self.custom_cursor = create_image_cursor("assets/images/arrow_left.png")
+        self.custom_cursor.hide()
+        self.ui_elements += [self.custom_cursor, create_fade_in()]
         self.timers = [Timer(700, self.on_intro_finished)]
 
     def initialize(self):
@@ -42,4 +43,4 @@ class MainScreen(Screen):
 
     def on_intro_finished(self) -> None:
         EnableUserInput().execute()
-        ShowCursor().execute()
+        self.custom_cursor.show()

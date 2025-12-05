@@ -53,7 +53,10 @@ def load_ui(json_path):
     with open(json_path, "r") as f:
         scene_data = json.load(f)
         background = _create_background(scene_data["background"])
-        clickable_elements = _create_clickable_elements(
-            scene_data["clickable_elements"]
-        )
+        try:
+            clickable_elements = _create_clickable_elements(
+                scene_data["clickable_elements"]
+            )
+        except KeyError:
+            clickable_elements = []
         return [background, *clickable_elements]

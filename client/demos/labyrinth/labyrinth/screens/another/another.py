@@ -16,13 +16,10 @@ class AnotherScreen(Screen):
         super().__init__()
 
         self.data = {}
-        self.ui_elements = load_ui("labyrinth/screens/main/ui.json")
+        self.ui_elements = load_ui("labyrinth/screens/another/ui.json")
         self.timers = [Timer(700, self.on_intro_finished)]
 
     def initialize(self):
-        PlaySound(
-            "assets/sounds/intro.ogg",
-        ).execute()
         DisableUserInput().execute()
         HideCursor().execute()
 
