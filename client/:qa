@@ -27,13 +27,13 @@ from engine.features.user_input.events import UserClickedEvent, UserTypedEvent
 
 # Mouse position singleton
 from engine.features.user_input.mouse_position import MousePosition
-from engine.primitives.command import Command
 
 # PRIMITIVES to extend from
 from engine.primitives.event import Event, InGameEvent
 from engine.primitives.event_handler import EventHandler
 from engine.primitives.screen import Screen
 from engine.primitives.timer import Timer
+from engine.primitives.command import Command
 
 # UI
 from engine.ui.builder import UIBuilder

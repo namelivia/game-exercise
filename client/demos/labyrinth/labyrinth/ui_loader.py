@@ -1,6 +1,7 @@
 import json
 
 from engine.api import ClickableUIElement, ScreenTransition, UIBuilder
+from labyrinth.commands import SetCustomCursor
 
 
 def _create_background(path):
@@ -32,10 +33,10 @@ def _create_clickable_element(definition):
         ScreenTransition(dest).execute()
 
     def on_enter():
-        print(definition["cursor"])
+        SetCustomCursor(definition["cursor"]).execute()
 
     def on_leave():
-        print("default cursor")
+        SetCustomCursor("default").execute()
 
     return ClickableUIElement(
         element=element,

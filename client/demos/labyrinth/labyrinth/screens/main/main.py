@@ -10,6 +10,7 @@ from engine.api import (
     Timer,
     UserClickedEvent,
 )
+from labyrinth.events import SetCustomCursorEvent
 from labyrinth.ui_loader import load_ui
 
 
@@ -43,7 +44,10 @@ class MainScreen(Screen):
         DisableUserInput().execute()
         HideCursor().execute()
 
-        self.events = {UserClickedEvent: self.on_user_clicked}
+        self.events = {
+            UserClickedEvent: self.on_user_clicked,
+            SetCustomCursorEvent: self.on_set_custom_cursor,
+        }
 
     def on_user_clicked(self, event: UserClickedEvent) -> None:
         for element in self.ui_elements:
@@ -53,3 +57,6 @@ class MainScreen(Screen):
     def on_intro_finished(self) -> None:
         EnableUserInput().execute()
         self.custom_cursor.set_cursor("default")
+
+    def on_set_custom_cursor(self, event: SetCustomCursorEvent) -> None:
+        self.custom_cursor.set_cursor(event.key)
