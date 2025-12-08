@@ -7,7 +7,7 @@
         "y": 148,
         "width": 69,
         "height": 237,
-        "cursor": "HAND",
+        "cursor": "go_left",
         "destination": "another"
       },
       {
@@ -16,7 +16,7 @@
         "y": 221,
         "width": 46,
         "height": 44,
-        "cursor": "HAND",
+        "cursor": "go_forward",
         "destination": "another"
       },
       {
@@ -25,7 +25,7 @@
         "y": 196,
         "width": 47,
         "height": 97,
-        "cursor": "HAND",
+        "cursor": "go_right",
         "destination": "another"
       },
       {
@@ -34,7 +34,7 @@
         "y": 407,
         "width": 198,
         "height": 80,
-        "cursor": "HAND",
+        "cursor": "go_back",
         "destination": "another"
       }
   ]

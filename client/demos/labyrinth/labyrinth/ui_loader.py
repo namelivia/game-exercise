@@ -1,6 +1,6 @@
 import json
 
-from engine.api import ChangeCursor, ClickableUIElement, ScreenTransition, UIBuilder
+from engine.api import ClickableUIElement, ScreenTransition, UIBuilder
 
 
 def _create_background(path):
@@ -32,10 +32,10 @@ def _create_clickable_element(definition):
         ScreenTransition(dest).execute()
 
     def on_enter():
-        ChangeCursor(definition["cursor"]).execute()
+        print(definition["cursor"])
 
     def on_leave():
-        ChangeCursor("ARROW").execute()
+        print("default cursor")
 
     return ClickableUIElement(
         element=element,
