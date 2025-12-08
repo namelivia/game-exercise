@@ -1,26 +1,17 @@
-from components.api import create_fade_in
+from components.api import ImageCursor, create_fade_in
 from engine.api import (
+    ClickableUIElement,
     DisableUserInput,
     EnableUserInput,
     HideCursor,
     PlayMusic,
     PlaySound,
     Screen,
-    ShowCursor,
     Timer,
+    UserClickedEvent,
 )
-
-from .ui import (
-    create_background,
-    create_clickable_area_1,
-    create_clickable_area_2,
-    create_clickable_area_3,
-    create_clickable_area_4,
-)
-
-
-def on_click():
-    pass
+from labyrinth.events import SetCustomCursorEvent
+from labyrinth.ui_loader import load_ui
 
 
 class MainScreen(Screen):
@@ -28,14 +19,19 @@ class MainScreen(Screen):
         super().__init__()
 
         self.data = {}
-        self.ui_elements = [
-            create_background(),
-            create_clickable_area_1(on_click),
-            create_clickable_area_2(on_click),
-            create_clickable_area_3(on_click),
-            create_clickable_area_4(on_click),
-            create_fade_in(),
-        ]
+        self.ui_elements = load_ui("labyrinth/screens/main/ui.json")
+        self.custom_cursor = ImageCursor()
+        self.custom_cursor.initialize(
+            {
+                "default": "assets/images/arrow_default.png",
+                "go_left": "assets/images/arrow_left.png",
+                "go_right": "assets/images/arrow_right.png",
+                "go_forward": "assets/images/arrow_forward.png",
+                "go_back": "assets/images/arrow_back.png",
+            }
+        )
+        self.custom_cursor.get_element().hide()
+        self.ui_elements += [self.custom_cursor.get_element(), create_fade_in()]
         self.timers = [Timer(700, self.on_intro_finished)]
 
     def initialize(self):
@@ -48,6 +44,19 @@ class MainScreen(Screen):
         DisableUserInput().execute()
         HideCursor().execute()
 
+        self.events = {
+            UserClickedEvent: self.on_user_clicked,
+            SetCustomCursorEvent: self.on_set_custom_cursor,
+        }
+
+    def on_user_clicked(self, event: UserClickedEvent) -> None:
+        for element in self.ui_elements:
+            if isinstance(element, ClickableUIElement) and element.mouse_over:
+                element.clicked()
+
     def on_intro_finished(self) -> None:
         EnableUserInput().execute()
-        ShowCursor().execute()
+        self.custom_cursor.set_cursor("default")
+
+    def on_set_custom_cursor(self, event: SetCustomCursorEvent) -> None:
+        self.custom_cursor.set_cursor(event.key)

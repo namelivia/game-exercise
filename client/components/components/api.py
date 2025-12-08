@@ -1,2 +1,2 @@
-from components.image_cursor import create_image_cursor
+from components.image_cursor import ImageCursor
 from components.overlay import create_fade_in, create_fade_out

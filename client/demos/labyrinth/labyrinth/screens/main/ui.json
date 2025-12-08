@@ -1,0 +1,41 @@
+{
+  "background": "assets/images/test_screen.png",
+  "clickable_elements": [
+      {
+        "id": "go_left",
+        "x": 150,
+        "y": 148,
+        "width": 69,
+        "height": 237,
+        "cursor": "go_left",
+        "destination": "another"
+      },
+      {
+        "id": "move_forward",
+        "x": 295,
+        "y": 221,
+        "width": 46,
+        "height": 44,
+        "cursor": "go_forward",
+        "destination": "another"
+      },
+      {
+        "id": "look_at_window",
+        "x": 433,
+        "y": 196,
+        "width": 47,
+        "height": 97,
+        "cursor": "go_right",
+        "destination": "another"
+      },
+      {
+        "id": "go_back",
+        "x": 223,
+        "y": 407,
+        "width": 198,
+        "height": 80,
+        "cursor": "go_back",
+        "destination": "another"
+      }
+  ]
+}
