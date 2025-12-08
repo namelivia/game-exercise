@@ -18,8 +18,10 @@ class MainScreen(Screen):
     def __init__(self) -> None:
         super().__init__()
 
-        self.data = {}
+        # Only for this screen
         self.ui_elements = load_ui("labyrinth/screens/main/ui.json")
+
+        # Common for every screen
         self.custom_cursor = ImageCursor()
         self.custom_cursor.initialize(
             {
@@ -28,12 +30,16 @@ class MainScreen(Screen):
                 "go_right": "assets/images/arrow_right.png",
                 "go_forward": "assets/images/arrow_forward.png",
                 "go_back": "assets/images/arrow_back.png",
+                "look": "assets/images/look.png",
             }
         )
         self.custom_cursor.get_element().hide()
         self.ui_elements += [self.custom_cursor.get_element(), create_fade_in()]
+
+        # Only for this screen
         self.timers = [Timer(700, self.on_intro_finished)]
 
+    # Only for this screen
     def initialize(self):
         PlayMusic(
             "assets/sounds/ambient.ogg",
@@ -44,6 +50,7 @@ class MainScreen(Screen):
         DisableUserInput().execute()
         HideCursor().execute()
 
+        # Common for every screen
         self.events = {
             UserClickedEvent: self.on_user_clicked,
             SetCustomCursorEvent: self.on_set_custom_cursor,
@@ -54,9 +61,11 @@ class MainScreen(Screen):
             if isinstance(element, ClickableUIElement) and element.mouse_over:
                 element.clicked()
 
+    # Only for this screen
     def on_intro_finished(self) -> None:
         EnableUserInput().execute()
         self.custom_cursor.set_cursor("default")
 
+    # Common for every screen
     def on_set_custom_cursor(self, event: SetCustomCursorEvent) -> None:
         self.custom_cursor.set_cursor(event.key)
