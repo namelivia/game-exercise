@@ -8,7 +8,7 @@
         "width": 69,
         "height": 237,
         "cursor": "go_left",
-        "destination": "another"
+        "action": "scene1_left"
       },
       {
         "id": "move_forward",
@@ -17,7 +17,7 @@
         "width": 46,
         "height": 44,
         "cursor": "go_forward",
-        "destination": "another"
+        "action": "scene1_forward"
       },
       {
         "id": "look_at_window",
@@ -26,7 +26,7 @@
         "width": 47,
         "height": 97,
         "cursor": "look",
-        "destination": "another"
+        "action": "scene1_window"
       },
       {
         "id": "go_back",
@@ -35,7 +35,7 @@
         "width": 198,
         "height": 80,
         "cursor": "go_back",
-        "destination": "another"
+        "action": "scene1_back"
       }
   ]
 }

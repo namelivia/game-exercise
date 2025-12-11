@@ -1,7 +1,44 @@
 import json
 
-from engine.api import ClickableUIElement, ScreenTransition, UIBuilder
+from engine.api import ClickableUIElement, PlaySound, ScreenTransition, UIBuilder
 from labyrinth.commands import SetCustomCursor
+
+
+def on_scene1_left():
+    from labyrinth.screens.another.another import AnotherScreen
+
+    ScreenTransition(AnotherScreen).execute()
+
+
+def on_scene1_forward():
+    from labyrinth.screens.another.another import AnotherScreen
+
+    ScreenTransition(AnotherScreen).execute()
+
+
+def on_scene1_window():
+    PlaySound(
+        "assets/sounds/window.ogg",
+    ).execute()
+
+
+def on_scene1_back():
+    print("I can't go back")
+
+
+def on_scene2_back():
+    from labyrinth.screens.main.main import MainScreen
+
+    ScreenTransition(MainScreen).execute()
+
+
+actions = {
+    "scene1_left": on_scene1_left,
+    "scene1_forward": on_scene1_forward,
+    "scene1_window": on_scene1_window,
+    "scene1_back": on_scene1_back,
+    "scene2_back": on_scene2_back,
+}
 
 
 def _create_background(path):
@@ -22,15 +59,7 @@ def _create_clickable_element(definition):
     element.hide()
 
     def on_click():
-        if definition["destination"] == "main":
-            from labyrinth.screens.main.main import MainScreen
-
-            dest = MainScreen
-        else:
-            from labyrinth.screens.another.another import AnotherScreen
-
-            dest = AnotherScreen
-        ScreenTransition(dest).execute()
+        actions[definition["action"]]()
 
     def on_enter():
         SetCustomCursor(definition["cursor"]).execute()
