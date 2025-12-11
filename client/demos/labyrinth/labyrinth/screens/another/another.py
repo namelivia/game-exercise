@@ -1,13 +1,6 @@
-from components.api import create_fade_in
-from engine.api import (
-    DisableUserInput,
-    EnableUserInput,
-    HideCursor,
-    PlaySound,
-    Screen,
-    ShowCursor,
-    Timer,
-)
+from components.api import ImageCursor
+from engine.api import ClickableUIElement, Screen, UserClickedEvent
+from labyrinth.events import SetCustomCursorEvent
 from labyrinth.ui_loader import load_ui
 
 
@@ -17,12 +10,31 @@ class AnotherScreen(Screen):
 
         self.data = {}
         self.ui_elements = load_ui("labyrinth/screens/another/ui.json")
-        self.timers = [Timer(700, self.on_intro_finished)]
 
-    def initialize(self):
-        DisableUserInput().execute()
-        HideCursor().execute()
+        self.custom_cursor = ImageCursor()
+        self.custom_cursor.initialize(
+            {
+                "default": "assets/images/arrow_default.png",
+                "go_left": "assets/images/arrow_left.png",
+                "go_right": "assets/images/arrow_right.png",
+                "go_forward": "assets/images/arrow_forward.png",
+                "go_back": "assets/images/arrow_back.png",
+                "look": "assets/images/look.png",
+            }
+        )
+        self.custom_cursor.get_element().hide()
+        self.custom_cursor.set_cursor("default")
+        self.ui_elements += [self.custom_cursor.get_element()]
 
-    def on_intro_finished(self) -> None:
-        EnableUserInput().execute()
-        ShowCursor().execute()
+        self.events = {
+            UserClickedEvent: self.on_user_clicked,
+            SetCustomCursorEvent: self.on_set_custom_cursor,
+        }
+
+    def on_user_clicked(self, event: UserClickedEvent) -> None:
+        for element in self.ui_elements:
+            if isinstance(element, ClickableUIElement) and element.mouse_over:
+                element.clicked()
+
+    def on_set_custom_cursor(self, event: SetCustomCursorEvent) -> None:
+        self.custom_cursor.set_cursor(event.key)

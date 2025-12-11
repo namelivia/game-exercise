@@ -1,3 +1,14 @@
 {
-  "background": "assets/images/another.png"
+  "background": "assets/images/another.png",
+  "clickable_elements": [
+      {
+        "id": "go_back",
+        "x": 223,
+        "y": 407,
+        "width": 198,
+        "height": 80,
+        "cursor": "go_back",
+        "action": "scene2_back"
+      }
+  ]
 }

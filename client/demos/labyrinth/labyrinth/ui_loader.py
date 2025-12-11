@@ -26,11 +26,18 @@ def on_scene1_back():
     print("I can't go back")
 
 
+def on_scene2_back():
+    from labyrinth.screens.main.main import MainScreen
+
+    ScreenTransition(MainScreen).execute()
+
+
 actions = {
     "scene1_left": on_scene1_left,
     "scene1_forward": on_scene1_forward,
     "scene1_window": on_scene1_window,
     "scene1_back": on_scene1_back,
+    "scene2_back": on_scene2_back,
 }
 
 
