@@ -1,3 +1,0 @@
-#!/bin/bash
-poetry run pytest --cov-report=xml --cov=client.engine && \
-poetry run codecov --commit=$1 -t $2
